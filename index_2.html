@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate Bernola (Dobbertin) | Content designer</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fafaf8;
+    --accent: #a21caf;
+    --line: #e3e0da;
+    --muted: #6b6660;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  .role {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-size: 0.9rem;
+    margin: 0 0 48px;
+  }
+
+  .contact a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact a:hover,
+  .contact a:focus {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  section {
+    margin: 0 0 40px;
+  }
+
+  h2 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  /* Numbers section */
+  .stats {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .stat-item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    cursor: pointer;
+    gap: 12px;
+  }
+
+  .stat-top:hover .stat-number {
+    color: var(--accent);
+  }
+
+  .stat-left {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+
+  .stat-label {
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .expand-icon {
+    color: var(--accent);
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    user-select: none;
+  }
+
+  .stat-item.open .expand-icon {
+    transform: rotate(45deg);
+  }
+
+  .stat-detail {
+    display: none;
+    padding: 0 0 16px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .stat-item.open .stat-detail {
+    display: block;
+  }
+
+  .stat-detail p { margin: 0 0 8px; }
+  .stat-detail p:last-child { margin-bottom: 0; }
+
+  /* Case studies */
+  .use-cases {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .use-cases li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .use-cases a {
+    display: block;
+    padding: 16px 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .use-cases a:hover,
+  .use-cases a:focus {
+    color: var(--accent);
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>Kate Bernola (Dobbertin)</h1>
+  <p class="role">Content designer</p>
+
+  <p class="contact">
+    <a href="tel:5854692324">585.469.2324</a>
+    <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
+    <a href="https://linkedin.com/in/kdbernola">linkedin.com/in/kdbernola</a>
+  </p>
+
+  <section>
+    <h2>About me</h2>
+    <p>I build design disciplines that didn't exist before, get them adopted across the organization, and leave teams permanently more capable than I found them.</p>
+  </section>
+
+  <section>
+    <h2>By the numbers</h2>
+    <ul class="stats">
+
+      <li class="stat-item">
+        <div class="stat-top" role="button" tabindex="0" aria-expanded="false">
+          <div class="stat-left">
+            <span class="stat-number">92%</span>
+            <span class="stat-label">Retention rate</span>
+          </div>
+          <span class="expand-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="stat-detail">
+          <p>11 of the 12 original content designers I hired still worked in the UX org when I left.</p>
+          <p>Average tenure: 3 years. Lowest tenure: 2 years.</p>
+          <p>While people reported to me, 0 resigned.</p>
+        </div>
+      </li>
+
+      <li class="stat-item">
+        <div class="stat-top" role="button" tabindex="0" aria-expanded="false">
+          <div class="stat-left">
+            <span class="stat-number">75%</span>
+            <span class="stat-label">Promotion rate</span>
+          </div>
+          <span class="expand-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="stat-detail">
+          <p>9 of 12 were promoted before I left.</p>
+          <p>6 leveled up within content design. One did so twice.</p>
+          <p>3 moved into other UX roles.</p>
+        </div>
+      </li>
+
+      <li class="stat-item">
+        <div class="stat-top" role="button" tabindex="0" aria-expanded="false">
+          <div class="stat-left">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Recommendation rate</span>
+          </div>
+          <span class="expand-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="stat-detail">
+          <p>When my role was cut, every former report still at the company offered a reference or letter of recommendation. I didn't ask.</p>
+        </div>
+      </li>
+
+      <li class="stat-item">
+        <div class="stat-top" role="button" tabindex="0" aria-expanded="false">
+          <div class="stat-left">
+            <span class="stat-number">15+</span>
+            <span class="stat-label">Years in UX, content, and change management</span>
+          </div>
+          <span class="expand-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="stat-detail">
+          <p>4 years hiring and managing teams, with up to 12 direct reports plus contractors.</p>
+          <p>9 content designers trained from scratch, hired on core skills and personality, then taught the craft.</p>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <section>
+    <h2>My approach</h2>
+    <p>[Placeholder: One or two short sentences on your design philosophy.]</p>
+  </section>
+
+  <section>
+    <h2>Case studies</h2>
+    <ul class="use-cases">
+      <li><a href="use-case-1.html">Building and scaling a content design practice</a></li>
+      <li><a href="use-case-2.html">Increasing KPIs</a></li>
+    </ul>
+  </section>
+
+</main>
+
+<script>
+  document.querySelectorAll('.stat-top').forEach(function(btn) {
+    function toggle() {
+      var item = btn.closest('.stat-item');
+      var isOpen = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+    btn.addEventListener('click', toggle);
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
