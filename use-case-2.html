@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarifying in-app messaging governance | Kate Bernola</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fafaf8;
+    --accent: #a21caf;
+    --line: #e3e0da;
+    --muted: #6b6660;
+    --hl-green: #4ade80;
+    --hl-yellow: #fde047;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+
+  .back-link:hover,
+  .back-link:focus {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  .context {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0 0 32px;
+  }
+
+  .subhead {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 32px;
+  }
+
+  section {
+    margin: 0 0 40px;
+  }
+
+  h2 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+
+  p {
+    margin: 0 0 12px;
+    font-size: 1rem;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  ul, ol {
+    margin: 0 0 12px;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+
+  li:last-child { margin-bottom: 0; }
+
+  .visual-figure {
+    margin: 16px 0 0;
+  }
+
+  .visual-figure svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .visual-caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  .criteria-box {
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 12px 0;
+    background: var(--paper);
+  }
+
+  .criteria-box ol {
+    margin-bottom: 0;
+  }
+
+  .impact-list {
+    border-top: 1px solid var(--line);
+    margin: 12px 0;
+    padding-top: 12px;
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <a class="back-link" href="index.html">&larr; Back to portfolio</a>
+
+  <h1>Clarifying in-app messaging governance</h1>
+  <p class="subhead">Eliminating redundant comms by fixing the intake process</p>
+
+  <section>
+    <h2>The problem</h2>
+    <p>Product owners submitted in-app messaging requests to both marketing and UX independently. Each group assessed requests using different criteria. UX had no authority to decline messaging, so the same information landed in multiple channels without coordination. Clients complained: "You tell me so many things in so many places." Exec escalations were frequent because UX was trapped in a no-saying role.</p>
+  </section>
+
+  <section>
+    <h2>Before: parallel intake, conflicting assessments</h2>
+    <ul>
+      <li>PO submitted the same request to marketing and UX in parallel</li>
+      <li>Each group ran its own discovery, using its own criteria</li>
+      <li>UX had no framework to decline messaging; assessments often conflicted</li>
+      <li>Same message could appear across multiple channels uncoordinated</li>
+      <li>Clients saw redundant information</li>
+      <li>Escalations climbed because UX was forced into a gatekeeping role without authority</li>
+    </ul>
+    <div class="visual-figure">
+      <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Before workflow: PO submits to both marketing and UX in parallel, each discovers separately, each assesses with different criteria, messages go across multiple channels, resulting in client confusion and high escalations" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+        <rect x="1" y="1" width="638" height="278" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <rect x="24" y="28" width="110" height="36" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="79" y="51" text-anchor="middle" font-size="14" fill="#1a1a1a">Product owner</text>
+        <path d="M90 64 v30 L50 130 v14 M90 64 v30 L560 130 v14" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="24" y="148" width="100" height="40" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="74" y="167" text-anchor="middle" font-size="13" fill="#1a1a1a">Marketing</text>
+        <text x="74" y="183" text-anchor="middle" font-size="13" fill="#1a1a1a">Discovery</text>
+        <path d="M126 168 h20" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <rect x="148" y="148" width="100" height="40" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="198" y="167" text-anchor="middle" font-size="13" fill="#1a1a1a">Marketing</text>
+        <text x="198" y="183" text-anchor="middle" font-size="13" fill="#1a1a1a">Assess</text>
+        <path d="M250 168 h20" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <rect x="272" y="148" width="100" height="40" rx="8" fill="#fde047"/>
+        <text x="322" y="167" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Multi-channel</text>
+        <text x="322" y="183" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Messaging</text>
+        <rect x="516" y="148" width="100" height="40" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="566" y="167" text-anchor="middle" font-size="13" fill="#1a1a1a">UX</text>
+        <text x="566" y="183" text-anchor="middle" font-size="13" fill="#1a1a1a">Discovery</text>
+        <path d="M458 168 h20" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <rect x="480" y="148" width="100" height="40" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="530" y="167" text-anchor="middle" font-size="13" fill="#1a1a1a">UX</text>
+        <text x="530" y="183" text-anchor="middle" font-size="13" fill="#1a1a1a">Assess</text>
+        <path d="M322 188 v30 M530 188 v30" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <rect x="252" y="228" width="140" height="36" rx="8" fill="#fde047"/>
+        <text x="322" y="251" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Client confusion + escalations</text>
+      </svg>
+      <p class="visual-caption">Parallel paths, separate criteria, conflicting outcomes.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>After: single intake, shared decision framework</h2>
+    <ul>
+      <li>PO submits one request through marketing intake</li>
+      <li>Marketing evaluates channel strategy across all surfaces</li>
+      <li>Marketing determines if the message is a candidate for in-app via shared criteria</li>
+      <li>UX consults only when the message meets criteria and needs placement guidance</li>
+      <li>One unified comms plan; UX never has to decline</li>
+      <li>Escalations drop to match marketing's historical rate</li>
+    </ul>
+    <div class="visual-figure">
+      <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="After workflow: PO submits to marketing intake, marketing evaluates channel strategy and applies shared criteria, UX consulted only when criteria are met, unified comms plan delivered, rare escalations" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+        <rect x="1" y="1" width="638" height="218" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <rect x="24" y="28" width="110" height="36" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="79" y="51" text-anchor="middle" font-size="14" fill="#1a1a1a">Product owner</text>
+        <path d="M136 46 h20" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <rect x="158" y="28" width="110" height="36" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="213" y="51" text-anchor="middle" font-size="14" fill="#1a1a1a">Marketing intake</text>
+        <path d="M270 46 h20" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <rect x="292" y="28" width="110" height="36" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="347" y="51" text-anchor="middle" font-size="14" fill="#1a1a1a">Shared criteria</text>
+        <path d="M347 64 v20 M347 84 L260 120 M347 84 L430 120" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="192" y="128" width="100" height="40" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="242" y="147" text-anchor="middle" font-size="13" fill="#1a1a1a">Criteria met:</text>
+        <text x="242" y="163" text-anchor="middle" font-size="13" fill="#1a1a1a">UX consults</text>
+        <rect x="368" y="128" width="100" height="40" rx="8" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round" stroke-dasharray="5 4" stroke-linecap="round"/>
+        <text x="418" y="147" text-anchor="middle" font-size="13" fill="#1a1a1a">Criteria not met:</text>
+        <text x="418" y="163" text-anchor="middle" font-size="13" fill="#1a1a1a">Marketing only</text>
+        <path d="M242 168 h130" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <rect x="260" y="188" width="160" height="28" rx="8" fill="#4ade80"/>
+        <text x="340" y="208" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Unified comms plan</text>
+      </svg>
+      <p class="visual-caption">Single intake, gate-keeping at the criteria level, unified delivery.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>In-app messaging criteria</h2>
+    <p>A message is appropriate in-app only when all of the following are true:</p>
+    <div class="criteria-box">
+      <ol>
+        <li>It impacts at least 5,000 clients or 10,000 users</li>
+        <li>We know exactly what screen the user is on when they need the information</li>
+        <li>The user is likely to stop their current task to address it immediately</li>
+        <li>Value (time or money saved × impacted clients) exceeds disruption cost (disruption per client × total viewers)</li>
+      </ol>
+    </div>
+    <p>If criteria 1 is "no" or criteria 2 is "we don't know," the message is not a candidate for in-app. UX is not engaged.</p>
+  </section>
+
+  <section>
+    <h2>UX role clarity</h2>
+    <ul>
+      <li>Evaluates placement, information architecture, and user impact</li>
+      <li>Does not evaluate channel strategy or prioritization</li>
+      <li>Created a Figma kit for consistent in-app treatments</li>
+      <li>Applied existing placement strategy from change management work</li>
+      <li>Brought long-standing experience assessing comms needs for customer-facing changes</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Cross-functional alignment</h2>
+    <ul>
+      <li>Co-created decision framework with marketing comms and product ops</li>
+      <li>Marketing adopted criteria quickly via learn-by-doing</li>
+      <li>Intake process required only one additional checkbox</li>
+      <li>PO now facilitates one discovery conversation instead of two</li>
+      <li>PO receives one unified answer from one team instead of parallel assessments</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Impact</h2>
+    <div class="impact-list">
+      <ul>
+        <li>Eliminated redundant messaging across channels</li>
+        <li>Addressed the client pain point: "You tell me so many things in so many places"</li>
+        <li>Removed UX's gatekeeping role without authority</li>
+        <li>Dropped exec escalations to match marketing's historical rate</li>
+        <li>Improved UX efficiency by removing unnecessary intake and debate cycles</li>
+        <li>Strengthened governance without adding process overhead</li>
+        <li>Increased consistency and clarity across all client communications</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
