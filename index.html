@@ -94,18 +94,20 @@
   }
 
   .stat {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin: 0 0 64px;
-    padding: 0 0 64px;
     border-bottom: 1px solid #e2e8f0;
   }
 
-  .stat:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+  .stat summary {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .stat summary::-webkit-details-marker {
+    display: none;
   }
 
   .stat-number {
@@ -113,14 +115,38 @@
     font-weight: 700;
     line-height: 1.2;
     color: #1e293b;
+    min-width: 140px;
   }
 
-  .stat-content p {
+  .stat-label {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    flex: 1;
+  }
+
+  .stat-icon {
+    font-size: 24px;
+    color: #64748b;
+    transition: transform 0.2s;
+  }
+
+  .stat[open] .stat-icon {
+    transform: rotate(45deg);
+  }
+
+  .stat-detail {
+    padding: 0 0 24px;
+    max-width: 600px;
+  }
+
+  .stat-detail p {
     color: #64748b;
     font-size: 18px;
+    margin: 0 0 8px;
   }
 
-  .stat-content p:last-child {
+  .stat-detail p:last-child {
     margin-bottom: 0;
   }
 
@@ -131,8 +157,8 @@
   }
 
   .case-study-list li {
-    margin: 0 0 64px;
-    padding: 0 0 64px;
+    margin: 0 0 24px;
+    padding: 0 0 24px;
     border-bottom: 1px solid #e2e8f0;
   }
 
@@ -184,12 +210,6 @@
     font-size: 24px;
     font-weight: 600;
     display: block;
-    margin-bottom: 16px;
-  }
-
-  .case-study-desc {
-    font-size: 18px;
-    color: #64748b;
   }
 
   a:focus-visible {
@@ -218,45 +238,49 @@
   <section>
     <h2>Leadership impact</h2>
 
-    <div class="stat">
-      <div>
-        <div class="stat-number">92%</div>
-      </div>
-      <div class="stat-content">
-        <h3>Retention rate</h3>
+    <details class="stat">
+      <summary>
+        <span class="stat-number">92%</span>
+        <span class="stat-label">Retention rate</span>
+        <span class="stat-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="stat-detail">
         <p>11 of 12 content designers I hired stayed in the UX org. Average tenure: 3 years. Zero resignations while reporting to me.</p>
       </div>
-    </div>
+    </details>
 
-    <div class="stat">
-      <div>
-        <div class="stat-number">75%</div>
-      </div>
-      <div class="stat-content">
-        <h3>Promotion rate</h3>
+    <details class="stat">
+      <summary>
+        <span class="stat-number">75%</span>
+        <span class="stat-label">Promotion rate</span>
+        <span class="stat-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="stat-detail">
         <p>9 of 12 were promoted. 6 advanced within content design, 3 moved into other UX roles.</p>
       </div>
-    </div>
+    </details>
 
-    <div class="stat">
-      <div>
-        <div class="stat-number">100%</div>
-      </div>
-      <div class="stat-content">
-        <h3>Reference rate</h3>
+    <details class="stat">
+      <summary>
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Reference rate</span>
+        <span class="stat-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="stat-detail">
         <p>When my role was eliminated, every former report still at the company offered a reference or recommendation letter. I didn't ask.</p>
       </div>
-    </div>
+    </details>
 
-    <div class="stat">
-      <div>
-        <div class="stat-number">15+</div>
-      </div>
-      <div class="stat-content">
-        <h3>Years in UX and content</h3>
+    <details class="stat">
+      <summary>
+        <span class="stat-number">15+</span>
+        <span class="stat-label">Years in UX, content, and change management</span>
+        <span class="stat-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="stat-detail">
         <p>4 years managing teams with up to 12 direct reports. Hired and trained 9 content designers from scratch.</p>
       </div>
-    </div>
+    </details>
   </section>
 
   <section>
@@ -271,6 +295,11 @@
       <p>"She constantly encouraged me to take on new challenges and advocated for my professional growth... Kate fostered a supportive and open environment where ideas mattered more than hierarchy. Her mentorship will have a lasting impact on my career."</p>
       <footer>Content designer. Recruited with no content design experience; promoted one level since, worked with Kate for four-plus years.</footer>
     </blockquote>
+
+    <blockquote>
+      <p>"Kate saw potential in my transferable skills and gave me the opportunity to join her team... One of the things I respect most is her willingness to look beyond the traditional résumé. That first opportunity in UX became the foundation for everything that followed."</p>
+      <footer>UX product designer 2. Transitioned into UX from a non-design role on Kate's team; promoted twice since.</footer>
+    </blockquote>
   </section>
 
   <section>
@@ -278,18 +307,16 @@
     <ul class="case-study-list">
       <li>
         <a href="use-case-1.html" class="case-study-link">Building and scaling a content design practice</a>
-        <p class="case-study-desc">A four-step framework for growing design disciplines from nothing, with measurable ROI on Help Center content and team impact at Paychex.</p>
       </li>
       <li>
         <a href="use-case-2.html" class="case-study-link">Clarifying in-app messaging governance</a>
-        <p class="case-study-desc">Eliminating redundant communications by establishing shared criteria and clear responsibility across PO, marketing, and UX teams.</p>
       </li>
     </ul>
   </section>
 
   <section>
     <h2>What I'm looking for</h2>
-    <p>A role where my drive to improve pushes designers to do their best work and grow their skills. A platform that needs real governance, grounded in UX principles. A team that values accessibility and diversity in practice, not just on posters. Leadership that treats AI as a powerful tool worth considering in every problem we solve, not as a box to check. A place that needs content design expertise. And ideally, no objections to me recruiting a few of my favorite people from my last team.</p>
+    <p>A role where my drive to improve pushes designers to do their best work and helps them grow. A platform that needs real governance, grounded in UX principles. A team that needs content design expertise, practices accessibility and inclusion, and treats AI as a powerful tool for every problem rather than a box to check. And, in a year or so, no objections to me recruiting a few favorite people from my last team.</p>
   </section>
 
 </main>
