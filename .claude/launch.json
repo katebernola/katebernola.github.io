@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "static-preview",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8420"],
-      "port": 8420
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\Mike\\AppData\\Local\\Temp\\claude\\C--Users-Mike-Desktop-Kate-and-Claude\\b342978e-aaa7-439f-9fa6-0105b0c291cc\\scratchpad\\serve.ps1"],
+      "port": 8421
     }
   ]
 }
