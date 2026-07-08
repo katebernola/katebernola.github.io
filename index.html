@@ -101,9 +101,26 @@
     margin: 0 auto;
     padding: 16px 32px;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
     gap: 32px;
     font-size: 16px;
+  }
+
+  .top-bar-name {
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .top-bar-contact {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .li-icon {
+    vertical-align: -2px;
+    margin-right: 6px;
   }
 
   .top-bar a {
@@ -274,7 +291,8 @@
     .intro .role { font-size: 20px; margin-top: -16px; }
     .intro p { font-size: 18px; }
     .intro p br { display: none; }
-    .top-bar-inner { padding: 12px 20px; gap: 16px; font-size: 14px; justify-content: center; flex-wrap: wrap; }
+    .top-bar-inner { padding: 12px 20px; gap: 16px; font-size: 14px; flex-wrap: wrap; justify-content: center; }
+    .top-bar-contact { gap: 16px; }
     .stat summary { gap: 16px; }
     .stat-number { font-size: 28px; min-width: 76px; }
     .stat-label { font-size: 18px; }
@@ -288,9 +306,15 @@
 
 <header class="top-bar">
   <div class="top-bar-inner">
-    <a href="tel:5854692324">585.469.2324</a>
-    <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
-    <a href="https://linkedin.com/in/kdbernola">linkedin.com/in/kdbernola</a>
+    <a class="top-bar-name" href="#top">Kate Bernola</a>
+    <nav class="top-bar-contact" aria-label="Contact">
+      <a href="tel:5854692324">585.469.2324</a>
+      <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
+      <a href="https://linkedin.com/in/kdbernola" aria-label="LinkedIn: kdbernola">
+        <svg class="li-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/>
+        </svg>kdbernola</a>
+    </nav>
   </div>
 </header>
 
