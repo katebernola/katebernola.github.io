@@ -505,7 +505,7 @@
     <p>This gate prevents well-intentioned messages from interrupting users when the benefit doesn't justify the interruption.</p>
 
     <div class="visual-figure">
-      <svg viewBox="0 0 620 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A two-by-two matrix. Vertical axis: message value, low to high. Horizontal axis: disruption cost, low to high. High value and low disruption: ship in-app. High value and high disruption: judgment call, and UX decides. Low value and low disruption: use another channel. Low value and high disruption: don't ship it." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+      <svg viewBox="0 0 620 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A two-by-two matrix. Vertical axis: message value, low to high. Horizontal axis: disruption cost, low to high. High value and low disruption: ship in-app. High value and high disruption: use another channel, valuable but not worth an in-app interruption. Low value and low disruption: use another channel, not worth an in-app interruption. Low value and high disruption: don't ship it." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
         <defs>
           <marker id="arrow-2x2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
@@ -521,12 +521,12 @@
         <text x="230" y="115" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Ship in-app</text>
         <text x="230" y="138" text-anchor="middle" font-size="13" fill="#475569">High value, low disruption</text>
 
-        <text x="450" y="115" text-anchor="middle" font-size="15" font-weight="600" fill="#1e293b">Judgment call</text>
-        <text x="450" y="138" text-anchor="middle" font-size="13" fill="#475569">UX decides: does value</text>
-        <text x="450" y="155" text-anchor="middle" font-size="13" fill="#475569">still beat the cost?</text>
+        <text x="450" y="115" text-anchor="middle" font-size="15" font-weight="600" fill="#1e293b">Use another channel</text>
+        <text x="450" y="138" text-anchor="middle" font-size="13" fill="#475569">Valuable, but not worth</text>
+        <text x="450" y="155" text-anchor="middle" font-size="13" fill="#475569">an in-app interruption</text>
 
         <text x="230" y="285" text-anchor="middle" font-size="15" font-weight="600" fill="#1e293b">Use another channel</text>
-        <text x="230" y="308" text-anchor="middle" font-size="13" fill="#475569">Not worth an interruption</text>
+        <text x="230" y="308" text-anchor="middle" font-size="13" fill="#475569">Not worth an in-app interruption</text>
 
         <text x="450" y="285" text-anchor="middle" font-size="15" font-weight="600" fill="#1e293b">Don't ship it</text>
         <text x="450" y="308" text-anchor="middle" font-size="13" fill="#475569">All cost, no value</text>
@@ -538,7 +538,7 @@
         <line x1="100" y1="380" x2="100" y2="20" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-2x2)"/>
         <text x="60" y="200" text-anchor="middle" font-size="14" fill="#1e293b" transform="rotate(-90 60 200)">Message value</text>
       </svg>
-      <p class="visual-caption">The same rule as a map. Only one quadrant earns an interruption; one more earns a conversation.</p>
+      <p class="visual-caption">The same rule as a map. Only one quadrant earns an in-app interruption.</p>
     </div>
   </section>
 
