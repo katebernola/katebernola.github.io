@@ -10,9 +10,6 @@ Kate to review (built 2026-07-08):
 3. Value-vs-disruption 2x2 in use-case-2
 
 Kate to supply or decide:
-6. Lessons-learned line for use-case-1
-7. Lessons-learned line for use-case-2
-8. Resolve use-case-1 overview claim ("tested across multimedia and product design" — cut it or back it up)
 11. Help Center intake criteria (for the "what earns an article" checklist artifact)
 
 Claude to do:
@@ -20,7 +17,7 @@ Claude to do:
 13. Full WCAG pass (keyboard focus on stat rows done; focus order, zoom, SVG alt text remain)
 14. Final proofread of all three pages (last in the chain)
 
-Done: mobile media queries, favicon + social meta tags, case study footers, hover indicators, percentages confirmed, URL resolved (site live at https://katebernola.github.io/), use-case-2 context line ("Paychex UX in partnership with marketing, 2026"), use-case-2 my-role section + corrected duplication story + rework loop in diagram, homepage intro resolved (arrow line cut), hired-designer numbers reconciled in Kate's stat rewrite, contact top bar + resume CTA button, accordion stats.
+Done: mobile media queries, favicon + social meta tags, case study footers, hover indicators, percentages confirmed, URL resolved (site live at https://katebernola.github.io/), use-case-2 context line ("Paychex UX in partnership with marketing, 2026"), use-case-2 my-role section + corrected duplication story + rework loop in diagram, homepage intro resolved (arrow line cut), hired-designer numbers reconciled in Kate's stat rewrite, contact top bar + resume CTA button, accordion stats, lessons-learned sections on both case studies, multi-discipline overview claim removed (restore is post-MVP item 10).
 
 ## Post-MVP (prioritized; tracker tasks 15–24)
 
@@ -33,7 +30,7 @@ Done: mobile media queries, favicon + social meta tags, case study footers, hove
 7. **Mid-period rate change story** — cut in the redesign; fits use-case-1 step 2 or stands alone
 8. **Custom domain** (e.g. katebernola.com)
 9. **Shared CSS across pages** — prevent style drift
-10. **Multimedia + product design framework applications** — once there's detail to work from
+10. **Multimedia + product design framework applications** — once there's detail to work from; includes restoring the multi-discipline claim to the use-case-1 overview with content design and multimedia equally represented (claim removed 2026-07-08 because only content design was shown)
 
 ## Housekeeping
 
