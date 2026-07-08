@@ -6,10 +6,9 @@ One running list, prioritized by impact. Update in place rather than starting ne
 
 1. **Add design artifacts to the case studies.** The site tells but doesn't show: no images of real work or leadership artifacts. Candidates: the in-app criteria checklist as a one-pager, the value-vs-disruption 2x2, the intake checkbox, blurred internal docs, Figma kit shots. Kate needs to supply or approve source material; some (checklist, 2x2) can be built from what's already on the pages.
 2. **Anchor use-case-2 with context.** It's the only case study without employer/date/team-size. Even "a Fortune 500 payroll platform" works if the name can't be used. Needs Kate's call on what's public.
-3. **Decide the permanent URL.** The repo rename moved the site to katebernola.github.io/portfolio/ (the old root URL now 404s — mystery solved). Options: (a) keep the /portfolio/ URL, (b) rename the repo to "katebernola.github.io" so the site serves at the root, or (c) buy a custom domain and point it wherever. Whatever wins is the link for the resume and LinkedIn. Kate's call; the rename is a one-click repo settings change.
-4. **Full WCAG pass** (contrast fixed; keyboard, focus order, and zoom still unchecked).
+3. **Full WCAG pass** (contrast fixed; keyboard, focus order, and zoom still unchecked).
 
-Done: mobile media queries, favicon + social preview tags, case study footers, git remote updated to katebernola/portfolio, old-workflow percentages confirmed by Kate.
+Done: mobile media queries, favicon + social preview tags, case study footers, old-workflow percentages confirmed by Kate. URL resolved: repo renamed to katebernola.github.io, site verified live at https://katebernola.github.io/ (homepage and case studies) — this is the link for the resume and LinkedIn. Custom domain remains a post-MVP option.
 
 ## Post-MVP (differentiators)
 
