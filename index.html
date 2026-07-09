@@ -150,6 +150,8 @@
   }
 
   .step-card {
+    position: relative;
+    overflow: hidden;
     display: block;
     border: 1px solid #e2e8f0;
     border-radius: 4px;
@@ -163,11 +165,21 @@
   }
 
   .step-num {
-    font-size: 28px;
+    position: absolute;
+    top: -18px;
+    right: 8px;
+    font-size: 104px;
     font-weight: 700;
     line-height: 1;
-    color: #64748b;
-    margin: 0 0 8px;
+    color: #e2e8f0;
+    margin: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .step-title,
+  .step-line {
+    position: relative;
   }
 
   .step-title {
@@ -181,6 +193,18 @@
     font-size: 16px;
     color: #475569;
     margin: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   a:focus-visible {
@@ -230,26 +254,26 @@
     <h2>Playbook</h2>
     <div class="playbook">
       <a class="step-card" href="use-case-1.html#step-1">
-        <p class="step-num">1</p>
-        <p class="step-title">Identify what doesn't add value.</p>
+        <p class="step-num" aria-hidden="true">1</p>
+        <p class="step-title"><span class="sr-only">Step 1: </span>Identify what doesn't add value.</p>
         <p class="step-line">Do the math.</p>
         <p class="step-line">Stop the work.</p>
       </a>
       <a class="step-card" href="use-case-1.html#step-2">
-        <p class="step-num">2</p>
-        <p class="step-title">Find surefire wins.</p>
+        <p class="step-num" aria-hidden="true">2</p>
+        <p class="step-title"><span class="sr-only">Step 2: </span>Find surefire wins.</p>
         <p class="step-line">Let your people shine.</p>
         <p class="step-line">Fuel demand.</p>
       </a>
       <a class="step-card" href="use-case-1.html#step-3">
-        <p class="step-num">3</p>
-        <p class="step-title">Make great work repeatable.</p>
+        <p class="step-num" aria-hidden="true">3</p>
+        <p class="step-title"><span class="sr-only">Step 3: </span>Make great work repeatable.</p>
         <p class="step-line">Build tools and frameworks.</p>
         <p class="step-line">Multiply impact.</p>
       </a>
       <a class="step-card" href="use-case-1.html#step-4">
-        <p class="step-num">4</p>
-        <p class="step-title">Create the new normal.</p>
+        <p class="step-num" aria-hidden="true">4</p>
+        <p class="step-title"><span class="sr-only">Step 4: </span>Create the new normal.</p>
         <p class="step-line">Persist and be patient.</p>
         <p class="step-line">Then get out of the way.</p>
       </a>
