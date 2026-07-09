@@ -81,14 +81,14 @@
     max-width: 600px;
   }
 
-  .intro .role {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 0 0 24px;
+  .masthead h1 {
+    margin: 0 0 4px;
   }
 
-  .masthead h1 {
+  .masthead-role {
+    font-size: 20px;
+    font-weight: 300;
+    color: #475569;
     margin: 0 0 16px;
   }
 
@@ -183,26 +183,6 @@
     margin: 0;
   }
 
-  .resume-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-    padding: 8px 24px;
-    border: 1px solid #1e293b;
-    border-radius: 4px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1e293b;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .resume-link:hover {
-    background: #1e293b;
-    color: #ffffff;
-  }
-
   a:focus-visible {
     outline: 2px solid #1e293b;
     outline-offset: 4px;
@@ -214,7 +194,7 @@
     h1 { font-size: 32px; }
     h2 { font-size: 24px; }
     h3 { font-size: 20px; }
-    .intro .role { font-size: 20px; }
+    .masthead-role { font-size: 18px; }
     .intro p { font-size: 18px; }
     .playbook { grid-template-columns: 1fr; }
     .tab-nav { gap: 16px; margin-bottom: 48px; }
@@ -229,6 +209,7 @@
 
   <header class="masthead">
     <h1>Kate Bernola</h1>
+    <p class="masthead-role">Experience design manager</p>
   </header>
 
   <nav class="tab-nav" aria-label="Site">
@@ -239,20 +220,10 @@
   </nav>
 
   <section class="intro">
-    <p class="role">Experience design manager</p>
     <p>I build design practices.<br>
     Less busywork.<br>
     More business impact.<br>
     The team and culture to make it last.</p>
-    <a class="resume-link" href="kate-bernola_ux-design-manager.pdf" aria-label="View my resume (PDF)">
-      View my resume
-      <svg class="resume-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <path d="M14 2v6h6"/>
-        <path d="M12 18v-6"/>
-        <path d="M9 15l3 3 3-3"/>
-      </svg>
-    </a>
   </section>
 
   <section id="work">
