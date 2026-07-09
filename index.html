@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kate Bernola | UX design manager</title>
+<title>Kate Bernola | Experience design manager</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e293b'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23ffffff' font-family='Arial, sans-serif'%3EK%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Kate Bernola, UX design manager. I build design disciplines where they didn't exist, get them adopted, and leave teams permanently more capable.">
+<meta name="description" content="Kate Bernola, experience design manager. I build design practices: less busywork, more business impact, and the team and culture to make it last.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kate Bernola | UX design manager">
+<meta property="og:title" content="Kate Bernola | Experience design manager">
 <meta property="og:description" content="I build design disciplines where they didn't exist, get them adopted, and leave teams permanently more capable.">
 <meta name="twitter:card" content="summary">
 <style>
@@ -157,6 +157,44 @@
   .me-links a:hover {
     color: #000000;
     border-bottom-color: #1e293b;
+  }
+
+  .playbook {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .step-card {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 24px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .step-card:hover {
+    border-color: #1e293b;
+  }
+
+  .step-eyebrow {
+    font-size: 16px;
+    color: #475569;
+    margin: 0 0 8px;
+  }
+
+  .step-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px;
+  }
+
+  .step-line {
+    font-size: 18px;
+    color: #475569;
+    margin: 0;
   }
 
   .resume-link {
@@ -316,7 +354,7 @@
     h3 { font-size: 20px; }
     .intro .role { font-size: 20px; margin-top: -16px; }
     .intro p { font-size: 18px; }
-    .intro p br { display: none; }
+    .playbook { grid-template-columns: 1fr; }
     .tab-nav { gap: 16px; margin-bottom: 48px; }
     .tab-nav a { font-size: 16px; }
     .tab-name { display: none; }
@@ -345,10 +383,11 @@
   </nav>
 
   <section class="intro">
-    <p class="role">UX design manager</p>
-    <p>I build design disciplines where they didn't exist,<br>
-    get them adopted across the organization,<br>
-    and leave teams permanently more capable than I found them.</p>
+    <p class="role">Experience design manager</p>
+    <p>I build design practices.<br>
+    Less busywork.<br>
+    More business impact.<br>
+    The team and culture to make it last.</p>
     <a class="resume-link" href="kate-bernola_ux-design-manager.pdf" aria-label="View my resume (PDF)">
       View my resume
       <svg class="resume-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -358,6 +397,36 @@
         <path d="M9 15l3 3 3-3"/>
       </svg>
     </a>
+  </section>
+
+  <section id="work">
+    <h2>Playbook</h2>
+    <div class="playbook">
+      <a class="step-card" href="use-case-1.html#step-1">
+        <p class="step-eyebrow">Step 1</p>
+        <p class="step-title">Identify what doesn't add value.</p>
+        <p class="step-line">Do the math.</p>
+        <p class="step-line">Stop the work.</p>
+      </a>
+      <a class="step-card" href="use-case-1.html#step-2">
+        <p class="step-eyebrow">Step 2</p>
+        <p class="step-title">Find surefire wins.</p>
+        <p class="step-line">Let your people shine.</p>
+        <p class="step-line">Fuel demand for more.</p>
+      </a>
+      <a class="step-card" href="use-case-1.html#step-3">
+        <p class="step-eyebrow">Step 3</p>
+        <p class="step-title">Make great work repeatable.</p>
+        <p class="step-line">Build tools and frameworks.</p>
+        <p class="step-line">Multiply impact.</p>
+      </a>
+      <a class="step-card" href="use-case-1.html#step-4">
+        <p class="step-eyebrow">Step 4</p>
+        <p class="step-title">Create the new normal.</p>
+        <p class="step-line">Persist and be patient.</p>
+        <p class="step-line">Then get out of the way.</p>
+      </a>
+    </div>
   </section>
 
   <section id="team">
@@ -441,20 +510,8 @@
     </blockquote>
   </section>
 
-  <section id="work">
-    <h2>Case studies</h2>
-    <ul class="case-study-list">
-      <li>
-        <a href="use-case-1.html" class="case-study-link">Building and scaling a content design practice</a>
-      </li>
-      <li>
-        <a href="use-case-2.html" class="case-study-link">Stopping the escalation spiral and freeing UX from request hell</a>
-      </li>
-    </ul>
-  </section>
-
   <section>
-    <h2>What I'm looking for in my next UX role</h2>
+    <h2>Dream job</h2>
     <p>A team that's capable of more, in need of a leader to clear the path and let them shine.</p>
     <p>A practice ready to level up: better governance, clearer communication, tighter change management.</p>
     <p>A company that sees how AI can solve problems, rather than treating "no AI" as the problem.</p>
