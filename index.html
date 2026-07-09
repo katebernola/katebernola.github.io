@@ -85,52 +85,78 @@
     font-size: 24px;
     font-weight: 600;
     color: #1e293b;
-    margin: -24px 0 24px;
+    margin: 0 0 24px;
   }
 
-  .top-bar {
+  .masthead h1 {
+    margin: 0 0 16px;
+  }
+
+  .tab-nav {
     position: sticky;
     top: 0;
     z-index: 10;
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
     background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    padding: 16px 0;
+    margin: 0 0 64px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
   }
 
-  .top-bar-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 16px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    font-size: 16px;
+  .tab-nav.stuck {
+    border-bottom-color: #e2e8f0;
   }
 
-  .top-bar-name {
-    font-weight: 600;
-    color: #1e293b;
-  }
-
-  .top-bar-contact {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-
-  .li-icon {
-    vertical-align: -2px;
-    margin-right: 6px;
-  }
-
-  .top-bar a {
+  .tab-nav a {
+    font-size: 18px;
     color: #475569;
     text-decoration: none;
     transition: color 0.2s;
   }
 
-  .top-bar a:hover {
+  .tab-nav a:hover {
     color: #000000;
+  }
+
+  .tab-name {
+    margin-left: auto;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .tab-nav.stuck .tab-name {
+    opacity: 1;
+  }
+
+  section {
+    scroll-margin-top: 80px;
+  }
+
+  .me-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 18px;
+  }
+
+  .me-links a {
+    align-self: flex-start;
+    color: #1e293b;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .me-links a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
   }
 
   .resume-link {
@@ -291,8 +317,9 @@
     .intro .role { font-size: 20px; margin-top: -16px; }
     .intro p { font-size: 18px; }
     .intro p br { display: none; }
-    .top-bar-inner { padding: 12px 20px; gap: 16px; font-size: 14px; flex-wrap: wrap; justify-content: center; }
-    .top-bar-contact { gap: 16px; }
+    .tab-nav { gap: 16px; margin-bottom: 48px; }
+    .tab-nav a { font-size: 16px; }
+    .tab-name { display: none; }
     .stat summary { gap: 16px; }
     .stat-number { font-size: 28px; min-width: 76px; }
     .stat-label { font-size: 18px; }
@@ -304,24 +331,20 @@
 </head>
 <body>
 
-<header class="top-bar">
-  <div class="top-bar-inner">
-    <a class="top-bar-name" href="#top">Kate Bernola</a>
-    <nav class="top-bar-contact" aria-label="Contact">
-      <a href="tel:5854692324">585.469.2324</a>
-      <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
-      <a href="https://linkedin.com/in/kdbernola" aria-label="LinkedIn: kdbernola">
-        <svg class="li-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-          <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/>
-        </svg>kdbernola</a>
-    </nav>
-  </div>
-</header>
-
 <main>
 
-  <section class="intro">
+  <header class="masthead">
     <h1>Kate Bernola</h1>
+  </header>
+
+  <nav class="tab-nav" aria-label="Site">
+    <a href="#work">My work</a>
+    <a href="#team">My team</a>
+    <a href="#me">Me</a>
+    <span class="tab-name" aria-hidden="true">Kate Bernola</span>
+  </nav>
+
+  <section class="intro">
     <p class="role">UX design manager</p>
     <p>I build design disciplines where they didn't exist,<br>
     get them adopted across the organization,<br>
@@ -337,7 +360,7 @@
     </a>
   </section>
 
-  <section>
+  <section id="team">
     <h2>Leadership impact</h2>
 
     <details class="stat" name="leadership-stats">
@@ -418,7 +441,7 @@
     </blockquote>
   </section>
 
-  <section>
+  <section id="work">
     <h2>Case studies</h2>
     <ul class="case-study-list">
       <li>
@@ -437,6 +460,28 @@
     <p>A company that sees how AI can solve problems, rather than treating "no AI" as the problem.</p>
   </section>
 
+  <section id="me">
+    <h2>Me</h2>
+    <div class="me-links">
+      <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
+      <a href="https://linkedin.com/in/kdbernola">linkedin.com/in/kdbernola</a>
+      <a href="tel:5854692324">585.469.2324</a>
+      <a href="kate-bernola_ux-design-manager.pdf">Resume (pdf)</a>
+    </div>
+  </section>
+
 </main>
+
+<script>
+  (function () {
+    var masthead = document.querySelector('.masthead');
+    var nav = document.querySelector('.tab-nav');
+    if (masthead && nav && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        nav.classList.toggle('stuck', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(masthead);
+    }
+  })();
+</script>
 </body>
 </html>
