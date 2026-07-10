@@ -92,16 +92,25 @@
     font-size: 18px;
     color: #475569;
     text-decoration: none;
-    transition: color 0.2s;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
   }
 
   .tab-nav a:hover {
     color: #000000;
+    border-bottom-color: #1e293b;
   }
 
   .tab-nav a[aria-current="page"] {
     color: #1e293b;
     font-weight: 600;
+    border-bottom-color: transparent;
+  }
+
+  .h1-last {
+    font-weight: 300;
+    color: #475569;
   }
 
   .tab-name {
@@ -178,14 +187,14 @@
 <main>
 
   <header class="masthead">
-    <h1>Kate Bernola</h1>
+    <h1>Kate <span class="h1-last">Bernola</span></h1>
   </header>
 
   <nav class="tab-nav" aria-label="Site">
     <a href="index.html">My work</a>
     <a href="team.html">My team</a>
     <a href="me.html" aria-current="page">Me</a>
-    <span class="tab-name" aria-hidden="true">Kate Bernola</span>
+    <span class="tab-name" aria-hidden="true">Kate</span>
   </nav>
 
   <section>

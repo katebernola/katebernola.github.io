@@ -115,16 +115,25 @@
     font-size: 18px;
     color: #475569;
     text-decoration: none;
-    transition: color 0.2s;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
   }
 
   .tab-nav a:hover {
     color: #000000;
+    border-bottom-color: #1e293b;
   }
 
   .tab-nav a[aria-current="page"] {
     color: #1e293b;
     font-weight: 600;
+    border-bottom-color: transparent;
+  }
+
+  .h1-last {
+    font-weight: 300;
+    color: #475569;
   }
 
   .tab-name {
@@ -253,6 +262,7 @@
     gap: 16px;
     max-width: 75ch;
     margin: 24px 0 32px;
+    align-items: start;
   }
 
   .eq-group .equation {
@@ -262,18 +272,54 @@
   }
 
   .eq-line {
+    position: relative;
+    padding-left: 22px;
     font-size: 16px;
     color: #475569;
     margin: 0;
   }
 
+  .eq-op {
+    position: absolute;
+    left: 0;
+  }
+
   .eq-answer {
-    border-top: 1px solid #e2e8f0;
-    margin-top: 12px;
-    padding-top: 12px;
-    font-size: 18px;
+    margin: 6px 0 0 22px;
+    padding-top: 6px;
+    border-top: 1px solid #64748b;
+    font-size: 16px;
+    font-weight: 400;
+    color: #475569;
+  }
+
+  .eq-group .equation:last-child .eq-answer {
     font-weight: 600;
     color: #1e293b;
+  }
+
+  .eq-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+  }
+
+  .roi-table {
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #475569;
+  }
+
+  .roi-table th {
+    text-align: left;
+    font-weight: 600;
+    color: #1e293b;
+    padding: 0 32px 4px 0;
+  }
+
+  .roi-table td {
+    padding: 2px 32px 2px 0;
   }
 
   .cs-tag {
@@ -372,7 +418,7 @@
 <main>
 
   <header class="masthead">
-    <h1>Kate Bernola</h1>
+    <h1>Kate <span class="h1-last">Bernola</span></h1>
     <p class="masthead-role">Experience design manager</p>
   </header>
 
@@ -380,18 +426,19 @@
     <a href="index.html" aria-current="page">My work</a>
     <a href="team.html">My team</a>
     <a href="me.html">Me</a>
-    <span class="tab-name" aria-hidden="true">Kate Bernola</span>
+    <span class="tab-name" aria-hidden="true">Kate</span>
   </nav>
 
   <section class="intro">
-    <p>I build design practices.<br>
-    Less busywork.<br>
-    More business impact.<br>
-    The team and culture to make it last.</p>
+    <p>I build design practices<br>
+    with less busywork,<br>
+    more business impact,<br>
+    and the culture to make it last.</p>
   </section>
 
   <section id="work">
     <h2>Playbook</h2>
+    <p>My 4-step framework to find time for the important stuff, transform ticket-takers into strategic partners, and scale their expertise.</p>
     <p class="context">Paychex UX content team, 2022&ndash;2024</p>
     <div class="playbook">
       <a class="step-card" href="#step-1">
@@ -423,25 +470,24 @@
 
 <section id="step-1">
     <h2>Step 1: Eliminate low-value work</h2>
-    <p>Every team has some grunt work. This team had all grunt work. A little middle-school math proved my point: it didn't make cents for skilled designers to write Help content.</p>
-    <p>(See what I did there with cents?)</p>
+    <p>Every team has some grunt work. My team had all grunt work. Middle-school math proved it didn't make cents.</p>
 
     <p class="cs-tag">Case study</p>
     <h3>Help Center articles</h3>
     <div class="eq-group">
       <div class="equation">
         <p class="eq-line">8 hours to create</p>
-        <p class="eq-line">× $120 per resource-hour</p>
+        <p class="eq-line"><span class="eq-op">×</span>$120 per resource-hour</p>
         <p class="eq-answer">$960 per article</p>
       </div>
       <div class="equation">
         <p class="eq-line">$24 savings per contact avoided</p>
-        <p class="eq-line">× 5% chance one article view prevents a contact</p>
+        <p class="eq-line"><span class="eq-op">×</span>5% chance one article view prevents a contact</p>
         <p class="eq-answer">$1.20 max value per view</p>
       </div>
       <div class="equation">
         <p class="eq-line">$960 per article</p>
-        <p class="eq-line">÷ $1.20 max value per view</p>
+        <p class="eq-line"><span class="eq-op">÷</span>$1.20 max value per view</p>
         <p class="eq-answer">800 views to break even</p>
       </div>
     </div>
@@ -449,7 +495,7 @@
     <p>Then we looked at what we'd already published:</p>
     <div class="equation">
       <div class="eq-row">
-        <span class="eq-expr">Help Center articles*</span>
+        <span class="eq-expr">Help Center articles</span>
         <span class="eq-result">1,203</span>
       </div>
       <div class="eq-row">
@@ -465,18 +511,14 @@
         <span class="eq-result">68%</span>
       </div>
     </div>
-    <p class="visual-caption">*Published at least a year ago.</p>
 
-    <h3>What did we spend on articles without sufficient ROI?</h3>
     <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">Within the company</span>
-        <span class="eq-result">6,568 hours · $788k</span>
-      </div>
-      <div class="eq-row">
-        <span class="eq-expr">Content design team</span>
-        <span class="eq-result">3,284 hours · $394k</span>
-      </div>
+      <p class="eq-title">What did we spend on articles without sufficient ROI?</p>
+      <table class="roi-table">
+        <tr><th scope="col">Org</th><th scope="col">Hours</th><th scope="col">Money</th></tr>
+        <tr><td>Company</td><td>6,568</td><td>$788k</td></tr>
+        <tr><td>Content design team</td><td>3,284</td><td>$394k</td></tr>
+      </table>
     </div>
 
     <h3>The new plan</h3>
@@ -487,14 +529,15 @@
       <li>Stop adding types of articles where virtually zero met the criteria: release notes, product overviews, explanatory articles.</li>
     </ul>
     <p>New article creation dropped 90%: from 20 per sprint to 2. Upkeep dropped too. We archived more articles than we fixed.</p>
-    <p>We proved something our UX research team had also seen. When users go to Help Center, they want one thing: step-by-step instructions for how to do something. And that's it. These numbers spoke louder than qualitative insights.</p>
+    <p><strong>When users go to Help Center, they want one thing: step-by-step instructions for how to do something. And that's it.</strong></p>
+    <p>Our UX research team had seen this for years. The numbers finally made it land.</p>
     <p>The best part? Step-by-step articles averaged about 4 hours to create, rather than 8.</p>
 
     <h3>More work we stopped</h3>
     <ul>
-      <li>Dropped support for more than 200 Help Center videos. At 24+ production hours each, only 15 earned their place.</li>
-      <li>Handed demo video production back to marketing, after a template made the work easy to do well at a lower rate.</li>
-      <li>Negotiated with product to stop chasing error edge cases: ship a generic error, then invest only where trackers showed it actually happening.</li>
+      <li><strong>Multimedia team:</strong> dropped support for more than 200 Help Center videos. At 24+ production hours each, only 15 earned their place.</li>
+      <li><strong>Multimedia team:</strong> handed demo video production back to marketing, after a template made the work easy to do well at a lower rate.</li>
+      <li><strong>Product design:</strong> negotiated with product to stop chasing error edge cases: ship a generic error, then invest only where trackers showed it actually happening.</li>
     </ul>
 
     <p><strong>Principle:</strong> Show the math. When leaders see that two-thirds of your output costs more than it returns, stopping becomes the obvious call.</p>
