@@ -344,6 +344,19 @@
     margin-top: 0;
   }
 
+  .cs-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #15803d;
+    margin: 24px 0 8px;
+  }
+
+  .case-study .eq-group,
+  .case-study .equation {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
   .cs-badge {
     display: inline-block;
     font-size: 13px;
@@ -493,7 +506,6 @@
   <section id="work">
     <h2>Playbook</h2>
     <p>My 4-step framework to find time for the important stuff, transform ticket-takers into strategic partners, and scale their expertise.</p>
-    <p class="context">Paychex UX content team, 2022&ndash;2024</p>
     <div class="playbook">
       <a class="step-card" href="#step-1">
         <p class="step-num" aria-hidden="true">1</p>
@@ -539,6 +551,8 @@
     <div class="case-study">
     <p class="cs-tag">Case study</p>
     <h3>Help Center articles</h3>
+
+    <p class="cs-label">The math</p>
     <div class="eq-group">
       <div class="equation">
         <p class="eq-line">8 hours to create</p>
@@ -557,7 +571,7 @@
       </div>
     </div>
 
-    <p>What we'd already published:</p>
+    <p class="cs-label">The reality</p>
     <div class="equation">
       <div class="eq-row">
         <span class="eq-expr">Help Center articles</span>
@@ -577,8 +591,8 @@
       </div>
     </div>
 
+    <p class="cs-label">The bill for the 68%</p>
     <div class="equation">
-      <p class="eq-title">What did we spend on articles without sufficient ROI?</p>
       <table class="roi-table">
         <tr><th scope="col">Org</th><th scope="col">Hours</th><th scope="col">Money</th></tr>
         <tr><td>Company</td><td>6,568</td><td>$788k</td></tr>
@@ -586,17 +600,17 @@
       </table>
     </div>
 
-    <h3>The new plan</h3>
-    <p>We added a serious gate to intake:</p>
+    <p class="cs-label">The fix</p>
     <ul>
       <li>Content designers set the MVP article list for each release. 1 hour per sprint, 26 a year.</li>
       <li>No search or chat data showing demand? Rejected.</li>
       <li>Stopped article types where virtually none met the bar: release notes, product overviews, explainers.</li>
     </ul>
+
+    <p class="cs-label">The result</p>
     <p>New articles dropped 90%: from 20 per sprint to 2. We archived more than we fixed.</p>
     <p><strong>When users go to Help Center, they want one thing: step-by-step instructions. And that's it.</strong></p>
-    <p>Our UX research team had seen this for years. The numbers finally made it land.</p>
-    <p>The best part? Step-by-step articles take about 4 hours, not 8.</p>
+    <p>Our UX research team had seen this for years. The numbers finally made it land. And step-by-step articles take about 4 hours, not 8.</p>
     </div>
 
     <h3>More work we stopped</h3>
@@ -675,8 +689,9 @@
     </ul>
   </section>
 
-  <section>
-    <h2>Outcomes</h2>
+  <section class="step">
+    <h2>What the playbook delivered</h2>
+    <p class="context">Paychex UX content team, 2022&ndash;2024</p>
     <div class="impact-list">
       <ul>
         <li>Stopped work that cost more than it returned</li>
@@ -687,7 +702,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="step">
     <h2>Lessons learned</h2>
     <p>The culture change only worked where my designers pushed for it themselves: asking to be included earlier, raising issues, pressing for reusable components. That advocacy can feel like ratting on the people you collaborate with, and it never stops. Where a designer pushed, the culture shifted. Where one didn't, everything slid backward.</p>
     <p>One designer waited for someone else to change his product team. Nothing shifted. He ended up working like a UI writer, buried in Help Center articles. The lesson: a leader can clear the path, but each designer has to do their own pushing.</p>
