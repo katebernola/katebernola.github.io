@@ -244,7 +244,47 @@
     background: #f8f9fa;
     padding: 24px 32px;
     margin: 24px 0 32px;
+    max-width: 480px;
+  }
+
+  .eq-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
     max-width: 75ch;
+    margin: 24px 0 32px;
+  }
+
+  .eq-group .equation {
+    margin: 0;
+    max-width: none;
+    padding: 16px 20px;
+  }
+
+  .eq-line {
+    font-size: 16px;
+    color: #475569;
+    margin: 0;
+  }
+
+  .eq-answer {
+    border-top: 1px solid #e2e8f0;
+    margin-top: 12px;
+    padding-top: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .cs-tag {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    border: 1px solid #64748b;
+    border-radius: 4px;
+    padding: 2px 10px;
+    margin: 0 0 8px;
   }
 
   .eq-row {
@@ -323,6 +363,7 @@
     .equation { padding: 16px 20px; }
     .eq-row { grid-template-columns: 1fr; gap: 4px; }
     .eq-result { white-space: normal; }
+    .eq-group { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -385,19 +426,23 @@
     <p>Every team has some grunt work. This team had all grunt work. A little middle-school math proved my point: it didn't make cents for skilled designers to write Help content.</p>
     <p>(See what I did there with cents?)</p>
 
+    <p class="cs-tag">Case study</p>
     <h3>Help Center articles</h3>
-    <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">8 hours to create × $120 per resource-hour</span>
-        <span class="eq-result">$960 per article</span>
+    <div class="eq-group">
+      <div class="equation">
+        <p class="eq-line">8 hours to create</p>
+        <p class="eq-line">× $120 per resource-hour</p>
+        <p class="eq-answer">$960 per article</p>
       </div>
-      <div class="eq-row">
-        <span class="eq-expr">$24 savings per contact avoided × 5% chance one article view prevents a contact</span>
-        <span class="eq-result">$1.20 max value per view</span>
+      <div class="equation">
+        <p class="eq-line">$24 savings per contact avoided</p>
+        <p class="eq-line">× 5% chance one article view prevents a contact</p>
+        <p class="eq-answer">$1.20 max value per view</p>
       </div>
-      <div class="eq-row eq-total">
-        <span class="eq-expr">$960 per article ÷ $1.20 max value per view</span>
-        <span class="eq-result">800 views to break even</span>
+      <div class="equation">
+        <p class="eq-line">$960 per article</p>
+        <p class="eq-line">÷ $1.20 max value per view</p>
+        <p class="eq-answer">800 views to break even</p>
       </div>
     </div>
 
@@ -439,41 +484,18 @@
     <ul>
       <li>Content designers decided the MVP article set for each release. About 1 hour per two-week sprint, 26 hours a year.</li>
       <li>Requests needed data showing enough search or chat activity on the topic, or they were rejected.</li>
+      <li>Stop adding types of articles where virtually zero met the criteria: release notes, product overviews, explanatory articles.</li>
     </ul>
-    <p>New article creation dropped from roughly 20 per sprint to 2. A 90% drop. Upkeep dropped too: we archived more articles than we fixed.</p>
-    <p>Most critically, we found a few article types where virtually zero articles met the criteria: release notes, product overviews, and explanatory articles. Our UX research team had already identified this, but wasn't heard. These numbers spoke louder to execs.</p>
-    <p>When our users went to Help Center, they wanted one thing: step-by-step instructions for how to do something. And that's it.</p>
+    <p>New article creation dropped 90%: from 20 per sprint to 2. Upkeep dropped too. We archived more articles than we fixed.</p>
+    <p>We proved something our UX research team had also seen. When users go to Help Center, they want one thing: step-by-step instructions for how to do something. And that's it. These numbers spoke louder than qualitative insights.</p>
     <p>The best part? Step-by-step articles averaged about 4 hours to create, rather than 8.</p>
 
-    <h3>Help Center videos</h3>
-    <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">At least 24 hours to make, review, and publish × $120 per resource-hour</span>
-        <span class="eq-result">$2,880+ per video</span>
-      </div>
-      <div class="eq-row">
-        <span class="eq-expr">Max value per view</span>
-        <span class="eq-result">$1.20</span>
-      </div>
-      <div class="eq-row eq-total">
-        <span class="eq-expr">$2,880 ÷ $1.20</span>
-        <span class="eq-result">2,400 views to break even</span>
-      </div>
-    </div>
-    <p>By that bar, we dropped support for more than 200 videos. Only 15 earned their place.</p>
-
-    <h3>Demo videos</h3>
-    <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">UX multimedia designer</span>
-        <span class="eq-result">$100 per hour</span>
-      </div>
-      <div class="eq-row">
-        <span class="eq-expr">Marketing multimedia designer</span>
-        <span class="eq-result">$80 per hour</span>
-      </div>
-    </div>
-    <p>Sometimes you just need a cost comparison. This work started with marketing and moved to UX during a capacity crunch. We improved the overall design first (bumpers, a template, guidelines), then handed production back. The template made the work easy to do well at the lower rate.</p>
+    <h3>More work we stopped</h3>
+    <ul>
+      <li>Dropped support for more than 200 Help Center videos. At 24+ production hours each, only 15 earned their place.</li>
+      <li>Handed demo video production back to marketing, after a template made the work easy to do well at a lower rate.</li>
+      <li>Negotiated with product to stop chasing error edge cases: ship a generic error, then invest only where trackers showed it actually happening.</li>
+    </ul>
 
     <p><strong>Principle:</strong> Show the math. When leaders see that two-thirds of your output costs more than it returns, stopping becomes the obvious call.</p>
   </section>
@@ -481,91 +503,28 @@
   <section id="step-2">
     <h2>Step 2: Show value</h2>
     <p>Freeing people up doesn't require new headcount. Point them at work where you know they'll make a difference.</p>
-
-    <h3>Retirement: a pair of projects</h3>
-    <p>Investment rebalancing had failed three rounds of usability testing. The design itself wasn't the problem: nobody understood what was happening. Rebalancing is complicated for an everyday 401(k) user with no retirement background. That made it the perfect testing ground:</p>
-    <ul>
-      <li>Research showed content actually was the problem</li>
-      <li>Without the right content the project would fail; with it, success was clear</li>
-      <li>Product agreed the problem was big, and committed to structural changes if the content designer found the need</li>
-    </ul>
-    <p>I assigned one of my content designers, with the next usability test a week away. He dove in, did the research to understand the content deeply, and reworked the design with the product designer. It worked, and we had measured qualitative data showing the impact.</p>
-    <p>But this looked a little too much like "bring us in at the last minute, and we'll fix everything for you." So I made a bargain: if he took this one, he also got a project that was early in development.</p>
-    <p>He picked up the retirement income estimator. He united two text-heavy screens into one. He replaced a wall of words with a simple chart that made the point better. He wrote a response for each scenario, from way too little saved to way too much. He pushed for a way to include funds from other accounts or from a partner, and made the case for inputs you could edit right on the results screen, no edit button needed. Then he pushed the product designer to iterate until those inputs clearly looked editable.</p>
-    <p>What he really did was reorder the workflow to match how users think. The value was obvious, and the retirement space was hooked. He became their full-time content designer.</p>
-
-    <h3>Mid-period rate change: proving the problem wasn't content</h3>
-    <p>A payroll feature called mid-period rate change was about to launch, and the team asked for "content support." The use case was legitimate. Some unions require raises on an employee's anniversary date. But the workflow was fragmented and nearly impossible for users to understand.</p>
-    <p>A standard raise took four steps in one straight line. A mid-period change took eight winding steps, starting from a hidden entry point and ending with a question nobody could explain: "How do you want this applied?" Even the PO, PM, and product designer struggled to explain what it meant. And usability tests weren't reliable, because admins were testing with fake data. No real stakes, no real money. In real payroll, admins manually validate every number, often with calculators. Ambiguity isn't acceptable.</p>
-    <p>When asked to "just explain it," I mapped the information architecture required to make the interaction understandable. That's when the team revealed they couldn't modify the screens where the fix belonged. The core issue wasn't content. It was the underlying system design.</p>
-    <p>By reframing the conversation around frequency, impact, and timing, I redirected the team toward the project that actually needed UX support early, rather than patching an incomprehensible workflow with words.</p>
-
-    <h3>Why not just ask for new resources?</h3>
-    <p>It's much harder to prove ROI for a resource you don't already have. If you don't have a team to redirect, other options:</p>
-    <ul>
-      <li>Find someone who's interested, and make room on their plate</li>
-      <li>Find the least valuable work already being done, and test with that time instead</li>
-      <li>Do it yourself</li>
-      <li>Secure new headcount, full-time or contract</li>
-    </ul>
-
+    <p>I picked a few big, visible projects where I knew we'd make a real difference. One content designer rescued an investment rebalancing flow that had failed three rounds of usability testing, then rebuilt the retirement income estimator around how users actually think. The retirement space made him their full-time content designer, and demand grew from there.</p>
+    <p>Sometimes showing value means proving the problem isn't content at all. When a payroll team asked for "content support" on a workflow nobody could explain, I mapped the information architecture and showed that the real issue was system design. That redirected the team toward the project that actually needed UX early.</p>
     <p><strong>Principle:</strong> Find sure-fire wins. Avoid last-minute patches. Aim for "essential to success," not "superhero work."</p>
   </section>
 
   <section id="step-3">
     <h2>Step 3: Scale value</h2>
-    <p>Once you've proven impact, invest in systems. Standards, templates, and tools let one person's expertise multiply across the organization.</p>
+    <p>Once you've proven impact, invest in systems: content standards written for product designers, reusable content, templates, decision maps, and clear intake processes. One person's expertise multiplies across the organization.</p>
 
-    <h3>Standards</h3>
-    <p>Content standards written for product designers (who don't have a writer on every project). A clear, shared source of truth means designers don't have to keep defending basic word choices. Publicly available standards from other companies are a good jump-start.</p>
-    <p>Component standards matter too. 9 of 10 times a content designer got stuck, it was because the product designer picked the wrong component.</p>
-
-    <h3>Strategies</h3>
-    <p>One person leads each company-wide need (product-led growth, change management, communications). Light consulting, not a time sink.</p>
-
-    <h3>Reusable content</h3>
-    <p>Standard error messages, date/time formats, address formats, system labels. If you want to deviate, make your case to the team. If you want to change the standard, do the research and get buy-in. A standard only counts if it isn't changed on a whim.</p>
-
-    <h3>Templates and tools</h3>
-    <p>UMUX lites for measuring ease and usefulness. (A UMUX lite is a short, two-question survey that measures how easy and useful something feels to use.) Notification templates. Decision maps that help partners find answers fast, without waiting on a specialist.</p>
-
+    <p class="cs-tag">Case study</p>
     <h3>An AI writing assistant</h3>
-    <p>Built on our own content standards. Type in rough text, and it returns a UI-ready version. Enhancements I was exploring:</p>
-    <ul>
-      <li>Asking a few questions before responding (What stage is this design at? Will people reading this know what the term means? What's the one key thing to say?)</li>
-      <li>Naming the different pieces of knowledge packed into a draft</li>
-      <li>Reinforcing the single key message</li>
-      <li>Factoring in the user persona</li>
-      <li>Sending researchers a daily digest of unconfirmed assumptions to help build out the knowledge base</li>
-    </ul>
-
-    <h3>Processes</h3>
-    <p>Clear intake, definition of ready, and turnaround expectations.</p>
+    <p>Built on our own content standards. Type in rough text, and it returns a UI-ready version.</p>
+    <p class="visual-caption">Full case study in progress.</p>
 
     <p><strong>Principle:</strong> Make work efficient, don't build everything at once. Standards and templates cut decisions, which speeds output.</p>
   </section>
 
   <section id="step-4">
     <h2>Step 4: Change the culture</h2>
-    <p>Here's what I did at Paychex, which had a strong legacy culture. Tactics will vary a lot by org.</p>
-    <p>Throughout, for every audience: I kept reinforcing concrete next steps and progress toward the big goal. I showed progress within each product space. Surveys anyone could fill out measured how it was going. I watched the results and adjusted.</p>
-
-    <h3>Content designers</h3>
-    <p>Before launch, I worked with them to define the overall goal, then guided them in building a timeline and concrete next steps. After launch, I met weekly 1:1 with each designer to see their work, hear the barriers, and provide direction. We also met weekly as a team, for camaraderie and alignment.</p>
-
-    <h3>Leadership, UX management, and leads</h3>
-    <p>Before launch, I met one-off with each lead and manager. I shared ideas and listened to concerns. Then I refined the plan to address the key ones, worked the plan into departmental goals, and got buy-in to include it in personal goals at the manager and IC level. At launch, I rounded back with the group: the plan, the timeline, and what they needed to do.</p>
-
-    <h3>All UX ICs</h3>
-    <p>Before launch, I shared the vision of where things were headed. At launch: a department meeting, an email, a document on the team wiki, and a visit to each product group during a team meeting to discuss and answer questions. In each, I acknowledged how things worked today, shared what was changing, shared the wins from step 2 and what made them different, and defined the future state and the path to get there.</p>
-
-    <h3>Partners</h3>
-    <p>Before launch, I met 1:1 with peers to build relationships, learn pain points, and plant the seeds of what was coming. At launch: an email announcement, plus a follow-up where I walked through the high-level plan and answered questions. Any group that was directly impacted, or whose behavior needed to change, got its own message or meeting.</p>
-
-    <h3>Longer term</h3>
-    <p>To truly be part of the flow of work, content designers eventually needed to be embedded in each team, staying connected through a community of practice. There were tears, but it was the right move.</p>
-
-    <p><strong>Principle:</strong> Step 3 is the most work. This is the hardest. You're asking people to think and work differently. You need permission, credibility, and consistency.</p>
+    <p>Step 3 is the most work. This one is the hardest. You're asking people to think and work differently. You need permission, credibility, and consistency.</p>
+    <p>Every audience got its own plan. My designers got a shared goal, weekly 1:1s, and team rituals. Leaders got the plan worked into departmental and personal goals. All of UX got the vision, the early wins, and the path. Partners got relationships first, announcements second. Surveys measured how it was going, and I adjusted as we went.</p>
+    <p>Longer term, content designers embedded into each product team, staying connected through a community of practice. There were tears, but it was the right move.</p>
   </section>
 
   <section>
