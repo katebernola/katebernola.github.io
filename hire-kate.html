@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KATE! The game show | Why you should hire Kate Bernola</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2314081f'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23ffd34d' font-family='Arial, sans-serif'%3EK%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Quotes, quirks, facts, and stats about Kate Bernola — delivered as a game show. Built with AI in an afternoon. Yes, it's supposed to look like this.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="KATE! The game show">
+<meta property="og:description" content="Two truths and a lie, a spin wheel, and an applause meter. The unnecessarily dramatic version of katebernola.github.io.">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="noindex">
+
+<!--
+  This page INTENTIONALLY breaks the portfolio design system:
+  gradients, shadows, big corners, loud color. That's the joke,
+  and the joke only works at full commitment. Everything else on
+  the site follows CLAUDE.md. This page is the sanctioned exception.
+
+  DRAFT — hold the push until Kate approves:
+  - The three "lie" cards in Act 2 are invented BY DESIGN (they're lies),
+    but Kate must approve the wording. Search "LIE CARD" below.
+  - Quote cards use the three real quotes already public on team.html.
+    More arrive via the quote campaign; add them to CARDS.
+-->
+
+<style>
+  * { box-sizing: border-box; }
+
+  :root {
+    --stage: #14081f;
+    --stage-deep: #0b0413;
+    --curtain: #2a1140;
+    --gold: #ffd34d;
+    --gold-hot: #ffb300;
+    --pink: #ff4f9a;
+    --cream: #fff6e3;
+    --buzz: #ff5252;
+    --felt: #1d0f30;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #35155c 0%, var(--stage) 55%, var(--stage-deep) 100%);
+    color: var(--cream);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+
+  .display {
+    font-family: Impact, "Arial Black", "Segoe UI Black", sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Marquee ---------- */
+
+  .marquee {
+    position: relative;
+    text-align: center;
+    border: 6px solid var(--gold);
+    border-radius: 24px;
+    padding: 40px 24px 32px;
+    background: linear-gradient(180deg, var(--curtain), var(--felt));
+    box-shadow: 0 0 60px rgba(255, 211, 77, 0.25), inset 0 0 40px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+
+  .bulbs {
+    position: absolute;
+    inset: 8px;
+    border-radius: 16px;
+    pointer-events: none;
+    background-image: radial-gradient(circle 5px, var(--gold) 0 4px, transparent 5px);
+    background-size: 34px 34px;
+    background-position: 0 0;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    padding: 14px;
+    opacity: 0.9;
+    animation: twinkle 1.2s steps(2) infinite;
+  }
+
+  @keyframes twinkle {
+    0%   { opacity: 0.9; }
+    50%  { opacity: 0.45; }
+    100% { opacity: 0.9; }
+  }
+
+  .marquee h1 {
+    margin: 0;
+    font-size: clamp(64px, 14vw, 128px);
+    line-height: 1;
+    color: var(--gold);
+    text-shadow:
+      0 2px 0 #8a5b00,
+      0 6px 0 rgba(0,0,0,0.55),
+      0 0 42px rgba(255, 211, 77, 0.55);
+  }
+
+  .marquee .tagline {
+    margin: 16px auto 4px;
+    font-size: clamp(17px, 3vw, 24px);
+    color: var(--cream);
+    max-width: 42ch;
+    font-weight: 600;
+  }
+
+  .marquee .footnote {
+    font-size: 14px;
+    color: #cdb4ff;
+    margin: 8px 0 0;
+  }
+
+  .host-line {
+    text-align: center;
+    max-width: 56ch;
+    margin: 32px auto 0;
+    font-size: 18px;
+    color: #e8d9ff;
+  }
+
+  .host-line a { color: var(--gold); }
+
+  /* ---------- Acts ---------- */
+
+  section { margin: 72px 0; }
+
+  .act-head {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .act-kicker {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 6px;
+  }
+
+  .act-head h2 {
+    margin: 0;
+    font-size: clamp(30px, 6vw, 44px);
+    color: var(--gold);
+    text-shadow: 0 3px 0 rgba(0,0,0,0.5);
+  }
+
+  .act-head .act-sub {
+    color: #cdb4ff;
+    font-size: 16px;
+    margin: 10px auto 0;
+    max-width: 52ch;
+  }
+
+  /* ---------- Act 1: spin ---------- */
+
+  .spin-stage {
+    background: linear-gradient(180deg, #241040, var(--felt));
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.55), 0 0 30px rgba(255,79,154,0.15);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .spin-card {
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 8px 4px;
+  }
+
+  .cat-chip {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+  }
+
+  .cat-stat  { color: var(--gold); }
+  .cat-quirk { color: var(--pink); }
+  .cat-fact  { color: #7ee0ff; }
+  .cat-quote { color: #b3ff8f; }
+
+  .spin-text {
+    font-size: clamp(19px, 3.4vw, 26px);
+    font-weight: 700;
+    color: var(--cream);
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  .spin-attr {
+    font-size: 14px;
+    color: #cdb4ff;
+    margin: 0;
+  }
+
+  .spin-btn {
+    margin-top: 22px;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3b1d00;
+    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border: 3px solid #fff1c4;
+    border-radius: 999px;
+    padding: 14px 54px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #8a5b00, 0 14px 30px rgba(0,0,0,0.5);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .spin-btn:hover { transform: translateY(2px); box-shadow: 0 6px 0 #8a5b00, 0 12px 26px rgba(0,0,0,0.5); }
+  .spin-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #8a5b00, 0 8px 18px rgba(0,0,0,0.5); }
+
+  /* ---------- Act 2: two truths and a lie ---------- */
+
+  .round {
+    background: linear-gradient(180deg, #241040, var(--felt));
+    border: 3px solid #6b3fa8;
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  }
+
+  .round-title {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin: 0 0 16px;
+    text-align: center;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .choice {
+    position: relative;
+    text-align: left;
+    font: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--cream);
+    background: #1a0b2e;
+    border: 2px solid #8f6cc9;
+    border-radius: 14px;
+    padding: 44px 16px 16px;
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  .choice:hover:not([disabled]) {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+  }
+
+  .choice .letter {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 22px;
+    color: var(--gold);
+  }
+
+  .choice[disabled] { cursor: default; opacity: 0.92; }
+
+  .choice.is-lie-revealed { border-color: var(--buzz); background: #3a0f1c; }
+  .choice.is-truth-revealed { border-color: #b3ff8f; }
+
+  .verdict {
+    margin: 18px 4px 0;
+    font-size: 17px;
+    color: var(--cream);
+    min-height: 1.5em;
+  }
+
+  .verdict strong { color: var(--gold); }
+  .verdict a { color: var(--gold); }
+  .verdict .ding { color: #b3ff8f; font-weight: 800; }
+  .verdict .bzzt { color: var(--buzz); font-weight: 800; }
+
+  .meter {
+    text-align: center;
+    font-size: 18px;
+    color: #e8d9ff;
+    margin-top: 4px;
+  }
+
+  .meter .display { color: var(--gold); font-size: 22px; letter-spacing: 0.1em; }
+
+  /* ---------- Act 3: lightning round ---------- */
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .filter-btn {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: transparent;
+    border: 2px solid #8f6cc9;
+    border-radius: 999px;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+  }
+
+  .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .filter-btn[aria-pressed="true"] {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #3b1d00;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .grid-card {
+    background: #1a0b2e;
+    border: 2px solid #4b2a78;
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .grid-card p { margin: 0; font-size: 16px; }
+  .grid-card .attr { font-size: 13px; color: #cdb4ff; }
+  .grid-card .cat-chip { align-self: flex-start; font-size: 10px; padding: 3px 10px; }
+  .grid-card a { color: var(--gold); }
+
+  /* ---------- Sign-off ---------- */
+
+  .signoff {
+    text-align: center;
+    border-top: 3px dashed #6b3fa8;
+    padding-top: 40px;
+  }
+
+  .signoff .big {
+    font-size: clamp(22px, 4.5vw, 30px);
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+
+  .signoff p { color: #e8d9ff; max-width: 56ch; margin: 0 auto 14px; font-size: 16px; }
+  .signoff a { color: var(--gold); }
+
+  .exit-btn {
+    display: inline-block;
+    margin-top: 18px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 15px;
+    color: #3b1d00;
+    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border-radius: 999px;
+    padding: 12px 32px;
+    text-decoration: none;
+    box-shadow: 0 6px 0 #8a5b00;
+  }
+
+  .exit-btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 #8a5b00; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .choices { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    section { margin: 56px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bulbs { animation: none; }
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header class="marquee">
+    <div class="bulbs" aria-hidden="true"></div>
+    <h1 class="display">Kate!</h1>
+    <p class="tagline">The most dramatic portfolio on the internet.*</p>
+    <p class="footnote">*Winner, "Most dramatic," high school senior superlatives. The judges' decision is final.</p>
+  </header>
+
+  <p class="host-line">Welcome to the show. You've seen <a href="index.html">the serious version</a> — playbooks, ROI math, retention stats. This is everything that didn't fit: the quotes, the quirks, and the numbers that sound made up. (They're not. That's the game.)</p>
+
+  <!-- ================= ACT 1 ================= -->
+  <section aria-labelledby="act1-title">
+    <div class="act-head">
+      <p class="act-kicker">Act one</p>
+      <h2 id="act1-title" class="display">The wheel of Kate</h2>
+      <p class="act-sub">One button. One random card. Quotes, quirks, facts, and stats — dealer's choice.</p>
+    </div>
+
+    <div class="spin-stage">
+      <div class="spin-card" id="spinCard" aria-live="polite">
+        <span class="cat-chip cat-stat" id="spinChip">Stat</span>
+        <p class="spin-text" id="spinText">Press the button. I'll wait. (I won't. I'm a web page.)</p>
+        <p class="spin-attr" id="spinAttr"></p>
+      </div>
+      <button class="spin-btn" id="spinBtn" type="button">Spin</button>
+    </div>
+  </section>
+
+  <!-- ================= ACT 2 ================= -->
+  <section aria-labelledby="act2-title">
+    <div class="act-head">
+      <p class="act-kicker">Act two</p>
+      <h2 id="act2-title" class="display">Two truths and a lie</h2>
+      <p class="act-sub">Three rounds. Find the lie. Fair warning: my real numbers are the ones that sound fake.</p>
+    </div>
+
+    <div id="game"></div>
+
+    <p class="meter" id="meter" aria-live="polite"></p>
+  </section>
+
+  <!-- ================= ACT 3 ================= -->
+  <section aria-labelledby="act3-title">
+    <div class="act-head">
+      <p class="act-kicker">Act three</p>
+      <h2 id="act3-title" class="display">The lightning round</h2>
+      <p class="act-sub">Every card in the deck, no gambling required. Filter to taste.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filter cards by category">
+      <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter-btn" type="button" data-filter="quote" aria-pressed="false">Quotes</button>
+      <button class="filter-btn" type="button" data-filter="stat" aria-pressed="false">Stats</button>
+      <button class="filter-btn" type="button" data-filter="quirk" aria-pressed="false">Quirks</button>
+      <button class="filter-btn" type="button" data-filter="fact" aria-pressed="false">Facts</button>
+    </div>
+
+    <div class="card-grid" id="cardGrid"></div>
+  </section>
+
+  <!-- ================= SIGN-OFF ================= -->
+  <footer class="signoff">
+    <p class="big display">That's the show, folks.</p>
+    <p>I built this page with AI in an afternoon. Yes, it's supposed to look like this.</p>
+    <p>It also intentionally breaks my own design system — gradients, shadows, corners over 4px. Every rule I hold the rest of <a href="index.html">my portfolio</a> to, suspended for one page, on purpose. Restraint means more when you can prove it's a choice.</p>
+    <p>Want the version with an ROI section? <a href="index.html">The playbook</a> · <a href="team.html">My team</a> · <a href="me.html">Me</a></p>
+    <a class="exit-btn" href="mailto:kdobbertin@gmail.com">Book this contestant</a>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- The deck ----------------
+     cat: stat | quirk | fact | quote
+     All stats/facts are real and already public (portfolio or resume).
+     Quotes are the three already published on team.html. */
+  var CARDS = [
+    { cat: 'stat',  text: '92% retention over three years. Nobody resigned while reporting to me.', attr: 'Receipts on the team page', link: 'team.html' },
+    { cat: 'stat',  text: '9 of my 12 designers were promoted. Three of them twice.', attr: 'Receipts on the team page', link: 'team.html' },
+    { cat: 'stat',  text: 'When my role was eliminated, 100% of my former reports offered a reference. I didn’t ask.', attr: 'Receipts on the team page', link: 'team.html' },
+    { cat: 'stat',  text: 'I hired 11 people and trained 9 of them from scratch — zero prior content design experience.', attr: 'Receipts on the team page', link: 'team.html' },
+    { cat: 'stat',  text: 'One cross-sell test: 148 wins and $520K+ in annual recurring revenue — from the treatment that interrupted the fewest people.', attr: 'Step 2 of the playbook', link: 'index.html#step-2' },
+    { cat: 'stat',  text: 'I helped 500,000 small businesses secure $65B in PPP loans. It won a Silver Stevie.', attr: 'On the resume', link: 'me.html' },
+    { cat: 'stat',  text: 'My work has earned 8 industry awards, including a Brandon Hall Gold for AI for business impact.', attr: 'On the resume', link: 'me.html' },
+    { cat: 'stat',  text: 'I proved 68% of our Help Center articles cost more to write than they returned. So we stopped.', attr: 'Step 1 of the playbook', link: 'index.html#step-1' },
+    { cat: 'stat',  text: '100+ people across UX and partner orgs adopted the AI coach my team built.', attr: 'Step 3 of the playbook', link: 'index.html#step-3' },
+    { cat: 'stat',  text: 'I rebuilt a content design practice from 1 person to 12.', attr: 'The whole playbook, really', link: 'index.html' },
+
+    { cat: 'quirk', text: 'I’m really bad at jokes. This page is as funny as I get.', attr: '' },
+    { cat: 'quirk', text: 'When I get very passionate, I get loud enough that Webex auto-mutes me. My team thinks this is hilarious.', attr: '' },
+    { cat: 'quirk', text: 'I won “most dramatic” in high school. This page is that award’s fault.', attr: '' },
+
+    { cat: 'fact',  text: 'I stood 10 feet from Joe Montana on the sideline of one of the top 25 college football games of all time.', attr: '' },
+    { cat: 'fact',  text: 'I have varsity letters in football and rowing.', attr: 'Notre Dame' },
+
+    { cat: 'quote', text: '“Kate is a fantastic leader who not only truly cares about the quality of deliverables, but also the people behind the deliverables.”', attr: 'A linguist she hired in 2021, now a senior UX content designer', link: 'team.html' },
+    { cat: 'quote', text: '“Kate fostered a supportive and open environment where ideas mattered more than hierarchy.”', attr: 'A marketer she hired in 2022, promoted to UX content designer II', link: 'team.html' },
+    { cat: 'quote', text: '“Kate saw potential in my transferable skills… That first opportunity in UX became the foundation for everything that followed.”', attr: 'An analyst she hired in 2023, now a UX product designer II', link: 'team.html' },
+    { cat: 'quote', text: 'Your quote could be here. I’m collecting more — with LinkedIn receipts, so you know they’re real.', attr: 'Kate’s colleagues, any minute now' }
+  ];
+
+  var CHIP_CLASS = { stat: 'cat-stat', quirk: 'cat-quirk', fact: 'cat-fact', quote: 'cat-quote' };
+  var CHIP_LABEL = { stat: 'Stat', quirk: 'Quirk', fact: 'Fact', quote: 'Quote' };
+
+  /* ---------------- Act 1: the wheel ---------------- */
+  var spinBtn = document.getElementById('spinBtn');
+  var spinText = document.getElementById('spinText');
+  var spinAttr = document.getElementById('spinAttr');
+  var spinChip = document.getElementById('spinChip');
+  var lastIndex = -1;
+
+  function showCard(i) {
+    var c = CARDS[i];
+    spinChip.textContent = CHIP_LABEL[c.cat];
+    spinChip.className = 'cat-chip ' + CHIP_CLASS[c.cat];
+    spinText.textContent = c.text;
+    spinAttr.textContent = c.attr || '';
+  }
+
+  function randomIndex() {
+    var i;
+    do { i = Math.floor(Math.random() * CARDS.length); } while (i === lastIndex && CARDS.length > 1);
+    lastIndex = i;
+    return i;
+  }
+
+  spinBtn.addEventListener('click', function () {
+    if (reducedMotion) { showCard(randomIndex()); return; }
+    spinBtn.disabled = true;
+    var flips = 7, n = 0;
+    var t = setInterval(function () {
+      showCard(Math.floor(Math.random() * CARDS.length));
+      if (++n >= flips) {
+        clearInterval(t);
+        showCard(randomIndex());
+        spinBtn.disabled = false;
+      }
+    }, 70);
+  });
+
+  /* ---------------- Act 2: two truths and a lie ----------------
+     Each round: exactly one item has lie:true.
+     LIE CARDS are fiction on purpose — Kate must approve wording. */
+  var ROUNDS = [
+    {
+      title: 'Round 1 · The career round',
+      items: [
+        { text: '9 of the 12 designers I hired had zero content design experience on day one.', lie: false,
+          reveal: 'True. Trained from scratch; 75% were promoted. <a href="team.html">Receipts.</a>' },
+        { text: 'A pop-up my team tested produced $520K+ in annual recurring revenue — while interrupting the fewest users.', lie: false,
+          reveal: 'True. The user-protective choice and the money-making choice were the same choice. <a href="index.html#step-2">Step 2.</a>' },
+        /* LIE CARD */
+        { text: 'My most-viewed Help Center article got over a million views.', lie: true,
+          reveal: 'The lie. Nobody reads Help Center articles — that’s kind of my whole thing. <a href="index.html#step-1">Step 1.</a>' }
+      ]
+    },
+    {
+      title: 'Round 2 · The personal round',
+      items: [
+        { text: 'I stood 10 feet from Joe Montana on the sideline of one of the top 25 college football games of all time.', lie: false,
+          reveal: 'True. Ten feet. Joe Montana. I remain calm about it to this day. (I do not.)' },
+        /* LIE CARD */
+        { text: 'I’m great at telling jokes.', lie: true,
+          reveal: 'The lie. I’m famously bad at jokes. My team can confirm. This page is as funny as I get.' },
+        { text: 'I won “most dramatic” in high school.', lie: false,
+          reveal: 'True. And now there’s a game show page. The prophecy fulfilled itself.' }
+      ]
+    },
+    {
+      title: 'Round 3 · The judgment round',
+      items: [
+        { text: 'Webex has automatically muted me for getting too passionate in a meeting. My team thinks it’s hilarious.', lie: false,
+          reveal: 'True. I speak fortissimo when I care. I care a lot.' },
+        { text: 'I helped 500,000 small businesses secure $65B in PPP loans.', lie: false,
+          reveal: 'True. Silver Stevie says so. Numbers that sound fake are my specialty.' },
+        /* LIE CARD */
+        { text: 'I’ve never lost an argument with a sales team.', lie: true,
+          reveal: 'The lie. I’ve lost plenty. I just won the ones with data attached. <a href="index.html#step-2">Exhibit A.</a>' }
+      ]
+    }
+  ];
+
+  var game = document.getElementById('game');
+  var meter = document.getElementById('meter');
+  var score = 0, answered = 0;
+
+  ROUNDS.forEach(function (round, r) {
+    var div = document.createElement('div');
+    div.className = 'round';
+    var letters = ['A', 'B', 'C'];
+
+    var h = document.createElement('p');
+    h.className = 'round-title';
+    h.textContent = round.title;
+    div.appendChild(h);
+
+    var wrap = document.createElement('div');
+    wrap.className = 'choices';
+
+    var verdict = document.createElement('p');
+    verdict.className = 'verdict';
+    verdict.setAttribute('aria-live', 'polite');
+
+    round.items.forEach(function (item, i) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'choice';
+      btn.innerHTML = '<span class="letter" aria-hidden="true">' + letters[i] + '</span>' + item.text;
+      btn.addEventListener('click', function () {
+        answered++;
+        var correct = item.lie;
+        if (correct) score++;
+        // reveal all
+        Array.prototype.forEach.call(wrap.children, function (b, j) {
+          b.disabled = true;
+          b.classList.add(round.items[j].lie ? 'is-lie-revealed' : 'is-truth-revealed');
+        });
+        var lieItem = round.items.filter(function (x) { return x.lie; })[0];
+        verdict.innerHTML = correct
+          ? '<span class="ding">DING DING DING!</span> You found the lie. ' + lieItem.reveal
+          : '<span class="bzzt">BZZZT.</span> That one’s true — told you the real ones sound fake. ' + lieItem.reveal;
+        updateMeter();
+      });
+      wrap.appendChild(btn);
+    });
+
+    div.appendChild(wrap);
+    div.appendChild(verdict);
+    game.appendChild(div);
+  });
+
+  function updateMeter() {
+    if (answered < ROUNDS.length) {
+      meter.innerHTML = 'Applause meter: <span class="display">' + score + ' / ' + answered + '</span>';
+      return;
+    }
+    var line;
+    if (score === 3)      line = 'Perfect score. You clearly read the portfolio. You should <a href="mailto:kdobbertin@gmail.com">hire accordingly</a>.';
+    else if (score === 2) line = 'Strong showing. The one you missed? That’s the stat worth remembering.';
+    else                  line = 'The lies won this round — which proves the point: my real numbers sound made up. <a href="index.html">See for yourself.</a>';
+    meter.innerHTML = 'Final score: <span class="display">' + score + ' / 3</span><br>' + line;
+  }
+
+  /* ---------------- Act 3: lightning round ---------------- */
+  var grid = document.getElementById('cardGrid');
+
+  CARDS.forEach(function (c) {
+    var card = document.createElement('div');
+    card.className = 'grid-card';
+    card.setAttribute('data-cat', c.cat);
+    var chip = '<span class="cat-chip ' + CHIP_CLASS[c.cat] + '">' + CHIP_LABEL[c.cat] + '</span>';
+    var attr = c.attr ? '<p class="attr">' + (c.link ? '<a href="' + c.link + '">' + c.attr + '</a>' : c.attr) + '</p>' : '';
+    card.innerHTML = chip + '<p>' + c.text + '</p>' + attr;
+    grid.appendChild(card);
+  });
+
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      var f = btn.getAttribute('data-filter');
+      Array.prototype.forEach.call(grid.children, function (card) {
+        card.style.display = (f === 'all' || card.getAttribute('data-cat') === f) ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
