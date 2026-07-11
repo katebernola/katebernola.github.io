@@ -65,7 +65,6 @@ A small linked index of shorter pieces, so strong-but-off-framework stories have
 
 ## Open decisions logged
 
-- **"Content Design" capitalization.** Step 3 capitalizes "Content Design/Designers" ~18×; the rest of the site and CLAUDE.md use lowercase sentence case. Decide: lowercase to match, or keep as a deliberate proper-noun treatment.
 - Retirement: naming (Paychex Flex? the product?) — Flex is already on the resume.
 
 ## Housekeeping
