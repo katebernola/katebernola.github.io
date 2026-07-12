@@ -5,25 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KATE! The game show | Why you should hire Kate Bernola</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2314081f'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='700' text-anchor='middle' fill='%23ffd34d' font-family='Arial, sans-serif'%3EK%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Quotes, quirks, facts, and stats about Kate Bernola — delivered as a game show. Built with AI in an afternoon. Yes, it's supposed to look like this.">
+<meta name="description" content="KATE-GORIES: a Jeopardy-style game show revealing why you should hire Kate Bernola. Quotes, quirks, facts, and numbers that sound made up. Built with AI.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="KATE! The game show">
-<meta property="og:description" content="Two truths and a lie, a spin wheel, and an applause meter. The unnecessarily dramatic version of katebernola.github.io.">
+<meta property="og:description" content="Jeopardy-style game show, daily doubles, phone a friend, and an applause meter. The unnecessarily dramatic version of katebernola.github.io.">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
-
-<!--
-  This page INTENTIONALLY breaks the portfolio design system:
-  gradients, shadows, big corners, loud color. That's the joke,
-  and the joke only works at full commitment. Everything else on
-  the site follows CLAUDE.md. This page is the sanctioned exception.
-
-  DRAFT — hold the push until Kate approves:
-  - The three "lie" cards in Act 2 are invented BY DESIGN (they're lies),
-    but Kate must approve the wording. Search "LIE CARD" below.
-  - Quote cards use the three real quotes already public on team.html.
-    More arrive via the quote campaign; add them to CARDS.
--->
 
 <style>
   * { box-sizing: border-box; }
@@ -68,59 +55,95 @@
     position: relative;
     text-align: center;
     border: 6px solid var(--gold);
-    border-radius: 24px;
-    padding: 40px 24px 32px;
-    background: linear-gradient(180deg, var(--curtain), var(--felt));
-    box-shadow: 0 0 60px rgba(255, 211, 77, 0.25), inset 0 0 40px rgba(0,0,0,0.5);
+    border-radius: 8px;
+    padding: 16px 20px;
+    background: #fff6e3;
+    box-shadow: 0 0 60px rgba(255, 211, 77, 0.25);
     overflow: hidden;
   }
 
-  .bulbs {
-    position: absolute;
-    inset: 8px;
-    border-radius: 16px;
-    pointer-events: none;
-    background-image: radial-gradient(circle 5px, var(--gold) 0 4px, transparent 5px);
-    background-size: 34px 34px;
-    background-position: 0 0;
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask-composite: exclude;
-    padding: 14px;
-    opacity: 0.9;
-    animation: twinkle 1.2s steps(2) infinite;
+  /* Even bulb rows — background-repeat: space distributes them without clipping.
+     Glow on/off a few times over 4s on load, then settle lit. */
+  .bulb-row {
+    height: 16px;
+    background-image: radial-gradient(circle at center, #e0a92e 0 4px, rgba(150,105,30,0.35) 4px 5px, transparent 6px);
+    background-size: 30px 16px;
+    background-repeat: space no-repeat;
+    background-position: center;
+    animation: bulbGlow 4s ease-in-out 1;
   }
 
-  @keyframes twinkle {
-    0%   { opacity: 0.9; }
-    50%  { opacity: 0.45; }
-    100% { opacity: 0.9; }
+  @keyframes bulbGlow {
+    0%   { opacity: 1; }
+    12%  { opacity: 0.3; }
+    25%  { opacity: 1; }
+    37%  { opacity: 0.3; }
+    50%  { opacity: 1; }
+    62%  { opacity: 0.3; }
+    75%  { opacity: 1; }
+    87%  { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  .bulb-row.top { margin-bottom: 16px; }
+  .bulb-row.bottom { margin-top: 16px; }
+
+  .rail-title {
+    padding: 6px 0 10px;
   }
 
   .marquee h1 {
     margin: 0;
-    font-size: clamp(64px, 14vw, 128px);
+    font-size: clamp(60px, 13vw, 120px);
     line-height: 1;
-    color: var(--gold);
-    text-shadow:
-      0 2px 0 #8a5b00,
-      0 6px 0 rgba(0,0,0,0.55),
-      0 0 42px rgba(255, 211, 77, 0.55);
+    color: #1a0f2e;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.1);
   }
 
   .marquee .tagline {
-    margin: 16px auto 4px;
-    font-size: clamp(17px, 3vw, 24px);
-    color: var(--cream);
-    max-width: 42ch;
+    margin: 14px auto 0;
+    font-size: clamp(17px, 3vw, 20px);
+    color: #3a2560;
+    max-width: 50ch;
     font-weight: 600;
   }
 
-  .marquee .footnote {
+  .credit-line {
+    text-align: center;
+    margin: 14px auto 0;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #9d84c4;
+    font-weight: 600;
+  }
+
+  .sound-row {
+    text-align: center;
+    margin: 18px auto 0;
+  }
+
+  .sound-toggle {
+    font: inherit;
     font-size: 14px;
-    color: #cdb4ff;
-    margin: 8px 0 0;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: transparent;
+    border: 2px solid #8f6cc9;
+    border-radius: 999px;
+    padding: 8px 22px;
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s, background 0.12s;
+  }
+
+  .sound-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+  .sound-toggle[aria-pressed="true"] {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #3b1d00;
   }
 
   .host-line {
@@ -133,13 +156,13 @@
 
   .host-line a { color: var(--gold); }
 
-  /* ---------- Acts ---------- */
+  /* ---------- Rounds ---------- */
 
   section { margin: 72px 0; }
 
   .act-head {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
   }
 
   .act-kicker {
@@ -166,105 +189,223 @@
     max-width: 52ch;
   }
 
-  /* ---------- Act 1: spin ---------- */
+  /* ---------- Jeopardy Board ---------- */
 
-  .spin-stage {
-    background: linear-gradient(180deg, #241040, var(--felt));
-    border: 3px solid var(--gold);
-    border-radius: 20px;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.55), 0 0 30px rgba(255,79,154,0.15);
-    padding: 32px 24px;
-    text-align: center;
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
   }
 
-  .spin-card {
-    min-height: 170px;
+  .board-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 8px;
+    min-height: 58px;
+    font-size: clamp(12px, 2.4vw, 15px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    color: var(--gold);
+    background: #3a1f66;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+  }
+
+  .board-tile {
+    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 14px;
-    padding: 8px 8px 4px;
+    gap: 8px;
+    background: linear-gradient(135deg, #6b3fa8, #4a2478);
+    border: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
   }
 
-  .cat-chip {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    padding: 4px 14px;
-    border-radius: 999px;
-    border: 2px solid currentColor;
+  .board-tile:hover:not([disabled]) {
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, #7d4bb8, #5a3086);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.6);
   }
 
-  .cat-stat  { color: var(--gold); }
-  .cat-quirk { color: var(--pink); }
-  .cat-fact  { color: #7ee0ff; }
-  .cat-quote { color: #b3ff8f; }
-
-  .spin-text {
-    font-size: clamp(19px, 3.4vw, 26px);
-    font-weight: 700;
-    color: var(--cream);
-    max-width: 46ch;
-    margin: 0;
+  .board-tile[disabled] {
+    cursor: default;
+    background: linear-gradient(135deg, #3a1f50, #2a1540);
+    border-color: #6b3fa8;
+    opacity: 0.5;
+    box-shadow: none;
   }
 
-  .spin-attr {
+  .board-category {
     font-size: 14px;
+    font-weight: 700;
     color: #cdb4ff;
-    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
-  .spin-btn {
-    margin-top: 22px;
+  .board-value {
     font-family: Impact, "Arial Black", sans-serif;
-    font-size: 26px;
+    font-size: clamp(32px, 8vw, 48px);
+    color: var(--gold);
+    line-height: 1;
+    font-weight: 900;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.5);
+  }
+
+  .board-tile.is-empty {
+    background: linear-gradient(135deg, #2a1540, #1d0f30);
+    border-color: #4b2a78;
+  }
+
+  .board-soon {
+    font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #3b1d00;
-    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
-    border: 3px solid #fff1c4;
-    border-radius: 999px;
-    padding: 14px 54px;
-    cursor: pointer;
-    box-shadow: 0 8px 0 #8a5b00, 0 14px 30px rgba(0,0,0,0.5);
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    color: #8f6cc9;
+    margin-top: 4px;
   }
 
-  .spin-btn:hover { transform: translateY(2px); box-shadow: 0 6px 0 #8a5b00, 0 12px 26px rgba(0,0,0,0.5); }
-  .spin-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #8a5b00, 0 8px 18px rgba(0,0,0,0.5); }
-
-  /* ---------- Act 2: two truths and a lie ---------- */
-
-  .round {
-    background: linear-gradient(180deg, #241040, var(--felt));
-    border: 3px solid #6b3fa8;
-    border-radius: 20px;
-    padding: 28px 24px;
-    margin-bottom: 28px;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  .board-tile.is-daily-double .board-value {
+    color: #ff4f9a;
+    animation: dailydoublepulse 1s ease-in-out infinite;
   }
 
-  .round-title {
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--pink);
-    margin: 0 0 16px;
-    text-align: center;
+  @keyframes dailydoublepulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
   }
 
-  .choices {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+  /* ---------- Question Modal ---------- */
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow-y: auto;
+    animation: fadeInOverlay 0.2s ease;
   }
 
-  .choice {
+  .modal-overlay.show {
+    display: flex;
+  }
+
+  @keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal-content {
     position: relative;
+    background: linear-gradient(180deg, #241040, var(--felt));
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    animation: slideUpModal 0.3s ease;
+  }
+
+  .modal-score {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+  }
+
+  .modal-x {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--cream);
+    background: transparent;
+    border: 2px solid #8f6cc9;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .modal-x:hover { color: var(--gold); border-color: var(--gold); }
+
+  .modal-seeanswer-btn {
+    display: block;
+    margin: 14px auto 0;
+    font: inherit;
+    font-size: 15px;
+    color: #cdb4ff;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .modal-seeanswer-btn:hover { color: var(--gold); }
+
+  @keyframes slideUpModal {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-category {
+    font-size: 14px;
+    color: var(--pink);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    margin-bottom: 8px;
+  }
+
+  .modal-value {
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 40px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.5);
+  }
+
+  .modal-question {
+    font-size: 20px;
+    color: var(--cream);
+    margin-bottom: 28px;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+
+  .modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .option-btn {
     text-align: left;
     font: inherit;
     font-size: 16px;
@@ -272,54 +413,218 @@
     color: var(--cream);
     background: #1a0b2e;
     border: 2px solid #8f6cc9;
-    border-radius: 14px;
-    padding: 44px 16px 16px;
+    border-radius: 12px;
+    padding: 16px;
     cursor: pointer;
     transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
   }
 
-  .choice:hover:not([disabled]) {
-    transform: translateY(-3px);
+  .option-btn:hover:not([disabled]) {
+    transform: translateX(4px);
     border-color: var(--gold);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
   }
 
-  .choice .letter {
-    position: absolute;
-    top: 10px;
-    left: 12px;
-    font-family: Impact, "Arial Black", sans-serif;
-    font-size: 22px;
-    color: var(--gold);
+  .option-btn[disabled] {
+    cursor: default;
   }
 
-  .choice[disabled] { cursor: default; opacity: 0.92; }
+  .option-btn.is-correct {
+    border-color: #b3ff8f;
+    background: #1a2e1a;
+  }
 
-  .choice.is-lie-revealed { border-color: var(--buzz); background: #3a0f1c; }
-  .choice.is-truth-revealed { border-color: #b3ff8f; }
+  .option-btn.is-wrong {
+    border-color: var(--buzz);
+    background: #3a0f1c;
+  }
 
-  .verdict {
-    margin: 18px 4px 0;
-    font-size: 17px;
+  .modal-verdict {
+    font-size: 18px;
     color: var(--cream);
     min-height: 1.5em;
+    margin-bottom: 20px;
   }
 
-  .verdict strong { color: var(--gold); }
-  .verdict a { color: var(--gold); }
-  .verdict .ding { color: #b3ff8f; font-weight: 800; }
-  .verdict .bzzt { color: var(--buzz); font-weight: 800; }
+  .modal-verdict strong { color: var(--gold); }
+  .modal-verdict a { color: var(--gold); }
+  .modal-verdict .ding { color: #b3ff8f; font-weight: 800; }
+  .modal-verdict .bzzt { color: var(--buzz); font-weight: 800; }
 
-  .meter {
-    text-align: center;
+  .modal-close-btn {
+    display: block;
+    margin: 0 auto;
+    font-family: Impact, "Arial Black", sans-serif;
     font-size: 18px;
-    color: #e8d9ff;
-    margin-top: 4px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3b1d00;
+    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border: 3px solid #fff1c4;
+    border-radius: 999px;
+    padding: 12px 32px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #8a5b00;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
   }
 
-  .meter .display { color: var(--gold); font-size: 22px; letter-spacing: 0.1em; }
+  .modal-close-btn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 4px 0 #8a5b00;
+  }
 
-  /* ---------- Act 3: lightning round ---------- */
+  /* ---------- Reactions (applause / X / lightning) ---------- */
+
+  .reaction {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1100;
+  }
+
+  .reaction.show { display: flex; }
+
+  .reaction .applause {
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: clamp(44px, 11vw, 96px);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    text-shadow: 0 0 28px rgba(255, 211, 77, 0.85), 0 4px 0 #8a5b00;
+    animation: applauseFlash 1.4s ease-out 1;
+  }
+
+  @keyframes applauseFlash {
+    0%   { transform: scale(0.6); opacity: 0; }
+    15%  { transform: scale(1.12); opacity: 1; }
+    35%  { opacity: 0.35; }
+    45%  { opacity: 1; }
+    60%  { opacity: 0.35; }
+    72%  { opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+
+  .reaction .bigx {
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: clamp(120px, 30vw, 280px);
+    line-height: 1;
+    color: var(--buzz);
+    text-shadow: 0 0 32px rgba(255, 82, 82, 0.9);
+    animation: xSlam 1.1s ease-out 1;
+  }
+
+  @keyframes xSlam {
+    0%   { transform: scale(2.6) rotate(-10deg); opacity: 0; }
+    22%  { transform: scale(0.9) rotate(-10deg); opacity: 1; }
+    32%  { transform: scale(1.06) rotate(-10deg); }
+    80%  { opacity: 1; }
+    100% { transform: scale(1) rotate(-10deg); opacity: 0; }
+  }
+
+  .reaction .bolts {
+    font-size: clamp(54px, 15vw, 130px);
+    letter-spacing: 0.1em;
+    animation: boltFlash 0.6s ease-out 1;
+  }
+
+  @keyframes boltFlash {
+    0%   { transform: scale(0.5); opacity: 0; }
+    30%  { transform: scale(1.2); opacity: 1; }
+    60%  { opacity: 0.3; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+
+  /* ---------- Lightning Round ---------- */
+
+  .lightning-spinner {
+    background: linear-gradient(180deg, #241040, var(--felt));
+    border: 3px solid #6b3fa8;
+    border-radius: 20px;
+    padding: 40px 24px;
+    text-align: center;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  }
+
+  .lightning-card-display {
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--cream);
+  }
+
+  .lightning-card-display .card-chip {
+    margin-bottom: 12px;
+  }
+
+  .grid-card.lightning-single .cat-chip {
+    align-self: center;
+  }
+
+  .spin-btn {
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3b1d00;
+    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border: 3px solid #fff1c4;
+    border-radius: 999px;
+    padding: 14px 48px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #8a5b00, 0 14px 30px rgba(0,0,0,0.5);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    margin-right: 12px;
+  }
+
+  .spin-btn:hover { transform: translateY(2px); box-shadow: 0 6px 0 #8a5b00, 0 12px 26px rgba(0,0,0,0.5); }
+  .spin-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #8a5b00, 0 8px 18px rgba(0,0,0,0.5); }
+
+  .next-card-btn {
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #3b1d00;
+    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border: 3px solid #fff1c4;
+    border-radius: 999px;
+    padding: 12px 32px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #8a5b00;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .next-card-btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 #8a5b00; }
+
+  .lightning-all-cards {
+    margin-top: 48px;
+  }
+
+  .lightning-all-cards summary {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gold);
+    padding: 12px;
+    text-align: center;
+    transition: opacity 0.2s;
+  }
+
+  .lightning-all-cards summary:hover { opacity: 0.8; }
+
+  .lightning-intro {
+    text-align: center;
+    font-size: 16px;
+    color: #cdb4ff;
+    margin-bottom: 20px;
+  }
 
   .filters {
     display: flex;
@@ -355,6 +660,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
+    margin-bottom: 24px;
   }
 
   .grid-card {
@@ -372,6 +678,50 @@
   .grid-card .cat-chip { align-self: flex-start; font-size: 10px; padding: 3px 10px; }
   .grid-card a { color: var(--gold); }
 
+  .cat-chip {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+  }
+
+  .cat-stat  { color: var(--gold); }
+  .cat-quirk { color: var(--pink); }
+  .cat-fact  { color: #7ee0ff; }
+  .cat-quote { color: #b3ff8f; }
+
+  .load-more-btn {
+    display: block;
+    margin: 0 auto;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3b1d00;
+    background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border: 3px solid #fff1c4;
+    border-radius: 999px;
+    padding: 12px 32px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #8a5b00;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .load-more-btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 #8a5b00; }
+
+  .meter {
+    text-align: center;
+    font-size: 18px;
+    color: #e8d9ff;
+    margin-top: 4px;
+  }
+
+  .meter .display { color: var(--gold); font-size: 22px; letter-spacing: 0.1em; }
+
   /* ---------- Sign-off ---------- */
 
   .signoff {
@@ -388,23 +738,26 @@
 
   .signoff p { color: #e8d9ff; max-width: 56ch; margin: 0 auto 14px; font-size: 16px; }
   .signoff a { color: var(--gold); }
+  .signoff .boring-link { margin-top: 48px; }
 
-  .exit-btn {
+  .signoff a.exit-btn {
     display: inline-block;
     margin-top: 18px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    font-size: 15px;
     color: #3b1d00;
     background: linear-gradient(180deg, var(--gold), var(--gold-hot));
+    border: 3px solid #fff1c4;
     border-radius: 999px;
-    padding: 12px 32px;
+    padding: 14px 40px;
     text-decoration: none;
-    box-shadow: 0 6px 0 #8a5b00;
+    box-shadow: 0 8px 0 #8a5b00, 0 14px 30px rgba(0,0,0,0.5);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
   }
 
-  .exit-btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 #8a5b00; }
+  .signoff a.exit-btn:hover { transform: translateY(2px); box-shadow: 0 6px 0 #8a5b00, 0 12px 26px rgba(0,0,0,0.5); }
 
   .sr-only {
     position: absolute;
@@ -421,13 +774,16 @@
   }
 
   @media (max-width: 640px) {
-    .choices { grid-template-columns: 1fr; }
+    .board { gap: 8px; }
+    .board-tile { border-radius: 8px; }
     .card-grid { grid-template-columns: 1fr; }
+    .modal-content { padding: 28px; }
     section { margin: 56px 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .bulbs { animation: none; }
+    .board-tile.is-daily-double .board-value { animation: none; }
     *, *::before, *::after {
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
@@ -438,274 +794,543 @@
 <body>
 <main>
 
-  <header class="marquee">
-    <div class="bulbs" aria-hidden="true"></div>
-    <h1 class="display">Kate!</h1>
-    <p class="tagline">The most dramatic portfolio on the internet.*</p>
-    <p class="footnote">*Winner, "Most dramatic," high school senior superlatives. The judges' decision is final.</p>
+  <header class="marquee" id="marquee">
+    <div class="bulb-row top" aria-hidden="true"></div>
+    <div class="rail-title">
+      <h1 class="display">Kate!</h1>
+    </div>
+    <p class="tagline">The game show that answers one life-altering question: why should you hire Kate?</p>
+    <div class="bulb-row bottom" aria-hidden="true"></div>
   </header>
 
-  <p class="host-line">Welcome to the show. You've seen <a href="index.html">the serious version</a> — playbooks, ROI math, retention stats. This is everything that didn't fit: the quotes, the quirks, and the numbers that sound made up. (They're not. That's the game.)</p>
+  <p class="credit-line">A joint production from Claude Studios and 21st Century Kate</p>
 
-  <!-- ================= ACT 1 ================= -->
-  <section aria-labelledby="act1-title">
+  <div class="sound-row">
+    <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">Sound: off</button>
+  </div>
+
+  <p class="host-line">You've seen <a href="index.html">the serious version</a> — playbooks, ROI math, retention stats. This page is the rest.</p>
+
+  <!-- ================= ROUND 1: JEOPARDY ================= -->
+  <section aria-labelledby="round1-title">
     <div class="act-head">
-      <p class="act-kicker">Act one</p>
-      <h2 id="act1-title" class="display">The wheel of Kate</h2>
-      <p class="act-sub">One button. One random card. Quotes, quirks, facts, and stats — dealer's choice.</p>
+      <p class="act-kicker">Round one</p>
+      <h2 id="round1-title" class="display">KATE-GORIES</h2>
+      <p class="act-sub">Pick a category, pick a value.</p>
     </div>
 
-    <div class="spin-stage">
-      <div class="spin-card" id="spinCard" aria-live="polite">
-        <span class="cat-chip cat-stat" id="spinChip">Stat</span>
-        <p class="spin-text" id="spinText">Press the button. I'll wait. (I won't. I'm a web page.)</p>
-        <p class="spin-attr" id="spinAttr"></p>
+    <div class="board" id="board" role="grid"></div>
+    <p class="meter" id="boardMeter" aria-live="polite"></p>
+  </section>
+
+  <!-- ================= ROUND 2: LIGHTNING ================= -->
+  <section aria-labelledby="round2-title">
+    <div class="act-head">
+      <p class="act-kicker">Round two</p>
+      <h2 id="round2-title" class="display">Lightning round</h2>
+      <p class="act-sub">One card at a time. Dealer's choice.</p>
+    </div>
+
+    <div class="lightning-spinner">
+      <div class="lightning-card-display" id="lightningCardDisplay" aria-live="polite"></div>
+      <button class="spin-btn" id="lightningSpinBtn" type="button">Hit me</button>
+    </div>
+
+    <details class="lightning-all-cards" style="margin-top: 48px;">
+      <summary style="cursor: pointer; font-size: 16px; font-weight: 600; color: var(--gold); padding: 12px; text-align: center;">See all cards</summary>
+
+      <div style="margin-top: 24px;">
+        <div class="filters" role="group" aria-label="Filter cards by category">
+          <button class="filter-btn" type="button" data-filter="stat" aria-pressed="true">Quantifiers</button>
+          <button class="filter-btn" type="button" data-filter="quirk" aria-pressed="false">Quirks</button>
+          <button class="filter-btn" type="button" data-filter="fact" aria-pressed="false">Quiddities</button>
+          <button class="filter-btn" type="button" data-filter="quote" aria-pressed="false">Quotes</button>
+        </div>
+
+        <div class="card-grid" id="cardGrid"></div>
       </div>
-      <button class="spin-btn" id="spinBtn" type="button">Spin</button>
-    </div>
-  </section>
-
-  <!-- ================= ACT 2 ================= -->
-  <section aria-labelledby="act2-title">
-    <div class="act-head">
-      <p class="act-kicker">Act two</p>
-      <h2 id="act2-title" class="display">Two truths and a lie</h2>
-      <p class="act-sub">Three rounds. Find the lie. Fair warning: my real numbers are the ones that sound fake.</p>
-    </div>
-
-    <div id="game"></div>
-
-    <p class="meter" id="meter" aria-live="polite"></p>
-  </section>
-
-  <!-- ================= ACT 3 ================= -->
-  <section aria-labelledby="act3-title">
-    <div class="act-head">
-      <p class="act-kicker">Act three</p>
-      <h2 id="act3-title" class="display">The lightning round</h2>
-      <p class="act-sub">Every card in the deck, no gambling required. Filter to taste.</p>
-    </div>
-
-    <div class="filters" role="group" aria-label="Filter cards by category">
-      <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
-      <button class="filter-btn" type="button" data-filter="quote" aria-pressed="false">Quotes</button>
-      <button class="filter-btn" type="button" data-filter="stat" aria-pressed="false">Stats</button>
-      <button class="filter-btn" type="button" data-filter="quirk" aria-pressed="false">Quirks</button>
-      <button class="filter-btn" type="button" data-filter="fact" aria-pressed="false">Facts</button>
-    </div>
-
-    <div class="card-grid" id="cardGrid"></div>
+    </details>
   </section>
 
   <!-- ================= SIGN-OFF ================= -->
   <footer class="signoff">
     <p class="big display">That's the show, folks.</p>
-    <p>I built this page with AI in an afternoon. Yes, it's supposed to look like this.</p>
-    <p>It also intentionally breaks my own design system — gradients, shadows, corners over 4px. Every rule I hold the rest of <a href="index.html">my portfolio</a> to, suspended for one page, on purpose. Restraint means more when you can prove it's a choice.</p>
-    <p>Want the version with an ROI section? <a href="index.html">The playbook</a> · <a href="team.html">My team</a> · <a href="me.html">Me</a></p>
+    <p>Built with AI. It started as an afternoon thing. It is now 1 a.m.</p>
     <a class="exit-btn" href="mailto:kdobbertin@gmail.com">Book this contestant</a>
+    <p class="boring-link">Back to the <a href="index.html">boring stuff</a></p>
   </footer>
 
 </main>
+
+<!-- Question Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-content">
+    <div class="modal-score" id="modalScore"></div>
+    <button class="modal-x" id="modalX" type="button" aria-label="Close without answering">&times;</button>
+    <div class="modal-category" id="modalCategory" style="margin-top: 20px;"></div>
+    <div class="modal-value" id="modalValue"></div>
+    <div class="modal-question" id="modalQuestion"></div>
+    <div class="modal-options" id="modalOptions"></div>
+    <div class="modal-verdict" id="modalVerdict" aria-live="polite"></div>
+    <button class="modal-close-btn" id="modalCloseBtn" type="button">Next</button>
+    <button class="modal-seeanswer-btn" id="modalSeeAnswer" type="button">See answer</button>
+  </div>
+</div>
+
+<!-- Celebration / buzzer reactions -->
+<div class="reaction" id="reaction" aria-hidden="true"></div>
 
 <script>
 (function () {
   'use strict';
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var AudioCtx = window.AudioContext || window.webkitAudioContext;
+  var synth = AudioCtx ? new AudioCtx() : null;
 
-  /* ---------------- The deck ----------------
-     cat: stat | quirk | fact | quote
-     All stats/facts are real and already public (portfolio or resume).
-     Quotes are the three already published on team.html. */
+  // Sound off by default; remember the choice across visits.
+  var soundEnabled = false;
+  try { soundEnabled = localStorage.getItem('kate-sound') === 'on'; } catch (e) {}
+
+  var soundToggle = document.getElementById('soundToggle');
+  function renderSoundToggle() {
+    soundToggle.textContent = soundEnabled ? 'Sound: on' : 'Sound: off';
+    soundToggle.setAttribute('aria-pressed', soundEnabled ? 'true' : 'false');
+  }
+  if (!synth) {
+    soundToggle.disabled = true;
+    soundToggle.textContent = 'Sound: n/a';
+  } else {
+    renderSoundToggle();
+    soundToggle.addEventListener('click', function () {
+      soundEnabled = !soundEnabled;
+      try { localStorage.setItem('kate-sound', soundEnabled ? 'on' : 'off'); } catch (e) {}
+      // Browsers start the AudioContext suspended until a user gesture.
+      if (soundEnabled && synth.state === 'suspended') { synth.resume(); }
+      renderSoundToggle();
+    });
+  }
+
+  /* Sound synthesis */
+  function playSound(type) {
+    if (!soundEnabled || !synth) return;
+    var now = synth.currentTime;
+    try {
+      if (type === 'applause') {
+        // Filtered white-noise burst with a clap-like texture and swell.
+        var dur = 1.6;
+        var len = Math.floor(synth.sampleRate * dur);
+        var buffer = synth.createBuffer(1, len, synth.sampleRate);
+        var data = buffer.getChannelData(0);
+        var attack = synth.sampleRate * 0.12;
+        for (var i = 0; i < len; i++) {
+          var swell = i < attack ? (i / attack) : (1 - (i - attack) / (len - attack));
+          // Sparse louder spikes over a bed of noise = individual claps.
+          var clap = Math.random() < 0.06 ? 2.4 : 0.8;
+          data[i] = (Math.random() * 2 - 1) * swell * clap * 0.4;
+        }
+        var src = synth.createBufferSource();
+        src.buffer = buffer;
+        var bp = synth.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = 1600;
+        bp.Q.value = 0.6;
+        var ag = synth.createGain();
+        ag.gain.value = 0.7;
+        src.connect(bp); bp.connect(ag); ag.connect(synth.destination);
+        src.start(now);
+        src.stop(now + dur);
+        return;
+      }
+
+      var osc = synth.createOscillator();
+      var gain = synth.createGain();
+      osc.connect(gain);
+      gain.connect(synth.destination);
+
+      if (type === 'ding') {
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'bzzt') {
+        // Twice as long as before (0.4s).
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.exponentialRampToValueAtTime(120, now + 0.4);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }
+    } catch (e) {}
+  }
+
+  /* The card deck */
   var CARDS = [
-    { cat: 'stat',  text: '92% retention over three years. Nobody resigned while reporting to me.', attr: 'Receipts on the team page', link: 'team.html' },
-    { cat: 'stat',  text: '9 of my 12 designers were promoted. Three of them twice.', attr: 'Receipts on the team page', link: 'team.html' },
-    { cat: 'stat',  text: 'When my role was eliminated, 100% of my former reports offered a reference. I didn’t ask.', attr: 'Receipts on the team page', link: 'team.html' },
-    { cat: 'stat',  text: 'I hired 11 people and trained 9 of them from scratch — zero prior content design experience.', attr: 'Receipts on the team page', link: 'team.html' },
-    { cat: 'stat',  text: 'One cross-sell test: 148 wins and $520K+ in annual recurring revenue — from the treatment that interrupted the fewest people.', attr: 'Step 2 of the playbook', link: 'index.html#step-2' },
-    { cat: 'stat',  text: 'I helped 500,000 small businesses secure $65B in PPP loans. It won a Silver Stevie.', attr: 'On the resume', link: 'me.html' },
-    { cat: 'stat',  text: 'My work has earned 8 industry awards, including a Brandon Hall Gold for AI for business impact.', attr: 'On the resume', link: 'me.html' },
-    { cat: 'stat',  text: 'I proved 68% of our Help Center articles cost more to write than they returned. So we stopped.', attr: 'Step 1 of the playbook', link: 'index.html#step-1' },
-    { cat: 'stat',  text: '100+ people across UX and partner orgs adopted the AI coach my team built.', attr: 'Step 3 of the playbook', link: 'index.html#step-3' },
-    { cat: 'stat',  text: 'I rebuilt a content design practice from 1 person to 12.', attr: 'The whole playbook, really', link: 'index.html' },
+    { cat: "stat",  text: "Nobody has ever resigned while reporting to Kate.", attr: "Not bad for 4 years.", link: "team.html" },
+    { cat: "stat",  text: "75% of her content design team was promoted.", attr: "3 of them twice.", link: "team.html" },
+    { cat: "stat",  text: "100% of Kate's former reports offered her a reference.", attr: "She didn't even ask.", link: "team.html" },
+    { cat: 'stat',  text: 'Kate trained 9 people how to be content designers.', attr: 'Starting with "content design exists."', link: 'team.html' },
+    { cat: "stat",  text: "Kate designed a cross-sell campaign that generated over half-a-mil in revenue.", attr: "And preserved IA integrity.", link: "index.html#step-2" },
+    { cat: "stat",  text: "Kate helped 500,000 small businesses stay in business during the pandemic.", attr: "It won a Silver Stevie.", link: "me.html" },
+    { cat: "stat",  text: "Her work earned a Brandon Hall Gold for AI for business impact.", attr: "And 7 other awards.", link: "me.html" },
+    { cat: "stat",  text: "She transformed a team of tech writers into designers.", attr: "Using middle school math.", link: "index.html#step-1" },
+    { cat: 'stat',  text: 'Kate taught an AI to coach content design. 100+ people signed up.', attr: 'It never gets tired of saying "sentence case."', link: 'index.html#step-3' },
+    { cat: "stat",  text: "Kate rebuilt a content design practice from 1 person to 12.", attr: "We're BFFs. For real.", link: "team.html" },
 
-    { cat: 'quirk', text: 'I’m really bad at jokes. This page is as funny as I get.', attr: '' },
-    { cat: 'quirk', text: 'When I get very passionate, I get loud enough that Webex auto-mutes me. My team thinks this is hilarious.', attr: '' },
-    { cat: 'quirk', text: 'I won “most dramatic” in high school. This page is that award’s fault.', attr: '' },
+    { cat: "quirk", text: "Kate says she's bad at jokes.", attr: "It's definitely her funniest joke." },
+    { cat: "quirk", text: "When Kate gets excited, she's so vociferous Webex mutes her.", attr: "Her team thinks this is hilarious." },
+    { cat: 'quirk', text: 'Kate won "most dramatic" in high school.', attr: "Exhibit A: this site." },
 
-    { cat: 'fact',  text: 'I stood 10 feet from Joe Montana on the sideline of one of the top 25 college football games of all time.', attr: '' },
-    { cat: 'fact',  text: 'I have varsity letters in football and rowing.', attr: 'Notre Dame' },
+    { cat: "fact",  text: "Kate stood 10 feet from Joe Montana on the sideline of one of the top 25 college football games of all time.", attr: "It was raining." },
+    { cat: "fact",  text: "Kate has varsity letters for football and rowing.", attr: "From Notre Dame." },
 
-    { cat: 'quote', text: '“Kate is a fantastic leader who not only truly cares about the quality of deliverables, but also the people behind the deliverables.”', attr: 'A linguist she hired in 2021, now a senior UX content designer', link: 'team.html' },
-    { cat: 'quote', text: '“Kate fostered a supportive and open environment where ideas mattered more than hierarchy.”', attr: 'A marketer she hired in 2022, promoted to UX content designer II', link: 'team.html' },
-    { cat: 'quote', text: '“Kate saw potential in my transferable skills… That first opportunity in UX became the foundation for everything that followed.”', attr: 'An analyst she hired in 2023, now a UX product designer II', link: 'team.html' },
-    { cat: 'quote', text: 'Your quote could be here. I’m collecting more — with LinkedIn receipts, so you know they’re real.', attr: 'Kate’s colleagues, any minute now' }
+    { cat: 'quote', text: '"Kate is a fantastic leader who not only truly cares about the quality of deliverables, but also the people behind the deliverables."', attr: '&mdash; <a href="https://www.linkedin.com/in/bekka-burton/">Bekka</a>' },
+    { cat: 'quote', text: '"Kate fostered a supportive and open environment where ideas mattered more than hierarchy."', attr: '&mdash; <a href="https://www.linkedin.com/in/gina-iannitelli/">Gina</a>' },
+    { cat: 'quote', text: '"Kate saw potential in my transferable skills... That first opportunity in UX became the foundation for everything that followed."', attr: '&mdash; <a href="https://www.linkedin.com/in/akayellis/">Amanda</a>' },
+    { cat: "quote", text: "Your quote could be here.", attr: "One catch: you have to hire Kate first." }
   ];
 
   var CHIP_CLASS = { stat: 'cat-stat', quirk: 'cat-quirk', fact: 'cat-fact', quote: 'cat-quote' };
-  var CHIP_LABEL = { stat: 'Stat', quirk: 'Quirk', fact: 'Fact', quote: 'Quote' };
+  var CHIP_LABEL = { stat: 'Quantifier', quirk: 'Quirk', fact: 'Quiddity', quote: 'Quote' };
 
-  /* ---------------- Act 1: the wheel ---------------- */
-  var spinBtn = document.getElementById('spinBtn');
-  var spinText = document.getElementById('spinText');
-  var spinAttr = document.getElementById('spinAttr');
-  var spinChip = document.getElementById('spinChip');
-  var lastIndex = -1;
-
-  function showCard(i) {
-    var c = CARDS[i];
-    spinChip.textContent = CHIP_LABEL[c.cat];
-    spinChip.className = 'cat-chip ' + CHIP_CLASS[c.cat];
-    spinText.textContent = c.text;
-    spinAttr.textContent = c.attr || '';
-  }
-
-  function randomIndex() {
-    var i;
-    do { i = Math.floor(Math.random() * CARDS.length); } while (i === lastIndex && CARDS.length > 1);
-    lastIndex = i;
-    return i;
-  }
-
-  spinBtn.addEventListener('click', function () {
-    if (reducedMotion) { showCard(randomIndex()); return; }
-    spinBtn.disabled = true;
-    var flips = 7, n = 0;
-    var t = setInterval(function () {
-      showCard(Math.floor(Math.random() * CARDS.length));
-      if (++n >= flips) {
-        clearInterval(t);
-        showCard(randomIndex());
-        spinBtn.disabled = false;
-      }
-    }, 70);
-  });
-
-  /* ---------------- Act 2: two truths and a lie ----------------
-     Each round: exactly one item has lie:true.
-     LIE CARDS are fiction on purpose — Kate must approve wording. */
-  var ROUNDS = [
+  /* Jeopardy clues. type "mc" = multiple choice; type "open" = answer-in-a-question,
+     revealed then self-judged. THE "AI"SLE $200 and $300 are pending Kate’s clues. */
+  var JEOPARDY_QUESTIONS = [
     {
-      title: 'Round 1 · The career round',
-      items: [
-        { text: '9 of the 12 designers I hired had zero content design experience on day one.', lie: false,
-          reveal: 'True. Trained from scratch; 75% were promoted. <a href="team.html">Receipts.</a>' },
-        { text: 'A pop-up my team tested produced $520K+ in annual recurring revenue — while interrupting the fewest users.', lie: false,
-          reveal: 'True. The user-protective choice and the money-making choice were the same choice. <a href="index.html#step-2">Step 2.</a>' },
-        /* LIE CARD */
-        { text: 'My most-viewed Help Center article got over a million views.', lie: true,
-          reveal: 'The lie. Nobody reads Help Center articles — that’s kind of my whole thing. <a href="index.html#step-1">Step 1.</a>' }
-      ]
+      category: "NO BUSINESS BEING TRUE",
+      value: 100,
+      type: "mc",
+      question: "At Notre Dame, Kate earned a varsity letter for her participation in two sports: rowing, and this other one the university is most famous for.",
+      options: ["What is fencing?", "What is football?", "What is volleyball?", "What is basketball?"],
+      correct: 1,
+      reveal: "What is football? Kate was a student manager for both organizations and even has a Big East Championship ring to prove it."
     },
     {
-      title: 'Round 2 · The personal round',
-      items: [
-        { text: 'I stood 10 feet from Joe Montana on the sideline of one of the top 25 college football games of all time.', lie: false,
-          reveal: 'True. Ten feet. Joe Montana. I remain calm about it to this day. (I do not.)' },
-        /* LIE CARD */
-        { text: 'I’m great at telling jokes.', lie: true,
-          reveal: 'The lie. I’m famously bad at jokes. My team can confirm. This page is as funny as I get.' },
-        { text: 'I won “most dramatic” in high school.', lie: false,
-          reveal: 'True. And now there’s a game show page. The prophecy fulfilled itself.' }
-      ]
+      category: "NO BUSINESS BEING TRUE",
+      value: 200,
+      type: "open",
+      question: "This three-letter COVID-era program offered forgivable loans based on payroll. When it became the company’s top priority, Kate was tapped to design the flow that turned a mountain of regulations into a clear path for business owners.",
+      answer: "What is PPP?",
+      reveal: "Kate was the sole content designer for the PPP report and Loan Forgiveness Calculator. Her work won multiple awards and helped more than 500,000 small businesses stay in business."
     },
     {
-      title: 'Round 3 · The judgment round',
-      items: [
-        { text: 'Webex has automatically muted me for getting too passionate in a meeting. My team thinks it’s hilarious.', lie: false,
-          reveal: 'True. I speak fortissimo when I care. I care a lot.' },
-        { text: 'I helped 500,000 small businesses secure $65B in PPP loans.', lie: false,
-          reveal: 'True. Silver Stevie says so. Numbers that sound fake are my specialty.' },
-        /* LIE CARD */
-        { text: 'I’ve never lost an argument with a sales team.', lie: true,
-          reveal: 'The lie. I’ve lost plenty. I just won the ones with data attached. <a href="index.html#step-2">Exhibit A.</a>' }
-      ]
+      category: "NO BUSINESS BEING TRUE",
+      value: 300,
+      type: "open",
+      question: "Kate designed a cross-sell campaign that generated this much revenue — enough to cover a seat on the first commercial spaceflight.",
+      answer: "What is $500,000?",
+      reveal: "Kate blocked sales from rolling out a treatment that broke the system’s Information Architecture, by designing a better one and proving it with an A/B test. Kate’s treatment appeared at the right place and time, appearing to 1/3 of the users but resulting in 2X conversions at the client level."
+    },
+    {
+      category: "THE AISLE",
+      value: 100,
+      type: "open",
+      question: "Kate built an AI coach that can help with design strategy and little things like reminding people to use this capitalization style everywhere — even when writing the first thing on the page.",
+      answer: "What is sentence case?",
+      reveal: "Sentence case is easier to scan because it follows the way people naturally read and write. It reduces visual noise and creates clearer, more predictable text patterns, which makes content more accessible — especially for people who benefit from that consistency."
+    },
+    {
+      category: "ALL THINGS EQUAL",
+      value: 100,
+      type: "mc",
+      question: "Three of these are the same. Find the one that doesn’t fit.\nA. Item treasured by beach-combers\nB. An approach to AI projects Kate brought to her portfolio, where design, dev, and product work as one unit\nC. The enclosure legumes grow in\nD. A means of escape from a doomed star destroyer",
+      options: ["What is A?", "What is B?", "What is C?", "What is D?"],
+      correct: 0,
+      reveal: "Pea pods, escape pods, and the pod approach — a research-backed method to design and build AI projects, where a cross-functional team works together to define, design, build, and iterate from day 1."
+    },
+    {
+      category: "ALL THINGS EQUAL",
+      value: 200,
+      type: "mc",
+      question: "Three of these have the same answer. Find the one that doesn’t fit.\nA. The turnover rate on Kate’s team\nB. Jack’s dog in The Nightmare Before Christmas\nC. The year that marks the start of the Common Era\nD. The value of a blank Scrabble tile",
+      options: ["What is A?", "What is B?", "What is C?", "What is D?"],
+      correct: 2,
+      reveal: "Technically, there is no year 0. But it’s true that over her 4 years as a manager, no one who reported to Kate has ever resigned or accepted a role on another team."
+    },
+    {
+      category: "ALL THINGS EQUAL",
+      value: 300,
+      type: "mc",
+      question: "Three of these have the same level of accuracy. Find the one that doesn’t fit.\nA. Passes by future NFL Hall of Famer Josh Allen\nB. Tomorrow’s weather forecast\nC. The Paychex Flex assistant, on topics Kate helped train and test\nD. Voice assistant speech recognition",
+      options: ["What is A?", "What is B?", "What is C?", "What is D?"],
+      correct: 0,
+      reveal: "Josh Allen’s completion percentage topped out just under 70%. But Kate raised the threshold for chatbot accuracy from 70% to 90%, matching a 24-hour forecast and ChatGPT’s ability to transcribe what you say. Go Bills!"
     }
   ];
 
-  var game = document.getElementById('game');
-  var meter = document.getElementById('meter');
-  var score = 0, answered = 0;
-
-  ROUNDS.forEach(function (round, r) {
-    var div = document.createElement('div');
-    div.className = 'round';
-    var letters = ['A', 'B', 'C'];
-
-    var h = document.createElement('p');
-    h.className = 'round-title';
-    h.textContent = round.title;
-    div.appendChild(h);
-
-    var wrap = document.createElement('div');
-    wrap.className = 'choices';
-
-    var verdict = document.createElement('p');
-    verdict.className = 'verdict';
-    verdict.setAttribute('aria-live', 'polite');
-
-    round.items.forEach(function (item, i) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'choice';
-      btn.innerHTML = '<span class="letter" aria-hidden="true">' + letters[i] + '</span>' + item.text;
-      btn.addEventListener('click', function () {
-        answered++;
-        var correct = item.lie;
-        if (correct) score++;
-        // reveal all
-        Array.prototype.forEach.call(wrap.children, function (b, j) {
-          b.disabled = true;
-          b.classList.add(round.items[j].lie ? 'is-lie-revealed' : 'is-truth-revealed');
-        });
-        var lieItem = round.items.filter(function (x) { return x.lie; })[0];
-        verdict.innerHTML = correct
-          ? '<span class="ding">DING DING DING!</span> You found the lie. ' + lieItem.reveal
-          : '<span class="bzzt">BZZZT.</span> That one’s true — told you the real ones sound fake. ' + lieItem.reveal;
-        updateMeter();
-      });
-      wrap.appendChild(btn);
-    });
-
-    div.appendChild(wrap);
-    div.appendChild(verdict);
-    game.appendChild(div);
+  /* Shuffle and distribute questions into a 3x3 board */
+  var boardState = {};
+  JEOPARDY_QUESTIONS.forEach(function (q, i) {
+    boardState[i] = { used: false, question: q };
   });
 
-  function updateMeter() {
-    if (answered < ROUNDS.length) {
-      meter.innerHTML = 'Applause meter: <span class="display">' + score + ' / ' + answered + '</span>';
+  var board = document.getElementById('board');
+  var boardMeter = document.getElementById('boardMeter');
+  var modal = document.getElementById('modal');
+  var modalCategory = document.getElementById('modalCategory');
+  var modalValue = document.getElementById('modalValue');
+  var modalQuestion = document.getElementById('modalQuestion');
+  var modalOptions = document.getElementById('modalOptions');
+  var modalVerdict = document.getElementById('modalVerdict');
+  var modalCloseBtn = document.getElementById('modalCloseBtn');
+  var marquee = document.getElementById('marquee');
+  var reaction = document.getElementById('reaction');
+
+  function showReaction(type) {
+    if (reducedMotion) return;
+    var content, dur;
+    if (type === 'applause')      { content = '<div class="applause">👏 Applause 👏</div>'; dur = 1400; }
+    else if (type === 'x')        { content = '<div class="bigx">✕</div>'; dur = 1100; }
+    else                          { content = '<div class="bolts">⚡ ⚡ ⚡</div>'; dur = 600; }
+    reaction.innerHTML = content;
+    reaction.classList.add('show');
+    clearTimeout(reaction._t);
+    reaction._t = setTimeout(function () {
+      reaction.classList.remove('show');
+      reaction.innerHTML = '';
+    }, dur);
+  }
+
+  var modalX = document.getElementById('modalX');
+  var modalSeeAnswer = document.getElementById('modalSeeAnswer');
+  var modalScore = document.getElementById('modalScore');
+
+  var boardScore = 0, boardResolved = 0;
+  var currentQuestion = null;
+  var currentQuestionIndex = null;
+  var currentTile = null;
+
+  /* Build the board: category titles across the top, dollar amounts below
+     (categories = columns, values = rows, like a real Jeopardy board). */
+  var CATEGORIES = ['NO BUSINESS BEING TRUE', 'THE AISLE', 'ALL THINGS EQUAL'];
+  var VALUES = [100, 200, 300];
+
+  CATEGORIES.forEach(function (cat) {
+    var h = document.createElement('div');
+    h.className = 'board-header';
+    if (cat === 'THE AISLE') {
+      h.innerHTML = "THE &quot;<span style='color: var(--gold)'>AI</span>&quot;SLE";
+    } else {
+      h.textContent = cat;
+    }
+    board.appendChild(h);
+  });
+
+  VALUES.forEach(function (val) {
+    CATEGORIES.forEach(function (cat) {
+      var qi = JEOPARDY_QUESTIONS.findIndex(function (q) { return q.category === cat && q.value === val; });
+      var tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'board-tile';
+
+      // Cells with no clue yet (THE "AI"SLE $200/$300) render as disabled placeholders.
+      if (qi === -1) {
+        tile.classList.add('is-empty');
+        tile.disabled = true;
+        tile.innerHTML = '<div class="board-value">$' + val + '</div><div class="board-soon">soon</div>';
+        board.appendChild(tile);
+        return;
+      }
+
+      var q = JEOPARDY_QUESTIONS[qi];
+      tile.innerHTML = '<div class="board-value">$' + val + '</div>';
+
+      (function (qref, qiref, tileEl) {
+        tileEl.addEventListener('click', function () {
+          if (boardState[qiref].used) return;
+          currentQuestion = qref;
+          currentQuestionIndex = qiref;
+          currentTile = tileEl;
+          showQuestion(qref, qiref);
+        });
+      })(q, qi, tile);
+
+      board.appendChild(tile);
+    });
+  });
+
+  function fmtDollars(n) {
+    return (n < 0 ? '-$' : '$') + Math.abs(n);
+  }
+
+  function markTileResolved() {
+    if (currentQuestionIndex !== null && !boardState[currentQuestionIndex].used) {
+      boardState[currentQuestionIndex].used = true;
+      if (currentTile) currentTile.disabled = true;
+      boardResolved++;
+    }
+  }
+
+  function renderModalScore() {
+    modalScore.textContent = 'Score: ' + fmtDollars(boardScore);
+  }
+
+  function showQuestion(q, idx) {
+    if (q.category === 'THE AISLE') modalCategory.innerHTML = "THE &quot;AI&quot;SLE";
+    else modalCategory.textContent = q.category;
+    modalValue.textContent = '$' + q.value;
+    renderModalScore();
+    modalQuestion.textContent = q.question;
+    modalVerdict.innerHTML = '';
+    modalOptions.innerHTML = '';
+
+    if (q.type === 'open') {
+      // No choices — reveal the answer, then self-judge.
+      modalSeeAnswer.style.display = 'none';
+      var revealBtn = document.createElement('button');
+      revealBtn.type = 'button';
+      revealBtn.className = 'option-btn reveal-answer-btn';
+      revealBtn.textContent = 'Reveal answer';
+      revealBtn.addEventListener('click', function () { revealOpen(q); });
+      modalOptions.appendChild(revealBtn);
+    } else {
+      modalSeeAnswer.style.display = 'block';
+      q.options.forEach(function (opt, i) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', function () { answered(i === q.correct, q, i); });
+        modalOptions.appendChild(btn);
+      });
+    }
+
+    modal.classList.add('show');
+    modalCloseBtn.focus();
+  }
+
+  function revealOptions(q, clickedIndex) {
+    var allOptions = modalOptions.querySelectorAll('.option-btn');
+    allOptions.forEach(function (btn, i) {
+      btn.disabled = true;
+      if (i === q.correct) btn.classList.add('is-correct');
+      else if (i === clickedIndex) btn.classList.add('is-wrong');
+    });
+    modalSeeAnswer.style.display = 'none';
+  }
+
+  function answered(isCorrect, q, clickedIndex) {
+    markTileResolved();
+    boardScore += isCorrect ? q.value : -q.value;
+
+    revealOptions(q, clickedIndex);
+    playSound(isCorrect ? 'applause' : 'bzzt');
+    showReaction(isCorrect ? 'applause' : 'x');
+
+    var tail = ' <strong>' + (isCorrect ? '+' : '-') + fmtDollars(q.value) + '</strong>';
+    modalVerdict.innerHTML = (isCorrect
+      ? '<span class="ding">DING DING DING!</span> ' + q.reveal
+      : '<span class="bzzt">BZZZT.</span> The answer: <strong>' + q.options[q.correct] + '</strong>. ' + q.reveal) + tail;
+
+    updateBoardMeter();
+  }
+
+  function revealOpen(q) {
+    markTileResolved();
+    modalSeeAnswer.style.display = 'none';
+    modalVerdict.innerHTML = '<strong>' + q.answer + '</strong> ' + q.reveal;
+
+    modalOptions.innerHTML = '';
+    var got = document.createElement('button');
+    got.type = 'button';
+    got.className = 'option-btn';
+    got.textContent = 'I got it (+' + fmtDollars(q.value) + ')';
+    got.addEventListener('click', function () { openJudge(q, true); });
+    var missed = document.createElement('button');
+    missed.type = 'button';
+    missed.className = 'option-btn';
+    missed.textContent = 'I missed it (-' + fmtDollars(q.value) + ')';
+    missed.addEventListener('click', function () { openJudge(q, false); });
+    modalOptions.appendChild(got);
+    modalOptions.appendChild(missed);
+  }
+
+  function openJudge(q, gotIt) {
+    boardScore += gotIt ? q.value : -q.value;
+    var btns = modalOptions.querySelectorAll('.option-btn');
+    btns.forEach(function (b) { b.disabled = true; });
+    if (gotIt && btns[0]) btns[0].classList.add('is-correct');
+    if (!gotIt && btns[1]) btns[1].classList.add('is-wrong');
+
+    playSound(gotIt ? 'applause' : 'bzzt');
+    showReaction(gotIt ? 'applause' : 'x');
+    modalVerdict.innerHTML += ' <strong>' + (gotIt ? '+' : '-') + fmtDollars(q.value) + '</strong>';
+    updateBoardMeter();
+  }
+
+  function seeAnswer() {
+    if (!currentQuestion || currentQuestion.type !== 'mc') return;
+    markTileResolved();
+    revealOptions(currentQuestion, -1);
+    modalVerdict.innerHTML = currentQuestion.reveal + ' <em>(no points either way.)</em>';
+    updateBoardMeter();
+  }
+
+  function updateBoardMeter() {
+    renderModalScore();
+    if (boardResolved < JEOPARDY_QUESTIONS.length) {
+      boardMeter.innerHTML = 'Score: <span class="display">' + fmtDollars(boardScore) + '</span>';
       return;
     }
     var line;
-    if (score === 3)      line = 'Perfect score. You clearly read the portfolio. You should <a href="mailto:kdobbertin@gmail.com">hire accordingly</a>.';
-    else if (score === 2) line = 'Strong showing. The one you missed? That’s the stat worth remembering.';
-    else                  line = 'The lies won this round — which proves the point: my real numbers sound made up. <a href="index.html">See for yourself.</a>';
-    meter.innerHTML = 'Final score: <span class="display">' + score + ' / 3</span><br>' + line;
+    if (boardScore >= 1000) line = 'Big winner. You clearly did your homework. <a href="mailto:kdobbertin@gmail.com">Let\'s talk.</a>';
+    else if (boardScore > 0) line = 'In the black. The ones you missed are worth reading the playbook for.';
+    else line = 'The house won this round. <a href="index.html">Check the playbook</a> and try again.';
+    boardMeter.innerHTML = 'Final score: <span class="display">' + fmtDollars(boardScore) + '</span><br>' + line;
   }
 
-  /* ---------------- Act 3: lightning round ---------------- */
-  var grid = document.getElementById('cardGrid');
+  modalCloseBtn.addEventListener('click', function () { modal.classList.remove('show'); });
+  modalX.addEventListener('click', function () { modal.classList.remove('show'); });
+  modalSeeAnswer.addEventListener('click', seeAnswer);
 
-  CARDS.forEach(function (c) {
-    var card = document.createElement('div');
-    card.className = 'grid-card';
-    card.setAttribute('data-cat', c.cat);
+  /* Lightning round spinner — one random card per "Hit me". */
+  var lightningDisplay = document.getElementById('lightningCardDisplay');
+  var lightningSpinBtn = document.getElementById('lightningSpinBtn');
+  var lastLightningCardIndex = -1;
+
+  function cardMarkup(c) {
     var chip = '<span class="cat-chip ' + CHIP_CLASS[c.cat] + '">' + CHIP_LABEL[c.cat] + '</span>';
     var attr = c.attr ? '<p class="attr">' + (c.link ? '<a href="' + c.link + '">' + c.attr + '</a>' : c.attr) + '</p>' : '';
-    card.innerHTML = chip + '<p>' + c.text + '</p>' + attr;
-    grid.appendChild(card);
-  });
+    return chip + '<p class="lc-text">' + c.text + '</p>' + attr;
+  }
+
+  function dealLightningCard() {
+    var i;
+    do { i = Math.floor(Math.random() * CARDS.length); } while (i === lastLightningCardIndex && CARDS.length > 1);
+    lastLightningCardIndex = i;
+    lightningDisplay.innerHTML = '<div class="grid-card lightning-single">' + cardMarkup(CARDS[i]) + '</div>';
+    showReaction('lightning');
+  }
+
+  lightningSpinBtn.addEventListener('click', dealLightningCard);
+
+  /* "See all cards" grid — every card in the selected category. */
+  var grid = document.getElementById('cardGrid');
+  var currentFilter = 'stat';
+
+  function renderCards() {
+    grid.innerHTML = '';
+    CARDS.forEach(function (c) {
+      if (c.cat !== currentFilter) return;
+      var card = document.createElement('div');
+      card.className = 'grid-card';
+      card.innerHTML = cardMarkup(c);
+      grid.appendChild(card);
+    });
+  }
+
+  renderCards();
 
   var filterBtns = document.querySelectorAll('.filter-btn');
   filterBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
       filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-      var f = btn.getAttribute('data-filter');
-      Array.prototype.forEach.call(grid.children, function (card) {
-        card.style.display = (f === 'all' || card.getAttribute('data-cat') === f) ? '' : 'none';
-      });
+      currentFilter = btn.getAttribute('data-filter');
+      renderCards();
     });
   });
 })();

@@ -18,13 +18,18 @@ Not linked / not pushed:
 
 ## Game show page — awaiting Kate's review before push
 
-`hire-kate.html` is built, playable, verified (game logic, filters, contrast, no overflow at 375/desktop, reduced-motion), and `noindex`'d. Not linked from anywhere, not pushed. Needs:
-- **Approve or rewrite the 3 lie cards** (Round 1: "1M+ views on my top Help Center article"; Round 2: "I'm great at telling jokes"; Round 3: "I've never lost an argument with a sales team").
-- **Confirm the varsity-letters fact stays** (football/rowing, pulled from the resume).
-- **Sign off on the vibe** — gold/purple casino palette, marquee bulbs, tone of the copy.
-- **Feed the deck.** Currently ~10 stat cards vs. ~5 personal cards (3 quirks/facts + 3 quotes + 1 placeholder); 2–3 more quirks/facts would balance it. Quote-campaign results slot in as they arrive.
-- **Decide the link-in.** Plan was a self-aware link from Me ("the unnecessarily dramatic version →"); confirm placement and label.
-- Once approved: push, then link it in.
+`hire-kate.html` rebuilt (2026-07-11) as **KATE-GORIES**, a Jeopardy-style board (3 categories × 3 values: "Sounds Made-Up," "The AIsle," "Stop That") replacing the old two-truths-and-a-lie. Old Hollywood cream marquee, "life-altering question" tagline, "A joint production from Claude Studios and 21st Century Kate" credit line, lightning round with "Surprise me" + "Come on down!" load-more, synthesized sound (off by default), reduced-motion guards. Linked from Me ("the unnecessarily dramatic version →"). `noindex`'d, not pushed. Still to do:
+- **REMOVED — re-add if Kate publishes the Paychex number:** the retirement cross-sell stat (148 wins / $520K+ ARR) was pulled from both the lightning deck and the "Sounds Made-Up" $200 Jeopardy tile (swapped to the 8-awards question) because it's the internal figure kept out of the public repo. If Kate green-lights publishing it, restore both.
+- **Still pending from the design pass** (decisions made, some not yet built): Daily Double is wired (random tile, pulsing); **Phone a Friend lifeline** (surfaces a real colleague quote as a hint) and **Price Is Right "closest without going over"** category not yet built. **Kids as clues crew** — 2 kids, photos as certain clues (Jeopardy-style), anonymous ("my kids"), *awaiting Kate's photos before implementation.*
+- **Deck rewritten (2026-07-11)** to Kate's content: 19 cards, third-person voice, main line + kicker (e.g. "Nobody has ever resigned…" / "Not bad for 4 years."). Categories renamed Stat→**Quantifier**, Fact→**Quiddity** on chips and filters.
+- **VOICE MISMATCH to resolve:** the deck cards are now third-person ("Kate…") but the Jeopardy board questions are still first-person ("I restructured how many pages…", "What's the retention rate of my team?"). Convert the board to third-person (host framing) for consistency — recommended, not yet done.
+- **AI-coach card is Claude's draft** (Kate asked for suggestions): "Kate taught an AI to coach content design. 100+ people signed up. / It never gets tired of saying 'sentence case.'" — approve or swap.
+- **Cross-sell revenue card = the softened Paychex number.** Card 5 reads "over half-a-mil in revenue" (no exact figure, no company). This is the internal figure pulled earlier for provenance, re-added by Kate in vague form. Confirm OK to publish before any push.
+- **Named quotes:** cards now name Bekka, Gina, Amanda (first names). Confirm each has given permission before push.
+- **"most dramatic" kicker** rendered as "Exhibit A: this site." (the courtroom word Kate was reaching for) — confirm.
+- **AIsle pun:** board category renders all-caps "THE AISLE," flattening the AI pun. Open: leave / drop uppercase / color the "AI" gold.
+- **Sign off on the vibe** — cream marquee with slide-rails + even bulb rows, gold/purple palette, tone of the copy.
+- Once approved: push, then confirm the link-in stays.
 
 ## Retirement case study — to finish and ship
 
