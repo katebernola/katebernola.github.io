@@ -393,9 +393,32 @@
   .modal-question {
     font-size: 20px;
     color: var(--cream);
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     line-height: 1.5;
-    white-space: pre-line;
+  }
+
+  .modal-items {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+
+  .modal-items li {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--cream);
+    border-top: 1px solid #3a2560;
+  }
+
+  .modal-items li:first-child { border-top: none; }
+
+  .modal-items .letter {
+    flex: 0 0 auto;
+    font-family: Impact, "Arial Black", sans-serif;
+    color: var(--gold);
   }
 
   .modal-options {
@@ -870,6 +893,7 @@
     <div class="modal-category" id="modalCategory" style="margin-top: 20px;"></div>
     <div class="modal-value" id="modalValue"></div>
     <div class="modal-question" id="modalQuestion"></div>
+    <ul class="modal-items" id="modalItems"></ul>
     <div class="modal-options" id="modalOptions"></div>
     <div class="modal-verdict" id="modalVerdict" aria-live="polite"></div>
     <button class="modal-close-btn" id="modalCloseBtn" type="button">Next</button>
@@ -916,6 +940,30 @@
     if (!soundEnabled || !synth) return;
     var now = synth.currentTime;
     try {
+      if (type === 'thunder') {
+        // Low rumble (filtered noise) with a sharp initial crack.
+        var tdur = 1.4;
+        var tlen = Math.floor(synth.sampleRate * tdur);
+        var tbuf = synth.createBuffer(1, tlen, synth.sampleRate);
+        var tdata = tbuf.getChannelData(0);
+        for (var j = 0; j < tlen; j++) {
+          var crack = j < synth.sampleRate * 0.05 ? 1.6 : 1;   // sharp opening crack
+          var decay = Math.pow(1 - j / tlen, 1.6);              // long rumble tail
+          tdata[j] = (Math.random() * 2 - 1) * decay * crack * 0.8;
+        }
+        var tsrc = synth.createBufferSource();
+        tsrc.buffer = tbuf;
+        var lp = synth.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.value = 220;
+        var tg = synth.createGain();
+        tg.gain.value = 0.9;
+        tsrc.connect(lp); lp.connect(tg); tg.connect(synth.destination);
+        tsrc.start(now);
+        tsrc.stop(now + tdur);
+        return;
+      }
+
       if (type === 'applause') {
         // Filtered white-noise burst with a clap-like texture and swell.
         var dur = 1.6;
@@ -1037,7 +1085,8 @@
       category: "ALL THINGS EQUAL",
       value: 100,
       type: "mc",
-      question: "Three of these are the same. Find the one that doesn’t fit.\nA. Item treasured by beach-combers\nB. An approach to AI projects Kate brought to her portfolio, where design, dev, and product work as one unit\nC. The enclosure legumes grow in\nD. A means of escape from a doomed star destroyer",
+      question: "Three of these are the same. Find the one that doesn’t fit.",
+      items: ["Item treasured by beach-combers", "An approach to AI projects Kate brought to her portfolio, where design, dev, and product work as one unit", "The enclosure legumes grow in", "A means of escape from a doomed star destroyer"],
       options: ["What is A?", "What is B?", "What is C?", "What is D?"],
       correct: 0,
       reveal: "Pea pods, escape pods, and the pod approach — a research-backed method to design and build AI projects, where a cross-functional team works together to define, design, build, and iterate from day 1."
@@ -1046,7 +1095,8 @@
       category: "ALL THINGS EQUAL",
       value: 200,
       type: "mc",
-      question: "Three of these have the same answer. Find the one that doesn’t fit.\nA. The turnover rate on Kate’s team\nB. Jack’s dog in The Nightmare Before Christmas\nC. The year that marks the start of the Common Era\nD. The value of a blank Scrabble tile",
+      question: "Three of these have the same answer. Find the one that doesn’t fit.",
+      items: ["The turnover rate on Kate’s team", "Jack’s dog in The Nightmare Before Christmas", "The year that marks the start of the Common Era", "The value of a blank Scrabble tile"],
       options: ["What is A?", "What is B?", "What is C?", "What is D?"],
       correct: 2,
       reveal: "Technically, there is no year 0. But it’s true that over her 4 years as a manager, no one who reported to Kate has ever resigned or accepted a role on another team."
@@ -1055,7 +1105,8 @@
       category: "ALL THINGS EQUAL",
       value: 300,
       type: "mc",
-      question: "Three of these have the same level of accuracy. Find the one that doesn’t fit.\nA. Passes by future NFL Hall of Famer Josh Allen\nB. Tomorrow’s weather forecast\nC. The Paychex Flex assistant, on topics Kate helped train and test\nD. Voice assistant speech recognition",
+      question: "Three of these have the same level of accuracy. Find the one that doesn’t fit.",
+      items: ["Passes by future NFL Hall of Famer Josh Allen", "Tomorrow’s weather forecast", "The Paychex Flex assistant, on topics Kate helped train and test", "Voice assistant speech recognition"],
       options: ["What is A?", "What is B?", "What is C?", "What is D?"],
       correct: 0,
       reveal: "Josh Allen’s completion percentage topped out just under 70%. But Kate raised the threshold for chatbot accuracy from 70% to 90%, matching a 24-hour forecast and ChatGPT’s ability to transcribe what you say. Go Bills!"
@@ -1098,6 +1149,7 @@
   var modalX = document.getElementById('modalX');
   var modalSeeAnswer = document.getElementById('modalSeeAnswer');
   var modalScore = document.getElementById('modalScore');
+  var modalItems = document.getElementById('modalItems');
 
   var boardScore = 0, boardResolved = 0;
   var currentQuestion = null;
@@ -1113,7 +1165,7 @@
     var h = document.createElement('div');
     h.className = 'board-header';
     if (cat === 'THE AISLE') {
-      h.innerHTML = "THE &quot;<span style='color: var(--gold)'>AI</span>&quot;SLE";
+      h.innerHTML = "THE <span style='white-space: nowrap'>&quot;<span style='color: var(--gold)'>AI</span>&quot;SLE</span>";
     } else {
       h.textContent = cat;
     }
@@ -1169,14 +1221,43 @@
     modalScore.textContent = 'Score: ' + fmtDollars(boardScore);
   }
 
+  function collapseToResult() {
+    // After an answer, hide the clue and choices so only the response + Next remain.
+    modalQuestion.style.display = 'none';
+    modalItems.style.display = 'none';
+    modalOptions.style.display = 'none';
+  }
+
   function showQuestion(q, idx) {
-    if (q.category === 'THE AISLE') modalCategory.innerHTML = "THE &quot;AI&quot;SLE";
+    if (q.category === 'THE AISLE') modalCategory.innerHTML = "THE <span style='white-space: nowrap'>&quot;AI&quot;SLE</span>";
     else modalCategory.textContent = q.category;
     modalValue.textContent = '$' + q.value;
     renderModalScore();
     modalQuestion.textContent = q.question;
+    modalQuestion.style.display = '';
+    modalOptions.style.display = '';
     modalVerdict.innerHTML = '';
     modalOptions.innerHTML = '';
+
+    // Optional A/B/C/D item list (odd-one-out clues).
+    modalItems.innerHTML = '';
+    if (q.items) {
+      modalItems.style.display = '';
+      var letters = ['A', 'B', 'C', 'D'];
+      q.items.forEach(function (it, i) {
+        var li = document.createElement('li');
+        var lt = document.createElement('span');
+        lt.className = 'letter';
+        lt.textContent = letters[i];
+        var tx = document.createElement('span');
+        tx.textContent = it;
+        li.appendChild(lt);
+        li.appendChild(tx);
+        modalItems.appendChild(li);
+      });
+    } else {
+      modalItems.style.display = 'none';
+    }
 
     if (q.type === 'open') {
       // No choices — reveal the answer, then self-judge.
@@ -1218,6 +1299,7 @@
     boardScore += isCorrect ? q.value : -q.value;
 
     revealOptions(q, clickedIndex);
+    collapseToResult();
     playSound(isCorrect ? 'applause' : 'bzzt');
     showReaction(isCorrect ? 'applause' : 'x');
 
@@ -1256,6 +1338,7 @@
     if (gotIt && btns[0]) btns[0].classList.add('is-correct');
     if (!gotIt && btns[1]) btns[1].classList.add('is-wrong');
 
+    collapseToResult();
     playSound(gotIt ? 'applause' : 'bzzt');
     showReaction(gotIt ? 'applause' : 'x');
     modalVerdict.innerHTML += ' <strong>' + (gotIt ? '+' : '-') + fmtDollars(q.value) + '</strong>';
@@ -1266,6 +1349,7 @@
     if (!currentQuestion || currentQuestion.type !== 'mc') return;
     markTileResolved();
     revealOptions(currentQuestion, -1);
+    collapseToResult();
     modalVerdict.innerHTML = currentQuestion.reveal + ' <em>(no points either way.)</em>';
     updateBoardMeter();
   }
@@ -1304,6 +1388,7 @@
     lastLightningCardIndex = i;
     lightningDisplay.innerHTML = '<div class="grid-card lightning-single">' + cardMarkup(CARDS[i]) + '</div>';
     showReaction('lightning');
+    playSound('thunder');
   }
 
   lightningSpinBtn.addEventListener('click', dealLightningCard);
