@@ -482,6 +482,41 @@
   .modal-verdict .ding { color: #b3ff8f; font-weight: 800; }
   .modal-verdict .bzzt { color: var(--buzz); font-weight: 800; }
 
+  .answer-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .answer-incorrect {
+    background-color: rgba(255, 82, 82, 0.15);
+    border-left: 4px solid var(--buzz);
+    color: var(--cream);
+  }
+
+  .answer-correct {
+    background-color: rgba(179, 255, 143, 0.15);
+    border-left: 4px solid #b3ff8f;
+    color: var(--cream);
+  }
+
+  .answer-icon {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .answer-incorrect .answer-icon { color: var(--buzz); }
+  .answer-correct .answer-icon { color: #b3ff8f; }
+
+  .answer-text { flex: 1; }
+
   .modal-close-btn {
     display: block;
     margin: 0 auto;
@@ -1268,26 +1303,7 @@
     modalOptions.style.display = '';
     modalVerdict.innerHTML = '';
     modalOptions.innerHTML = '';
-
-    // Optional A/B/C/D item list (odd-one-out clues).
-    modalItems.innerHTML = '';
-    if (q.items) {
-      modalItems.style.display = '';
-      var letters = ['A', 'B', 'C', 'D'];
-      q.items.forEach(function (it, i) {
-        var li = document.createElement('li');
-        var lt = document.createElement('span');
-        lt.className = 'letter';
-        lt.textContent = letters[i];
-        var tx = document.createElement('span');
-        tx.textContent = it;
-        li.appendChild(lt);
-        li.appendChild(tx);
-        modalItems.appendChild(li);
-      });
-    } else {
-      modalItems.style.display = 'none';
-    }
+    modalItems.style.display = 'none';
 
     if (q.type === 'open') {
       // No choices — reveal the answer, then self-judge.
@@ -1300,11 +1316,13 @@
       modalOptions.appendChild(revealBtn);
     } else {
       modalSeeAnswer.style.display = 'block';
-      q.options.forEach(function (opt, i) {
+      // Use items as button text if available (odd-one-out clues); otherwise use options.
+      var buttonTexts = q.items || q.options;
+      buttonTexts.forEach(function (txt, i) {
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'option-btn';
-        btn.textContent = opt;
+        btn.textContent = txt;
         btn.addEventListener('click', function () { answered(i === q.correct, q, i); });
         modalOptions.appendChild(btn);
       });
@@ -1335,10 +1353,17 @@
     playSound(isCorrect ? 'applause' : 'bzzt');
     showReaction(isCorrect ? 'applause' : 'x');
 
-    var tail = '<strong>' + (isCorrect ? '+' : '-') + fmtDollars(q.value) + '</strong>';
-    modalVerdict.innerHTML = (isCorrect
-      ? '<span class="ding">You got it!</span> ' + q.reveal + ' ' + tail
-      : '<span class="bzzt">BZZZT.</span> You chose: <strong>' + q.options[clickedIndex] + '</strong>. Correct: <strong>' + q.options[q.correct] + '</strong>. ' + q.reveal + ' ' + tail);
+    var buttonTexts = q.items || q.options;
+    var userChoice = buttonTexts[clickedIndex];
+    var correctChoice = buttonTexts[q.correct];
+    var scoreText = '<strong>' + (isCorrect ? '+' : '-') + fmtDollars(q.value) + '</strong>';
+
+    if (isCorrect) {
+      modalVerdict.innerHTML = '<div class="answer-container answer-correct"><div class="answer-icon">✓</div><div class="answer-text">' + userChoice + '</div></div>' + q.reveal + ' ' + scoreText;
+    } else {
+      modalVerdict.innerHTML = '<div class="answer-container answer-incorrect"><div class="answer-icon">✕</div><div class="answer-text">' + userChoice + '</div></div>' +
+        '<div class="answer-container answer-correct"><div class="answer-icon">✓</div><div class="answer-text">' + correctChoice + '</div></div>' + q.reveal + ' ' + scoreText;
+    }
 
     updateBoardMeter();
   }
