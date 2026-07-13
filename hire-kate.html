@@ -335,6 +335,14 @@
     color: var(--gold);
   }
 
+  .modal-category, .modal-value {
+    display: none;
+  }
+
+  .modal-category.show, .modal-value.show {
+    display: block;
+  }
+
   .modal-x {
     position: absolute;
     top: 14px;
@@ -822,7 +830,7 @@
     <div class="rail-title">
       <h1 class="display">Kate!</h1>
     </div>
-    <p class="tagline">The game show that answers one life-altering question: why should you hire Kate?</p>
+    <p class="tagline">The game show that answers one life-altering question: why&nbsp;should you hire Kate?</p>
     <div class="bulb-row bottom" aria-hidden="true"></div>
   </header>
 
@@ -896,7 +904,7 @@
     <ul class="modal-items" id="modalItems"></ul>
     <div class="modal-options" id="modalOptions"></div>
     <div class="modal-verdict" id="modalVerdict" aria-live="polite"></div>
-    <button class="modal-close-btn" id="modalCloseBtn" type="button">Next</button>
+    <button class="modal-close-btn" id="modalCloseBtn" type="button">Back to board</button>
     <button class="modal-seeanswer-btn" id="modalSeeAnswer" type="button">See answer</button>
   </div>
 </div>
@@ -1082,6 +1090,24 @@
       reveal: "Sentence case is easier to scan because it follows the way people naturally read and write. It reduces visual noise and creates clearer, more predictable text patterns, which makes content more accessible — especially for people who benefit from that consistency."
     },
     {
+      category: "THE AISLE",
+      value: 200,
+      type: "mc",
+      question: "There are times AI is the right answer, and other times it's not. Which of these did Kate solve primarily with an AI-driven solution?",
+      options: ["What is interpreting government regulations for the Paycheck Protection Program?", "What is stopping a sales-driven cross-sell campaign that broke the app's IA?", "What is coaching more than 100 designers to write better UI content?", "What is running A/B tests on promotional placements?"],
+      correct: 2,
+      reveal: "Kate used AI to scale content guidelines and standards, not deterministic work. The other three problems were solved through product design, experimentation, and systems thinking. The AI coach helped more than 100 people make better content decisions, so content designers could focus on deeper-level problems."
+    },
+    {
+      category: "THE AISLE",
+      value: 300,
+      type: "mc",
+      question: "Kate raised a red flag when she noticed that each team working on Paychex Assistant was creating its own way of organizing information, known as this. Biologists have used this concept for centuries.",
+      options: ["What is a knowledge base?", "What is content management?", "What is information architecture?", "What is taxonomy?"],
+      correct: 3,
+      reveal: "Taxonomy is the system for classifying and organizing information. Because AI thrives on consistency, Kate alerted Product Management of the risk and brought together UX, Product, and Knowledge Management to define a centralized approach in the future."
+    },
+    {
       category: "ALL THINGS EQUAL",
       value: 100,
       type: "mc",
@@ -1222,16 +1248,20 @@
   }
 
   function collapseToResult() {
-    // After an answer, hide the clue and choices so only the response + Next remain.
+    // After an answer, hide the clue and choices so only the response + Back to board remain.
     modalQuestion.style.display = 'none';
     modalItems.style.display = 'none';
     modalOptions.style.display = 'none';
+    modalCategory.classList.remove('show');
+    modalValue.classList.remove('show');
   }
 
   function showQuestion(q, idx) {
     if (q.category === 'THE AISLE') modalCategory.innerHTML = "THE <span style='white-space: nowrap'>&quot;AI&quot;SLE</span>";
     else modalCategory.textContent = q.category;
+    modalCategory.classList.add('show');
     modalValue.textContent = '$' + q.value;
+    modalValue.classList.add('show');
     renderModalScore();
     modalQuestion.textContent = q.question;
     modalQuestion.style.display = '';
@@ -1281,6 +1311,8 @@
     }
 
     modal.classList.add('show');
+    var modalContentEl = document.querySelector('.modal-content');
+    if (modalContentEl) setTimeout(function() { modalContentEl.scrollTop = 0; }, 0);
     modalCloseBtn.focus();
   }
 
@@ -1303,10 +1335,10 @@
     playSound(isCorrect ? 'applause' : 'bzzt');
     showReaction(isCorrect ? 'applause' : 'x');
 
-    var tail = ' <strong>' + (isCorrect ? '+' : '-') + fmtDollars(q.value) + '</strong>';
+    var tail = '<strong>' + (isCorrect ? '+' : '-') + fmtDollars(q.value) + '</strong>';
     modalVerdict.innerHTML = (isCorrect
-      ? '<span class="ding">DING DING DING!</span> ' + q.reveal
-      : '<span class="bzzt">BZZZT.</span> The answer: <strong>' + q.options[q.correct] + '</strong>. ' + q.reveal) + tail;
+      ? '<span class="ding">You got it!</span> ' + q.reveal + ' ' + tail
+      : '<span class="bzzt">BZZZT.</span> You chose: <strong>' + q.options[clickedIndex] + '</strong>. Correct: <strong>' + q.options[q.correct] + '</strong>. ' + q.reveal + ' ' + tail);
 
     updateBoardMeter();
   }
