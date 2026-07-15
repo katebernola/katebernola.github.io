@@ -612,11 +612,12 @@
     padding: 40px 24px;
     text-align: center;
     box-shadow: 0 14px 40px rgba(0,0,0,0.45);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 280px;
+  }
+
+  .lightning-placeholder {
+    font-size: 24px;
+    color: #cdb4ff;
+    margin: 0;
   }
 
   .lightning-card-display {
@@ -881,7 +882,7 @@
   <p class="credit-line">A joint production from Claude Studios and 21st Century Kate</p>
 
   <div class="sound-row">
-    <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">Sound: off</button>
+    <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true">Sound: on</button>
   </div>
 
   <p class="host-line">You've seen the <a href="index.html">serious version</a>. This page is the fun stuff.</p>
@@ -892,10 +893,10 @@
       <p class="act-kicker">Round one</p>
       <h2 id="round1-title" class="display">KATE-GORIES!</h2>
       <p class="act-sub">Pick a category, pick a value.</p>
+      <p class="meter" id="boardMeter" aria-live="polite"></p>
     </div>
 
     <div class="board" id="board" role="grid"></div>
-    <p class="meter" id="boardMeter" aria-live="polite"></p>
   </section>
 
   <!-- ================= ROUND 2: LIGHTNING ================= -->
@@ -903,11 +904,10 @@
     <div class="act-head">
       <p class="act-kicker">Round two</p>
       <h2 id="round2-title" class="display">Lightning round</h2>
-      <p class="act-sub">One card at a time. Dealer's choice.</p>
     </div>
 
     <div class="lightning-spinner">
-      <div class="lightning-card-display" id="lightningCardDisplay" aria-live="polite"></div>
+      <div class="lightning-card-display" id="lightningCardDisplay" aria-live="polite"><p class="lightning-placeholder">One card at a time. Dealer's choice.</p></div>
       <button class="spin-btn" id="lightningSpinBtn" type="button">Hit me</button>
     </div>
 
@@ -964,9 +964,9 @@
   var AudioCtx = window.AudioContext || window.webkitAudioContext;
   var synth = AudioCtx ? new AudioCtx() : null;
 
-  // Sound off by default; remember the choice across visits.
-  var soundEnabled = false;
-  try { soundEnabled = localStorage.getItem('kate-sound') === 'on'; } catch (e) {}
+  // Sound on by default; remember the choice across visits.
+  var soundEnabled = true;
+  try { soundEnabled = localStorage.getItem('kate-sound') !== 'off'; } catch (e) {}
 
   var soundToggle = document.getElementById('soundToggle');
   function renderSoundToggle() {
@@ -990,6 +990,8 @@
   /* Sound synthesis */
   function playSound(type) {
     if (!soundEnabled || !synth) return;
+    // Browsers start the AudioContext suspended until a user gesture.
+    if (synth.state === 'suspended') { synth.resume(); }
     var now = synth.currentTime;
     try {
       if (type === 'thunder') {
@@ -1084,7 +1086,9 @@
     { cat: "fact",  text: "Kate stood 10 feet from Joe Montana on the sideline of one of the top 25 college football games of all time.", attr: "It was raining, and we lost." },
     { cat: "fact",  text: "Nobody has ever resigned while reporting to Kate.", attr: "Not bad for 4 years.", link: "team.html" },
     { cat: "fact",  text: "Her work earned a Brandon Hall Gold for AI for business impact.", attr: "And 7 other awards.", link: "me.html" },
-    { cat: "fact",  text: "Kate transformed two teams: Help Center writing to content design. Video production to multimedia design.", attr: "Using middle school math.", link: "index.html#step-1" },
+    { cat: "fact",  text: "Kate transformed three design practices.", attr: "Using middle school math.", link: "index.html#step-1" },
+    { cat: "fact",  text: "Kate was the programming director for a major local film festival.", attr: "It celebrates women in film." },
+    { cat: "fact",  text: "Kate was elected to a board position in her Ultimate Frisbee organization.", attr: "She represented the beer league." },
 
 
     { cat: 'quote', text: '"Kate is a fantastic leader who not only truly cares about the quality of deliverables, but also the people behind the deliverables."', attr: '&mdash; <a href="https://www.linkedin.com/in/bekka-burton/">Bekka</a>' },
@@ -1236,7 +1240,7 @@
     var h = document.createElement('div');
     h.className = 'board-header';
     if (cat === 'THE AISLE') {
-      h.innerHTML = "THE <span style='white-space: nowrap'>&quot;<span style='color: var(--gold)'>AI</span>&quot;SLE</span>";
+      h.innerHTML = "THE&nbsp;<span style='white-space: nowrap'>&quot;<span style='color: var(--gold)'>AI</span>&quot;SLE</span>";
     } else {
       h.textContent = cat;
     }
@@ -1308,7 +1312,7 @@
   }
 
   function showQuestion(q, idx) {
-    if (q.category === 'THE AISLE') modalCategory.innerHTML = "THE <span style='white-space: nowrap'>&quot;AI&quot;SLE</span>";
+    if (q.category === 'THE AISLE') modalCategory.innerHTML = "THE&nbsp;<span style='white-space: nowrap'>&quot;AI&quot;SLE</span>";
     else modalCategory.textContent = q.category;
     modalCategory.classList.add('show');
     modalValue.textContent = '$' + q.value;
