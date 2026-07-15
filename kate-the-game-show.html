@@ -853,7 +853,7 @@
       <p class="meter" id="boardMeter" aria-live="polite"></p>
     </div>
 
-    <div class="board" id="board" role="grid"></div>
+    <div class="board" id="board"></div>
   </section>
 
   <!-- ================= ROUND 2: LIGHTNING ================= -->
@@ -896,9 +896,9 @@
 
 <!-- Question Modal -->
 <div class="modal-overlay" id="modal">
-  <div class="modal-content">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalQuestion">
     <button class="modal-x" id="modalX" type="button" aria-label="Close without answering">&times;</button>
-    <div class="double-banner" id="doubleBanner" style="display: none"><span class="dd-title">Double down!</span>This clue is worth double.</div>
+    <div class="double-banner" id="doubleBanner" style="display: none" aria-live="polite"><span class="dd-title">Double down!</span>This clue is worth double.</div>
     <div class="modal-question" id="modalQuestion"></div>
     <div class="modal-options" id="modalOptions"></div>
     <button class="modal-seeanswer-btn" id="modalSeeAnswer" type="button">Skip to answer</button>
@@ -1295,6 +1295,7 @@
       var tile = document.createElement('button');
       tile.type = 'button';
       tile.className = 'board-tile';
+      tile.setAttribute('aria-label', cat + ', $' + val);
 
       // Cells with no clue yet (THE "AI"SLE $200/$300) render as disabled placeholders.
       if (qi === -1) {
@@ -1421,9 +1422,31 @@
     boardMeter.innerHTML = 'Final score: <span class="display">' + fmtDollars(boardScore) + '</span><br>' + line;
   }
 
-  modalCloseBtn.addEventListener('click', function () { modal.classList.remove('show'); });
-  modalX.addEventListener('click', function () { modal.classList.remove('show'); });
+  function closeModal() {
+    modal.classList.remove('show');
+    // Return focus to the tile that opened the dialog; if it's now resolved
+    // (disabled), fall back to the next playable tile, then the board itself.
+    var target = (currentTile && !currentTile.disabled) ? currentTile : null;
+    if (!target) target = board.querySelector('.board-tile:not([disabled])');
+    if (!target) { board.setAttribute('tabindex', '-1'); target = board; }
+    if (target && typeof target.focus === 'function') target.focus();
+  }
+
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalX.addEventListener('click', closeModal);
   modalSeeAnswer.addEventListener('click', skipToAnswer);
+
+  // Dialog keyboard support: Escape closes; Tab is trapped within the modal.
+  modal.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var focusable = modal.querySelectorAll('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])');
+    var visible = Array.prototype.filter.call(focusable, function (el) { return el.offsetParent !== null; });
+    if (!visible.length) return;
+    var first = visible[0], last = visible[visible.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   /* Lightning round spinner — one random card per "Hit me". */
   var lightningDisplay = document.getElementById('lightningCardDisplay');
