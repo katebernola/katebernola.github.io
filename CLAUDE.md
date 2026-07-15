@@ -31,7 +31,7 @@ Minimal, modern design inspired by Stripe, Linear, and Intercom. Generous whites
 - Diagram strokes and arrows: #64748b (passes 3:1 non-text contrast on #f8f9fa; too light for text on gray backgrounds — never use it for text)
 - Decorative borders: #e2e8f0 (exempt from contrast rules; never load-bearing)
 - Black: #000000
-- Case study accent: #15803d green, used only for case-study tags, badges, and outline boxes (passes 4.5:1 text contrast on white)
+- Case study accent: #6B4C9A purple, used only for case-study tags, badges, subheads, and outline boxes (passes 4.5:1 text contrast on white at 6.72:1)
 - No other color accents; use neutral grays and black for hierarchy and emphasis
 
 ### Typography
@@ -39,8 +39,11 @@ Minimal, modern design inspired by Stripe, Linear, and Intercom. Generous whites
 - H1: 48px, weight 700, line-height 1.2
 - H2: 32px, weight 700, line-height 1.3
 - H3: 24px, weight 600, line-height 1.3
+- Subhead: 20px, weight 600, accent purple, line-height 1.3 — labels a sub-section inside a case study (e.g. "The math", "Results"). Sits below H3. Sentence case, never uppercase.
 - Body: 18px, weight 400, line-height 1.6
 - Small: 16px, weight 400, line-height 1.5
+
+A subhead must never render smaller than the body text it introduces — that inverts the hierarchy and reads like a caption. No uppercase or all-caps eyebrow labels anywhere; distinguish a label by size, weight, and color instead.
 
 ### Visual constraints
 - No gradients

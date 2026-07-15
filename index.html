@@ -262,7 +262,7 @@
     background: #f8f9fa;
     padding: 24px 32px;
     margin: 24px 0 32px;
-    max-width: 480px;
+    max-width: 360px;
   }
 
   .eq-group {
@@ -355,10 +355,11 @@
   }
 
   .cs-label {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: #6B4C9A;
     margin: 24px 0 8px;
+    line-height: 1.3;
   }
 
   .case-study .eq-group,
@@ -414,36 +415,25 @@
     font-weight: 700;
   }
 
-  .roi-table {
-    width: 100%;
-    border-collapse: collapse;
+  .key-insight {
+    border-left: 3px solid #6B4C9A;
+    padding-left: 20px;
+    margin: 40px 0 0;
   }
 
-  .roi-table tr {
-    border-bottom: 1px solid #e2e8f0;
+  .key-insight .ki-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6B4C9A;
+    margin: 0 0 4px;
   }
 
-  .roi-table tr:last-child {
-    border-bottom: none;
-  }
-
-  .roi-table td {
-    padding: 12px 0;
-    text-align: left;
-  }
-
-  .roi-table td:first-child {
-    padding-right: 24px;
-  }
-
-  .roi-table tr:last-child td:first-child {
-    font-size: 18px;
+  .key-insight .ki-text {
+    font-size: 20px;
     font-weight: 600;
     color: #1e293b;
-  }
-
-  .roi-table tr:last-child td:last-child {
-    font-size: 18px;
+    line-height: 1.4;
+    margin: 0;
   }
 
   .impact-list {
@@ -582,7 +572,6 @@
         <p class="step-title"><span class="sr-only">Step 2: </span>Find surefire wins.</p>
         <p class="step-line">Let your people shine.</p>
         <p class="step-line">Fuel demand.</p>
-        <p class="cs-badge">Case study</p>
       </a>
       <a class="step-card" href="#step-3">
         <p class="step-num" aria-hidden="true">3</p>
@@ -621,7 +610,7 @@
       <div class="equation">
         <p class="eq-line">16 hours to create</p>
         <p class="eq-line"><span class="eq-op">×</span>$120 per resource-hour</p>
-        <p class="eq-answer">$1920 per article</p>
+        <p class="eq-answer">$1920 per video</p>
       </div>
       <div class="equation">
         <p class="eq-line">$12 savings per contact avoided</p>
@@ -635,19 +624,18 @@
       </div>
       </div>
     <p class="cs-label">Current state</p>
-    <div class="eq-group">
-      <div class="equation">
-        <p class="eq-line">$1920 per video</p>
-        <p class="eq-line"><span class="eq-op">÷</span>$1.20 max value per view</p>
-        <p class="eq-answer">1600 views to break even</p>
+    <div class="equation">
+      <div class="eq-row">
+        <span class="eq-expr">Help Center videos</span>
+        <span class="eq-result">237</span>
       </div>
-
-      <div class="equation">
-        <table class="roi-table">
-          <tr><td>Help Center videos</td><td><strong>237</strong></td></tr>
-          <tr><td>with 1600+ annual reviews</td><td><strong>12</strong></td></tr>
-          <tr><td><strong>Videos below ROI threshold</strong></td><td><strong>95%</strong></td></tr>
-        </table>
+      <div class="eq-row">
+        <span class="eq-expr">Videos with 1600+ annual views</span>
+        <span class="eq-result">12</span>
+      </div>
+      <div class="eq-row eq-total">
+        <span class="eq-expr">Videos below ROI threshold</span>
+        <span class="eq-result">95%</span>
       </div>
     </div>
     <p>Each video took many hours to create. About half of that time came from people outside my team.</p>
@@ -663,7 +651,7 @@
     <ul>
       <li>We stopped taking requests for these videos.</li>
       <li>Once each quarter, we looked at the most-read articles without videos.</li>
-      <li>We only made a video if the number show it might be worth it. </li>
+      <li>We only made a video if the numbers showed it might be worth it.</li>
     </ul>
 
     <p class="cs-label">Results</p>
@@ -677,7 +665,10 @@
       <li><strong>Multimedia design:</strong> One 30-minute conversation paved the way to return demo videos to the original producers. All we had to do was create a reusable template. </li>
     </ul>
 
-    <p><strong>Key insight:</strong>If a conversation doesn't solve it, show the math.</p>
+    <div class="key-insight">
+      <p class="ki-label">Key insight</p>
+      <p class="ki-text">If a conversation doesn't solve it, show the math.</p>
+    </div>
   </section>
 
   <section id="step-2" class="step">
@@ -701,7 +692,10 @@
       <li>Demand for content design grew across product teams.</li>
     </ul>
 
-    <p><strong>Key insight:</strong> Credibility comes from solving important problems, not from taking every request.</p>
+    <div class="key-insight">
+      <p class="ki-label">Key insight</p>
+      <p class="ki-text">Credibility comes from solving important problems, not from taking every request.</p>
+    </div>
   </section>
 
   <section id="step-3" class="step">
@@ -720,7 +714,7 @@
     <p>We couldn't hire more designers. </p>
 	<p>Instead, we decided to make their expertise available to everyone.</p>
 
-        <p class="cs-label">The first agent:  UI Writing Assistant</p>
+        <p class="cs-label">The first agent: UI Writing Assistant</p>
     <p>Like everyone else, our first instinct was to try AI. We loaded our standards into an AI writing agent and hoped it would coach people through creating UI content.</p>
     <p>The results were disappointing.</p>
     <p>The AI wrote closer to our voice than other people did, but it still made poor decisions. It missed character limits. It didn't understand when someone was using the wrong component. It couldn't explain why one approach was better than another. And it missed a lot.</p>
@@ -745,7 +739,7 @@
       <li>Recommend better components</li>
       <li>Tell people when they needed to consult a content designer</li>
     </ul>
-    <p>This wasn't a writing agent; it was a design coach. And it worked. Product designers produce stronger copy. Change management messaging prioritized risk mitigation. Marketing messaging led with value.</p>
+    <p>This wasn't a writing agent; it was a design coach. And it worked. Product designers produced stronger copy. Change management messaging prioritized risk mitigation. Marketing messaging led with value.</p>
 
         <p class="cs-label">Results</p>
     <p>More than 100 people across UX and partner organizations adopted the AI coach.</p>
@@ -755,11 +749,13 @@
     <h3>Other ways it played out</h3>
     <ul>
       <li><strong>Product design</strong>: Before creating a new solution, we began with a simple plan with elements that already existed. As we upgraded pieces, we always had something ready-to-ship. This enabled us to pivot on a dime, while also leaving dev with something to code.</li>
-    <li><strong>Multimedia design</strong>: A reusable illustration library let designers assemble graphics from standardized pieces instead of creating every illustration from scratch.</p>
+    <li><strong>Multimedia design</strong>: A reusable illustration library let designers assemble graphics from standardized pieces instead of creating every illustration from scratch.</li>
 </ul>
    
-    <h4>Key insight</h4>
-    <p>Don't scale people; scale expertise.</p>
+    <div class="key-insight">
+      <p class="ki-label">Key insight</p>
+      <p class="ki-text">Don't scale people; scale expertise.</p>
+    </div>
   </section>
 
   <section id="step-4" class="step">
@@ -777,15 +773,14 @@
 
     <h3>Ways it played out</h3>
     <ul>
-      <li>Content designers went from ticket-takers to embedded partners on every product team, connected by a community of practice.</a></li>
-      </li>
+      <li>Content designers went from ticket-takers to embedded partners on every product team, connected by a community of practice.</li>
       <li>Product designers shifted from spending weeks in execution to providing data-based arguments that influenced the roadmap.</li>
-      </li>
-      <li>Multimedia design shifted from asset-creation to collaborative partnership, enabling the team to shape when and how multimedia was used. </a></li>
-      </li>
+      <li>Multimedia design shifted from asset-creation to collaborative partnership, enabling the team to shape when and how multimedia was used.</li>
     </ul>
-    <h4>Key insight</h4>
-    <p>Leaders can create the conditions for change, but the team has to own it.</p>
+    <div class="key-insight">
+      <p class="ki-label">Key insight</p>
+      <p class="ki-text">Leaders can create the conditions for change, but the team has to own it.</p>
+    </div>
   </section>
 
  
