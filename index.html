@@ -327,6 +327,7 @@
     padding: 0 32px 4px 0;
   }
 
+
   .roi-table td {
     padding: 2px 32px 2px 0;
   }
@@ -411,6 +412,38 @@
   .eq-total .eq-result {
     font-size: 24px;
     font-weight: 700;
+  }
+
+  .roi-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .roi-table tr {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .roi-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .roi-table td {
+    padding: 12px 0;
+    text-align: left;
+  }
+
+  .roi-table td:first-child {
+    padding-right: 24px;
+  }
+
+  .roi-table tr:last-child td:first-child {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .roi-table tr:last-child td:last-child {
+    font-size: 18px;
   }
 
   .impact-list {
@@ -576,82 +609,75 @@
       </div>
     </div>
 
-    <h3>The move</h3>
-    <p>Every team has some grunt work. My team had all grunt work. Middle-school math proved it didn't make cents.</p>
-
     <div class="case-study">
     <p class="cs-tag">Case study</p>
-    <h3>Help Center articles</h3>
+    <h3>Stopping creation of Help Center videos</h3>
+    <p>When I inherited the multimedia team, it was "the video team." The designers spent more than half their time making videos that mirrored Help Center articles. No one had ever done the math to analyze the actual value.</p>
 
     <p class="cs-label">The math</p>
+<p>Ready for a trip back to your 5th grade math class?</p>
+
     <div class="eq-group">
       <div class="equation">
-        <p class="eq-line">8 hours to create</p>
+        <p class="eq-line">16 hours to create</p>
         <p class="eq-line"><span class="eq-op">×</span>$120 per resource-hour</p>
-        <p class="eq-answer">$960 per article</p>
+        <p class="eq-answer">$1920 per article</p>
       </div>
       <div class="equation">
-        <p class="eq-line">$24 savings per contact avoided</p>
-        <p class="eq-line"><span class="eq-op">×</span>5% chance one article view prevents a contact</p>
+        <p class="eq-line">$12 savings per contact avoided</p>
+        <p class="eq-line"><span class="eq-op">×</span>10% chance one view prevents a contact</p>
         <p class="eq-answer">$1.20 max value per view</p>
       </div>
       <div class="equation">
-        <p class="eq-line">$960 per article</p>
+        <p class="eq-line">$1920 per video</p>
         <p class="eq-line"><span class="eq-op">÷</span>$1.20 max value per view</p>
-        <p class="eq-answer">800 views to break even</p>
+        <p class="eq-answer">1600 views to break even</p>
+      </div>
+      </div>
+    <p class="cs-label">Current state</p>
+    <div class="eq-group">
+      <div class="equation">
+        <p class="eq-line">$1920 per video</p>
+        <p class="eq-line"><span class="eq-op">÷</span>$1.20 max value per view</p>
+        <p class="eq-answer">1600 views to break even</p>
+      </div>
+
+      <div class="equation">
+        <table class="roi-table">
+          <tr><td>Help Center videos</td><td><strong>237</strong></td></tr>
+          <tr><td>with 1600+ annual reviews</td><td><strong>12</strong></td></tr>
+          <tr><td><strong>Videos below ROI threshold</strong></td><td><strong>95%</strong></td></tr>
+        </table>
       </div>
     </div>
-
-    <p class="cs-label">The reality</p>
-    <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">Help Center articles</span>
-        <span class="eq-result">1,203</span>
-      </div>
-      <div class="eq-row">
-        <span class="eq-expr">Articles with 800+ views annually</span>
-        <span class="eq-result">382</span>
-      </div>
-      <div class="eq-row">
-        <span class="eq-expr">Articles worth the cost to write</span>
-        <span class="eq-result">32%</span>
-      </div>
-      <div class="eq-row eq-total">
-        <span class="eq-expr">Articles not worth the cost to write</span>
-        <span class="eq-result">68%</span>
-      </div>
-    </div>
-
-    <p class="cs-label">The bill for the 68%</p>
+    <p>Each video took many hours to create. About half of that time came from people outside my team.</p>
     <div class="equation">
       <table class="roi-table">
-        <tr><th scope="col">Org</th><th scope="col">Hours</th><th scope="col">Money</th></tr>
-        <tr><td>Company</td><td>6,568</td><td>$788k</td></tr>
-        <tr><td>Content design team</td><td>3,284</td><td>$394k</td></tr>
+        <tr><th scope="col">Organization</th><th scope="col">Hours</th><th scope="col">Dollars</th></tr>
+        <tr><td>Company</td><td>3,600</td><td>$432k</td></tr>
+        <tr><td>Team</td><td>1,800</td><td>$216k</td></tr>
       </table>
     </div>
 
-    <p class="cs-label">The fix</p>
+    <p class="cs-label">What we changed</p>
     <ul>
-      <li>Content designers set the MVP article list for each release. 1 hour per sprint, 26 a year.</li>
-      <li>No search or chat data showing demand? Rejected.</li>
-      <li>Stopped article types where virtually none met the bar: release notes, product overviews, explainers.</li>
+      <li>We stopped taking requests for these videos.</li>
+      <li>Once each quarter, we looked at the most-read articles without videos.</li>
+      <li>We only made a video if the number show it might be worth it. </li>
     </ul>
 
-    <p class="cs-label">The result</p>
-    <p>New articles dropped 90%: from 20 per sprint to 2. We archived more than we fixed.</p>
-    <p><strong>When users go to Help Center, they want one thing: step-by-step instructions. And that's it.</strong></p>
-    <p>Our UX research team had seen this for years. The numbers finally made it land. And step-by-step articles take about 4 hours, not 8.</p>
+    <p class="cs-label">Results</p>
+    <p>Before, the team created 3 videos per sprint. After, they produced 4 videos over the next few years. One was a C-suite ask, but the other three had data to support them.</p>
     </div>
 
-    <h3>More work we stopped</h3>
+    <h3>Other ways it played out</h3>
     <ul>
-      <li><strong>Multimedia team:</strong> dropped 200+ Help Center videos. Only 15 earned their place.</li>
-      <li><strong>Multimedia team:</strong> sent demo video production back to marketing, with a template that made it easy to do well.</li>
-      <li><strong>Product design:</strong> stopped chasing error edge cases. Ship a generic error; invest only where trackers prove it happens.</li>
+      <li><strong>Product design:</strong> We stopped designing for rare error cases. The PO shipped a generic message first and only invested more if the data showed it was needed.</li>
+      <li><strong>Content design:</strong> Help Center articles made up the bulk of the Content Design team's work. I applied the same break-even math we used for Help Center videos. We cut production and upkeep by 90%.</li>
+      <li><strong>Multimedia design:</strong> One 30-minute conversation paved the way to return demo videos to the original producers. All we had to do was create a reusable template. </li>
     </ul>
 
-    <p><strong>Principle:</strong> Show the math. When two-thirds of your output costs more than it returns, stopping is the obvious call.</p>
+    <p><strong>Key insight:</strong>If a conversation doesn't solve it, show the math.</p>
   </section>
 
   <section id="step-2" class="step">
@@ -663,70 +689,19 @@
       </div>
     </div>
 
-    <h3>The move</h3>
-    <p>So people are bored. Now what? Find projects where the need is so obvious, sending in an expert almost feels like cheating.</p>
+    <h3>What I do</h3>
+    <p>Seek out projects where the need is so obvious, sending in an expert feels like cheating.</p>
 
-    <div class="case-study">
-    <p class="cs-tag">Case study</p>
-    <h3>The retirement cross-sell test</h3>
-    <p>Not every surefire win is easy. This one was a fight &mdash; but with the data on my side, the outcome was never in doubt. A sales team was building an ad into the left navigation of a product companies pay thousands for, and it was already shipping. Most of the people who'd see it weren't prospects. They were payroll customers trying to run payroll.</p>
 
-    <p class="cs-label">The conflict</p>
-    <p>The plan added a new primary nav item labeled "Retirement," with a dot marking new content. It read as another product. Clicking it opened what was functionally an ad, routing users out of the platform to book a sales call.</p>
-
-    <div class="visual-figure">
-      <svg viewBox="0 0 640 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Redrawn wireframe of the platform. A left navigation column lists product areas: Dashboard, Payroll, Employees, Reports, Taxes. Below them sits a new item labeled Retirement with a dot marking new content, drawn in the identical style so it looks like another product. A dashed outline and a note point to it: a promotion drawn as a product. A second note reads: clicking it left the platform for a sales page." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
-        <rect x="20" y="20" width="600" height="360" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
-        <rect x="20" y="20" width="600" height="40" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
-        <circle cx="44" cy="40" r="5" fill="#e2e8f0"/>
-        <rect x="60" y="35" width="90" height="10" rx="2" fill="#e2e8f0"/>
-        <rect x="20" y="60" width="170" height="320" fill="#f8f9fa" stroke="#64748b" stroke-width="1"/>
-        <text x="44" y="100" font-size="15" fill="#1e293b">Dashboard</text>
-        <text x="44" y="140" font-size="15" fill="#1e293b">Payroll</text>
-        <text x="44" y="180" font-size="15" fill="#1e293b">Employees</text>
-        <text x="44" y="220" font-size="15" fill="#1e293b">Reports</text>
-        <text x="44" y="260" font-size="15" fill="#1e293b">Taxes</text>
-        <rect x="28" y="288" width="154" height="34" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="4 3"/>
-        <text x="44" y="310" font-size="15" fill="#1e293b">Retirement</text>
-        <circle cx="150" cy="305" r="5" fill="#1e293b"/>
-        <rect x="214" y="84" width="180" height="14" rx="2" fill="#e2e8f0"/>
-        <rect x="214" y="112" width="360" height="10" rx="2" fill="#eef1f4"/>
-        <rect x="214" y="132" width="360" height="10" rx="2" fill="#eef1f4"/>
-        <rect x="214" y="152" width="300" height="10" rx="2" fill="#eef1f4"/>
-        <rect x="214" y="196" width="170" height="90" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
-        <rect x="404" y="196" width="170" height="90" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
-        <line x1="182" y1="305" x2="214" y2="330" stroke="#64748b" stroke-width="1"/>
-        <text x="214" y="336" font-size="13" fill="#475569">A promotion, drawn as a product.</text>
-        <text x="214" y="356" font-size="13" fill="#475569">Clicking it left the platform for a sales page.</text>
-        <text x="20" y="404" font-size="12" fill="#475569">Redrawn wireframe. Not a real screen capture.</text>
-      </svg>
-      <p class="visual-caption">The proposed treatment changed the platform's information architecture. A promotion was disguised as a product.</p>
-    </div>
-
-    <p class="cs-label">The evidence</p>
-    <p>Under 1% of users who saw it clicked through and finished. Of the ones who clicked, 78% closed it immediately. That's not a conversion problem &mdash; it's a trust problem. People thought they were clicking a product.</p>
-
-    <p class="cs-label">The test</p>
-    <p>Instead of arguing about taste, I designed four alternatives and ran all five at once as an A/B/C/D/E test. I reframed the message from a pitch ("free retirement plan, tax credits") to a compliance notice ("no retirement deductions detected &mdash; you may be out of California compliance"), set display rules so it never shadowed a real payroll message, and added a dismissal survey to learn why people hid it.</p>
-
-    <p class="cs-label">The surprise</p>
-    <p>The treatment that reached the fewest people won: a pop-up shown only at payroll submit. Context beat exposure. And the survey nobody asked for caught a flaw the business couldn't see &mdash; about a third of respondents already had retirement. The targeting had missed a state-specific earnings code, so the exclusion logic was quietly wrong.</p>
-
-    <p class="cs-label">The line</p>
-    <p>The business then asked for the list of users who opened the ad and closed it, on the logic that opening it signals interest. I refused, and won executive backing: a company pursuing product-led growth can't punish users &mdash; with spam or cold calls &mdash; for exploring a promotion it placed in its own interface.</p>
-
-    <p class="cs-label">The result</p>
-    <p>148 wins and over $520K in annual recurring revenue, with the campaign still running. The revenue wasn't the point &mdash; it was the proof. The user-protective choice and the revenue-maximizing choice turned out to be the same choice.</p>
-    </div>
-
-    <h3>More wins</h3>
+    <h3>Ways it played out</h3>
     <ul>
-      <li>A 401(k) rebalancing flow had failed three rounds of usability testing. My designer reworked it, then rebuilt the retirement income estimator around how users think. Retirement made him their full-time content designer.</li>
-      <li>A payroll team asked for "content support" on a workflow nobody could explain. I proved the real issue was system design, and the team reprioritized toward the project that needed UX early.</li>
+      <li><strong>Multimedia design</strong>: When we completely overhauled our accountant portal, the content designer requested a few images. I embedded a multimedia designer on the project, enabling him to define visual hierarchy for the new portal, and suggest improvements that other designers didn't know were possible.</li>
+      <li><strong>Content design</strong>: A 401(k) rebalancing flow had failed three rounds of usability testing. My designer reworked it, then rebuilt the retirement income estimator around how users think. Retirement made him their full-time content designer.</li>
+      <li><strong>Content design</strong>: A payroll team asked for "content support" on a workflow nobody could explain. I proved the real issue was system design, and the team reprioritized toward the project that needed UX early.</li>
       <li>Demand for content design grew across product teams.</li>
     </ul>
 
-    <p><strong>Principle:</strong> Find surefire wins. No last-minute patches. "Essential to success," not "superhero work."</p>
+    <p><strong>Key insight:</strong> Credibility comes from solving important problems, not from taking every request.</p>
   </section>
 
   <section id="step-3" class="step">
@@ -738,66 +713,53 @@
       </div>
     </div>
 
-    <h3>The move</h3>
-    <p>Invest in systems: standards written for product designers, reusable content, templates, decision maps, clear intake. One expert multiplies.</p>
-
     <div class="case-study">
     <p class="cs-tag">Case study</p>
-    <h3>AI content design coach</h3>
-    <p>Scaling content design expertise across the organization.</p>
+    <h3>Scaling expertise with AI</h3>
+    <p>Our company acquired a new platform that nearly doubled our product footprint. At about the same time, content designers began moving into new UX leadership roles, so the team was shrinking.</p>
+    <p>We couldn't hire more designers. </p>
+	<p>Instead, we decided to make their expertise available to everyone.</p>
 
-    <h4>We couldn't hire more content designers.</h4>
-    <p>Instead, I helped make their expertise available to everyone.</p>
-    <p>When our product footprint nearly doubled, the obvious solution was adding people. We couldn't. At the same time, several content designers had grown into new roles across UX, leaving a smaller content design practice to support a much larger organization. The result: the content design practice was spending too much time rewriting repeatable UI copy instead of helping shape products and designing the next generation of AI-ready systems.</p>
-    <p>The goal wasn't to replace content design. It was to reserve content design expertise for work that required it.</p>
+        <p class="cs-label">The first agent:  UI Writing Assistant</p>
+    <p>Like everyone else, our first instinct was to try AI. We loaded our standards into an AI writing agent and hoped it would coach people through creating UI content.</p>
+    <p>The results were disappointing.</p>
+    <p>The AI wrote closer to our voice than other people did, but it still made poor decisions. It missed character limits. It didn't understand when someone was using the wrong component. It couldn't explain why one approach was better than another. And it missed a lot.</p>
 
-    <h4>The challenge</h4>
-    <p>Years of content design expertise existed. Almost none of it scaled.</p>
-    <p>More than 120 pages of standards covered voice and tone, communication strategy, reusable patterns, component guidance, accessibility, and product messaging. New content designers took months to become fluent. Product designers, researchers, product ops, and marketing couldn't realistically learn it all. Yet all of them created product content.</p>
-    <p>The bottleneck wasn't writing. The bottleneck was access to expertise.</p>
+        <p class="cs-label">Building the system</p>
+    <p>Years of guidance existed across wiki pages, design system documentation, and tribal knowledge. Content standards weren't integrated with the design system. And the design system documentation explained <em>what</em> to do, but not <em>why</em>. </p>
+    <p>So we stopped improving the AI, and started improving the knowledge architecture.</p>
+    <p>The content designers no longer reported to me. Each was embedded with a different product team, and everyone already had a full-time job. Even so, the practice still operated as one team.</p>
+    <p>I organized the work, divided ownership, and established a shared structure. The content designers drove the work themselves, reviewing each other's standards and holding one another accountable until every page followed the same framework.</p>
+    <p>Over three months, we transformed hundreds of scattered guidelines into one coherent knowledge system.</p> 
+  
+      <p class="cs-label">Growing the system</p>
+    <p>Once the structure existed, adding knowledge became straightforward.</p>
+    <p>We expanded the system beyond writing guidance to include communication strategy, reusable notification templates, content schemas, temporary messaging patterns, and component-level recommendations.</p>
+    <p>Instead of documenting rules, we documented decisions.</p>
 
-    <h4>The strategy</h4>
-    <p>AI was part of the solution, but it wasn't <em>the</em> solution. The solution required knowledge architecture.</p>
-    <p>Before training a model, we reworked our standards. Every component needed a clear purpose. Every recommendation needed a reason. Every strategy needed to be explicit instead of living in experienced content designers' heads. We removed documentation that didn't affect writing, clarified decision criteria, expanded guidance to include temporary product messaging, and structured the knowledge so both people and AI could understand it. Only then did we teach it to Copilot.</p>
-
-    <h4>The AI coach</h4>
-    <p>Rather than generating generic copy, the agent acted like an experienced content designer sitting beside you. It could:</p>
+      <p class="cs-label">The second agent: content design coach</p>
+  <p>By the time Microsoft Copilot Enterprise became available, both the technology and our documentation had matured. Instead of acting like a copy generator, the AI behaved more like a content designer. It could:</p>
     <ul>
-      <li>Rewrite UI content in our voice and tone.</li>
-      <li>Apply component-specific guidance.</li>
-      <li>Respect character limits across dozens of UI patterns.</li>
-      <li>Recommend reusable content instead of creating new variations.</li>
-      <li>Explain why it suggested changes.</li>
-      <li>Coach designers toward stronger communication strategy.</li>
+      <li>Explain communication strategy</li>
+      <li>Recognize reusable patterns</li>
+      <li>Recommend better components</li>
+      <li>Tell people when they needed to consult a content designer</li>
     </ul>
-    <p>It didn't just edit. It taught. If someone led with a feature instead of customer value, it explained why. If they repeated information in a title and description, it pointed it out. If they emphasized how instead of why, it redirected them.</p>
-    <p>The goal wasn't better prompts. It was better content design decisions.</p>
+    <p>This wasn't a writing agent; it was a design coach. And it worked. Product designers produce stronger copy. Change management messaging prioritized risk mitigation. Marketing messaging led with value.</p>
 
-    <h4>Governance still mattered</h4>
-    <p>Not every standard should be easy to bypass. Some patterns deliberately required content design judgment. Exclamation points were discouraged because they quickly made the product sound forced or juvenile. "We" shifted attention from users to the company. The AI explained these principles, suggested alternatives, and reinforced when content design review was required. It automated consistency—not judgment.</p>
+        <p class="cs-label">Results</p>
+    <p>More than 100 people across UX and partner organizations adopted the AI coach.</p>
+    <p>Content designers could invest expertise where it mattered. They developed strategy, improved information architecture, and shaped the integration of LLMs into our products. </p>
+    </div> 
 
-    <h4>Beyond the bot</h4>
-    <p>Once content design knowledge became structured, it powered much more than AI. The same work enabled:</p>
+    <h3>Other ways it played out</h3>
     <ul>
-      <li>Reusable notification architecture across email, SMS, and in-app messaging</li>
-      <li>Shared change management patterns</li>
-      <li>Feature awareness frameworks</li>
-      <li>Reusable promotional messaging</li>
-      <li>Repeatable content schemas used across product experiences</li>
-    </ul>
-    <p>Marketing, product ops, researchers, and product designers all worked from the same playbook instead of inventing new approaches for every project.</p>
-
-    <h4>The impact</h4>
-    <p>More than 100 people across UX and partner organizations adopted the AI coach. Product designers—including many working in English as a second language—could confidently create production-ready UI content aligned with content design standards. Researchers and partners brought stronger work into review instead of blank pages.</p>
-    <p>Most importantly, the content design practice shifted its attention. Instead of spending hours applying standards manually, content designers spent more time in design reviews, influencing information architecture, supporting high-complexity work, and designing the next generation of systems for AI. The biggest change wasn't faster writing. It was changing where content design expertise created value.</p>
-
-    <h4>More examples</h4>
-    <p>This approach wasn't unique to content design. I used the same playbook with other disciplines.</p>
-    <p><strong>Multimedia: Component illustration system.</strong> Built a reusable illustration library that let designers assemble graphics from standardized pieces instead of creating every illustration from scratch.</p>
-    <p><strong>Multimedia: MVP-first production workflow.</strong> Every project started by defining the smallest valuable deliverable before investing in polished production. When priorities shifted and the team was pulled into executive work, stakeholders still received useful deliverables instead of waiting for unfinished work.</p>
-    </div>
-
-    <p><strong>Principle:</strong> Don't build everything at once. Standards cut decisions; fewer decisions, faster output.</p>
+      <li><strong>Product design</strong>: Before creating a new solution, we began with a simple plan with elements that already existed. As we upgraded pieces, we always had something ready-to-ship. This enabled us to pivot on a dime, while also leaving dev with something to code.</li>
+    <li><strong>Multimedia design</strong>: A reusable illustration library let designers assemble graphics from standardized pieces instead of creating every illustration from scratch.</p>
+</ul>
+   
+    <h4>Key insight</h4>
+    <p>Don't scale people; scale expertise.</p>
   </section>
 
   <section id="step-4" class="step">
@@ -809,34 +771,24 @@
       </div>
     </div>
 
-    <h3>The move</h3>
-    <p>Step 3 is the most work. This one is the hardest. You need permission, credibility, and consistency. Every audience gets its own plan: designers, leaders, all of UX, partners.</p>
+    <h3>Making it stick</h3>
+    <p>Culture change doesn't happen because a leader says so. It takes permission, credibility, and consistency. Every audience needs a different plan: the team, peers, leaders, and partners.</p>
+ 	<p>Prepare your team to advocate for themselves. Looking across the organization, one pattern stood out: the more a designer pushed for a seat at the table, the further the culture shifted.</p>
 
-    <h3>How it played out</h3>
+    <h3>Ways it played out</h3>
     <ul>
-      <li>Content design went from ticket-taker to embedded partner on every product team, connected by a community of practice. There were tears, but it was the right move.</li>
-      <li>The people proof lives on <a href="team.html">My team</a>: retention, promotions, and what the team says.</li>
+      <li>Content designers went from ticket-takers to embedded partners on every product team, connected by a community of practice.</a></li>
+      </li>
+      <li>Product designers shifted from spending weeks in execution to providing data-based arguments that influenced the roadmap.</li>
+      </li>
+      <li>Multimedia design shifted from asset-creation to collaborative partnership, enabling the team to shape when and how multimedia was used. </a></li>
+      </li>
     </ul>
+    <h4>Key insight</h4>
+    <p>Leaders can create the conditions for change, but the team has to own it.</p>
   </section>
 
-  <section class="step">
-    <h2>What the playbook delivered</h2>
-    <p class="context">Paychex UX content team, 2022&ndash;2024</p>
-    <div class="impact-list">
-      <ul>
-        <li>Stopped work that cost more than it returned</li>
-        <li>Built leadership credibility through visible wins</li>
-        <li>Standards, templates, and tools that let partners help themselves</li>
-        <li>Left the organization permanently more capable</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="step">
-    <h2>Lessons learned</h2>
-    <p>I had conversations and gained verbal buy-in. But the culture change only worked for my designers who were willing to push for it themselves: asking to be included earlier, raising issues, pressing for reusable components. That advocacy can make you feel pesky, and it never stops. The more a designer was willing to push, the faster and further the culture shifted.</p>
-  </section>
-
+ 
 </main>
 
 <script>

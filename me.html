@@ -167,6 +167,86 @@
     color: #ffffff;
   }
 
+  .me-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    column-gap: 64px;
+    row-gap: 80px;
+    align-items: start;
+  }
+
+  .me-layout section {
+    margin: 0;
+  }
+
+  .me-contact { grid-column: 1; grid-row: 1; }
+
+  .me-rail { grid-column: 2; grid-row: 1; }
+
+  .me-looking { grid-column: 1 / -1; }
+
+  .marquee-card {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #fff6e3;
+    border: 4px solid #ffd34d;
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .marquee-card:hover {
+    border-color: #ffb300;
+    transform: translateY(-2px);
+  }
+
+  .mc-bulbs {
+    height: 12px;
+    background-image: radial-gradient(circle at center, #e0a92e 0 3px, rgba(150, 105, 30, 0.35) 3px 4px, transparent 5px);
+    background-size: 24px 12px;
+    background-repeat: space no-repeat;
+    background-position: center;
+  }
+
+  .mc-title {
+    font-family: Impact, "Arial Black", "Segoe UI Black", sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #1a0f2e;
+    margin: 16px 0 8px;
+  }
+
+  .mc-sub {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #3a2560;
+    margin: 0 0 12px;
+  }
+
+  .mc-cta {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a0f2e;
+    margin: 0 0 16px;
+  }
+
+  @media (max-width: 720px) {
+    .me-layout {
+      grid-template-columns: 1fr;
+      row-gap: 64px;
+    }
+
+    .me-contact,
+    .me-rail,
+    .me-looking {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+
   a:focus-visible {
     outline: 2px solid #1e293b;
     outline-offset: 4px;
@@ -205,34 +285,42 @@
     <span class="tab-name" aria-hidden="true">Kate</span>
   </nav>
 
-  <section>
-    <h2>Me</h2>
-    <div class="me-links">
-      <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
-      <a href="https://linkedin.com/in/kdbernola">linkedin.com/in/kdbernola</a>
-      <a href="tel:5854692324">585.469.2324</a>
-    </div>
-    <a class="resume-link" href="kate-bernola_ux-design-manager.pdf" aria-label="View my resume (PDF)">
-      View my resume
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <path d="M14 2v6h6"/>
-        <path d="M12 18v-6"/>
-        <path d="M9 15l3 3 3-3"/>
-      </svg>
-    </a>
-  </section>
+  <div class="me-layout">
+    <section class="me-contact">
+      <h2>Contact</h2>
+      <div class="me-links">
+        <a href="mailto:kdobbertin@gmail.com">kdobbertin@gmail.com</a>
+        <a href="https://linkedin.com/in/kdbernola">linkedin.com/in/kdbernola</a>
+        <a href="tel:5854692324">585.469.2324</a>
+      </div>
+      <a class="resume-link" href="kate-bernola_ux-design-manager.pdf" aria-label="View my resume (PDF)">
+        View my resume
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <path d="M14 2v6h6"/>
+          <path d="M12 18v-6"/>
+          <path d="M9 15l3 3 3-3"/>
+        </svg>
+      </a>
+    </section>
+    <section class="me-looking">
+      <h2>What I'm looking for</h2>
+      <p>A team that's capable of more, in need of a leader to clear the path and let them shine.</p>
+      <p>A practice ready to level up: better governance, clearer communication, tighter change management.</p>
+      <p>A company that sees how AI can solve problems, rather than treating "no AI" as the problem.</p>
+    </section>
+    <aside class="me-rail" aria-label="The game show">
+      <a class="marquee-card" href="kate-the-game-show.html">
+        <div class="mc-bulbs" aria-hidden="true"></div>
+        <p class="mc-title">Kate!</p>
+        <p class="mc-sub">The unnecessarily dramatic version of this site.</p>
+        <p class="mc-cta">Play the game show →</p>
+        <div class="mc-bulbs" aria-hidden="true"></div>
+      </a>
+    </aside>
+  </div>
 
-  <section>
-    <h2>What I'm looking for</h2>
-    <p>A team that's capable of more, in need of a leader to clear the path and let them shine.</p>
-    <p>A practice ready to level up: better governance, clearer communication, tighter change management.</p>
-    <p>A company that sees how AI can solve problems, rather than treating "no AI" as the problem.</p>
-  </section>
 
-  <section>
-    <p><a href="hire-kate.html" style="font-size: 18px; font-weight: 600;">Or play the KATE! game show — the unnecessarily dramatic version →</a></p>
-  </section>
 
 </main>
 
