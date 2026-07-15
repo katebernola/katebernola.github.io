@@ -57,6 +57,35 @@ A subhead must never render smaller than the body text it introduces — that in
 - No illustrations, highlights, or decorative elements
 - If showing workflow/process, use simple boxes, lines, and labels only
 
+### Visual components
+
+Reusable patterns already built in `index.html`. Reach for one of these before inventing a new visual — check `.equation`, `.eq-row`, `.roi-table`, `.visual-figure`, `.key-insight`, and `.case-study` in the CSS for exact rules.
+
+**Equation box** (`.equation`) — one calculation, shown as stacked lines.
+- Slate fill `#f8f9fa`, 1px `#e2e8f0` border, no radius, 24px/32px padding, max-width 360px.
+- Each line (`.eq-line`) is 16px; an operator (`.eq-op`) sits in a left gutter.
+- The final line (`.eq-answer`) gets a 1px `#64748b` top rule.
+- Three side-by-side steps of one calculation use `.eq-group` (3-column grid, tighter 16px/20px padding per box, no per-box max-width — the group's own max-width of 75ch governs).
+
+**Stat line** (`.eq-row` inside a plain `.equation`) — a label-and-figure pair, for reporting a number rather than deriving one.
+- Grid: label (`.eq-expr`, 18px) left, figure (`.eq-result`, 18px/600) right, baseline-aligned.
+- Stack multiple rows in one box for related stats. No separator between ordinary rows.
+- The row that states the headline number is `.eq-total`: a 1px `#e2e8f0` rule above it, and its figure bumps to 24px/700. Use one `.eq-total` per box, always last.
+
+**Data table** (`.roi-table`) — for a small comparison grid (e.g. hours/dollars by org).
+- 16px, left-aligned, generous 32px right padding per column, no visible borders — spacing does the separating.
+
+**Figure + caption** (`.visual-figure` / `.visual-caption`) — for an inline diagram.
+- SVG gets the same slate fill + 1px border as an equation box, full width, auto height.
+- Caption sits below at 16px, `#475569`.
+
+**Key insight callout** (`.key-insight`) — the one takeaway closing out a step or case study.
+- 3px `#6B4C9A` left border, 20px left padding, 40px top margin.
+- Label ("Key insight", `.ki-label`) at 16px/600 purple; the insight itself (`.ki-text`) at 20px/600 dark. One per section, always last.
+
+**Case study container** (`.case-study`) — wraps an entire case study.
+- 1px `#6B4C9A` border, 4px radius, 24px padding. `.cs-tag` (top) and `.cs-badge` (on step-card links) are the small bordered purple pills that mark something as a case study.
+
 ## Accessibility
 
 - Pages should meet WCAG standards. Run a full accessibility pass on major additions or "final" versions — not required on every small edit.
