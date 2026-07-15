@@ -1027,8 +1027,7 @@
   var CHIP_CLASS = { stat: 'cat-stat', quirk: 'cat-quirk', fact: 'cat-fact', quote: 'cat-quote' };
   var CHIP_LABEL = { stat: 'Quantifier', quirk: 'Quirk', fact: 'Quiddity', quote: 'Quip' };
 
-  /* Jeopardy clues. All multiple choice. Odd-one-out clues use "items" for the
-     button text; other clues use "options". */
+  /* Jeopardy clues. All multiple choice. */
   var JEOPARDY_QUESTIONS = [
     {
       category: "NO BUSINESS BEING TRUE",
@@ -1044,7 +1043,7 @@
       value: 200,
       type: "mc",
       question: "This COVID-era program known widely by its 3-letter acronym offered forgivable loans based on payroll. When it became the company’s top priority, Kate designed the flow that turned a mountain of regulations into a clear path for business owners.",
-      options: ["What is the Small Business Administration?", "What is the COVID Relief Fund?", "What is the Pancea for the Pandemic Plan?", "What is the Paycheck Protection Program?"],
+      options: ["What is the Small Business Administration?", "What is the COVID Relief Fund?", "What is the Panacea for the Pandemic Plan?", "What is the Paycheck Protection Program?"],
       correct: 3,
       reveal: "Kate was the sole content designer for the PPP report and Loan Forgiveness Calculator. The team's work won multiple awards and helped more than 500,000 small businesses stay afloat."
     },
@@ -1055,7 +1054,7 @@
       question: "Kate designed a cross-sell campaign that generated this much revenue. It's enough to cover a seat on the first commercial spaceflight.",
       options: ["What is $50,000?", "What is $100,000?", "What is $500,000?", "What is $1,000,000?"],
       correct: 2,
-      reveal: "The biggest win wasn't the revenue; it was the user experience snafu she prevented. The original campaign sales started to roll out broke the system's information architecture. Kate designed a safe alternative, then used an A/B test to show it was over twice as effective at meeting the sale goal."
+      reveal: "The biggest win wasn't the revenue; it was the user experience snafu she prevented. The original campaign that sales started to roll out broke the system's information architecture. Kate designed a safe alternative, then used an A/B test to show it was over twice as effective at meeting the sale goal."
     },
     {
       category: "THE AISLE",
@@ -1073,7 +1072,7 @@
       question: "AI is powerful, but it's not always the right choice. Identify the use case Kate solved with AI. What is ... ?", 
       options: ["Interpreting government regulations", "Stopping a promotional initiative that broke the IA", "Coaching 100+ people on UI messaging", "Running A/B tests on promotional language"],
       correct: 2,
-      reveal: "Kate used AI to scale content guidelines and standards, not deterministic work. She solved the other three problems through product design, experimentation, and systems thinking. AI would have added unecessary cost or risk."
+      reveal: "Kate used AI to scale content guidelines and standards, not deterministic work. She solved the other three problems through product design, experimentation, and systems thinking. AI would have added unnecessary cost or risk."
     },
     {
       category: "THE AISLE",
@@ -1082,15 +1081,14 @@
       question: "Kate raised a red flag when she noticed that each team working on Paychex Assistant was creating its own way of organizing information, known as this. Biologists have used the concept for centuries.",
       options: ["What is a knowledgebase?", "What is content management?", "What is information architecture?", "What is taxonomy?"],
       correct: 3,
-      reveal: "Taxonomy is the system for classifying and organizing information. Because AI thrives on consistency, Kate took action when she spotted this disconnect. She alerted UX and Product management of current-state the risk. Then she brought UX, Product, dev, and Knowledge Management together. THey defined a centralized approach to use going forward."
+      reveal: "Taxonomy is the system for classifying and organizing information. Because AI thrives on consistency, Kate took action when she spotted this disconnect. She alerted UX and Product management of the risk. Then she brought UX, Product, dev, and Knowledge Management together. They defined a centralized approach to use going forward."
     },
     {
       category: "ALL THINGS EQUAL",
       value: 100,
       type: "mc",
       question: "Three of these are the same. Find the one that doesn’t fit.",
-      items: ["Item treasured by beach-combers", "An approach to AI projects Kate brought to her portfolio, where design, dev, and product work as one unit", "The enclosure legumes grow in", "A means of escape from a doomed star destroyer"],
-      options: ["What is A?", "What is B?", "What is C?", "What is D?"],
+      options: ["Item treasured by beach-combers", "An approach to AI projects Kate brought to her portfolio, where design, dev, and product work as one unit", "The enclosure legumes grow in", "A means of escape from a doomed star destroyer"],
       correct: 0,
       reveal: "Pea pods, escape pods, and the pod approach: a research-backed method to design and build AI projects, where a cross-functional team works together to define, design, build, and iterate from day 1."
     },
@@ -1101,15 +1099,14 @@
       question: "Three of these have the same answer. Find the one that doesn’t fit. What is ... ?",
       options: ["The turnover rate on Kate’s team", "Jack’s dog in The Nightmare Before Christmas?", "The year that marks the start of the Common Era?", "The value of a blank Scrabble tile"],
       correct: 2,
-      reveal: "Technically, there is no year 0. But it’s true that over her for years as a manager, no one has ever resigned or accepted another role while reporting to Kate."
+      reveal: "Technically, there is no year 0. But it’s true that over her four years as a manager, no one has ever resigned or accepted another role while reporting to Kate."
     },
     {
       category: "ALL THINGS EQUAL",
       value: 300,
       type: "mc",
       question: "Three of these have the same level of accuracy. Find the one that doesn’t fit. What is ... ?",
-      items: ["Passes by future NFL Hall of Famer Josh Allen", "Tomorrow’s weather forecast", "The Paychex Flex assistant, on topics Kate helped train and test", "Voice assistant speech recognition"],
-      options: ["What is A?", "What is B?", "What is C?", "What is D?"],
+      options: ["Passes by future NFL Hall of Famer Josh Allen", "Tomorrow’s weather forecast", "The Paychex Flex assistant, on topics Kate helped train and test", "Voice assistant speech recognition"],
       correct: 0,
       reveal: "Josh Allen’s completion percentage topped out just under 70%. But Kate raised the threshold for chatbot accuracy from 70% to 90%, matching it to what's expected from a 24-hour forecast and ChatGPT voice-to-text transcripts. Go Bills!"
     }
@@ -1238,9 +1235,7 @@
     modalVerdict.innerHTML = '';
     modalOptions.innerHTML = '';
 
-    // Use items as button text if available (odd-one-out clues); otherwise use options.
-    var buttonTexts = q.items || q.options;
-    buttonTexts.forEach(function (txt, i) {
+    q.options.forEach(function (txt, i) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'option-btn';
@@ -1270,10 +1265,9 @@
     playSound(isCorrect ? 'applause' : 'bzzt');
     showReaction(isCorrect ? 'applause' : 'x');
 
-    var buttonTexts = q.items || q.options;
     var rows = '';
-    if (!isCorrect) rows += answerRow(buttonTexts[clickedIndex], false);
-    rows += answerRow(buttonTexts[q.correct], true);
+    if (!isCorrect) rows += answerRow(q.options[clickedIndex], false);
+    rows += answerRow(q.options[q.correct], true);
     var amount = '<strong>' + (isCorrect ? '+' : '-') + fmtDollars(q.value) + '</strong> ';
     modalVerdict.innerHTML = rows + '<p class="answer-reveal">' + amount + q.reveal + '</p>';
 
@@ -1285,8 +1279,7 @@
     if (!currentQuestion) return;
     markTileResolved();
     collapseToResult();
-    var buttonTexts = currentQuestion.items || currentQuestion.options;
-    modalVerdict.innerHTML = answerRow(buttonTexts[currentQuestion.correct], true) +
+    modalVerdict.innerHTML = answerRow(currentQuestion.options[currentQuestion.correct], true) +
       '<p class="answer-reveal">' + currentQuestion.reveal + '</p>';
     updateBoardMeter();
   }
