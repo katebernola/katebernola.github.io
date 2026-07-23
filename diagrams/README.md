@@ -12,7 +12,9 @@ Seven superseded iterations were deleted on 2026-07-22 (`agent-model-v1` through
 
 ## How the flow is drawn
 
-- **Object types get different shapes.** Collaborative process (bot + person) = rounded box with two speech bubbles. Single-actor process = rounded box with a person icon (designer only) or a bot icon (bot only). Document = letter-shaped page with a folded corner. Decision = diamond. Kickoff = ellipse.
+- **Object types get different shapes.** Collaborative process (bot + person) = rounded box with a conversation icon. Single-actor process = rounded box with a person icon (designer only) or a bot icon (bot only). Document = letter-shaped page with a folded corner. Decision = diamond. Kickoff = ellipse.
+- **Icons come from `/Icons`**, embedded as `<symbol>` definitions and placed with `<use>`. Conversation marks the three collaborative steps; person marks kickoff and design execution; robot marks review; books, cycle, rocket and edit mark the four footnotes. Optical sizes are tuned rather than nominal — each glyph fills its 24-unit box differently, so the placements are sized to land at roughly 18px for collaborative steps, 15–17px for single-actor steps and 12–14px for footnotes, preserving the hierarchy.
+- **Optional usability testing carries no icon.** It isn't an actor-owned step, and labelling it "optional" says more than a person glyph did.
 - **Visual hierarchy**, most to least prominent: collaborative processes → documents (bot output) → single-actor processes → decisions → kickoff. Carried by size and label weight, not by stroke.
 - **One stroke colour** — `#64748b` — on every shape, connector and frame. Shapes and the frame are `1`; connectors and arrowheads are `1.5`. This matches the house diagram convention in `index.html`. No colour anywhere: per `CLAUDE.md`, diagrams are neutral only, so collaborative steps are marked by the conversation icon alone (they previously carried the portfolio purple `#6B4C9A`).
 - **Corner radius is `4`** on every rounded shape, per the `CLAUDE.md` limit of 0–4px for cards.
@@ -26,5 +28,6 @@ Seven superseded iterations were deleted on 2026-07-22 (`agent-model-v1` through
 ## Open
 
 - The knowledge base still needs adding to the flow.
-- Icons are placeholders and can be swapped for real ones.
+- The rocket icon sits on "the requester can return to any stage" because that is where the old rocket-shaped glyph was. A rocket reads as *launch*, so it may belong on "monitored post-launch" instead.
+- Collaborative steps are marked by the conversation icon alone, with no legend explaining it. A highlight treatment and a legend are both still open.
 - Screenshot verification remains impossible — the Browser pane must be displayed for the page to composite frames. Everything is verified geometrically (stroke consistency, document sizing, title clearance, nothing clipped) but has not been seen.
