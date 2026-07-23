@@ -1,0 +1,177 @@
+<svg viewBox="0 0 885 1280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The coach workflow, running as a snake down the page. Kickoff sits at the top. A collaborative discovery process leads to the Brief document, listing overview, objective, persona, workflow and usage data. A collaborative strategy process leads to a group of three stacked documents: content inventory, content audit and gap analysis. Those produce one Content needs document, which produces a pair of side-by-side documents: Plan A, which mitigates UX risks but may add scope, and Plan B, which holds scope but carries UX risk. Both go to a decision where the product owner picks a plan. A collaborative content design process produces the UI plan document, listing component, copy, confidence and risks. A designer-only design execution process follows, with usability testing alongside, before the decision where the product owner decides what ships. The designer then submits the Design file, which a bot-only Review process reviews. Review sends two documents: Risks, to the designer, who logs them in Jira; and Knowledge base updates, to the content design team, who review and approve. The work is monitored post-launch. Collaborative steps, where the bot and a person work together, are outlined in purple and carry a conversation icon. Footnotes: the bot references the knowledge base at every step, the process is iterative throughout, the requester can return to any stage, and the bot applies changes to all artifacts." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>How the AI content design coach works, end to end</title>
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6.5,3.2 L0,6.4" fill="none" stroke="#64748b" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <rect x="16" y="16" width="853" height="1248" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+
+  <!-- ===== curved connectors ===== -->
+  <g fill="none" stroke="#64748b" stroke-width="1.5">
+    <path d="M130,127 C128,250 200,240 263,245" marker-end="url(#a)"/>
+    <path d="M375,245 C440,225 550,228 690,245" marker-end="url(#a)"/>
+    <path d="M745,369 C750,390 752,405 754,418" marker-end="url(#a)"/>
+    <path d="M698,490 C650,500 620,498 582,490" marker-end="url(#a)"/>
+    <path d="M363,500 C330,512 280,505 230,496" marker-end="url(#a)"/>
+    <path d="M170,523 C168,630 192,718 308,702" marker-end="url(#a)"/>
+    <path d="M420,700 C460,672 560,668 660,686" marker-end="url(#a)"/>
+    <path d="M720,721 C720,760 720,795 720,828" marker-end="url(#a)"/>
+    <path d="M663,900 C620,912 560,908 412,905" marker-end="url(#a)"/>
+  </g>
+
+  <!-- ===== Kickoff ===== -->
+  <ellipse cx="130" cy="100" rx="44" ry="27" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="130" cy="88" r="4" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M124,98 a6 6 0 0 1 12,0" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <text x="130" y="115" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">Kickoff</text>
+
+  <!-- ===== Discovery (collaborative) ===== -->
+  <rect x="55" y="195" width="150" height="76" rx="10" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <rect x="116" y="211" width="18" height="12" rx="3" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <path d="M120,223 v4 l4,-4" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <rect x="128" y="218" width="18" height="12" rx="3" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <path d="M142,230 v4 l-4,-4" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <text x="130" y="256" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">Discovery</text>
+
+  <!-- ===== Brief ===== -->
+  <path d="M265,190 H363 L375,202 V333 H265 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M363,190 V202 H375" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="320" y="212" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Brief</text>
+  <text x="277" y="236" font-size="9.5" fill="#475569">· Overview</text>
+  <text x="277" y="251" font-size="9.5" fill="#475569">· Objective</text>
+  <text x="277" y="266" font-size="9.5" fill="#475569">· Persona</text>
+  <text x="277" y="281" font-size="9.5" fill="#475569">· Workflow</text>
+  <text x="277" y="296" font-size="9.5" fill="#475569">· Usage data</text>
+
+  <!-- ===== Strategy (collaborative) ===== -->
+  <rect x="445" y="195" width="150" height="76" rx="10" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <rect x="506" y="211" width="18" height="12" rx="3" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <path d="M510,223 v4 l4,-4" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <rect x="518" y="218" width="18" height="12" rx="3" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <path d="M532,230 v4 l-4,-4" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <text x="520" y="256" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">Strategy</text>
+
+  <!-- ===== GROUP: content inventory / content audit / gap analysis ===== -->
+  <path d="M720,160 H818 L830,172 V303 H720 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M818,160 V172 H830" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="775" y="182" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Content inventory</text>
+
+  <path d="M706,192 H804 L816,204 V335 H706 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M804,192 V204 H816" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="761" y="214" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Content audit</text>
+
+  <path d="M692,224 H790 L802,236 V367 H692 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M790,224 V236 H802" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="747" y="246" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Gap analysis</text>
+
+  <!-- ===== Content needs ===== -->
+  <path d="M700,420 H798 L810,432 V563 H700 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M798,420 V432 H810" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="755" y="442" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Content needs</text>
+
+  <!-- ===== PAIR: Plan B (behind, right) / Plan A (front, left) ===== -->
+  <path d="M470,410 H568 L580,422 V553 H470 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M568,410 V422 H580" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="525" y="432" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Plan B</text>
+  <text x="482" y="456" font-size="9.5" fill="#475569">· Holds scope</text>
+  <text x="482" y="471" font-size="9.5" fill="#475569">· Carries UX risk</text>
+
+  <path d="M365,430 H463 L475,442 V573 H365 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M463,430 V442 H475" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="420" y="452" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Plan A</text>
+  <text x="377" y="476" font-size="9.5" fill="#475569">· Mitigates UX risks</text>
+  <text x="377" y="491" font-size="9.5" fill="#475569">· May add scope</text>
+
+  <!-- ===== Decision: P.O. picks a plan ===== -->
+  <path d="M170,457 L228,490 L170,523 L112,490 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <text x="170" y="487" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">P.O. picks</text>
+  <text x="170" y="500" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">a plan</text>
+
+  <!-- ===== Content design (collaborative) ===== -->
+  <rect x="95" y="650" width="150" height="76" rx="10" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <rect x="156" y="666" width="18" height="12" rx="3" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <path d="M160,678 v4 l4,-4" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <rect x="168" y="673" width="18" height="12" rx="3" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <path d="M182,685 v4 l-4,-4" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
+  <text x="170" y="711" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">Content design</text>
+
+  <!-- ===== UI plan ===== -->
+  <path d="M310,620 H408 L420,632 V763 H310 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M408,620 V632 H420" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="365" y="642" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">UI plan</text>
+  <text x="322" y="666" font-size="9.5" fill="#475569">· Component</text>
+  <text x="322" y="681" font-size="9.5" fill="#475569">· Copy</text>
+  <text x="322" y="696" font-size="9.5" fill="#475569">· Confidence</text>
+  <text x="322" y="711" font-size="9.5" fill="#475569">· Risks</text>
+
+  <!-- ===== Design execution ===== -->
+  <rect x="480" y="652" width="120" height="72" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="540" cy="676" r="4" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M534,686 a6 6 0 0 1 12,0" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <text x="540" y="712" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Design execution</text>
+
+  <!-- ===== Usability testing ===== -->
+  <rect x="545" y="758" width="100" height="48" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <text x="595" y="779" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">Usability</text>
+  <text x="595" y="793" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">testing</text>
+
+  <!-- ===== Decision: P.O. decides what ships ===== -->
+  <path d="M720,655 L778,688 L720,721 L662,688 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <text x="720" y="685" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">P.O. decides</text>
+  <text x="720" y="698" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">what ships</text>
+
+  <!-- ===== Design file ===== -->
+  <path d="M665,830 H763 L775,842 V973 H665 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M763,830 V842 H775" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="720" y="852" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Design file</text>
+  <text x="677" y="876" font-size="9.5" fill="#475569">· Submitted for review</text>
+
+  <!-- ===== Monitored post-launch ===== -->
+  <rect x="650" y="995" width="140" height="42" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <text x="720" y="1021" font-size="10" font-weight="600" fill="#1e293b" text-anchor="middle">Monitored post-launch</text>
+
+  <!-- ===== Review (bot only) ===== -->
+  <rect x="470" y="862" width="120" height="72" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="530" cy="878" r="1.6" fill="#64748b"/>
+  <path d="M530,880 V884" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <rect x="522" y="884" width="16" height="13" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="526" cy="890" r="1.4" fill="#64748b"/>
+  <circle cx="534" cy="890" r="1.4" fill="#64748b"/>
+  <text x="530" y="922" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Review</text>
+
+  <!-- ===== PAIR: Knowledge base updates (behind, right) / Risks (front, left) ===== -->
+  <path d="M300,830 H398 L410,842 V973 H300 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M398,830 V842 H410" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="355" y="850" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Knowledge base</text>
+  <text x="355" y="864" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">updates</text>
+  <text x="312" y="888" font-size="9.5" fill="#475569">· To content design</text>
+  <text x="312" y="903" font-size="9.5" fill="#475569">· They approve</text>
+
+  <path d="M195,850 H293 L305,862 V993 H195 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M293,850 V862 H305" fill="none" stroke="#64748b" stroke-width="1.5"/>
+  <text x="250" y="872" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Risks</text>
+  <text x="207" y="896" font-size="9.5" fill="#475569">· To the designer</text>
+  <text x="207" y="911" font-size="9.5" fill="#475569">· Logged in Jira</text>
+
+  <!-- ===== footnotes ===== -->
+  <rect x="55" y="1080" width="470" height="124" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+
+  <rect x="76" y="1095" width="4" height="14" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <rect x="82" y="1095" width="4" height="14" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <rect x="88" y="1095" width="4" height="14" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <text x="110" y="1106" font-size="11" fill="#1e293b">The bot references the knowledge base at every step</text>
+
+  <path d="M91,1128 a7 7 0 1 1 -3,-5.7" fill="none" stroke="#64748b" stroke-width="1.2"/>
+  <path d="M88,1119 l0,4.5 l4,-1" fill="none" stroke="#64748b" stroke-width="1.2"/>
+  <text x="110" y="1132" font-size="11" fill="#1e293b">This process is iterative throughout</text>
+
+  <path d="M84,1146 C88,1150 88,1156 84,1161 C80,1156 80,1150 84,1146 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <path d="M80,1157 l-3,4 l4,-1" fill="none" stroke="#64748b" stroke-width="1.2"/>
+  <path d="M88,1157 l3,4 l-4,-1" fill="none" stroke="#64748b" stroke-width="1.2"/>
+  <text x="110" y="1158" font-size="11" fill="#1e293b">The requester can return to any stage</text>
+
+  <path d="M77,1187 L80,1178 L88,1170 L91,1173 L83,1181 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <text x="110" y="1184" font-size="11" fill="#1e293b">The bot applies changes to all artifacts</text>
+</svg>

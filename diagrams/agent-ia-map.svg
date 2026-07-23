@@ -1,0 +1,115 @@
+<svg viewBox="0 0 1000 596" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Knowledge architecture of the AI Content Design Coach, organized like a codebase, not a prompt library. Rather than a folder inventory, it shows what the coach knows. The canon is a numbered progression from 01 philosophy through 04 decision-framework, 08 content-standards, 09 decision-library, to 16 escalation. Rules the coach applies: beliefs about why, such as users-dont-read; guidelines about how, such as one-next-step and title-does-the-compare-work; and mistakes about what not to do, such as late-validation. What it knows: component standards, built on Polaris, covering banner, dialog, tooltip, toast and more, with when to use each and what to use instead; terminology, including approved and banned terms, product language, and how to talk about people, our company, UI elements, and our products; and patterns, real cases including mid-period-rate-change and retirement-enrollment. Evidence holds reviews and worked examples. Working memory holds open questions and things to test. The single source of truth is rules dot js, one machine-readable file that feeds the prototypes: a chat app and a form app." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+
+  <!-- Root -->
+  <text x="500" y="34" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">AI Content Design Coach</text>
+  <text x="500" y="54" font-size="12.5" fill="#475569" text-anchor="middle">Organized like a codebase, not a prompt library</text>
+  <line x1="60" y1="72" x2="940" y2="72" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- ============ COLUMN A: the canon ============ -->
+  <text x="60" y="96" font-size="13" font-weight="600" fill="#6B4C9A">The canon</text>
+  <text x="60" y="118" font-size="11.5" fill="#475569">a numbered progression, 01 → 16</text>
+  <line x1="66" y1="126" x2="66" y2="373" stroke="#64748b" stroke-width="1"/>
+
+  <line x1="66" y1="140" x2="74" y2="140" stroke="#64748b" stroke-width="1"/><text x="80" y="144" font-size="11" fill="#475569">01 philosophy</text>
+  <line x1="66" y1="155.5" x2="74" y2="155.5" stroke="#64748b" stroke-width="1"/><text x="80" y="159.5" font-size="11" fill="#475569">02 principles</text>
+  <line x1="66" y1="171" x2="74" y2="171" stroke="#64748b" stroke-width="1"/><text x="80" y="175" font-size="11" fill="#475569">03 coaching-style</text>
+  <line x1="66" y1="186.5" x2="74" y2="186.5" stroke="#64748b" stroke-width="1"/><text x="80" y="190.5" font-size="11" font-weight="600" fill="#1e293b">04 decision-framework</text>
+  <line x1="66" y1="202" x2="74" y2="202" stroke="#64748b" stroke-width="1"/><text x="80" y="206" font-size="11" fill="#475569">05 user-journeys</text>
+  <line x1="66" y1="217.5" x2="74" y2="217.5" stroke="#64748b" stroke-width="1"/><text x="80" y="221.5" font-size="11" fill="#475569">06 placement-rules</text>
+  <line x1="66" y1="233" x2="74" y2="233" stroke="#64748b" stroke-width="1"/><text x="80" y="237" font-size="11" fill="#475569">07 component-standards</text>
+  <line x1="66" y1="248.5" x2="74" y2="248.5" stroke="#64748b" stroke-width="1"/><text x="80" y="252.5" font-size="11" fill="#475569">08 content-standards</text>
+  <line x1="66" y1="264" x2="74" y2="264" stroke="#64748b" stroke-width="1"/><text x="80" y="268" font-size="11" font-weight="600" fill="#1e293b">09 decision-library</text>
+  <line x1="66" y1="279.5" x2="74" y2="279.5" stroke="#64748b" stroke-width="1"/><text x="80" y="283.5" font-size="11" fill="#475569">10 review-process</text>
+  <line x1="66" y1="295" x2="74" y2="295" stroke="#64748b" stroke-width="1"/><text x="80" y="299" font-size="11" fill="#475569">11 research-methods</text>
+  <line x1="66" y1="310.5" x2="74" y2="310.5" stroke="#64748b" stroke-width="1"/><text x="80" y="314.5" font-size="11" fill="#475569">12 governance</text>
+  <line x1="66" y1="326" x2="74" y2="326" stroke="#64748b" stroke-width="1"/><text x="80" y="330" font-size="11" fill="#475569">13 pattern-library</text>
+  <line x1="66" y1="341.5" x2="74" y2="341.5" stroke="#64748b" stroke-width="1"/><text x="80" y="345.5" font-size="11" fill="#475569">14 voice-and-tone</text>
+  <line x1="66" y1="357" x2="74" y2="357" stroke="#64748b" stroke-width="1"/><text x="80" y="361" font-size="11" fill="#475569">15 icons-and-imagery</text>
+  <line x1="66" y1="372.5" x2="74" y2="372.5" stroke="#64748b" stroke-width="1"/><text x="80" y="376.5" font-size="11" fill="#475569">16 escalation</text>
+
+  <!-- ============ COLUMN B: rules the coach applies ============ -->
+  <text x="380" y="96" font-size="13" font-weight="600" fill="#6B4C9A">Rules the coach applies</text>
+
+  <text x="380" y="118" font-size="13" font-weight="700" fill="#1e293b">Beliefs</text>
+  <text x="434" y="118" font-size="11.5" fill="#475569">why</text>
+  <line x1="386" y1="126" x2="386" y2="186.5" stroke="#64748b" stroke-width="1"/>
+  <line x1="386" y1="140" x2="394" y2="140" stroke="#64748b" stroke-width="1"/><text x="400" y="144" font-size="11" font-weight="600" fill="#1e293b">users-dont-read</text>
+  <line x1="386" y1="155.5" x2="394" y2="155.5" stroke="#64748b" stroke-width="1"/><text x="400" y="159.5" font-size="11" fill="#475569">less-is-more</text>
+  <line x1="386" y1="171" x2="394" y2="171" stroke="#64748b" stroke-width="1"/><text x="400" y="175" font-size="11" fill="#475569">defaults-beat-explanations</text>
+  <line x1="386" y1="186.5" x2="394" y2="186.5" stroke="#64748b" stroke-width="1"/><text x="400" y="190.5" font-size="11" fill="#475569">education-follows-action</text>
+
+  <text x="380" y="212" font-size="13" font-weight="700" fill="#1e293b">Guidelines</text>
+  <text x="454" y="212" font-size="11.5" fill="#475569">how</text>
+  <line x1="386" y1="220" x2="386" y2="311.5" stroke="#64748b" stroke-width="1"/>
+  <line x1="386" y1="234" x2="394" y2="234" stroke="#64748b" stroke-width="1"/><text x="400" y="238" font-size="11" font-weight="600" fill="#1e293b">one-next-step</text>
+  <line x1="386" y1="249.5" x2="394" y2="249.5" stroke="#64748b" stroke-width="1"/><text x="400" y="253.5" font-size="11" fill="#475569">visual-hierarchy</text>
+  <line x1="386" y1="265" x2="394" y2="265" stroke="#64748b" stroke-width="1"/><text x="400" y="269" font-size="11" fill="#475569">title-does-the-compare-work</text>
+  <line x1="386" y1="280.5" x2="394" y2="280.5" stroke="#64748b" stroke-width="1"/><text x="400" y="284.5" font-size="11" fill="#475569">group-related-decisions</text>
+  <line x1="386" y1="296" x2="394" y2="296" stroke="#64748b" stroke-width="1"/><text x="400" y="300" font-size="11" fill="#475569">audit-existing-cues</text>
+  <line x1="386" y1="311.5" x2="394" y2="311.5" stroke="#64748b" stroke-width="1"/><text x="400" y="315.5" font-size="11" fill="#64748b">+ 5 more</text>
+
+  <text x="380" y="337" font-size="13" font-weight="700" fill="#1e293b">Mistakes</text>
+  <text x="446" y="337" font-size="11.5" fill="#475569">what not to do</text>
+  <line x1="386" y1="345" x2="386" y2="405.5" stroke="#64748b" stroke-width="1"/>
+  <line x1="386" y1="359" x2="394" y2="359" stroke="#64748b" stroke-width="1"/><text x="400" y="363" font-size="11" font-weight="600" fill="#1e293b">late-validation</text>
+  <line x1="386" y1="374.5" x2="394" y2="374.5" stroke="#64748b" stroke-width="1"/><text x="400" y="378.5" font-size="11" fill="#475569">indefensible-defaults</text>
+  <line x1="386" y1="390" x2="394" y2="390" stroke="#64748b" stroke-width="1"/><text x="400" y="394" font-size="11" fill="#475569">marketing-in-product</text>
+  <line x1="386" y1="405.5" x2="394" y2="405.5" stroke="#64748b" stroke-width="1"/><text x="400" y="409.5" font-size="11" fill="#64748b">+ 4 more</text>
+
+  <!-- ============ COLUMN C: what it knows ============ -->
+  <text x="700" y="96" font-size="13" font-weight="600" fill="#6B4C9A">What it knows</text>
+
+  <text x="700" y="118" font-size="13" font-weight="700" fill="#1e293b">Component standards</text>
+  <line x1="706" y1="126" x2="706" y2="171" stroke="#64748b" stroke-width="1"/>
+  <line x1="706" y1="140" x2="714" y2="140" stroke="#64748b" stroke-width="1"/><text x="720" y="144" font-size="11" font-weight="600" fill="#1e293b">built on Polaris</text>
+  <line x1="706" y1="155.5" x2="714" y2="155.5" stroke="#64748b" stroke-width="1"/><text x="720" y="159.5" font-size="11" fill="#475569">banner · dialog · tooltip · toast …</text>
+  <line x1="706" y1="171" x2="714" y2="171" stroke="#64748b" stroke-width="1"/><text x="720" y="175" font-size="11" fill="#475569">when to use each, what to use instead</text>
+
+  <text x="700" y="197" font-size="13" font-weight="700" fill="#1e293b">Terminology</text>
+  <line x1="706" y1="205" x2="706" y2="312" stroke="#64748b" stroke-width="1"/>
+  <line x1="706" y1="219" x2="714" y2="219" stroke="#64748b" stroke-width="1"/><text x="720" y="223" font-size="11" fill="#475569">approved-terms</text>
+  <line x1="706" y1="234.5" x2="714" y2="234.5" stroke="#64748b" stroke-width="1"/><text x="720" y="238.5" font-size="11" fill="#475569">banned-terms</text>
+  <line x1="706" y1="250" x2="714" y2="250" stroke="#64748b" stroke-width="1"/><text x="720" y="254" font-size="11" fill="#475569">product-language</text>
+  <line x1="706" y1="265.5" x2="714" y2="265.5" stroke="#64748b" stroke-width="1"/><text x="720" y="269.5" font-size="11" fill="#475569">talking about people</text>
+  <line x1="706" y1="281" x2="714" y2="281" stroke="#64748b" stroke-width="1"/><text x="720" y="285" font-size="11" fill="#475569">talking about our company</text>
+  <line x1="706" y1="296.5" x2="714" y2="296.5" stroke="#64748b" stroke-width="1"/><text x="720" y="300.5" font-size="11" fill="#475569">talking about UI elements</text>
+  <line x1="706" y1="312" x2="714" y2="312" stroke="#64748b" stroke-width="1"/><text x="720" y="316" font-size="11" fill="#475569">talking about our products</text>
+
+  <text x="700" y="338" font-size="13" font-weight="700" fill="#1e293b">Patterns</text>
+  <text x="766" y="338" font-size="11.5" fill="#475569">real cases</text>
+  <line x1="706" y1="346" x2="706" y2="421.5" stroke="#64748b" stroke-width="1"/>
+  <line x1="706" y1="360" x2="714" y2="360" stroke="#64748b" stroke-width="1"/><text x="720" y="364" font-size="11" font-weight="600" fill="#1e293b">mid-period-rate-change</text>
+  <line x1="706" y1="375.5" x2="714" y2="375.5" stroke="#64748b" stroke-width="1"/><text x="720" y="379.5" font-size="11" fill="#475569">retirement-enrollment</text>
+  <line x1="706" y1="391" x2="714" y2="391" stroke="#64748b" stroke-width="1"/><text x="720" y="395" font-size="11" fill="#475569">change-management</text>
+  <line x1="706" y1="406.5" x2="714" y2="406.5" stroke="#64748b" stroke-width="1"/><text x="720" y="410.5" font-size="11" fill="#475569">onboarding</text>
+  <line x1="706" y1="421.5" x2="714" y2="421.5" stroke="#64748b" stroke-width="1"/><text x="720" y="425.5" font-size="11" fill="#64748b">+ 2 more</text>
+
+  <!-- ============ FOOTER BAND ============ -->
+  <line x1="60" y1="446" x2="940" y2="446" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Evidence -->
+  <rect x="60" y="466" width="270" height="112" fill="#f8f9fa" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+  <text x="76" y="490" font-size="13" font-weight="600" fill="#6B4C9A">Evidence</text>
+  <text x="76" y="512" font-size="11.5" font-weight="700" fill="#1e293b">Reviews</text>
+  <text x="76" y="528" font-size="11" fill="#475569">retirement-popup-review · upload-error-review</text>
+  <text x="76" y="550" font-size="11.5" font-weight="700" fill="#1e293b">Worked examples</text>
+  <text x="76" y="566" font-size="11" fill="#475569">before-after · critiques · generated-reviews</text>
+
+  <!-- Working memory -->
+  <rect x="350" y="466" width="250" height="112" fill="#f8f9fa" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+  <text x="366" y="490" font-size="13" font-weight="600" fill="#6B4C9A">Working memory</text>
+  <text x="366" y="512" font-size="11" fill="#475569">open questions</text>
+  <text x="366" y="528" font-size="11" fill="#475569">things to test · unknowns</text>
+  <text x="366" y="544" font-size="11" fill="#475569">where we might be wrong</text>
+  <text x="366" y="566" font-size="11" fill="#64748b">the coach's standing doubts</text>
+
+  <!-- Source of truth (purple) -->
+  <rect x="620" y="466" width="320" height="112" fill="#ffffff" stroke="#6B4C9A" stroke-width="1" rx="4"/>
+  <text x="636" y="490" font-size="13" font-weight="600" fill="#6B4C9A">Single source of truth</text>
+  <text x="636" y="513" font-size="12" font-weight="700" fill="#1e293b">rules.js</text>
+  <text x="690" y="513" font-size="11" fill="#475569">one machine-readable file</text>
+  <text x="636" y="536" font-size="15" fill="#64748b">↓ feeds</text>
+  <text x="636" y="559" font-size="12" font-weight="700" fill="#1e293b">the prototypes</text>
+  <text x="726" y="559" font-size="11" fill="#475569">chat app · form app</text>
+  <text x="636" y="574" font-size="10.5" fill="#64748b">the app reads the rules; the docs quote them</text>
+</svg>

@@ -1,0 +1,2561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha — communication decision coach</title>
+<style>
+  :root {
+    --white: #ffffff;
+    --slate-bg: #f8f9fa;
+    --slate-mid: #475569;
+    --slate-dark: #1e293b;
+    --stroke: #e2e8f0;
+    --diagram: #64748b;
+    --purple: #6B4C9A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--slate-dark);
+    background: var(--white);
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; font-size: 16px; color: var(--slate-dark); }
+
+  /* ---------- layout ---------- */
+  .app-header {
+    border-bottom: 1px solid var(--stroke);
+    padding: 24px 32px;
+  }
+  .app-header-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .app-title { font-size: 24px; font-weight: 600; line-height: 1.3; }
+  .app-title span { color: var(--purple); }
+  .app-sub { font-size: 16px; color: var(--slate-mid); }
+  .layout {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 232px 1fr 280px;
+    gap: 32px;
+    padding: 32px;
+    align-items: start;
+  }
+
+  /* ---------- stepper ---------- */
+  .stepper { position: sticky; top: 24px; }
+  .progress-track {
+    height: 4px;
+    background: var(--stroke);
+    margin-bottom: 16px;
+  }
+  .progress-fill { height: 4px; background: var(--purple); width: 0; transition: width .3s; }
+  .progress-label { font-size: 16px; color: var(--slate-mid); margin-bottom: 16px; }
+  .step-list { list-style: none; }
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--slate-mid);
+    border-left: 3px solid transparent;
+    margin-bottom: 4px;
+  }
+  .step-item.reachable { cursor: pointer; }
+  .step-item.reachable:hover { background: var(--slate-bg); }
+  .step-item.current {
+    border-left-color: var(--purple);
+    color: var(--slate-dark);
+    font-weight: 600;
+    background: var(--slate-bg);
+  }
+  .step-item.locked { opacity: .45; }
+  .step-num {
+    width: 22px; height: 22px;
+    flex: 0 0 22px;
+    border: 1px solid var(--stroke);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    background: var(--white);
+  }
+  .step-item.done .step-num { background: var(--purple); border-color: var(--purple); color: var(--white); }
+  .step-item.current .step-num { border-color: var(--purple); color: var(--purple); font-weight: 600; }
+
+  /* ---------- main workspace ---------- */
+  .workspace { min-width: 0; }
+  .step-kicker { font-size: 16px; font-weight: 600; color: var(--purple); margin-bottom: 8px; }
+  h2.step-title { font-size: 32px; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
+  .step-intro { color: var(--slate-mid); margin-bottom: 32px; max-width: 65ch; }
+
+  .panel {
+    border: 1px solid var(--stroke);
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 4px;
+  }
+  .panel h3 { font-size: 20px; font-weight: 600; line-height: 1.3; margin-bottom: 16px; }
+  .field { margin-bottom: 24px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .field .hint { font-size: 16px; font-weight: 400; color: var(--slate-mid); margin-bottom: 8px; }
+  .field input[type="text"], .field textarea, .field select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--stroke);
+    border-radius: 4px;
+    background: var(--white);
+  }
+  .field textarea { min-height: 96px; resize: vertical; }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: 2px solid var(--purple);
+    outline-offset: 1px;
+    border-color: var(--purple);
+  }
+
+  /* choice cards */
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .choice-card {
+    border: 1px solid var(--stroke);
+    border-radius: 4px;
+    padding: 16px;
+    cursor: pointer;
+    display: block;
+  }
+  .choice-card:hover { background: var(--slate-bg); }
+  .choice-card.selected { border-color: var(--purple); outline: 1px solid var(--purple); }
+  .choice-card input { position: absolute; opacity: 0; }
+  .choice-card .choice-name { font-weight: 600; font-size: 16px; }
+  .choice-card .choice-desc { font-size: 16px; color: var(--slate-mid); line-height: 1.5; margin-top: 4px; }
+  .choice-card:focus-within { outline: 2px solid var(--purple); outline-offset: 1px; }
+
+  /* pill checkboxes */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    border: 1px solid var(--stroke);
+    border-radius: 4px;
+    padding: 4px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background: var(--white);
+    color: var(--slate-dark);
+  }
+  .pill:hover { background: var(--slate-bg); }
+  .pill.selected { border-color: var(--purple); color: var(--purple); font-weight: 600; }
+  .pill:focus-visible { outline: 2px solid var(--purple); outline-offset: 1px; }
+
+  /* ---------- intake flow ---------- */
+  .intake-summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--stroke);
+  }
+  .is-label { font-size: 14px; font-weight: 600; color: var(--slate-mid); grid-column: 1; }
+  .is-value { font-size: 16px; grid-column: 1; }
+  .is-edit {
+    grid-column: 2; grid-row: 1 / span 2;
+    background: none; border: 1px solid var(--stroke); border-radius: 4px;
+    font-size: 14px; color: var(--slate-mid); padding: 4px 8px;
+  }
+  .is-edit:hover { background: var(--slate-bg); color: var(--slate-dark); }
+  .intake-q { padding-top: 24px; }
+  .intake-q .field { margin-bottom: 0; }
+  .intake-free { display: flex; gap: 8px; margin-top: 16px; }
+  .intake-free input, .intake-free textarea { flex: 1; padding: 8px; border: 1px solid var(--stroke); border-radius: 4px; font-size: 16px; }
+  .intake-free input:focus, .intake-free textarea:focus { outline: 2px solid var(--purple); outline-offset: 1px; }
+  .intake-done { font-size: 16px; color: var(--slate-mid); padding-top: 16px; }
+  .assume-note {
+    background: var(--slate-bg);
+    border: 1px solid var(--stroke);
+    padding: 16px;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .assume-note .an-label {
+    display: block;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .scope-note {
+    border-left: 3px solid var(--purple);
+    padding: 8px 0 8px 16px;
+    font-size: 16px;
+    color: var(--slate-dark);
+    margin-bottom: 16px;
+  }
+
+  /* ---------- coach cards ---------- */
+  .coach-card {
+    border: 1px solid var(--purple);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .coach-head {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 16px;
+  }
+  .coach-title { font-size: 20px; font-weight: 600; color: var(--slate-dark); margin-bottom: 16px; }
+  .orrt-row { display: grid; grid-template-columns: 148px 1fr; gap: 16px; padding: 8px 0; border-top: 1px solid var(--stroke); }
+  .orrt-row:first-of-type { border-top: none; padding-top: 0; }
+  .orrt-label { font-size: 16px; font-weight: 600; color: var(--purple); }
+  .orrt-row p { font-size: 16px; line-height: 1.5; color: var(--slate-dark); }
+
+  .coach-respond { margin-top: 16px; border-top: 1px solid var(--stroke); padding-top: 16px; }
+  .respond-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+  .respond-note { margin-top: 8px; }
+  .respond-note textarea { width: 100%; min-height: 64px; padding: 8px; border: 1px solid var(--stroke); border-radius: 4px; resize: vertical; }
+
+  /* ---------- messages ---------- */
+  .msg-card {
+    border: 1px solid var(--stroke);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: var(--white);
+  }
+  .msg-top { display: flex; gap: 8px; align-items: flex-start; }
+  .msg-index {
+    flex: 0 0 auto;
+    font-size: 14px; font-weight: 600;
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-top: 6px;
+  }
+  .msg-text-input { flex: 1; padding: 8px; border: 1px solid var(--stroke); border-radius: 4px; }
+  .msg-remove {
+    background: none; border: 1px solid var(--stroke); border-radius: 4px;
+    color: var(--slate-mid); font-size: 16px; padding: 4px 8px; margin-top: 2px;
+  }
+  .msg-remove:hover { color: var(--slate-dark); background: var(--slate-bg); }
+
+  .verdict-tag {
+    display: inline-block;
+    font-size: 14px; font-weight: 600;
+    border: 1px solid var(--slate-mid);
+    color: var(--slate-mid);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+  .verdict-tag.keep { border-color: var(--purple); color: var(--purple); }
+  .verdict-tag.cut { border-color: var(--slate-dark); color: var(--slate-dark); text-decoration: line-through; }
+
+  .eval-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .eval-row .field { margin-bottom: 0; }
+
+  .mini-coach {
+    margin-top: 16px;
+    border-left: 3px solid var(--purple);
+    padding-left: 16px;
+  }
+  .mini-coach .orrt-row { grid-template-columns: 128px 1fr; }
+
+  /* hierarchy list */
+  .rank-item {
+    display: flex; align-items: center; gap: 16px;
+    border: 1px solid var(--stroke); border-radius: 4px;
+    padding: 16px; margin-bottom: 8px; background: var(--white);
+  }
+  .rank-pos { font-size: 24px; font-weight: 700; color: var(--purple); min-width: 32px; }
+  .rank-body { flex: 1; min-width: 0; }
+  .rank-msg { font-size: 16px; }
+  .rank-treatment { font-size: 14px; color: var(--slate-mid); margin-top: 4px; }
+  .rank-controls { display: flex; flex-direction: column; gap: 4px; }
+  .rank-controls button {
+    border: 1px solid var(--stroke); background: var(--white); border-radius: 4px;
+    width: 32px; height: 28px; font-size: 14px; color: var(--slate-dark);
+  }
+  .rank-controls button:hover:not(:disabled) { background: var(--slate-bg); }
+  .rank-controls button:disabled { opacity: .3; cursor: default; }
+
+  /* strategy doc */
+  .strategy-doc { border: 1px solid var(--purple); border-radius: 4px; padding: 32px; margin-bottom: 24px; }
+  .strategy-doc h3 { font-size: 20px; font-weight: 600; color: var(--purple); margin: 24px 0 8px; }
+  .strategy-doc h3:first-child { margin-top: 0; }
+  .strategy-doc p, .strategy-doc li { font-size: 16px; line-height: 1.6; }
+  .strategy-doc ul { padding-left: 24px; }
+  .strategy-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .strategy-table th, .strategy-table td {
+    text-align: left; font-size: 16px; padding: 8px 24px 8px 0;
+    border-bottom: 1px solid var(--stroke); vertical-align: top;
+  }
+  .strategy-table th { font-weight: 600; }
+
+  /* generated copy */
+  .copy-block {
+    background: var(--slate-bg);
+    border: 1px solid var(--stroke);
+    border-radius: 4px;
+    padding: 16px;
+    margin: 8px 0;
+    font-size: 16px;
+  }
+  .copy-label { font-size: 14px; font-weight: 600; color: var(--purple); margin-bottom: 4px; }
+  .copy-note { font-size: 14px; color: var(--slate-mid); margin-top: 4px; }
+
+  /* key insight */
+  .key-insight { border-left: 3px solid var(--purple); padding-left: 20px; margin-top: 40px; }
+  .ki-label { font-size: 16px; font-weight: 600; color: var(--purple); }
+  .ki-text { font-size: 20px; font-weight: 600; color: var(--slate-dark); line-height: 1.3; margin-top: 4px; }
+
+  /* ---------- standards engine ---------- */
+  .std-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 24px; }
+  .std-tile { border: 1px solid var(--stroke); border-radius: 4px; padding: 16px 8px; text-align: center; }
+  .std-tile .std-cat-name { font-size: 14px; font-weight: 600; color: var(--slate-dark); }
+  .std-tile .std-cat-counts { font-size: 14px; color: var(--slate-mid); margin-top: 4px; }
+  .std-tile.has-fix { border-color: var(--slate-dark); }
+  .std-tile.has-review { border-color: var(--purple); }
+  .std-row { display: grid; grid-template-columns: 88px 176px 1fr; gap: 16px; padding: 8px 0; border-top: 1px solid var(--stroke); font-size: 16px; align-items: start; }
+  .std-row:first-of-type { border-top: none; }
+  .std-status { font-size: 14px; font-weight: 600; border: 1px solid var(--stroke); border-radius: 4px; padding: 1px 8px; justify-self: start; white-space: nowrap; }
+  .std-status.pass { color: var(--slate-mid); }
+  .std-status.review { color: var(--purple); border-color: var(--purple); }
+  .std-status.fix { color: var(--white); background: var(--slate-dark); border-color: var(--slate-dark); }
+  .std-check { font-weight: 600; line-height: 1.5; }
+  .std-finding { line-height: 1.5; }
+  .std-fixhint { color: var(--slate-mid); font-size: 14px; margin-top: 4px; line-height: 1.5; }
+  .std-edit-row { display: grid; grid-template-columns: 48px 1fr 176px 152px; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .std-edit-row input { padding: 8px; border: 1px solid var(--stroke); border-radius: 4px; font-size: 14px; width: 100%; }
+  .std-edit-row input:focus { outline: 2px solid var(--purple); outline-offset: 1px; }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-block;
+    border: 1px solid var(--slate-dark);
+    background: var(--slate-dark);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 4px;
+  }
+  .btn:hover { background: var(--slate-mid); border-color: var(--slate-mid); }
+  .btn.secondary { background: var(--white); color: var(--slate-dark); border-color: var(--stroke); font-weight: 400; }
+  .btn.secondary:hover { background: var(--slate-bg); }
+  .btn.ghost-purple { background: var(--white); color: var(--purple); border: 1px solid var(--purple); font-weight: 600; }
+  .btn.ghost-purple:hover { background: var(--slate-bg); }
+  .btn:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+  .step-nav { display: flex; justify-content: space-between; gap: 16px; margin-top: 32px; }
+  .validation-msg { color: var(--slate-dark); font-size: 16px; font-weight: 600; margin-top: 16px; display: none; }
+  .validation-msg.show { display: block; }
+
+  /* ---------- summary rail ---------- */
+  .summary { position: sticky; top: 24px; border: 1px solid var(--stroke); border-radius: 4px; padding: 24px; }
+  .summary h2 { font-size: 16px; font-weight: 600; color: var(--purple); margin-bottom: 16px; }
+  .sum-section { border-top: 1px solid var(--stroke); padding: 8px 0; }
+  .sum-section:first-of-type { border-top: none; padding-top: 0; }
+  .sum-label { font-size: 14px; font-weight: 600; color: var(--slate-mid); }
+  .sum-value { font-size: 16px; line-height: 1.5; }
+  .sum-value .pending { color: var(--slate-mid); font-style: normal; }
+  .sum-msgs { list-style: none; }
+  .sum-msgs li { font-size: 14px; line-height: 1.5; padding: 2px 0; display: flex; gap: 8px; align-items: baseline; }
+  .sum-msgs .v { flex: 0 0 auto; font-weight: 600; font-size: 12px; }
+  .summary .restart {
+    margin-top: 16px; width: 100%;
+    background: none; border: 1px solid var(--stroke); border-radius: 4px;
+    font-size: 14px; color: var(--slate-mid); padding: 8px;
+  }
+  .summary .restart:hover { background: var(--slate-bg); color: var(--slate-dark); }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+  @media (max-width: 1000px) {
+    .layout { grid-template-columns: 1fr; padding: 24px 16px; }
+    .std-grid { grid-template-columns: 1fr 1fr; }
+    .std-row { grid-template-columns: 1fr; gap: 4px; }
+    .std-edit-row { grid-template-columns: 1fr; }
+    .stepper { position: static; }
+    .step-list { display: flex; flex-wrap: wrap; gap: 4px; }
+    .step-item { border-left: none; border: 1px solid var(--stroke); border-radius: 4px; margin-bottom: 0; }
+    .step-item.current { border-color: var(--purple); }
+    .summary { position: static; order: 3; }
+    .choice-grid, .eval-row { grid-template-columns: 1fr; }
+    .orrt-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header-inner">
+    <div>
+      <div class="app-title">Alpha <span>· a communication decision workshop, not a chatbot</span></div>
+      <div class="app-sub">Decide what to say, where, and how loud — before you write a word.</div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="stepper" aria-label="Workshop steps">
+    <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">Step 1 of 12</div>
+    <ol class="step-list" id="stepList"></ol>
+  </nav>
+
+  <main class="workspace" id="workspace" aria-live="polite"></main>
+
+  <aside class="summary" aria-label="Live strategy summary">
+    <h2>Strategy so far</h2>
+    <div id="summaryBody"></div>
+    <button class="restart" id="restartBtn">Start over</button>
+  </aside>
+</div>
+
+<script src="ai-communication-coach/rules.js"></script>
+<script>
+'use strict';
+
+/* All rule data lives in ai-communication-coach/rules.js — the single
+   source of truth shared with the knowledge base. This file is logic only. */
+const {
+  COMPONENT_TYPES, TRIGGERS, STAGES, USER_GOALS, BUSINESS_GOALS, COMM_GOALS, PLACEMENTS,
+  STAGE_CARDS, STAGE_MISMATCH, BUSINESSY_WORDS, CONFLICT_RULES, COMM_PROBES, VERDICT_LABELS,
+  CHAR_BUDGETS, ACRONYM_OK, COMPLEX_WORDS, INCLUSIVE_TERMS, A11Y_FLAGS, VAGUE_PHRASES,
+  PLAYFUL_WORDS, TIME_BOUND, LIFECYCLE_WORDS, IDIOMS, TERM_RULES, NAMING_PAIRS, PHRASE_VARIANTS,
+  COMPONENT_GOAL_FIT, PLACEMENT_DEFAULTS, OVERRIDE_WARNINGS, STD_CATEGORIES,
+  LOCALIZATION_EXPANSION, TEASER_OPENERS, GOAL_OPTIONS, CUE_SUGGESTIONS,
+  UX_ROLES, KPI_ASSUMPTIONS, AUDIENCE_TAGS, PRODUCTS, PROJECT_TYPES, MVP_PROJECT_TYPES, INCLUDES, INFERENCE
+} = window.COACH_RULES;
+
+/* =========================================================
+   State
+   ========================================================= */
+const STORAGE_KEY = 'comm-coach-v2';
+
+const blankState = () => ({
+  current: 1,
+  furthest: 1,
+  intake: { role: '', path: '', componentType: '', goal: '', context: '', draft: '', audience: '', cues: '', trigger: '', triggerLabel: '', product: '', workflow: '', uiImageName: '', surface: '', kpiStated: '', kpiAgreed: '', campaign: '', campaignChannels: '', working: '', userNeed: '', audienceTags: '', tagsOk: '', includes: '', includesOk: '', projectType: '', sameWaySuccess: '', displayContent: '', todaySteps: '', todayOk: '', futureSteps: '', futureOk: '', clientsImpacted: '', goalType: '', commsOther: '', commsOk: '' },
+  assumptions: [],          // [{id, response: 'holds'|'adjust'|'', note}]
+  stage: '',
+  userGoals: [], userGoalCustom: '',
+  businessGoals: [],
+  commPrimary: '', commSecondary: '',
+  messages: [],             // [{id, text, need, known, placementOverride, owner, expires}]
+  msgSeq: 1,
+  order: [],                // ordered ids of kept messages
+  stdCounts: null           // {pass, review, fix} from the last standards run
+});
+
+let state = blankState();
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = Object.assign(blankState(), JSON.parse(raw));
+  } catch (e) { state = blankState(); }
+}
+
+/* =========================================================
+   Helpers
+   ========================================================= */
+const $ = (sel, el) => (el || document).querySelector(sel);
+const $$ = (sel, el) => Array.from((el || document).querySelectorAll(sel));
+const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+function wordCount(t) { return (String(t || '').trim().match(/\S+/g) || []).length; }
+function sentences(t) {
+  return String(t || '').split(/(?<=[.!?])\s+|\n+/).map(s => s.trim()).filter(s => s.length > 1);
+}
+function stripFiller(t) {
+  return String(t || '')
+    .replace(/\b(just|really|very|simply|actually|basically|quite|totally)\s+/gi, '')
+    .replace(/\bplease note that\s+/gi, '')
+    .replace(/\bin order to\b/gi, 'to')
+    .replace(/\bat this time\b/gi, 'now')
+    .replace(/\bwe (are excited|'re excited|are thrilled|'re thrilled) to (announce|share) that\s*/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+function sentenceCase(t) {
+  t = String(t || '').trim();
+  return t ? t.charAt(0).toUpperCase() + t.slice(1) : t;
+}
+
+function coachCard(c) {
+  return `<div class="coach-card">
+    <div class="coach-head">Coach's take</div>
+    ${c.title ? `<div class="coach-title">${esc(c.title)}</div>` : ''}
+    <div class="orrt">
+      <div class="orrt-row"><span class="orrt-label">Observation</span><p>${esc(c.observation)}</p></div>
+      <div class="orrt-row"><span class="orrt-label">Reasoning</span><p>${esc(c.reasoning)}</p></div>
+      <div class="orrt-row"><span class="orrt-label">Recommendation</span><p>${esc(c.recommendation)}</p></div>
+      <div class="orrt-row"><span class="orrt-label">Tradeoffs</span><p>${esc(c.tradeoffs)}</p></div>
+    </div>
+    ${c.extra || ''}
+  </div>`;
+}
+
+function miniORRT(c) {
+  return `<div class="mini-coach">
+    <div class="orrt-row"><span class="orrt-label">Observation</span><p>${esc(c.observation)}</p></div>
+    <div class="orrt-row"><span class="orrt-label">Reasoning</span><p>${esc(c.reasoning)}</p></div>
+    <div class="orrt-row"><span class="orrt-label">Recommendation</span><p>${esc(c.recommendation)}</p></div>
+    <div class="orrt-row"><span class="orrt-label">Tradeoffs</span><p>${esc(c.tradeoffs)}</p></div>
+  </div>`;
+}
+
+/* =========================================================
+   Coach logic — assumptions (step 2)
+   ========================================================= */
+function buildAssumptions() {
+  const it = state.intake;
+  const cards = [];
+  const hasInc = n => (it.includes || '').split(',').map(s => s.trim()).includes(n);
+
+  const triggerCards = {
+    stakeholder: {
+      title: 'Assumption: the ask is the answer',
+      observation: 'This started as a stakeholder ask.',
+      reasoning: 'Asks often name a fix, not the problem.',
+      recommendation: 'Write the problem in one sentence. If you can\'t, go ask.',
+      tradeoffs: 'Asking why takes time. Skipping it can ship the wrong fix.'
+    },
+    support: {
+      title: 'Assumption: better words will unstick people',
+      observation: 'Support tickets sparked this.',
+      reasoning: 'Tickets show where people got stuck — not that words caused it.',
+      recommendation: 'Read five real tickets. Borrow the users\' words.',
+      tradeoffs: 'Reading slows you down today. Guessing keeps the tickets coming.'
+    },
+    research: {
+      title: 'Assumption: the data says what you think it says',
+      observation: 'Metrics or research prompted this.',
+      reasoning: 'Numbers show where people leave, not why.',
+      recommendation: 'Name the behavior you expect to change, and how you\'ll know.',
+      tradeoffs: 'Defining success takes effort. Without it, anything looks like a win.'
+    },
+    own: {
+      title: 'Assumption: the problem is real because you felt it',
+      observation: 'This came from your own work.',
+      reasoning: 'Nobody has checked the why yet — including you.',
+      recommendation: 'Answer: what happens if we ship nothing?',
+      tradeoffs: 'Questioning your own idea slows you down. Not questioning it can polish something nobody needs.'
+    },
+    upkeep: {
+      title: 'Assumption: users need to care about our upkeep',
+      observation: 'Routine technical upkeep prompted this.',
+      reasoning: 'Users don\'t care about our systems — only their task.',
+      recommendation: 'Lead with what they must do and by when. Keep our reasons to one line.',
+      tradeoffs: 'Skipping the backstory feels abrupt. Leading with it buries the action.'
+    },
+    engineering: {
+      title: 'Assumption: copy should absorb the constraint',
+      observation: 'A technical limit forced this message.',
+      reasoning: 'Users don\'t care why we can\'t — they care what they can do.',
+      recommendation: 'Say the impact and the next step. Skip the system story.',
+      tradeoffs: 'Hiding the tech story can feel vague. Telling it dumps our problem on the user.'
+    }
+  };
+  if (triggerCards[it.trigger]) cards.push(triggerCards[it.trigger]);
+
+  cards.push({
+    title: 'Assumption: words will fix this',
+    observation: 'The request treats this as a words problem.',
+    reasoning: 'Words can\'t fix a confusing layout or a bad moment — only narrate it.',
+    recommendation: 'Ask: if the design or timing changed, would this message still be needed?',
+    tradeoffs: 'Questioning the brief slows the sprint. A bandage message gets rewritten forever.'
+  });
+
+  const cues = (it.cues || '').trim();
+  if (cues && !/^none/i.test(cues)) {
+    cards.push({
+      title: 'Assumption: one more cue will work where these haven\'t',
+      observation: `Already pointing here: ${cues}.`,
+      reasoning: 'Users walked past all of these without acting.',
+      recommendation: 'Find out why — unseen, unclear, or unconvincing — and fix that. Often the best move is fixing the loudest cue, not adding one.',
+      tradeoffs: 'Diagnosis is slow. Skipping it usually buys one more ignored cue.'
+    });
+  } else if (cues) {
+    cards.push({
+      title: 'Assumption: there really are no existing cues',
+      observation: 'Nothing points the user here today.',
+      reasoning: 'Truly zero is rare — and a one-time message is a thin path on its own.',
+      recommendation: 'Walk the journey once. Then plan the permanent home first.',
+      tradeoffs: 'The walk costs an hour. A message pointing at nothing costs its whole budget.'
+    });
+  }
+
+  if (it.goal === 'Ship a mandate I was given') {
+    cards.push({
+      title: 'Assumption: shipping the mandate meets the need',
+      observation: 'The goal you were handed is to ship this.',
+      reasoning: 'Behind every mandate is a number someone wants moved.',
+      recommendation: 'Find the number. Aim the copy at it.',
+      tradeoffs: 'Questioning a mandate looks like resistance. Shipping it blind changes nothing.'
+    });
+  }
+
+  if (hasInc('Change management messaging')) {
+    cards.push({
+      title: 'Assumption: users will find out on their own',
+      observation: 'The way users do this today will stop working.',
+      reasoning: 'Nobody reads release notes. They find out when their habit fails.',
+      recommendation: 'Tell them before it changes, where the old habit lives: what stops, what to do instead.',
+      tradeoffs: 'Change messaging is extra scope. Skipping it becomes support tickets.'
+    });
+  }
+
+  if (hasInc('Selling opportunity')) {
+    cards.push({
+      title: 'Assumption: the sell can ride along',
+      observation: 'This includes a selling opportunity.',
+      reasoning: 'A task message and a sell are different things.',
+      recommendation: 'Give the sell its own message and moment. Make the real charge the biggest number.',
+      tradeoffs: 'Separate, the sell gets fewer eyes. Fused, both messages fail.'
+    });
+  }
+
+  if (hasInc('Another company')) {
+    cards.push({
+      title: 'Assumption: users know who is talking',
+      observation: 'Another company appears in this experience.',
+      reasoning: 'Users quietly ask: who\'s talking? Who has my data? Who do I blame?',
+      recommendation: 'Decide whose name is on it and where the handoff happens. Partner naming likely needs legal.',
+      tradeoffs: 'Naming the partner adds approvals. Hiding it feels misleading at the seam.'
+    });
+  }
+
+  const comms = (it.commsOther || '').split(',').map(s => s.trim()).filter(c => c && !/^nothing/i.test(c));
+  if (comms.length) {
+    cards.push({
+      title: 'Assumption: the product must carry this too',
+      observation: `This also goes out by: ${comms.join(', ')}.`,
+      reasoning: 'People who got the email meet the same pitch again in the product.',
+      recommendation: 'Give the in-product piece a job the other channels can\'t do — catch people at the moment of action. No job? Let the other channels carry it.',
+      tradeoffs: 'Fewer surfaces, fewer impressions. Repeats teach people to skim.'
+    });
+  }
+
+  if (it.path === 'outside' && (it.kpiAgreed || '').trim()) {
+    cards.push({
+      title: 'Assumption: the click is the finish line we can see',
+      observation: `Success will be read as: ${(it.kpiAgreed || '').trim()}.`,
+      reasoning: 'What happens after the click is invisible to us.',
+      recommendation: 'Judge the copy against the agreed measures only.',
+      tradeoffs: 'A click isn\'t an outcome. But an unmeasurable goal can\'t be coached.'
+    });
+  }
+
+  const wc = wordCount(it.draft);
+  if (wc > 40) {
+    cards.push({
+      title: 'Assumption: users will read all of this',
+      observation: `Your draft is about ${wc} words.`,
+      reasoning: 'People scan. Attention drops after the first line.',
+      recommendation: 'Assume one line gets read. Every other line must earn its place.',
+      tradeoffs: 'Cutting risks nuance. Keeping it all risks the reader.'
+    });
+  } else if (wc > 0) {
+    cards.push({
+      title: 'Assumption: short means clear',
+      observation: `Your draft is short — about ${wc} words.`,
+      reasoning: 'Short is only clear if it carries the one fact they need.',
+      recommendation: 'Keep the length. Check it answers the user\'s actual question.',
+      tradeoffs: 'Terse can leave real questions open. Adding words starts the bloat.'
+    });
+  }
+
+  if (it.audience.trim()) {
+    cards.push({
+      title: 'Assumption: your audience is one person',
+      observation: `You describe the user as "${it.audience.trim()}".`,
+      reasoning: 'One label hides several moments: first-timers, returners, people mid-error.',
+      recommendation: 'Name the one person this serves most. Write for them.',
+      tradeoffs: 'Focusing underserves the edges. Writing for everyone serves no one.'
+    });
+  }
+
+  return cards;
+}
+
+/* =========================================================
+   Coach logic — stage (step 3)
+   ========================================================= */
+
+function stageMismatchCard() {
+  const key = state.intake.componentType + '|' + state.stage;
+  const msg = STAGE_MISMATCH[key];
+  if (!msg) return '';
+  return coachCard({
+    title: 'A tension worth naming',
+    observation: `You paired a ${COMPONENT_TYPES[state.intake.componentType].name.toLowerCase()} with the "${STAGES[state.stage].name.toLowerCase()}" stage.`,
+    reasoning: msg,
+    recommendation: 'You can keep this pairing — but do it on purpose, and let it shape the copy in the later steps.',
+    tradeoffs: 'Changing the pattern means rework now. Keeping it means the words must work harder than words usually can.'
+  });
+}
+
+/* =========================================================
+   Coach logic — goals (steps 4–6)
+   ========================================================= */
+
+function userGoalsCoach() {
+  const goals = [...state.userGoals];
+  if (state.userGoalCustom.trim()) goals.push(state.userGoalCustom.trim());
+  if (!goals.length) return '';
+
+  if (state.userGoalCustom.trim() && BUSINESSY_WORDS.test(state.userGoalCustom)) {
+    return coachCard({
+      title: 'That goal is wearing a costume',
+      observation: `You wrote "${state.userGoalCustom.trim()}" as a user goal.`,
+      reasoning: 'Users do not wake up wanting to adopt, engage, or convert. Those are our goals in their voice. A real user goal survives the test: "would they say it that way to a friend?"',
+      recommendation: 'Rewrite it as the user would say it — start with "I just want to…". Move the business version to the next step, where it belongs.',
+      tradeoffs: 'Separating the two feels pedantic. But copy written to a disguised business goal always sounds like it — users can smell it.'
+    });
+  }
+
+  if (goals.length >= 3) {
+    return coachCard({
+      title: 'One moment, one job',
+      observation: `You picked ${goals.length} user goals.`,
+      reasoning: 'All of them may be true across the journey. But in this one moment, a user has one job — and copy that serves three goals serves none well.',
+      recommendation: `Pick the primary. If forced to keep only one, which would the user pick? The rest become context, not drivers.`,
+      tradeoffs: 'Narrowing means some real needs go unserved here. Serving them all means the message blurs for everyone.'
+    });
+  }
+
+  return coachCard({
+    title: 'Plausible — now check the voice',
+    observation: `You picked: ${goals.join('; ').toLowerCase()}.`,
+    reasoning: 'These sound like real user goals. The trap is that plausible goals are often our best guess dressed as fact.',
+    recommendation: 'Finish this sentence in the user\'s own words: "I just want to…". If your goal survives that phrasing, trust it.',
+    tradeoffs: 'Validating goals takes research you may not have time for. Guessing is faster — and fine, as long as you label it a guess.'
+  });
+}
+
+
+function businessGoalsCoach() {
+  if (!state.businessGoals.length) return '';
+  const conflicts = [];
+  for (const rule of CONFLICT_RULES) {
+    if (!state.businessGoals.includes(rule.biz)) continue;
+    if (rule.stages && rule.stages.includes(state.stage)) conflicts.push(rule.msg);
+    if (rule.userGoal && state.userGoals.includes(rule.userGoal)) conflicts.push(rule.msg);
+  }
+
+  if (conflicts.length) {
+    return coachCard({
+      title: 'Your goals are pulling in two directions',
+      observation: `Business goals: ${state.businessGoals.join('; ').toLowerCase()}. User's moment: ${STAGES[state.stage] ? STAGES[state.stage].name.toLowerCase() : '—'}.`,
+      reasoning: conflicts.join(' '),
+      recommendation: 'Serve the user\'s goal in this moment. The business goal gets served by the trust that builds — or it gets its own, better moment.',
+      tradeoffs: 'Deferring the business goal is a hard sell to stakeholders holding this quarter\'s number. Chasing it here spends trust you cannot see on a dashboard.'
+    });
+  }
+
+  return coachCard({
+    title: 'Where the goals overlap is your message',
+    observation: `Business wants: ${state.businessGoals.join('; ').toLowerCase()}. The user wants: ${(state.userGoals[0] || state.userGoalCustom || 'their goal').toLowerCase()}.`,
+    reasoning: 'The strongest product copy lives where these overlap — where helping the user is helping the business. Anything outside the overlap has to be pushed, and pushed copy sounds pushed.',
+    recommendation: 'Write one sentence naming the overlap: "When the user succeeds at X, the business gets Y." That sentence is your strategy\'s spine.',
+    tradeoffs: 'Sticking to the overlap means some business goals wait for another moment. Stretching beyond it means users start reading your product like advertising.'
+  });
+}
+
+
+function commGoalsCoach() {
+  if (!state.commPrimary) return '';
+  let html = '';
+  const p = COMM_PROBES[state.commPrimary];
+
+  if (state.commPrimary === 'persuade' && (state.stage === 'need' || state.stage === 'leaving')) {
+    html += coachCard({
+      title: 'Persuading someone at their worst moment',
+      observation: `Primary goal "persuade" during "${STAGES[state.stage].name.toLowerCase()}".`,
+      reasoning: 'A person who is stuck or leaving is at their least persuadable and most watchful. Pressure here confirms their worst read of the product.',
+      recommendation: 'Change the primary goal to reassure or inform for this moment. If persuasion truly is the job, it should feel like helping.',
+      tradeoffs: 'Dropping persuasion here may cost a save or a sale you can measure. Keeping it costs trust you cannot.'
+    });
+  }
+
+  html += coachCard({
+    title: p.title,
+    observation: `Primary: ${COMM_GOALS[state.commPrimary].name.toLowerCase()}${state.commSecondary ? '. Secondary: ' + COMM_GOALS[state.commSecondary].name.toLowerCase() : ', no secondary'}.`,
+    reasoning: p.reasoning,
+    recommendation: p.recommendation,
+    tradeoffs: p.tradeoffs
+  });
+
+  if (state.commSecondary && state.commSecondary === state.commPrimary) {
+    // prevented by UI, but guard anyway
+  } else if (state.commSecondary === 'persuade' && state.commPrimary === 'reassure') {
+    html += coachCard({
+      title: 'Reassure and persuade fight each other',
+      observation: 'You paired reassure (primary) with persuade (secondary).',
+      reasoning: 'Reassurance says "you are safe; no pressure." Persuasion applies pressure. Users feel the second goal and stop believing the first.',
+      recommendation: 'Drop the persuasion from this moment. A reassured user persuades themselves.',
+      tradeoffs: 'You give up a call to action here. You keep the credibility that makes the next call to action work.'
+    });
+  }
+  return html;
+}
+
+/* =========================================================
+   Coach logic — messages (steps 7–10)
+   ========================================================= */
+function verdictFor(m) {
+  if (!m.need || !m.known) return null;
+  if (m.need === 'act') return 'keep';
+  if (m.need === 'later') return 'defer';
+  if (m.need === 'helps') return m.known === 'yes' ? 'cut' : 'secondary';
+  return 'cut'; // need === 'no'
+}
+
+
+function verdictCoach(m) {
+  const v = verdictFor(m);
+  if (!v) return '';
+  const txt = `"${m.text}"`;
+  const cards = {
+    keep: {
+      observation: `You said the user needs ${txt} to act right now.`,
+      reasoning: 'Need-to-act messages are the only ones guaranteed a reader. This one has earned the front of the line.',
+      recommendation: 'Lead with it. Give it the strongest position and treatment in step 10.',
+      tradeoffs: 'Every message you lead with pushes the others down. Be sure this one deserves the spotlight over its siblings.'
+    },
+    secondary: {
+      observation: `${sentenceCase(txt)} helps, but the user could act without it — and they may not know it yet.`,
+      reasoning: 'Helpful-but-optional information is where message bloat comes from. It deserves a home, not a headline.',
+      recommendation: 'Keep it, but as support: smaller, later, or behind a "learn more."',
+      tradeoffs: 'Tucked-away information gets missed by some users. Promoted, it dilutes the message that actually drives action.'
+    },
+    defer: {
+      observation: `You said ${txt} matters — just not now.`,
+      reasoning: 'Right message, wrong moment is still the wrong message. Deferring is not cutting; it is scheduling.',
+      recommendation: 'Park it for a later touchpoint: next visit, a changelog, a follow-up. Note the trigger that makes it timely.',
+      tradeoffs: 'Deferred messages need a real delivery plan or they quietly die. If no later moment exists, be honest: this is a cut.'
+    },
+    cut: {
+      observation: m.known === 'yes'
+        ? `The user likely already knows ${txt}.`
+        : `The user does not need ${txt} to act, now or later.`,
+      reasoning: 'Telling people what they already know — or never needed — costs the attention your real message depends on. Nice to know is not need to know.',
+      recommendation: 'Cut it. If a stakeholder pushes back, ask what the user would do differently after reading it.',
+      tradeoffs: 'Cutting risks the rare user who did need it. Keeping it taxes every user who did not.'
+    }
+  };
+  return miniORRT(cards[v]);
+}
+
+function keptMessages() {
+  const kept = state.messages.filter(m => ['keep', 'secondary'].includes(verdictFor(m)));
+  // respect saved order
+  kept.sort((a, b) => {
+    const ia = state.order.indexOf(a.id), ib = state.order.indexOf(b.id);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
+  return kept;
+}
+
+function recommendedOrderIds() {
+  const kept = state.messages.filter(m => ['keep', 'secondary'].includes(verdictFor(m)));
+  return [
+    ...kept.filter(m => verdictFor(m) === 'keep').map(m => m.id),
+    ...kept.filter(m => verdictFor(m) === 'secondary').map(m => m.id)
+  ];
+}
+
+function placementDefault(m) {
+  const v = verdictFor(m);
+  if (PLACEMENT_DEFAULTS.byVerdict[v]) return PLACEMENT_DEFAULTS.byVerdict[v];
+  return PLACEMENT_DEFAULTS.leadByComponent[state.intake.componentType] || PLACEMENT_DEFAULTS.leadFallback;
+}
+
+function placementCoach(m) {
+  const v = verdictFor(m);
+  const rec = placementDefault(m);
+  const chosen = m.placementOverride || rec;
+  const base = {
+    keep: {
+      observation: `This is a lead message. Recommended: ${PLACEMENTS[rec].toLowerCase()}.`,
+      reasoning: 'A message the user needs in order to act must live where the action lives. Distance between the message and the action is where errors happen.',
+      recommendation: `Place it ${rec === 'modal' ? 'in the dialog itself, above the buttons' : 'inline, at the point of action'} — visible without any extra click.`,
+      tradeoffs: 'Inline space is expensive and fights the UI for room. But a lead message you have to hunt for is not a lead message.'
+    },
+    secondary: {
+      observation: `This is a support message. Recommended: ${PLACEMENTS[rec].toLowerCase()}.`,
+      reasoning: 'Support information helps the curious without taxing the hurried. Progressive disclosure serves both.',
+      recommendation: 'Helper text under the control, or a short "learn more" that expands. Keep the collapsed line meaningful on its own.',
+      tradeoffs: 'Some users never expand anything, so tucked content goes unseen. Surfacing it fully makes every user pay for a few users\' curiosity.'
+    },
+    defer: {
+      observation: `This message is deferred. Recommended: ${PLACEMENTS[rec].toLowerCase()}.`,
+      reasoning: 'A deferred message needs a future trigger, or it is a cut wearing a calendar.',
+      recommendation: 'Attach it to a real future moment: next session, the changelog, a follow-up email. Name the trigger in your strategy.',
+      tradeoffs: 'Later channels have weaker attention than in-product moments. What you gain in timing you lose in reach.'
+    }
+  };
+  if (!base[v]) return '';
+  let html = miniORRT(base[v]);
+
+  if (m.placementOverride && m.placementOverride !== rec) {
+    const w = OVERRIDE_WARNINGS[v + '|' + m.placementOverride];
+    if (w) {
+      html += miniORRT({
+        observation: `You overrode the recommendation with: ${PLACEMENTS[m.placementOverride].toLowerCase()}.`,
+        reasoning: w,
+        recommendation: 'Overrides are allowed — you know context the coach does not. Just make it a decision, not a default.',
+        tradeoffs: 'Your override may fit constraints the coach cannot see. It also gives up the reasoning above.'
+      });
+    }
+  }
+  return html;
+}
+
+function hierarchyTreatment(pos, total, verdict) {
+  if (pos === 0) return 'Lead: largest and first. Body size or above, weight 600–700, top of the reading order.';
+  if (verdict === 'secondary') return 'Support: small text (16px), regular weight, muted color, below or behind a disclosure.';
+  if (pos === 1) return 'Second: body size, regular weight, directly after the lead.';
+  return 'Tertiary: small text (16px), muted color, last in the reading order.';
+}
+
+/* =========================================================
+   Coach logic — content generation (step 12)
+   ========================================================= */
+function generateVariants(m, isLead) {
+  const cleaned = sentenceCase(stripFiller(m.text));
+  const goal = state.commPrimary;
+  const variants = [{
+    label: 'Tightened',
+    text: cleaned,
+    note: cleaned === m.text.trim() ? 'Already tight — no filler to strip.' : 'Your words, with the filler stripped out.'
+  }];
+
+  const templates = {
+    instruct: { label: 'Verb-first', make: t => t, note: 'Start the sentence with the action verb. Cut everything before it.' },
+    inform:   { label: 'Fact-first', make: t => t, note: 'Lead with the fact itself. No preamble, no "please note."' },
+    reassure: { label: 'Status-first', make: t => t, note: 'State what is safe or unchanged first, then the detail.' },
+    confirm:  { label: 'Consequence-first', make: t => t, note: 'Name what happens and what cannot be undone. Button label repeats the action.' },
+    warn:     { label: 'Risk-and-when', make: t => t, note: 'Name the specific risk and the moment it applies.' },
+    persuade: { label: 'Doubt-answering', make: t => t, note: 'State the evidence that removes the doubt. No urgency tactics.' }
+  };
+
+  const structures = {
+    instruct: '[Action verb] + [object] + [payoff if not obvious].',
+    inform:   '[The fact]. [What it means for the user, if not obvious].',
+    reassure: '[What is safe / unchanged]. [What to do next, if anything].',
+    confirm:  '[What will happen]. [What cannot be undone]. Button: [repeat the action].',
+    warn:     '[The risk] + [when it applies] + [how to avoid it].',
+    persuade: '[The doubt, answered with evidence]. [The choice, stated neutrally].'
+  };
+
+  if (templates[goal]) {
+    variants.push({
+      label: templates[goal].label + ' structure',
+      text: structures[goal],
+      note: templates[goal].note + ' Slot your message into this shape.'
+    });
+  }
+
+  if (isLead) {
+    const firstSentence = sentences(cleaned)[0] || cleaned;
+    if (firstSentence !== cleaned) {
+      variants.push({ label: 'First sentence only', text: firstSentence, note: 'If only one line gets read, could this be the line?' });
+    }
+  }
+  return variants;
+}
+
+/* =========================================================
+   Content standards engine (step 12)
+   ========================================================= */
+const STOPWORDS = new Set(['the', 'a', 'an', 'to', 'of', 'and', 'or', 'is', 'are', 'was', 'were', 'your', 'you', 'we', 'our', 'it', 'that', 'this', 'with', 'for', 'not', 'can', 'in', 'on', 'at', 'be', 'all', 'out']);
+
+function syllableCount(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, '');
+  if (!word) return 0;
+  if (word.length <= 3) return 1;
+  word = word.replace(/(?:[^laeiouy]e)$/, '').replace(/^y/, '');
+  const m = word.match(/[aeiouy]{1,2}/g);
+  return m ? m.length : 1;
+}
+function fleschGrade(text) {
+  const sents = Math.max(1, sentences(text).length);
+  const words = (text.match(/\S+/g) || []);
+  if (!words.length) return 0;
+  const syl = words.reduce((n, w) => n + syllableCount(w), 0);
+  return Math.max(0, 0.39 * (words.length / sents) + 11.8 * (syl / words.length) - 15.59);
+}
+function contentTokens(t) { return (String(t).toLowerCase().match(/[a-z']+/g) || []).filter(w => !STOPWORDS.has(w)); }
+function overlapRatio(a, b) {
+  const A = new Set(contentTokens(a)), B = new Set(contentTokens(b));
+  if (!A.size || !B.size) return 0;
+  let inter = 0; A.forEach(w => { if (B.has(w)) inter++; });
+  return inter / Math.min(A.size, B.size);
+}
+function mLabel(m) { return 'M' + (state.messages.indexOf(m) + 1); }
+function placementOf(m) { return m.placementOverride || placementDefault(m); }
+function activeStdMessages() { return state.messages.filter(m => ['keep', 'secondary', 'defer'].includes(verdictFor(m))); }
+
+
+function stdRow(name, issues, fix, sev) {
+  return issues.length
+    ? { name, status: sev || 'review', finding: issues.join(' '), fix }
+    : { name, status: 'pass', finding: 'No issues found.', fix: '' };
+}
+
+function productNamesIn(msgs) {
+  const names = new Set();
+  msgs.forEach(m => {
+    const words = m.text.split(/\s+/);
+    let run = [];
+    words.forEach((w, i) => {
+      const clean = w.replace(/[^A-Za-z0-9'-]/g, '');
+      const startsSentence = i === 0 || /[.!?]$/.test(words[i - 1] || '');
+      if (clean && /^[A-Z]/.test(clean) && !startsSentence && !ACRONYM_OK.includes(clean) && clean !== 'I') {
+        run.push(clean);
+      } else {
+        if (run.length) names.add(run.join(' '));
+        run = [];
+      }
+    });
+    if (run.length) names.add(run.join(' '));
+  });
+  return [...names];
+}
+
+function writingChecks(kept) {
+  const rows = [];
+  const each = fn => kept.forEach(m => fn(m, m.text, mLabel(m)));
+
+  let iss = []; let hasCaps = false;
+  each((m, t, L) => {
+    const caps = (t.match(/\b[A-Z]{3,}\b/g) || []).filter(w => !ACRONYM_OK.includes(w));
+    if (caps.length) { hasCaps = true; iss.push(`${L}: all caps ("${caps.join('", "')}").`); }
+    const words = t.split(/\s+/);
+    const capCount = words.filter(w => /^[A-Z][a-z]/.test(w)).length;
+    if (words.length > 3 && capCount > words.length / 2) iss.push(`${L} looks headline-cased.`);
+  });
+  rows.push(stdRow('Sentence case', iss, 'Capitalize the first word and product names — nothing else.', hasCaps ? 'fix' : 'review'));
+
+  iss = [];
+  each((m, t, L) => COMPLEX_WORDS.forEach(([w, alt]) => {
+    if (t.toLowerCase().includes(w)) iss.push(`${L}: "${w}" → "${alt}".`);
+  }));
+  rows.push(stdRow('Plain language', iss, 'Swap in the everyday word. If the sentence still works, the fancy word was decoration.'));
+
+  let maxG = 0; iss = [];
+  each((m, t, L) => {
+    const g = fleschGrade(t);
+    if (g > maxG) maxG = g;
+    if (g > 9) iss.push(`${L} reads at grade ${g.toFixed(1)}.`);
+  });
+  rows.push(kept.length && !iss.length
+    ? { name: 'Reading level', status: 'pass', finding: `Highest reading level: grade ${maxG.toFixed(1)} — fine for product copy.`, fix: '' }
+    : stdRow('Reading level', iss, 'Shorter sentences, shorter words. Aim for grade 8 or below.', maxG > 12 ? 'fix' : 'review'));
+
+  const allText = kept.map(m => m.text).join(' ');
+  const we = (allText.match(/\b(we|our|us|we're|we've)\b/gi) || []).length;
+  const you = (allText.match(/\b(you|your|you're|you've)\b/gi) || []).length;
+  rows.push(we > you
+    ? { name: 'Voice', status: 'review', finding: `"We/our" appears ${we} time${we === 1 ? '' : 's'}, "you/your" ${you} — the copy is about the company, not the user.`, fix: 'Rewrite from the user\'s side of the screen. What do they have, see, or do next?' }
+    : { name: 'Voice', status: 'pass', finding: we + you === 0 ? 'No pronouns — neutral voice.' : `"You" outweighs "we" (${you} to ${we}) — user-centered.`, fix: '' });
+
+  iss = [];
+  const tenseStage = ['need', 'decide', 'leaving'].includes(state.stage);
+  each((m, t, L) => {
+    if (tenseStage && /!/.test(t)) iss.push(`${L} uses "!" at a tense moment.`);
+    if (tenseStage && PLAYFUL_WORDS.test(t)) iss.push(`${L} is playful ("${t.match(PLAYFUL_WORDS)[0]}") while the user is stressed.`);
+    if (!tenseStage && (t.match(/!/g) || []).length > 1) iss.push(`${L} has ${t.match(/!/g).length} exclamation marks.`);
+  });
+  rows.push(stdRow('Tone', iss, tenseStage ? 'Calm and plain. A stressed reader hears cheerfulness as not being taken seriously.' : 'One exclamation mark is a spice, two is a smell.'));
+
+  iss = [];
+  each((m, t, L) => INCLUSIVE_TERMS.forEach(([re, alt]) => {
+    const hit = t.match(re);
+    if (hit) iss.push(`${L}: "${hit[0]}" → "${alt}".`);
+  }));
+  rows.push(stdRow('Inclusivity', iss, 'Use the suggested replacement — same meaning, nobody excluded.', 'fix'));
+
+  iss = [];
+  each((m, t, L) => A11Y_FLAGS.forEach(([re, why]) => {
+    const hit = t.match(re);
+    if (hit) iss.push(`${L}: "${hit[0]}" — ${why}.`);
+  }));
+  rows.push(stdRow('Accessibility', iss, 'Write for ears and switches, not just eyes and mice.'));
+
+  iss = [];
+  each((m, t, L) => {
+    VAGUE_PHRASES.forEach(re => { const hit = t.match(re); if (hit) iss.push(`${L}: "${hit[0]}" names no cause.`); });
+    if (/\b(may|might|possibly|perhaps)\b/i.test(t) && state.commPrimary === 'instruct') iss.push(`${L} hedges ("${t.match(/\b(may|might|possibly|perhaps)\b/i)[0]}") inside an instruction.`);
+    if (/\bor\b/i.test(t) && wordCount(t) > 8) iss.push(`${L}: "or" may be doing double duty — this could be two messages.`);
+    const teaser = t.trim().match(TEASER_OPENERS);
+    if (teaser) iss.push(`${L} opens with "${teaser[0]}" — a teaser spends the most-read position on no information.`);
+  });
+  rows.push(stdRow('Clarity', iss, 'Name the specific problem — it is its own announcement, so a generic line beside it is redundant. The next step must be viable and complete ("reduce the file size and try again", not just "try again").'));
+
+  iss = [];
+  each((m, t, L) => {
+    if (/\bsuccessfully\b/i.test(t)) iss.push(`${L}: "successfully" — if it worked, success is implied.`);
+    if (/\bplease note\b/i.test(t)) iss.push(`${L}: "please note" — the note itself is the noting.`);
+  });
+  for (let i = 0; i < kept.length; i++) for (let j = i + 1; j < kept.length; j++) {
+    if (overlapRatio(kept[i].text, kept[j].text) > 0.6) iss.push(`${mLabel(kept[i])} and ${mLabel(kept[j])} say nearly the same thing.`);
+  }
+  rows.push(stdRow('Redundancy', iss, 'Cut the word or merge the pair. Every repeat costs attention the lead message needs.'));
+
+  iss = [];
+  each((m, t, L) => {
+    const hit = t.match(/\b(is|are|was|were|be|been|being)\s+(?:not\s+)?(\w+ed|shown|given|made|sent|done|kept|left|lost|held|built|found|set|put|seen|known|taken|chosen|written|hidden|broken)\b/i);
+    if (hit) iss.push(`${L}: "${hit[0]}" is passive.`);
+  });
+  rows.push(stdRow('Active voice', iss, 'Make the subject do the action ("Files over 2GB won\'t upload" beats "are not supported").'));
+
+  iss = []; let worstWc = 0;
+  each((m, t, L) => {
+    const wc = wordCount(t);
+    if (wc > worstWc) worstWc = wc;
+    if (wc > 20) iss.push(`${L} is ${wc} words — a paragraph, not a message.`);
+    else if (wc > 12) iss.push(`${L} is ${wc} words — scannable, barely.`);
+  });
+  rows.push(stdRow('Scannability', iss, 'Twelve words or fewer scans in one pass. Front-load the fact — but never cut the key takeaway to hit a count.', worstWc > 20 ? 'fix' : 'review'));
+
+  return rows;
+}
+
+function designChecks(kept) {
+  const rows = [];
+  const comp = state.intake.componentType;
+  const compName = comp ? COMPONENT_TYPES[comp].name.toLowerCase() : 'component';
+  const goal = state.commPrimary;
+
+  const fit = COMPONENT_GOAL_FIT[comp] || [];
+  rows.push(goal && fit.length && !fit.includes(goal)
+    ? { name: 'Correct component', status: 'review', finding: `The ${compName} pattern usually carries ${fit.join('/')} copy; your primary goal is ${goal}.`, fix: 'Either the component or the goal is off — decide which, on purpose.' }
+    : { name: 'Correct component', status: 'pass', finding: `The ${compName} pattern fits a primary goal of ${goal || '—'}.`, fix: '' });
+
+  const iss = [];
+  const inlineCount = kept.filter(m => placementOf(m) === 'inline').length;
+  if (inlineCount > 2) iss.push(`${inlineCount} messages placed inline — they compete for the same glance.`);
+  if (kept.some(m => placementOf(m) === 'tooltip')) iss.push('A tooltip is in use — hover-only, invisible on touch screens.');
+  if (kept.filter(m => placementOf(m) === 'modal').length > 1) iss.push('More than one message routed to a modal — one dialog, one job.');
+  rows.push(stdRow('Component usage', iss, 'Spread messages across placements by priority, or cut until the placements fit.'));
+
+  const leads = kept.filter(m => verdictFor(m) === 'keep');
+  rows.push(leads.length <= 1
+    ? { name: 'Hierarchy', status: 'pass', finding: leads.length ? 'One lead message — clean hierarchy.' : 'No lead message on screen.', fix: '' }
+    : { name: 'Hierarchy', status: leads.length > 2 ? 'fix' : 'review', finding: `${leads.length} lead messages (${leads.map(mLabel).join(', ')}) compete for position one.`, fix: 'If both are truly need-to-act, merge them into one sentence or sequence them.' });
+
+  const first = state.messages.find(m => m.id === state.order[0]);
+  rows.push(first && verdictFor(first) !== 'keep'
+    ? { name: 'Visual prominence', status: 'fix', finding: `The most prominent slot holds ${mLabel(first)}, a support message.`, fix: 'Give the top slot to a need-to-act message (step 10).' }
+    : { name: 'Visual prominence', status: 'pass', finding: 'The most prominent slot holds a need-to-act message.', fix: '' });
+
+  const patterns = [];
+  if (kept.some(m => placementOf(m) === 'helper')) patterns.push('Progressive disclosure in use — the control needs a visible affordance and keyboard support.');
+  if (kept.some(m => placementOf(m) === 'modal')) patterns.push('A modal is in use — it needs an obvious dismiss and a focus trap.');
+  rows.push(patterns.length
+    ? { name: 'Interaction patterns', status: 'review', finding: patterns.join(' '), fix: 'Check the pattern against the design system\'s spec before handoff.' }
+    : { name: 'Interaction patterns', status: 'pass', finding: 'No interactive disclosure patterns in use.', fix: '' });
+
+  const misplaced = kept.filter(m => verdictFor(m) === 'keep' && !['inline', 'modal'].includes(placementOf(m)));
+  rows.push(stdRow('Message placement', misplaced.map(m => `${mLabel(m)} is need-to-act but lives in ${PLACEMENTS[placementOf(m)].toLowerCase()}.`), 'Move it to where the action happens — distance from the action is where errors live.'));
+
+  return rows;
+}
+
+function productChecks(msgs) {
+  const rows = [];
+  let iss = [];
+  msgs.forEach(m => TERM_RULES.forEach(([re, use]) => {
+    const hit = m.text.match(re);
+    if (hit && hit[0].toLowerCase() !== use) iss.push(`${mLabel(m)}: "${hit[0]}" → "${use}".`);
+  }));
+  rows.push(stdRow('Approved terminology', iss, 'Demo termbase — a real team swaps in its own. The rule is the same: one approved word per concept.'));
+
+  iss = [];
+  const allLower = msgs.map(m => m.text.toLowerCase()).join(' ');
+  NAMING_PAIRS.forEach(([a, b]) => {
+    if (new RegExp('\\b' + a + '\\w*\\b').test(allLower) && new RegExp('\\b' + b + '\\w*\\b').test(allLower)) {
+      iss.push(`Both "${a}" and "${b}" appear — pick one name for the concept.`);
+    }
+  });
+  rows.push(stdRow('Consistent naming', iss, 'Two names for one thing doubles what the user has to learn.'));
+
+  iss = [];
+  msgs.forEach(m => PHRASE_VARIANTS.forEach(([re, std]) => {
+    const hit = m.text.match(re);
+    if (hit) iss.push(`${mLabel(m)}: "${hit[0]}" — the standard phrase is "${std}".`);
+  }));
+  rows.push(msgs.length && !iss.length
+    ? { name: 'Reusable phrases', status: 'pass', finding: 'No off-library phrasing found. Standard set: "Try again", "Learn more", "Contact support".', fix: '' }
+    : stdRow('Reusable phrases', iss, 'Reuse the standard phrase — users recognize it faster than a fresh one.'));
+
+  const names = productNamesIn(msgs);
+  rows.push(names.length
+    ? { name: 'Product vocabulary', status: 'review', finding: `Possible product names: ${names.map(n => '"' + n + '"').join(', ')}.`, fix: 'Confirm each is an approved name, spelled exactly as branded — or lowercase it.' }
+    : { name: 'Product vocabulary', status: 'pass', finding: 'No product names detected.', fix: '' });
+
+  return rows;
+}
+
+function communicationChecks(msgs, kept) {
+  const rows = [];
+  const tempMsgs = msgs.filter(m => TIME_BOUND.test(m.text));
+  rows.push(tempMsgs.length
+    ? { name: 'Temporary vs permanent', status: 'review', finding: tempMsgs.map(m => `${mLabel(m)} is time-bound ("${m.text.match(TIME_BOUND)[0]}").`).join(' '), fix: 'Time-bound copy needs an expiry date below, or wording that stays true.' }
+    : { name: 'Temporary vs permanent', status: 'pass', finding: 'All messages read as permanent — nothing will silently go stale.', fix: '' });
+
+  rows.push(kept.length <= 3
+    ? { name: 'Message priority', status: 'pass', finding: `${kept.length} message${kept.length === 1 ? '' : 's'} on one screen — within budget.`, fix: '' }
+    : { name: 'Message priority', status: kept.length > 5 ? 'fix' : 'review', finding: `${kept.length} messages on one screen.`, fix: 'A screen carries about three messages before they blur into one.' });
+
+  const iss = [];
+  const deferred = state.messages.filter(m => verdictFor(m) === 'defer');
+  kept.forEach(k => deferred.forEach(d => {
+    if (overlapRatio(k.text, d.text) > 0.5) iss.push(`${mLabel(k)} (on screen) overlaps ${mLabel(d)} (deferred) — the same news lands twice.`);
+  }));
+  rows.push(stdRow('Channel duplication', iss, 'One channel per message. If both must exist, stagger them deliberately.'));
+
+  const rot = msgs.filter(m => LIFECYCLE_WORDS.test(m.text));
+  rows.push(rot.length
+    ? { name: 'Lifecycle', status: 'review', finding: rot.map(m => `${mLabel(m)} says "${m.text.match(LIFECYCLE_WORDS)[0]}" — true today, stale soon.`).join(' '), fix: 'Plan the edit that removes it. Nothing is new for long.' }
+    : { name: 'Lifecycle', status: 'pass', finding: 'No wording that rots on a timer.', fix: '' });
+
+  const unowned = msgs.filter(m => !(m.owner || '').trim());
+  rows.push(stdRow('Ownership', unowned.map(m => `${mLabel(m)} has no owner.`), 'Name an owner in the panel above — unowned copy outlives its truth.'));
+
+  const needsExpiry = msgs.filter(m => (TIME_BOUND.test(m.text) || LIFECYCLE_WORDS.test(m.text)) && !(m.expires || '').trim());
+  rows.push(msgs.length && !needsExpiry.length
+    ? { name: 'Expiration', status: 'pass', finding: tempMsgs.length || rot.length ? 'Every time-bound message has a review date.' : 'Nothing here needs an expiry.', fix: '' }
+    : stdRow('Expiration', needsExpiry.map(m => `${mLabel(m)} is time-bound but has no review date.`), 'Set a review date in the panel above — or reword it to stay true.'));
+
+  return rows;
+}
+
+function technicalChecks(kept) {
+  const rows = [];
+  const budgets = kept.map(m => ({ m, len: m.text.length, budget: CHAR_BUDGETS[placementOf(m)] || null }));
+
+  const counts = budgets.filter(b => b.budget).map(b => `${mLabel(b.m)}: ${b.len}/${b.budget} chars (${placementOf(b.m)}).`);
+  const over = budgets.filter(b => b.budget && b.len > b.budget);
+  const near = budgets.filter(b => b.budget && b.len <= b.budget && b.len >= b.budget * 0.85);
+  rows.push({
+    name: 'Character limits',
+    status: over.length ? 'fix' : near.length ? 'review' : 'pass',
+    finding: counts.length ? counts.join(' ') : 'No placements with character budgets.',
+    fix: over.length ? 'Cut to fit — the container wins every argument with the copy.' : near.length ? 'Close to the limit; localization will push it over.' : ''
+  });
+
+  let iss = over.map(b => `${mLabel(b.m)} would truncate to "${b.m.text.slice(0, b.budget - 1)}…".`);
+  const lead = state.messages.find(m => m.id === state.order[0]);
+  if (lead) {
+    const firstWord = (lead.text.trim().split(/\s+/)[0] || '').replace(/[^A-Za-z']/g, '');
+    if (['We', 'Please', 'Unfortunately', 'Sorry', 'Just', 'There'].includes(firstWord)) {
+      iss.push(`${mLabel(lead)} opens with "${firstWord}" — the key fact is not first, and truncation hits it hardest.`);
+    }
+  }
+  rows.push(stdRow('Truncation', iss, 'Put the fact users need in the first 40 characters. Everything after may vanish.', over.length ? 'fix' : 'review'));
+
+  iss = [];
+  budgets.forEach(b => {
+    if (b.budget && b.len <= b.budget && Math.ceil(b.len * LOCALIZATION_EXPANSION) > b.budget) {
+      iss.push(`${mLabel(b.m)} fits English but overflows once translated (+50% average ≈ ${Math.ceil(b.len * LOCALIZATION_EXPANSION)}/${b.budget}).`);
+    }
+  });
+  kept.forEach(m => { const hit = m.text.match(IDIOMS); if (hit) iss.push(`${mLabel(m)}: "${hit[0]}" is an idiom — it translates badly or not at all.`); });
+  rows.push(stdRow('Localization', iss, 'Write 50% under budget and skip idioms — translated text runs up to 50% longer on average, and short labels can expand 300%.'));
+
+  iss = [];
+  kept.forEach(m => {
+    if (placementOf(m) === 'tooltip') iss.push(`${mLabel(m)} lives in a tooltip — there is no hover on a phone.`);
+    else if (['inline', 'banner'].includes(placementOf(m))) {
+      const lines = Math.ceil(m.text.length / 38);
+      if (lines > 2) iss.push(`${mLabel(m)} wraps to ~${lines} lines on a 320px screen.`);
+    }
+  });
+  rows.push(stdRow('Responsive behavior', iss, 'Check the smallest screen first — copy that works at 320px works everywhere.', iss.some(i => i.includes('tooltip')) ? 'fix' : 'review'));
+
+  return rows;
+}
+
+
+function runStandards() {
+  const kept = keptMessages();
+  const active = activeStdMessages();
+  return {
+    writing: writingChecks(kept),
+    design: designChecks(kept),
+    product: productChecks(active),
+    communication: communicationChecks(active, kept),
+    technical: technicalChecks(kept)
+  };
+}
+
+function tallyStandards(res) {
+  const t = { pass: 0, review: 0, fix: 0 };
+  Object.values(res).forEach(rows => rows.forEach(r => t[r.status]++));
+  return t;
+}
+
+function stdResultsHtml(res) {
+  const t = tallyStandards(res);
+  const total = t.pass + t.review + t.fix;
+
+  let html = coachCard({
+    title: 'The engine\'s verdict',
+    observation: `${total} checks ran across five standards: ${t.pass} passed, ${t.review} to review, ${t.fix} to fix.`,
+    reasoning: 'Automated checks catch pattern-level problems — case, length, passive voice, missing owners. They cannot catch a wrong message; the earlier steps were for that.',
+    recommendation: t.fix ? 'Clear the fixes first — they are defects, not opinions. Then judge each review flag: "review" means a human should decide, not "change it".' : t.review ? 'Walk the review flags — each one is a judgment call the engine refuses to make for you.' : 'Everything passed. Stay suspicious anyway — clean checks make copy consistent, not right.',
+    tradeoffs: 'A green checklist can create false confidence. Passing every check proves consistency; the strategy steps prove correctness.'
+  });
+
+  html += '<div class="std-grid">' + Object.entries(res).map(([key, rows]) => {
+    const c = { pass: 0, review: 0, fix: 0 };
+    rows.forEach(r => c[r.status]++);
+    const cls = c.fix ? 'has-fix' : c.review ? 'has-review' : '';
+    return `<div class="std-tile ${cls}">
+      <div class="std-cat-name">${STD_CATEGORIES[key].name}</div>
+      <div class="std-cat-counts">✓ ${c.pass} · ! ${c.review} · ✕ ${c.fix}</div>
+    </div>`;
+  }).join('') + '</div>';
+
+  html += Object.entries(res).map(([key, rows]) => {
+    const cat = STD_CATEGORIES[key];
+    const flagged = rows.filter(r => r.status !== 'pass');
+    const worst = rows.find(r => r.status === 'fix') || flagged[0];
+    return `<div class="panel">
+      <h3>${cat.name}</h3>
+      ${rows.map(r => `
+        <div class="std-row">
+          <span class="std-status ${r.status}">${r.status === 'pass' ? '✓ pass' : r.status === 'review' ? '! review' : '✕ fix'}</span>
+          <span class="std-check">${esc(r.name)}</span>
+          <span class="std-finding">${esc(r.finding)}${r.fix ? `<div class="std-fixhint">${esc(r.fix)}</div>` : ''}</span>
+        </div>`).join('')}
+      ${worst ? miniORRT({
+        observation: `${flagged.length} of ${rows.length} ${cat.name.toLowerCase()} checks flagged. Worst: ${worst.name.toLowerCase()} — ${worst.finding}`,
+        reasoning: cat.reasoning,
+        recommendation: worst.fix || 'Work through the flagged rows above.',
+        tradeoffs: cat.tradeoffs
+      }) : ''}
+    </div>`;
+  }).join('');
+
+  return html;
+}
+
+/* =========================================================
+   Live summary (right rail)
+   ========================================================= */
+function renderSummary() {
+  const s = state;
+  const pend = t => `<span class="pending">${t}</span>`;
+  const stageName = s.stage ? STAGES[s.stage].name : null;
+  const comp = s.intake.componentType ? COMPONENT_TYPES[s.intake.componentType].name : null;
+  const userGoals = [...s.userGoals, ...(s.userGoalCustom.trim() ? [s.userGoalCustom.trim()] : [])];
+  const kept = s.messages.filter(m => ['keep', 'secondary'].includes(verdictFor(m))).length;
+  const cut = s.messages.filter(m => verdictFor(m) === 'cut').length;
+  const deferred = s.messages.filter(m => verdictFor(m) === 'defer').length;
+
+  let msgList = '';
+  if (s.messages.length) {
+    msgList = '<ul class="sum-msgs">' + s.messages.map(m => {
+      const v = verdictFor(m);
+      const short = m.text.length > 42 ? m.text.slice(0, 40).trim() + '…' : m.text;
+      const mark = { keep: '●', secondary: '◐', defer: '◷', cut: '✕' }[v] || '○';
+      return `<li><span class="v" aria-hidden="true">${mark}</span><span${v === 'cut' ? ' style="text-decoration:line-through;color:var(--slate-mid)"' : ''}>${esc(short)}</span><span class="sr-only">${v ? VERDICT_LABELS[v] : 'not yet evaluated'}</span></li>`;
+    }).join('') + '</ul>';
+  }
+
+  $('#summaryBody').innerHTML = `
+    <div class="sum-section"><div class="sum-label">Designing</div>
+      <div class="sum-value">${comp ? esc(comp) : pend('Not set yet')}</div></div>
+    <div class="sum-section"><div class="sum-label">Journey stage</div>
+      <div class="sum-value">${stageName ? esc(stageName) : pend('Step 3')}</div></div>
+    <div class="sum-section"><div class="sum-label">User wants</div>
+      <div class="sum-value">${userGoals.length ? esc(userGoals[0]) + (userGoals.length > 1 ? ` <span class="pending">+${userGoals.length - 1} more</span>` : '') : pend('Step 4')}</div></div>
+    <div class="sum-section"><div class="sum-label">Business wants</div>
+      <div class="sum-value">${s.businessGoals.length ? esc(s.businessGoals.join(', ')) : pend('Step 5')}</div></div>
+    <div class="sum-section"><div class="sum-label">Communication goal</div>
+      <div class="sum-value">${s.commPrimary ? esc(COMM_GOALS[s.commPrimary].name) + (s.commSecondary ? ', then ' + esc(COMM_GOALS[s.commSecondary].name.toLowerCase()) : '') : pend('Step 6')}</div></div>
+    <div class="sum-section"><div class="sum-label">Messages</div>
+      <div class="sum-value">${s.messages.length ? `${kept} kept · ${deferred} deferred · ${cut} cut` : pend('Step 7')}</div>
+      ${msgList}</div>
+    <div class="sum-section"><div class="sum-label">Standards</div>
+      <div class="sum-value">${s.stdCounts ? `${s.stdCounts.pass} pass · ${s.stdCounts.review} review · ${s.stdCounts.fix} fix` : pend('Step 12')}</div></div>`;
+}
+
+/* =========================================================
+   Steps definition
+   ========================================================= */
+const steps = [
+  /* ---------- 1. Request intake (forked; UX path opens open-ended) ---------- */
+  {
+    label: 'Request intake',
+    title: 'What landed on your desk?',
+    render() {
+      return `<div class="panel" id="intakeFlow"></div>`;
+    },
+    wire(el) {
+      const it = state.intake;
+      let editIdx = null;
+
+      const isUx = () => UX_ROLES.includes(it.role);
+      const hasInclude = name => (it.includes || '').split(',').map(s => s.trim()).includes(name);
+      const stepsDiffer = () => it.futureOk && it.futureSteps !== 'same' && it.futureSteps.trim() !== (it.todaySteps || '').trim();
+
+      const addInclude = name => {
+        const inc = (it.includes || '').split(',').map(s => s.trim()).filter(Boolean);
+        if (!inc.includes(name)) inc.push(name);
+        it.includes = inc.join(', ');
+      };
+
+      /* Silent inference: runs on every free-text answer. Pre-fills what's
+         confident; follow-ups collect the rest. Everything filled shows in
+         the summary with a Change button. */
+      const infer = txt => {
+        const t = txt || '';
+        if (!(it.product || '').trim()) {
+          for (const [p, re] of Object.entries(INFERENCE.products)) { if (re.test(t)) { it.product = p; break; } }
+        }
+        const tags = (it.audienceTags || '').split(',').map(s => s.trim()).filter(Boolean);
+        for (const [tag, re] of Object.entries(INFERENCE.audiences)) { if (re.test(t) && !tags.includes(tag)) tags.push(tag); }
+        if (tags.length) it.audienceTags = tags.join(', ');
+        const inc = (it.includes || '').split(',').map(s => s.trim()).filter(Boolean);
+        for (const [k, re] of Object.entries(INFERENCE.includes)) { if (re.test(t) && !inc.includes(k)) inc.push(k); }
+        if (inc.length) it.includes = inc.join(', ');
+        if (!(it.projectType || '').trim()) {
+          for (const [p, re] of Object.entries(INFERENCE.projectTypes)) { if (re.test(t)) { it.projectType = p; break; } }
+        }
+        const comms = (it.commsOther || '').split(',').map(s => s.trim()).filter(Boolean);
+        for (const [c, re] of Object.entries(INFERENCE.comms)) { if (re.test(t) && !comms.includes(c)) comms.push(c); }
+        if (comms.length) it.commsOther = comms.join(', ');
+      };
+
+      const inferComponent = () => {
+        if (!isUx() || it.componentType) return;
+        const inc = it.includes || '';
+        it.componentType =
+          /Notification/.test(inc) ? 'notification' :
+          /Feature awareness|Selling/.test(inc) ? 'announce' :
+          it.projectType === 'One-time message' ? 'announce' :
+          /A new user|Company setup/.test(inc) ? 'onboarding' :
+          'form';
+      };
+
+      const buildQs = () => {
+        const qs = [];
+
+        qs.push({
+          key: 'role', label: 'What’s your role?', type: 'pills',
+          pills: [...UX_ROLES, 'Marketing', 'Product', 'Sales or service'],
+          get: () => it.role || '',
+          set: v => {
+            it.role = v;
+            it.path = UX_ROLES.includes(v) ? 'ux' : 'outside';
+          }
+        });
+
+        if (!(it.role || '').trim()) return qs;
+
+        if (isUx()) {
+          /* ---------- UX path ---------- */
+          qs.push({
+            key: 'working', label: 'What are you working on?', type: 'textarea',
+            placeholder: 'In your own words.',
+            get: () => it.working || '',
+            set: v => { it.working = v; infer(v); }
+          });
+          qs.push({
+            key: 'userNeed', label: 'What problem are you trying to solve?', type: 'textarea',
+            get: () => it.userNeed || '',
+            set: v => { it.userNeed = v; infer(v); }
+          });
+          qs.push({
+            key: 'audienceTags', label: 'Audience — all that apply', type: 'pills-multi',
+            pills: [...AUDIENCE_TAGS, 'None of the above'], noFree: true,
+            get: () => it.tagsOk ? (it.audienceTags || '') : '',
+            display: () => it.audienceTags || '',
+            preset: () => it.audienceTags || '',
+            set: v => { it.audienceTags = v; it.tagsOk = '1'; }
+          });
+          qs.push({
+            key: 'audience', label: 'Audience specifics', type: 'text',
+            placeholder: 'e.g. direct employees only; includes volunteers; excludes contractors',
+            get: () => it.audience, set: v => { it.audience = v; infer(v); }
+          });
+          qs.push({
+            key: 'product', label: 'Product', type: 'pills',
+            pills: PRODUCTS,
+            get: () => it.product || '', set: v => { it.product = v; }
+          });
+          qs.push({
+            key: 'projectType', label: 'Project involves', type: 'pills',
+            pills: PROJECT_TYPES,
+            scopeNote: { 'New UI': 'New UI is beyond this prototype on purpose — the MVP covers one-time messages and updates to existing UI. Pick the closest in-scope option.' },
+            get: () => it.projectType || '', set: v => { it.projectType = v; }
+          });
+          qs.push({
+            key: 'todaySteps', label: 'Step out the user’s experience today', type: 'steps',
+            get: () => it.todayOk ? (it.todaySteps || '') : '',
+            display: () => (it.todaySteps || '').split('\n').join(' → ')
+          });
+          qs.push({
+            key: 'futureSteps', label: 'After this ships, what changes? Edit the steps that differ', type: 'steps',
+            future: true,
+            get: () => it.futureOk ? (it.futureSteps || '') : '',
+            display: () => it.futureSteps === 'same' ? 'Nothing changes — message only' : (it.futureSteps || '').split('\n').join(' → ')
+          });
+          if (it.projectType === 'One-time message' || stepsDiffer()) {
+            qs.push({
+              key: 'clientsImpacted', label: 'How many clients do we know for sure are impacted?', type: 'pills',
+              pills: ['All of them', 'A known list', 'We don’t know yet'],
+              get: () => it.clientsImpacted || '', set: v => { it.clientsImpacted = v; }
+            });
+          }
+          qs.push({
+            key: 'includes', label: 'This project includes — all that apply', type: 'pills-multi',
+            pills: INCLUDES,
+            get: () => it.includesOk ? (it.includes || '') : '',
+            display: () => it.includes || '',
+            preset: () => it.includes || '',
+            set: v => { it.includes = v; it.includesOk = '1'; inferComponent(); }
+          });
+          if (hasInclude('Information display screen')) {
+            qs.push({
+              key: 'displayContent', label: 'List all the content for the display screen', type: 'textarea',
+              placeholder: 'One item per line.',
+              get: () => it.displayContent || '', set: v => { it.displayContent = v; }
+            });
+          }
+          qs.push({
+            key: 'goalType', label: 'Do you want the user to do something, or know something?', type: 'pills',
+            pills: ['Do something', 'Know something', 'Both'],
+            get: () => it.goalType || '', set: v => { it.goalType = v; }
+          });
+          qs.push({
+            key: 'goal',
+            label: it.goalType === 'Do something' ? 'What should they do?'
+              : it.goalType === 'Know something' ? 'What should they know — and why?'
+              : 'What should they do, and what must they know?',
+            type: 'text',
+            get: () => it.goal || '', set: v => { it.goal = v; }
+          });
+          qs.push({
+            key: 'commsOther', label: 'How else are we communicating this?', type: 'pills-multi',
+            pills: ['Email', 'Rep or advisor outreach', 'In-product message', 'Marketing site', 'Social', 'Nothing else'],
+            get: () => it.commsOk ? (it.commsOther || '') : '',
+            display: () => it.commsOther || '',
+            preset: () => it.commsOther || '',
+            set: v => { it.commsOther = v; it.commsOk = '1'; }
+          });
+          qs.push({
+            key: 'draft', label: 'What will the user see or click?', type: 'textarea',
+            placeholder: 'Spell it out in plain words — what appears, what they read, what they click.',
+            get: () => it.draft, set: v => { it.draft = v; infer(v); }
+          });
+          qs.push({
+            key: 'trigger', label: 'Where did this request come from?', type: 'pills',
+            pills: Object.values(TRIGGERS),
+            get: () => it.trigger ? TRIGGERS[it.trigger] : '',
+            set: v => { it.trigger = Object.keys(TRIGGERS).find(k => TRIGGERS[k] === v) || ''; }
+          });
+        } else {
+          /* ---------- Outside-UX path: small form, plain language, never a draft ---------- */
+          qs.push({
+            key: 'product', label: 'Which product is this about?', type: 'pills',
+            pills: PRODUCTS,
+            get: () => it.product || '', set: v => { it.product = v; }
+          });
+          qs.push({
+            key: 'audience', label: 'Who should see this?', type: 'text',
+            placeholder: 'e.g. Employees who are eligible but not enrolled',
+            get: () => it.audience, set: v => { it.audience = v; }
+          });
+          qs.push({
+            key: 'goal', label: 'What are you trying to achieve?', type: 'pills',
+            pills: GOAL_OPTIONS,
+            get: () => it.goal || '', set: v => { it.goal = v; }
+          });
+          qs.push({
+            key: 'surface', label: 'Where do you picture this appearing?', type: 'pills',
+            pills: ['A popup when they sign in', 'A message on their dashboard', 'A banner across the top', 'An email', 'Not sure — open to suggestions'],
+            get: () => it.surface || '',
+            set: v => {
+              it.surface = v;
+              it.componentType = /email/i.test(v) ? 'notification' : 'announce';
+            }
+          });
+          qs.push({
+            key: 'cues', label: 'Is anything in the product already pointing users at this?', type: 'pills-multi',
+            pills: CUE_SUGGESTIONS,
+            get: () => it.cues || '', set: v => { it.cues = v; }
+          });
+          qs.push({
+            key: 'kpiStated', label: 'How will you measure success?', type: 'text',
+            placeholder: 'e.g. Enrollment rate, campaign conversions, awareness',
+            get: () => it.kpiStated || '', set: v => { it.kpiStated = v; }
+          });
+          qs.push({
+            key: 'kpiAgreed', label: 'Which of these will you accept as the success measure?', type: 'pills-multi',
+            pills: KPI_ASSUMPTIONS,
+            note: 'campaigns link out of the system, so the furthest we can track is the click that leaves. Inside the platform we can count chatbot visits, Help Center visits, workflow completions, and stage progression.',
+            get: () => it.kpiAgreed || '', set: v => { it.kpiAgreed = v; }
+          });
+          qs.push({
+            key: 'commsOther', label: 'How else are we communicating this?', type: 'pills-multi',
+            pills: ['Email', 'Rep or advisor outreach', 'In-product message', 'Marketing site', 'Social', 'Nothing else'],
+            get: () => it.commsOk ? (it.commsOther || '') : '',
+            display: () => it.commsOther || '',
+            preset: () => it.commsOther || '',
+            set: v => { it.commsOther = v; it.commsOk = '1'; }
+          });
+          const OUTSIDE_TRIGGERS = {
+            'My own idea': 'own',
+            'My manager or leadership asked for it': 'stakeholder',
+            'A campaign plan calls for it': 'stakeholder',
+            'Metrics or a business goal': 'research'
+          };
+          qs.push({
+            key: 'trigger', label: 'Where is this coming from?', type: 'pills',
+            pills: Object.keys(OUTSIDE_TRIGGERS),
+            get: () => it.triggerLabel || (it.trigger ? TRIGGERS[it.trigger] : ''),
+            set: v => {
+              it.triggerLabel = v;
+              it.trigger = OUTSIDE_TRIGGERS[v] || 'stakeholder';
+            }
+          });
+        }
+        return qs;
+      };
+
+      const answered = q => (q.get() || '').trim() !== '';
+      const shown = q => (q.display ? q.display() : q.get()) || '';
+
+      const activeHtml = q => {
+        let body = '';
+        if (q.type === 'steps') {
+          const today = (it.todaySteps || '').split('\n').filter(Boolean);
+          let vals;
+          if (q.future) {
+            vals = it.futureSteps && it.futureSteps !== 'same' ? it.futureSteps.split('\n') : today.slice();
+          } else {
+            vals = today.length ? today : ['User signs in', 'User goes to ' + (it.product || 'the product'), '', '', ''];
+          }
+          while (vals.length < 5) vals.push('');
+          body = `
+          <div class="intake-free" style="flex-direction:column;align-items:stretch;">
+            ${vals.slice(0, 5).map((v, i) => `<input type="text" data-step="${i}" value="${esc(v)}" aria-label="Step ${i + 1}" placeholder="Step ${i + 1}">`).join('')}
+            ${q.future ? '' : `<input type="file" data-file accept="image/*" aria-label="Upload a screenshot of the UI"><div class="hint" data-filename>${it.uiImageName ? 'Attached: ' + esc(it.uiImageName) : ''}</div>`}
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="btn" data-continue>Continue</button>
+              ${q.future ? `<button type="button" class="pill" data-same>Nothing changes — message only</button>` : ''}
+            </div>
+          </div>`;
+        } else if (q.type === 'pills' || q.type === 'pills-multi') {
+          const current = q.preset ? q.preset() : q.get();
+          const selected = q.type === 'pills-multi' ? current.split(',').map(s => s.trim()) : [current];
+          body = `${q.note ? `<div class="assume-note"><span class="an-label">Alpha’s assumption — challenge it if wrong</span>${esc(q.note)}</div>` : ''}
+          <div class="pill-row" role="group" aria-label="Suggested answers">
+            ${q.pills.map(p => `<button type="button" class="pill ${selected.includes(p) ? 'selected' : ''}" data-pill="${esc(p)}">${esc(p)}</button>`).join('')}
+          </div>
+          <div class="scope-note" data-scope hidden></div>
+          <div class="intake-free">
+            <input type="text" data-free placeholder="Something else…" value="${q.type === 'pills-multi' ? esc(current) : ''}" aria-label="Something else" ${q.noFree ? 'hidden' : ''}>
+            ${q.type === 'pills-multi' ? `<button type="button" class="btn" data-continue>Continue</button>` : q.noFree ? '' : `<button type="button" class="btn" data-continue>Continue</button>`}
+          </div>`;
+        } else if (q.type === 'textarea') {
+          body = `<div class="intake-free">
+            <textarea data-free rows="4" placeholder="${esc(q.placeholder || '')}" aria-label="${esc(q.label)}">${esc(q.get())}</textarea>
+            <button type="button" class="btn" data-continue>Continue</button>
+          </div>`;
+        } else {
+          body = `<div class="intake-free">
+            <input type="text" data-free placeholder="${esc(q.placeholder || '')}" value="${esc(q.get())}" aria-label="${esc(q.label)}">
+            <button type="button" class="btn" data-continue>Continue</button>
+          </div>`;
+        }
+        return `<div class="intake-q field">
+          <label>${esc(q.label)}</label>
+          ${body}
+        </div>`;
+      };
+
+      const renderFlow = () => {
+        const flow = $('#intakeFlow', el);
+        const qs = buildQs();
+        let idx = editIdx !== null ? editIdx : qs.findIndex(q => !answered(q));
+        if (idx === -1 || idx > qs.length) idx = qs.length;
+
+        flow.innerHTML = qs.map((q, i) => {
+          if (i === idx) return activeHtml(q);
+          if (!answered(q)) return '';
+          return `<div class="intake-summary">
+            <span class="is-label">${esc(q.label)}</span>
+            <span class="is-value">${esc(shown(q))}</span>
+            <button type="button" class="is-edit" data-i="${i}">Change</button>
+          </div>`;
+        }).join('') + (idx === qs.length ? '<p class="intake-done">That’s the brief. Check the summary, then continue.</p>' : '');
+
+        $$('.is-edit', flow).forEach(b => b.addEventListener('click', () => { editIdx = +b.dataset.i; renderFlow(); }));
+
+        const q = qs[idx];
+        if (!q) return;
+
+        if (q.type === 'steps') {
+          const readSteps = () => $$('[data-step]', flow).map(inp => inp.value.trim()).filter(Boolean).join('\n');
+          const fileInput = $('[data-file]', flow);
+          if (fileInput) fileInput.addEventListener('change', () => {
+            if (fileInput.files && fileInput.files[0]) {
+              it.uiImageName = fileInput.files[0].name;
+              $('[data-filename]', flow).textContent = 'Attached: ' + it.uiImageName;
+              touch();
+            }
+          });
+          $('[data-continue]', flow).addEventListener('click', () => {
+            const v = readSteps();
+            if (!v) return;
+            if (q.future) {
+              it.futureSteps = v; it.futureOk = '1';
+              if (v.trim() !== (it.todaySteps || '').trim()) addInclude('Change management messaging');
+            } else {
+              it.todaySteps = v; it.todayOk = '1';
+            }
+            editIdx = null; touch(); renderFlow();
+          });
+          const same = $('[data-same]', flow);
+          if (same) same.addEventListener('click', () => {
+            it.futureSteps = 'same'; it.futureOk = '1';
+            editIdx = null; touch(); renderFlow();
+          });
+          const first = $('[data-step]', flow);
+          if (first) first.focus();
+          return;
+        }
+
+        const free = $('[data-free]', flow);
+
+        const advance = val => {
+          if (!val.trim()) return;
+          q.set(val.trim());
+          editIdx = null; touch(); renderFlow();
+        };
+        $$('button[data-pill]', flow).forEach(b => b.addEventListener('click', () => {
+          const p = b.dataset.pill;
+          if (q.scopeNote && q.scopeNote[p]) {
+            const note = $('[data-scope]', flow);
+            note.textContent = q.scopeNote[p];
+            note.hidden = false;
+            return;
+          }
+          if (q.type === 'pills-multi') {
+            if (/^(none|nothing)\b/i.test(p)) {
+              free.value = p;
+              $$('button[data-pill]', flow).forEach(x => x.classList.remove('selected'));
+              b.classList.add('selected');
+            } else {
+              const parts = free.value.split(',').map(s => s.trim()).filter(s => s && !/^(none|nothing)\b/i.test(s));
+              if (parts.includes(p)) parts.splice(parts.indexOf(p), 1); else parts.push(p);
+              free.value = parts.join(', ');
+              b.classList.toggle('selected');
+              $$('button[data-pill]', flow).forEach(x => { if (/^(none|nothing)\b/i.test(x.dataset.pill)) x.classList.remove('selected'); });
+            }
+          } else {
+            advance(p);
+          }
+        }));
+        const cont = $('[data-continue]', flow);
+        if (cont) cont.addEventListener('click', () => advance(free.value));
+        if (free && free.tagName === 'INPUT' && !free.hidden) free.addEventListener('keydown', e => { if (e.key === 'Enter') advance(free.value); });
+        if (free && !free.hidden) free.focus();
+      };
+
+      renderFlow();
+    },
+    validate() {
+      const it = state.intake;
+      if (!(it.role || '').trim()) return 'Pick your role first — the questions depend on it.';
+      const ux = UX_ROLES.includes(it.role);
+      const hasInc = n => (it.includes || '').split(',').map(s => s.trim()).includes(n);
+      if (ux) {
+        if (!(it.working || '').trim()) return 'Describe what you’re working on.';
+        if (!(it.userNeed || '').trim()) return 'Name the problem you’re trying to solve.';
+        if (!(it.audienceTags || '').trim() || !it.tagsOk) return 'Confirm the audience categories.';
+        if (!it.audience.trim()) return 'Add the audience specifics.';
+        if (!(it.product || '').trim()) return 'Pick the product.';
+        if (!(it.projectType || '').trim()) return 'Say what the project involves.';
+        if (!MVP_PROJECT_TYPES.includes(it.projectType)) return 'New UI is out of scope for this prototype — pick the closest in-scope option.';
+        if (!it.todayOk) return 'Step out today’s experience.';
+        if (!it.futureOk) return 'Say what changes after this ships — or that nothing does.';
+        if ((it.projectType === 'One-time message' || (it.futureSteps !== 'same' && (it.futureSteps || '').trim() !== (it.todaySteps || '').trim())) && !(it.clientsImpacted || '').trim()) return 'Say how many clients we know are impacted.';
+        if (!(it.includes || '').trim() || !it.includesOk) return 'Confirm what the project includes.';
+        if (hasInc('Information display screen') && !(it.displayContent || '').trim()) return 'List the content for the display screen.';
+        if (!(it.goalType || '').trim()) return 'Say whether the user should do something or know something.';
+        if (!(it.goal || '').trim()) return 'Spell out what they should do or know.';
+        if (!it.commsOk) return 'Say how else we’re communicating this — or "Nothing else."';
+        if (!it.draft.trim() && !(it.displayContent || '').trim()) return 'Describe what the user will see or click.';
+        if (!it.componentType) it.componentType = 'announce';
+      } else {
+        if (!(it.product || '').trim()) return 'Name the product.';
+        if (!(it.goal || '').trim()) return 'Name the goal — what should be different after this ships?';
+        if (!it.audience.trim()) return 'Say who should see this.';
+        if (!(it.surface || '').trim()) return 'Say where you picture this appearing.';
+        if (!(it.cues || '').trim()) return 'Answer the existing-cues question — or "none" after checking.';
+        if (!(it.kpiStated || '').trim()) return 'Say how you’ll measure success.';
+        if (!(it.kpiAgreed || '').trim()) return 'Pick at least one in-system measure to accept as success.';
+        if (!it.commsOk) return 'Say how else we’re communicating this — or "Nothing else."';
+      }
+      if (!it.trigger) return 'Pick where the request came from.';
+      return null;
+    }
+  },
+
+  /* ---------- 2. Assumption review ---------- */
+  {
+    label: 'Assumption review',
+    title: 'Every request smuggles in assumptions',
+    intro: 'The coach read your intake and found the beliefs hiding inside it. Respond to each one — agreeing is allowed, but say why.',
+    render() {
+      const cards = buildAssumptions();
+      // sync response slots
+      if (state.assumptions.length !== cards.length) {
+        state.assumptions = cards.map((c, i) => (state.assumptions[i] && state.assumptions[i].title === c.title) ? state.assumptions[i] : { title: c.title, response: '', note: '' });
+      }
+      return cards.map((c, i) => {
+        const a = state.assumptions[i];
+        return coachCard({
+          ...c,
+          extra: `<div class="coach-respond" data-idx="${i}">
+            <div class="respond-buttons" role="radiogroup" aria-label="Your response to: ${esc(c.title)}">
+              <button type="button" class="pill ${a.response === 'adjust' ? 'selected' : ''}" data-resp="adjust" aria-pressed="${a.response === 'adjust'}">Fair point — I'll adjust</button>
+              <button type="button" class="pill ${a.response === 'holds' ? 'selected' : ''}" data-resp="holds" aria-pressed="${a.response === 'holds'}">It holds — here's why</button>
+            </div>
+            <div class="respond-note" ${a.response ? '' : 'hidden'}>
+              <label class="sr-only" for="note-${i}">Your note</label>
+              <textarea id="note-${i}" placeholder="${a.response === 'holds' ? 'Your evidence or reasoning (a sentence is plenty)…' : 'What you’ll change or check (optional)…'}">${esc(a.note)}</textarea>
+            </div>
+          </div>`
+        });
+      }).join('');
+    },
+    wire(el) {
+      $$('.coach-respond', el).forEach(box => {
+        const i = +box.dataset.idx;
+        $$('button[data-resp]', box).forEach(btn => btn.addEventListener('click', () => {
+          state.assumptions[i].response = btn.dataset.resp;
+          $$('button[data-resp]', box).forEach(b => {
+            b.classList.toggle('selected', b === btn);
+            b.setAttribute('aria-pressed', b === btn);
+          });
+          $('.respond-note', box).hidden = false;
+          touch();
+        }));
+        $('textarea', box).addEventListener('input', e => { state.assumptions[i].note = e.target.value; touch(); });
+      });
+    },
+    validate() {
+      if (state.assumptions.some(a => !a.response)) return 'Respond to every assumption — even "fair point" counts.';
+      const holdsNoNote = state.assumptions.find(a => a.response === 'holds' && !a.note.trim());
+      if (holdsNoNote) return '"It holds" needs a why. One sentence is plenty.';
+      return null;
+    }
+  },
+
+  /* ---------- 3. Journey stage ---------- */
+  {
+    label: 'Journey stage',
+    title: 'Where is the user in their journey?',
+    intro: 'The same words mean different things to a newcomer and a regular. Pick the moment this copy lands in.',
+    render() {
+      return `
+      <div class="panel">
+        <div class="choice-grid" role="radiogroup" aria-label="Journey stage">
+          ${Object.entries(STAGES).map(([k, v]) => `
+            <label class="choice-card ${state.stage === k ? 'selected' : ''}">
+              <input type="radio" name="stage" value="${k}" ${state.stage === k ? 'checked' : ''}>
+              <span class="choice-name">${v.name}</span>
+              <span class="choice-desc">${v.desc}</span>
+            </label>`).join('')}
+        </div>
+      </div>
+      <div id="stageCoach">${state.stage ? coachCard({ title: 'What this stage demands', ...STAGE_CARDS[state.stage] }) + stageMismatchCard() : ''}</div>`;
+    },
+    wire(el) {
+      $$('input[name="stage"]', el).forEach(r => r.addEventListener('change', () => {
+        state.stage = r.value;
+        $$('.choice-card', el).forEach(c => c.classList.toggle('selected', $('input', c).checked));
+        $('#stageCoach', el).innerHTML = coachCard({ title: 'What this stage demands', ...STAGE_CARDS[state.stage] }) + stageMismatchCard();
+        touch();
+      }));
+    },
+    validate() { return state.stage ? null : 'Pick a stage — the coach cannot challenge a blank.'; }
+  },
+
+  /* ---------- 4. User goals ---------- */
+  {
+    label: 'User goals',
+    title: 'What does the user want right now?',
+    intro: 'Not what they want from life — what they want in this exact moment, in their own words.',
+    render() {
+      return `
+      <div class="panel">
+        <div class="field">
+          <label>Pick what fits (fewer is better)</label>
+          <div class="pill-row">
+            ${USER_GOALS.map(g => `<button type="button" class="pill ${state.userGoals.includes(g) ? 'selected' : ''}" data-goal="${esc(g)}" aria-pressed="${state.userGoals.includes(g)}">${esc(g)}</button>`).join('')}
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-customgoal">Or say it in the user's voice</label>
+          <input type="text" id="f-customgoal" value="${esc(state.userGoalCustom)}" placeholder='"I just want to…"'>
+        </div>
+      </div>
+      <div id="ugCoach">${userGoalsCoach()}</div>`;
+    },
+    wire(el) {
+      const refresh = () => { $('#ugCoach', el).innerHTML = userGoalsCoach(); touch(); };
+      $$('button[data-goal]', el).forEach(b => b.addEventListener('click', () => {
+        const g = b.dataset.goal;
+        const i = state.userGoals.indexOf(g);
+        if (i === -1) state.userGoals.push(g); else state.userGoals.splice(i, 1);
+        b.classList.toggle('selected'); b.setAttribute('aria-pressed', b.classList.contains('selected'));
+        refresh();
+      }));
+      let t;
+      $('#f-customgoal', el).addEventListener('input', e => {
+        state.userGoalCustom = e.target.value;
+        clearTimeout(t); t = setTimeout(refresh, 400);
+      });
+    },
+    validate() {
+      return (state.userGoals.length || state.userGoalCustom.trim()) ? null : 'Pick or write at least one user goal.';
+    }
+  },
+
+  /* ---------- 5. Business goals ---------- */
+  {
+    label: 'Business goals',
+    title: 'What does the business want from this moment?',
+    intro: 'Be honest here — hidden business goals do not disappear, they just leak into the copy sideways.',
+    render() {
+      return `
+      <div class="panel">
+        <div class="field">
+          <label>Pick what applies</label>
+          <div class="pill-row">
+            ${BUSINESS_GOALS.map(g => `<button type="button" class="pill ${state.businessGoals.includes(g) ? 'selected' : ''}" data-goal="${esc(g)}" aria-pressed="${state.businessGoals.includes(g)}">${esc(g)}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div id="bgCoach">${businessGoalsCoach()}</div>`;
+    },
+    wire(el) {
+      $$('button[data-goal]', el).forEach(b => b.addEventListener('click', () => {
+        const g = b.dataset.goal;
+        const i = state.businessGoals.indexOf(g);
+        if (i === -1) state.businessGoals.push(g); else state.businessGoals.splice(i, 1);
+        b.classList.toggle('selected'); b.setAttribute('aria-pressed', b.classList.contains('selected'));
+        $('#bgCoach', el).innerHTML = businessGoalsCoach();
+        touch();
+      }));
+    },
+    validate() { return state.businessGoals.length ? null : 'Pick at least one — "none" is never true.'; }
+  },
+
+  /* ---------- 6. Communication goals ---------- */
+  {
+    label: 'Communication goals',
+    title: 'What is this copy actually for?',
+    intro: 'One primary goal. One optional secondary. If you need three, you have two messages pretending to be one.',
+    render() {
+      const opts = k => Object.entries(COMM_GOALS)
+        .map(([key, v]) => `<option value="${key}" ${(state[k] === key) ? 'selected' : ''} ${(k === 'commSecondary' && state.commPrimary === key) ? 'disabled' : ''}>${v.name} — ${v.desc.toLowerCase()}</option>`).join('');
+      return `
+      <div class="panel">
+        <div class="field">
+          <label for="f-primary">Primary goal</label>
+          <select id="f-primary"><option value="">Choose one…</option>${opts('commPrimary')}</select>
+        </div>
+        <div class="field">
+          <label for="f-secondary">Secondary goal (optional)</label>
+          <select id="f-secondary"><option value="">None</option>${opts('commSecondary')}</select>
+        </div>
+      </div>
+      <div id="cgCoach">${commGoalsCoach()}</div>`;
+    },
+    wire(el) {
+      const refresh = () => {
+        if (state.commSecondary === state.commPrimary) state.commSecondary = '';
+        $('#cgCoach', el).innerHTML = commGoalsCoach();
+        // re-render selects to update disabled option
+        const sec = $('#f-secondary', el);
+        $$('option', sec).forEach(o => { o.disabled = o.value && o.value === state.commPrimary; });
+        if (sec.value === state.commPrimary) sec.value = '';
+        touch();
+      };
+      $('#f-primary', el).addEventListener('change', e => { state.commPrimary = e.target.value; refresh(); });
+      $('#f-secondary', el).addEventListener('change', e => { state.commSecondary = e.target.value; refresh(); });
+    },
+    validate() { return state.commPrimary ? null : 'Pick a primary goal.'; }
+  },
+
+  /* ---------- 7. Break messages apart ---------- */
+  {
+    label: 'Break it apart',
+    title: 'One message, one idea',
+    intro: 'Split your draft into atomic messages — each one a single idea a user could nod at. The next step judges each on its own.',
+    render() {
+      const draft = (state.intake.draft || '').trim() || (state.intake.displayContent || '').trim();
+      const noDraft = state.intake.path === 'outside' || !draft;
+      const sc = sentences(draft).length;
+      const coach = noDraft
+        ? coachCard({
+            title: 'No draft — on purpose',
+            observation: 'This request came in without copy. That\'s by design.',
+            reasoning: 'The message list gets built from the goal, not from wording. Each point a user must take in to act is one message — and each will have to justify itself before any words get polished.',
+            recommendation: 'List the points that must land, one per line below. Facts, not sentences: "you\'re eligible", "it takes 10 minutes", "your data carries over". Wordsmithing comes at the very end.',
+            tradeoffs: 'Building from facts feels slower than editing a draft. It also avoids polishing a message that shouldn\'t exist.'
+          })
+        : coachCard({
+            title: 'Your draft, weighed',
+            observation: `Your draft is about ${wordCount(draft)} words and roughly ${sc} sentence${sc === 1 ? '' : 's'}.`,
+            reasoning: 'A "message" is one idea with one job. Bundled ideas hide weak ones behind strong ones — unbundled, each has to justify itself.',
+            recommendation: sc > 1
+              ? 'Start from the suggested split below, then merge or rewrite until each line is one idea. An "or" between actions usually marks two messages.'
+              : 'Even one sentence can hide two ideas ("saved, and by the way, upgrade"). Split anything with an "and" — or an "or" — doing double duty.',
+            tradeoffs: 'Splitting too fine makes fragments that read as noise. Too coarse and the weak ideas ride along unexamined.'
+          });
+      return `
+      ${coach}
+      ${noDraft ? '' : `<div class="panel">
+        <h3>${state.intake.draft.trim() ? 'Your draft' : 'Your content list'}</h3>
+        <p style="font-size:16px;color:var(--slate-mid);white-space:pre-wrap;">${esc(draft)}</p>
+      </div>`}
+      <div class="panel">
+        <h3>${noDraft ? 'Points that must land' : 'Atomic messages'}</h3>
+        ${!noDraft && sc > 0 && !state.messages.length ? `<p style="margin-bottom:16px;"><button type="button" class="btn ghost-purple" id="autoSplit">Suggest a split from my draft</button></p>` : ''}
+        <div id="msgList"></div>
+        <button type="button" class="btn secondary" id="addMsg">+ Add a message</button>
+      </div>`;
+    },
+    wire(el) {
+      const renderList = () => {
+        $('#msgList', el).innerHTML = state.messages.map((m, i) => `
+          <div class="msg-card" data-id="${m.id}">
+            <div class="msg-top">
+              <span class="msg-index">M${i + 1}</span>
+              <input type="text" class="msg-text-input" value="${esc(m.text)}" aria-label="Message ${i + 1}">
+              <button type="button" class="msg-remove" aria-label="Remove message ${i + 1}">Remove</button>
+            </div>
+          </div>`).join('');
+        $$('.msg-card', el).forEach(card => {
+          const id = +card.dataset.id;
+          $('.msg-text-input', card).addEventListener('input', e => {
+            const m = state.messages.find(x => x.id === id);
+            if (m) m.text = e.target.value;
+            touch();
+          });
+          $('.msg-remove', card).addEventListener('click', () => {
+            state.messages = state.messages.filter(x => x.id !== id);
+            state.order = state.order.filter(x => x !== id);
+            renderList(); touch();
+          });
+        });
+      };
+      renderList();
+      const auto = $('#autoSplit', el);
+      if (auto) auto.addEventListener('click', () => {
+        const d = (state.intake.draft || '').trim();
+        const parts = d ? sentences(d) : (state.intake.displayContent || '').split('\n').map(s => s.trim()).filter(Boolean);
+        parts.forEach(s => {
+          state.messages.push({ id: state.msgSeq++, text: s, need: '', known: '', placementOverride: '', owner: '', expires: '' });
+        });
+        auto.parentElement.remove();
+        renderList(); touch();
+      });
+      $('#addMsg', el).addEventListener('click', () => {
+        state.messages.push({ id: state.msgSeq++, text: '', need: '', known: '', placementOverride: '', owner: '', expires: '' });
+        renderList(); touch();
+        const inputs = $$('.msg-text-input', el);
+        if (inputs.length) inputs[inputs.length - 1].focus();
+      });
+    },
+    validate() {
+      state.messages = state.messages.filter(m => m.text.trim());
+      if (!state.messages.length) return 'Add at least one message. Use the suggested split if you like.';
+      return null;
+    }
+  },
+
+  /* ---------- 8. Evaluate each message ---------- */
+  {
+    label: 'Evaluate messages',
+    title: 'Make every message earn its place',
+    intro: 'Two questions per message. The coach turns your answers into a verdict: keep, support, defer, or cut.',
+    render() {
+      return state.messages.map((m, i) => {
+        const v = verdictFor(m);
+        return `
+        <div class="msg-card" data-id="${m.id}">
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap;">
+            <div style="font-size:16px;"><span class="msg-index">M${i + 1}</span>&nbsp; ${esc(m.text)}</div>
+            <span class="verdict-tag ${v === 'cut' ? 'cut' : (v ? 'keep' : '')}" data-role="verdict">${v ? VERDICT_LABELS[v] : 'Awaiting answers'}</span>
+          </div>
+          <div class="eval-row">
+            <div class="field">
+              <label for="need-${m.id}">Does the user need this to act?</label>
+              <select id="need-${m.id}" data-key="need">
+                <option value="">Choose…</option>
+                <option value="act" ${m.need === 'act' ? 'selected' : ''}>Yes — they can't act well without it</option>
+                <option value="helps" ${m.need === 'helps' ? 'selected' : ''}>It helps, but they could act without it</option>
+                <option value="later" ${m.need === 'later' ? 'selected' : ''}>Not now — a later moment</option>
+                <option value="no" ${m.need === 'no' ? 'selected' : ''}>No</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="known-${m.id}">Do they already know it?</label>
+              <select id="known-${m.id}" data-key="known">
+                <option value="">Choose…</option>
+                <option value="yes" ${m.known === 'yes' ? 'selected' : ''}>Probably yes</option>
+                <option value="maybe" ${m.known === 'maybe' ? 'selected' : ''}>Some do, some don't</option>
+                <option value="no" ${m.known === 'no' ? 'selected' : ''}>Probably not</option>
+              </select>
+            </div>
+          </div>
+          <div data-role="coach">${verdictCoach(m)}</div>
+        </div>`;
+      }).join('');
+    },
+    wire(el) {
+      $$('.msg-card', el).forEach(card => {
+        const id = +card.dataset.id;
+        const m = state.messages.find(x => x.id === id);
+        $$('select', card).forEach(sel => sel.addEventListener('change', () => {
+          m[sel.dataset.key] = sel.value;
+          const v = verdictFor(m);
+          const tag = $('[data-role="verdict"]', card);
+          tag.textContent = v ? VERDICT_LABELS[v] : 'Awaiting answers';
+          tag.className = 'verdict-tag ' + (v === 'cut' ? 'cut' : (v ? 'keep' : ''));
+          $('[data-role="coach"]', card).innerHTML = verdictCoach(m);
+          touch();
+        }));
+      });
+    },
+    validate() {
+      if (state.messages.some(m => !m.need || !m.known)) return 'Answer both questions for every message.';
+      if (!state.messages.some(m => ['keep', 'secondary'].includes(verdictFor(m)))) return 'Everything got cut or deferred. Either this moment needs no copy (a fine answer — but then you are done), or one message deserves a second look.';
+      return null;
+    }
+  },
+
+  /* ---------- 9. Placement ---------- */
+  {
+    label: 'Placement',
+    title: 'Where should each message live?',
+    intro: 'A message\'s home matters as much as its words. The coach recommends; you can override — with your reasons on the record.',
+    render() {
+      const active = state.messages.filter(m => verdictFor(m) !== 'cut');
+      const cutCount = state.messages.length - active.length;
+      let html = active.map((m, i) => {
+        const rec = placementDefault(m);
+        const chosen = m.placementOverride || rec;
+        return `
+        <div class="msg-card" data-id="${m.id}">
+          <div style="font-size:16px;margin-bottom:8px;">
+            <span class="msg-index">M${state.messages.indexOf(m) + 1}</span>&nbsp; ${esc(m.text)}
+            &nbsp;<span class="verdict-tag keep">${VERDICT_LABELS[verdictFor(m)]}</span>
+          </div>
+          <div class="field" style="max-width:480px;">
+            <label for="place-${m.id}">Placement</label>
+            <select id="place-${m.id}">
+              ${Object.entries(PLACEMENTS).filter(([k]) => k !== 'none').map(([k, v]) =>
+                `<option value="${k}" ${chosen === k ? 'selected' : ''}>${v}${k === rec ? ' (coach’s pick)' : ''}</option>`).join('')}
+            </select>
+          </div>
+          <div data-role="coach">${placementCoach(m)}</div>
+        </div>`;
+      }).join('');
+      if (cutCount) html += `<p style="font-size:16px;color:var(--slate-mid);">${cutCount} cut message${cutCount === 1 ? '' : 's'} need${cutCount === 1 ? 's' : ''} no home. That's the reward for cutting.</p>`;
+      return html;
+    },
+    wire(el) {
+      $$('.msg-card', el).forEach(card => {
+        const id = +card.dataset.id;
+        const m = state.messages.find(x => x.id === id);
+        $('select', card).addEventListener('change', e => {
+          m.placementOverride = (e.target.value === placementDefault(m)) ? '' : e.target.value;
+          $('[data-role="coach"]', card).innerHTML = placementCoach(m);
+          touch();
+        });
+      });
+    },
+    validate() { return null; }
+  },
+
+  /* ---------- 10. Visual hierarchy ---------- */
+  {
+    label: 'Visual hierarchy',
+    title: 'Who speaks first, and how loudly?',
+    intro: 'Order the kept messages. Position one gets read; everything after it gets scanned, maybe.',
+    render() {
+      const kept = keptMessages();
+      if (!state.order.length || kept.some(m => !state.order.includes(m.id))) {
+        state.order = recommendedOrderIds();
+      }
+      return `
+      <div class="panel">
+        <h3>Reading order</h3>
+        <div id="rankList"></div>
+      </div>
+      <div id="rankCoach"></div>`;
+    },
+    wire(el) {
+      const renderRank = () => {
+        const kept = keptMessages();
+        $('#rankList', el).innerHTML = kept.map((m, i) => `
+          <div class="rank-item" data-id="${m.id}">
+            <span class="rank-pos" aria-hidden="true">${i + 1}</span>
+            <div class="rank-body">
+              <div class="rank-msg">${esc(m.text)}</div>
+              <div class="rank-treatment">${hierarchyTreatment(i, kept.length, verdictFor(m))}</div>
+            </div>
+            <div class="rank-controls">
+              <button type="button" data-move="up" ${i === 0 ? 'disabled' : ''} aria-label="Move message ${i + 1} up">↑</button>
+              <button type="button" data-move="down" ${i === kept.length - 1 ? 'disabled' : ''} aria-label="Move message ${i + 1} down">↓</button>
+            </div>
+          </div>`).join('');
+        $$('.rank-item', el).forEach(item => {
+          const id = +item.dataset.id;
+          $$('button[data-move]', item).forEach(btn => btn.addEventListener('click', () => {
+            const idx = state.order.indexOf(id);
+            const swap = btn.dataset.move === 'up' ? idx - 1 : idx + 1;
+            if (swap < 0 || swap >= state.order.length) return;
+            [state.order[idx], state.order[swap]] = [state.order[swap], state.order[idx]];
+            renderRank(); renderCoach(); touch();
+          }));
+        });
+      };
+      const renderCoach = () => {
+        const recIds = recommendedOrderIds();
+        const matches = JSON.stringify(recIds) === JSON.stringify(state.order);
+        const lead = state.messages.find(m => m.id === state.order[0]);
+        const leadV = lead ? verdictFor(lead) : null;
+        let card;
+        if (!matches && leadV === 'secondary') {
+          card = {
+            title: 'A support message is leading the room',
+            observation: 'Your reading order puts a support message above a need-to-act message.',
+            reasoning: 'The first position is the only one with guaranteed attention. Spending it on optional context means the essential message inherits leftover attention.',
+            recommendation: 'Lead with a message the user needs in order to act. Let support material support.',
+            tradeoffs: 'Sometimes context must come first to make the action make sense — if that is your reasoning here, keep it, on purpose.'
+          };
+        } else if (!matches) {
+          card = {
+            title: 'You reordered — make sure it is a decision',
+            observation: 'Your order differs from the coach\'s recommendation (need-to-act first, support after).',
+            reasoning: 'Reordering is often right — narrative logic can beat priority logic. It is only wrong when it happens by accident.',
+            recommendation: 'Read your order top to bottom as a user would. If each line sets up the next, keep it.',
+            tradeoffs: 'Narrative order reads better but can bury the lead. Priority order surfaces the lead but can feel abrupt.'
+          };
+        } else {
+          card = {
+            title: 'Priority order, confirmed',
+            observation: 'Your order leads with need-to-act messages and ends with support.',
+            reasoning: 'This matches how people scan: they take the first thing and sample the rest. The essential message gets the guaranteed slot.',
+            recommendation: 'Match the visual treatment to the order — the treatments listed under each message are your spec.',
+            tradeoffs: 'Priority order can feel blunt. If the copy reads abruptly in step 12, a connective word beats a reshuffle.'
+          };
+        }
+        $('#rankCoach', el).innerHTML = coachCard(card);
+      };
+      renderRank(); renderCoach();
+    },
+    validate() { return null; }
+  },
+
+  /* ---------- 11. Strategy ---------- */
+  {
+    label: 'Strategy',
+    nextLabel: 'Check standards →',
+    title: 'Your communication strategy',
+    intro: 'Everything you decided, in one place. This is the document that survives the design review.',
+    render() {
+      const s = state;
+      const kept = keptMessages();
+      const deferred = s.messages.filter(m => verdictFor(m) === 'defer');
+      const cut = s.messages.filter(m => verdictFor(m) === 'cut');
+      const userGoals = [...s.userGoals, ...(s.userGoalCustom.trim() ? [s.userGoalCustom.trim()] : [])];
+      const challenged = s.assumptions.filter(a => a.response === 'adjust').length;
+
+      const row = (m, i) => {
+        const place = PLACEMENTS[m.placementOverride || placementDefault(m)];
+        return `<tr><td>${i + 1}</td><td>${esc(m.text)}</td><td>${VERDICT_LABELS[verdictFor(m)]}</td><td>${esc(place)}</td></tr>`;
+      };
+
+      return `
+      <div class="strategy-doc" id="strategyDoc">
+        <h3>Context</h3>
+        <p>Requested by: ${esc(s.intake.role || '—')}${s.intake.product ? ' · Product: ' + esc(s.intake.product) : ''}${s.intake.projectType ? ' · ' + esc(s.intake.projectType) : ''}.</p>
+        ${s.intake.userNeed ? `<p>User need: ${esc(s.intake.userNeed)}</p>` : ''}
+        ${s.intake.audienceTags ? `<p>Audience: ${esc(s.intake.audienceTags)}${s.intake.audience ? ' — ' + esc(s.intake.audience) : ''}.</p>` : ''}
+        ${s.intake.includes ? `<p>Includes: ${esc(s.intake.includes.toLowerCase())}.${/Change management/.test(s.intake.includes || '') ? ' Change management needed — the current way stops working.' : ''}</p>` : ''}
+        <p>${esc(COMPONENT_TYPES[s.intake.componentType].name)}${s.intake.context.trim() ? ' — ' + esc(s.intake.context.trim()) : ''}${s.intake.surface ? ' — requested as: ' + esc(s.intake.surface.toLowerCase()) : ''}. The user: ${esc(s.intake.audience)}. Journey stage: ${esc(STAGES[s.stage].name.toLowerCase())}.</p>
+        ${(s.intake.commsOther || '').trim() && !/^nothing/i.test(s.intake.commsOther.trim()) ? `<p>Also communicated by: ${esc(s.intake.commsOther)}.</p>` : ''}
+        ${(s.intake.clientsImpacted || '').trim() ? `<p>Clients impacted: ${esc(s.intake.clientsImpacted)}.</p>` : ''}
+        ${s.intake.path === 'outside' && s.intake.kpiAgreed ? `<p>Success measures (agreed, in-system): ${esc(s.intake.kpiAgreed)}. Stated KPI: ${esc(s.intake.kpiStated || '—')}.</p>` : ''}
+        <h3>Goals</h3>
+        <ul>
+          <li>Requester's goal: ${esc((s.intake.goal || '—').toLowerCase())}</li>
+          <li>User goal: ${esc(userGoals.join('; ').toLowerCase() || '—')}</li>
+          <li>Business goal: ${esc(s.businessGoals.join('; ').toLowerCase())}</li>
+          <li>Communication goal: ${esc(COMM_GOALS[s.commPrimary].name.toLowerCase())}${s.commSecondary ? ', then ' + esc(COMM_GOALS[s.commSecondary].name.toLowerCase()) : ''}</li>
+        </ul>
+        <h3>Assumptions examined</h3>
+        <p>${s.assumptions.length} assumptions surfaced; ${challenged} marked for adjustment${challenged ? ', ' + (s.assumptions.length - challenged) + ' defended with reasons' : ''}.</p>
+        <h3>Message plan</h3>
+        <div style="overflow-x:auto;">
+        <table class="strategy-table">
+          <thead><tr><th>#</th><th>Message</th><th>Decision</th><th>Placement</th></tr></thead>
+          <tbody>
+            ${kept.map(row).join('')}
+            ${deferred.map((m) => `<tr><td>—</td><td>${esc(m.text)}</td><td>${VERDICT_LABELS.defer}</td><td>${esc(PLACEMENTS[m.placementOverride || 'later'])}</td></tr>`).join('')}
+            ${cut.map(m => `<tr><td>—</td><td style="text-decoration:line-through;color:var(--slate-mid);">${esc(m.text)}</td><td>Cut</td><td>—</td></tr>`).join('')}
+          </tbody>
+        </table>
+        </div>
+        <h3>Hierarchy</h3>
+        <ul>${kept.map((m, i) => `<li><strong>${i + 1}.</strong> ${esc(m.text)} — ${hierarchyTreatment(i, kept.length, verdictFor(m)).toLowerCase()}</li>`).join('')}</ul>
+        <h3>Guiding principles</h3>
+        <ul>
+          <li>One message per moment. The lead message: "${esc(kept[0] ? kept[0].text.replace(/\.$/, '') : '—')}."</li>
+          <li>Serve the user's goal first; the business goal rides on the trust that builds.</li>
+          <li>${cut.length ? `What was cut stays cut — ${cut.length} message${cut.length === 1 ? '' : 's'} did not survive "what would the user do differently?"` : 'Every message survived evaluation — stay alert for scope creep in review.'}</li>
+          ${deferred.length ? `<li>Deferred messages need a real trigger, or they are cuts in disguise.</li>` : ''}
+        </ul>
+      </div>
+      <p><button type="button" class="btn ghost-purple" id="copyStrategy">Copy strategy as text</button> <span id="copyDone" style="font-size:16px;color:var(--slate-mid);"></span></p>
+      ${coachCard({
+        title: 'Before you take this to review',
+        observation: 'You now have a strategy with named goals, verdicts, and tradeoffs — not just copy.',
+        reasoning: 'Design reviews attack copy line by line because there is nothing else to attack. A strategy moves the argument up a level: disagree with the goal, not the adjective.',
+        recommendation: 'Present the strategy before the copy. Invite disagreement at the decision level — it is cheaper there.',
+        tradeoffs: 'Showing your reasoning invites scrutiny of your reasoning. That is the job.'
+      })}
+      <div class="key-insight">
+        <div class="ki-label">Key insight</div>
+        <div class="ki-text">The copy is the last decision, not the first. Everything above is why it will hold up.</div>
+      </div>`;
+    },
+    wire(el) {
+      $('#copyStrategy', el).addEventListener('click', async () => {
+        const text = $('#strategyDoc', el).innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          $('#copyDone', el).textContent = 'Copied.';
+        } catch (e) {
+          $('#copyDone', el).textContent = 'Copy failed — select the text and copy manually.';
+        }
+        setTimeout(() => { $('#copyDone', el).textContent = ''; }, 2000);
+      });
+    },
+    validate() { return null; }
+  },
+
+  /* ---------- 12. Content standards engine ---------- */
+  {
+    label: 'Standards check',
+    nextLabel: 'Generate content →',
+    title: 'Run it against the standards',
+    intro: 'The engine reads every surviving message against five sets of standards. Fix things in place — edits here carry through to the final copy.',
+    render() {
+      const res = runStandards();
+      state.stdCounts = tallyStandards(res);
+      save();
+      const active = activeStdMessages();
+      return `
+      <div class="panel">
+        <h3>Fix in place</h3>
+        <p class="hint" style="font-size:16px;color:var(--slate-mid);margin-bottom:16px;">Edit the copy, name an owner, set a review date. The checks below re-run as you type.</p>
+        ${active.map(m => `
+          <div class="std-edit-row" data-id="${m.id}">
+            <span class="msg-index">${mLabel(m)}</span>
+            <input type="text" data-key="text" value="${esc(m.text)}" aria-label="${mLabel(m)} copy">
+            <input type="text" data-key="owner" value="${esc(m.owner || '')}" placeholder="Owner (who keeps this true?)" aria-label="${mLabel(m)} owner">
+            <input type="text" data-key="expires" value="${esc(m.expires || '')}" placeholder="Review date" aria-label="${mLabel(m)} review date">
+          </div>`).join('')}
+      </div>
+      <div id="stdResults">${stdResultsHtml(res)}</div>`;
+    },
+    wire(el) {
+      let t;
+      const refresh = () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          const res = runStandards();
+          state.stdCounts = tallyStandards(res);
+          $('#stdResults', el).innerHTML = stdResultsHtml(res);
+          touch();
+        }, 400);
+      };
+      $$('.std-edit-row', el).forEach(row => {
+        const m = state.messages.find(x => x.id === +row.dataset.id);
+        $$('input', row).forEach(inp => inp.addEventListener('input', () => {
+          m[inp.dataset.key] = inp.value;
+          refresh();
+        }));
+      });
+    },
+    validate() { return null; }
+  },
+
+  /* ---------- 13. Generate content ---------- */
+  {
+    label: 'Content',
+    title: 'Now — and only now — the words',
+    intro: 'Drafts to react to, not final copy — going through Alpha is a process, not an approval. The coach can rough in structure; you bring the craft.',
+    render() {
+      const kept = keptMessages();
+      let html = coachCard({
+        title: 'How these drafts were made',
+        observation: `${kept.length} message${kept.length === 1 ? '' : 's'} survived. Primary goal: ${COMM_GOALS[state.commPrimary].name.toLowerCase()}. Stage: ${STAGES[state.stage].name.toLowerCase()}.`,
+        reasoning: 'Each draft applies your strategy: filler stripped, the goal\'s structure suggested, the lead message given first-line treatment. A rule-based coach can enforce discipline; it cannot hear tone the way you can.',
+        recommendation: 'Read each variant aloud in the user\'s moment. Keep what survives being spoken; rewrite what does not.',
+        tradeoffs: 'Template structures make copy consistent but can flatten voice. Bend the structure before you break the strategy.'
+      });
+
+      html += kept.map((m, i) => {
+        const variants = generateVariants(m, i === 0);
+        return `
+        <div class="panel">
+          <h3>${i + 1}. ${i === 0 ? 'Lead message' : (verdictFor(m) === 'secondary' ? 'Support message' : 'Message')}</h3>
+          <p style="font-size:16px;color:var(--slate-mid);margin-bottom:8px;">Original: "${esc(m.text)}" · ${esc(PLACEMENTS[m.placementOverride || placementDefault(m)].toLowerCase())}</p>
+          ${variants.map(v => `
+            <div class="copy-block">
+              <div class="copy-label">${esc(v.label)}</div>
+              <div>${esc(v.text)}</div>
+              <div class="copy-note">${esc(v.note)}</div>
+            </div>`).join('')}
+        </div>`;
+      }).join('');
+
+      const deferred = state.messages.filter(m => verdictFor(m) === 'defer');
+      if (deferred.length) {
+        html += `<div class="panel"><h3>Deferred for later moments</h3>
+          ${deferred.map(m => `<p style="font-size:16px;">"${esc(m.text)}" — write it when its moment has a design.</p>`).join('')}</div>`;
+      }
+
+      html += `<div class="key-insight">
+        <div class="ki-label">Key insight</div>
+        <div class="ki-text">You made ${steps.length - 1} decisions before writing a word. That is what makes the words defensible.</div>
+      </div>
+      <p style="margin-top:32px;"><button type="button" class="btn secondary" id="restartEnd">Run another request through the workshop</button></p>`;
+      return html;
+    },
+    wire(el) {
+      $('#restartEnd', el).addEventListener('click', restart);
+    },
+    validate() { return null; }
+  }
+];
+
+/* =========================================================
+   Navigation and rendering
+   ========================================================= */
+function touch() { save(); renderSummary(); }
+
+function renderStepper() {
+  $('#stepList').innerHTML = steps.map((s, i) => {
+    const n = i + 1;
+    const cls = ['step-item'];
+    if (n === state.current) cls.push('current');
+    else if (n < state.furthest || (n <= state.furthest && n < state.current)) cls.push('done');
+    if (n <= state.furthest) cls.push('reachable'); else cls.push('locked');
+    const done = cls.includes('done');
+    return `<li class="${cls.join(' ')}" data-step="${n}" ${n <= state.furthest ? 'tabindex="0" role="link"' : 'aria-disabled="true"'} aria-current="${n === state.current ? 'step' : 'false'}">
+      <span class="step-num" aria-hidden="true">${done ? '✓' : n}</span><span>${s.label}</span></li>`;
+  }).join('');
+  $$('#stepList .step-item.reachable').forEach(li => {
+    const go = () => goTo(+li.dataset.step);
+    li.addEventListener('click', go);
+    li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
+  const pct = Math.round(((state.current - 1) / (steps.length - 1)) * 100);
+  $('#progressFill').style.width = pct + '%';
+  $('#progressLabel').textContent = `Step ${state.current} of ${steps.length}`;
+}
+
+function renderMain() {
+  const i = state.current - 1;
+  const step = steps[i];
+  const ws = $('#workspace');
+  ws.innerHTML = `
+    <div class="step-kicker">Step ${state.current} of ${steps.length}</div>
+    <h2 class="step-title">${step.title}</h2>
+    <div id="stepBody">${step.render()}</div>
+    <p class="validation-msg" id="valMsg" role="alert"></p>
+    <div class="step-nav">
+      ${state.current > 1 ? '<button type="button" class="btn secondary" id="backBtn">← Back</button>' : '<span></span>'}
+      ${state.current < steps.length ? `<button type="button" class="btn" id="nextBtn">${step.nextLabel || 'Continue →'}</button>` : ''}
+    </div>`;
+  step.wire($('#stepBody', ws));
+  const back = $('#backBtn', ws);
+  if (back) back.addEventListener('click', () => goTo(state.current - 1, true));
+  const next = $('#nextBtn', ws);
+  if (next) next.addEventListener('click', () => {
+    const err = step.validate();
+    const vm = $('#valMsg', ws);
+    if (err) { vm.textContent = err; vm.classList.add('show'); return; }
+    vm.classList.remove('show');
+    goTo(state.current + 1, true);
+  });
+  window.scrollTo({ top: 0 });
+}
+
+function goTo(n, skipValidate) {
+  if (n < 1 || n > steps.length) return;
+  if (n > state.furthest + 0 && !skipValidate) return;
+  if (n > state.furthest) state.furthest = n;
+  if (n <= state.furthest || skipValidate) state.current = n;
+  if (state.current > state.furthest) state.furthest = state.current;
+  save();
+  renderStepper(); renderMain(); renderSummary();
+}
+
+function restart() {
+  if (!confirm('Start over? This clears the whole workshop.')) return;
+  state = blankState();
+  save();
+  renderStepper(); renderMain(); renderSummary();
+}
+
+$('#restartBtn').addEventListener('click', restart);
+
+load();
+renderStepper();
+renderMain();
+renderSummary();
+</script>
+</body>
+</html>

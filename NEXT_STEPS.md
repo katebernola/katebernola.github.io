@@ -51,6 +51,26 @@ Not linked / not pushed:
 5. **Step 4 principle line** — still missing; breaks the four-step template. Needs one line in Kate's voice.
 6. **Fill step 3 placeholder visuals** — operating model, knowledge architecture, annotated AI conversation, notification architecture.
 
+## AI communication coach (Alpha)
+
+**Prototypes (2026-07-19)**
+- **v2 is live locally:** `communication-coach-chat.html` — chat conversation + live-filling brief, verdict levels/flags, two-plan strategy with defect log. v1 (form) kept and linked as the iteration story. Knowledge base updated (decision library, new heuristics, flagship pattern `ai-communication-coach/patterns/mid-period-rate-change.md`).
+- Later: model backend + free hosting so reviewers can use it without setup · port the outside-UX path into v2 · portfolio case-study page linking v1 → v2.
+
+**Diagrams (2026-07-22)** — see `diagrams/README.md` for the index and the drawing rules.
+- **Current: `diagrams/agent-flow.svg`** — the object-typed workflow (kickoff → discovery → brief → strategy → inventory/audit/gap → content needs → plan A + plan B → P.O. picks a plan → content design → UI plan → design execution → P.O. decides what ships → review → risks + next steps). Preceded by an OOUX pass in `diagrams/decision-coach-ooux.md`. Encoded into `books/04-decision-framework.md` and `books/09-decision-library.md`.
+- **Seven superseded iterations deleted.** Remaining: the flow, `agent-ia-map.svg` (the organized-knowledge artifact), and the OOUX write-up.
+- **Next on this: add the knowledge base to the flow** — deliberately left out until the flow itself is signed off.
+- **Icons are placeholders** (person, chat bubbles, bot). Kate likes them and may supply real ones.
+- Open: whether the iteration property (re-enter at any step) reads well as a sentence under the diagram, or needs a visual device.
+
+**Blocked on Kate**
+- **Screenshot files** for the mid-period case study — the images pasted in chat need saving as files, then redacting (crop client headers, blur product name) before they can ship.
+- **The real brief schema** — the flow shows overview/objective/persona/workflow/usage data; confirm that's right rather than invented.
+- **Display the Browser pane** — screenshot verification has been impossible all session ("the Browser pane is not displayed, so the page is not compositing frames"). Everything is verified geometrically but unseen.
+
+**Story framing (agreed)** — three beats: 1. everything was a mess (the scattered-piles visual already in `index.html`) → 2. we organized the knowledge and built a reasoning machine (`agent-ia-map.svg` + `agent-flow.svg`) → 3. everyone used it (adoption artifact not built).
+
 ## Additional stories bank ("deep dives" — the oddballs)
 
 A small linked index of shorter pieces, so strong-but-off-framework stories have a home without jamming them into the playbook:
@@ -80,6 +100,10 @@ A small linked index of shorter pieces, so strong-but-off-framework stories have
 - Retirement: naming (Paychex Flex? the product?) — Flex is already on the resume.
 - **Step 2 framing tension.** "Find surefire wins" fits the 401(k)/payroll wins cleanly but strains against the retirement cross-sell story (a hard-fought judgment call, not an obvious win). Bridged for now with a line inside the case study; a broader reframe toward "Show value" was offered but not decided.
 - **Word echo in Step 2.** "Retirement" now names two different things in the same step (the cross-sell ad and the income estimator). Reads fine; flagged in case Kate wants to reword the estimator bullet to reduce the repetition.
+
+## Job tracker (Desktop/Job Tracker — separate project, not the portfolio)
+
+- **LinkedIn recruiter/connections one-click buttons.** Deferred from the initial dashboard build (2026-07-16). Add per-card buttons that open a pre-filled LinkedIn people-search ("Recruiter at [Company]") and a connections search ("Connections at [Company]") in a new tab — plain links, no browser extension needed at runtime. Needs: URL pattern for LinkedIn people-search with company + keyword params.
 
 ## Housekeeping
 

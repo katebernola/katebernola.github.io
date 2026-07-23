@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha — communication coach (chat)</title>
+<style>
+  :root {
+    --white: #ffffff;
+    --slate-bg: #f8f9fa;
+    --slate-mid: #475569;
+    --slate-dark: #1e293b;
+    --stroke: #e2e8f0;
+    --diagram: #64748b;
+    --purple: #6B4C9A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Inter, 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 18px; line-height: 1.6; color: var(--slate-dark); background: var(--white);
+  }
+  header {
+    border-bottom: 1px solid var(--stroke);
+    padding: 16px 24px;
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  }
+  header h1 { font-size: 24px; font-weight: 600; line-height: 1.3; }
+  header .tag {
+    font-size: 16px; color: var(--purple);
+    border: 1px solid var(--purple); border-radius: 4px;
+    padding: 0 8px;
+  }
+  header a { color: var(--slate-mid); font-size: 16px; margin-left: auto; }
+  .layout {
+    display: grid; grid-template-columns: 1fr 380px;
+    max-width: 1240px; margin: 0 auto;
+    height: calc(100vh - 61px);
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; height: auto; }
+    #briefPane { border-left: none; border-top: 1px solid var(--stroke); }
+  }
+
+  /* ---------- chat pane ---------- */
+  #chatPane { display: flex; flex-direction: column; min-width: 0; }
+  #log { flex: 1; overflow-y: auto; padding: 24px; }
+  .bubble { max-width: 56ch; margin-bottom: 16px; }
+  .bubble .who { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .bubble.coach .who { color: var(--purple); }
+  .bubble.user { margin-left: auto; }
+  .bubble.user .who { color: var(--slate-mid); text-align: right; }
+  .bubble .msg {
+    border: 1px solid var(--stroke); border-radius: 8px;
+    padding: 8px 16px; font-size: 18px;
+  }
+  .bubble.coach .msg { background: var(--slate-bg); }
+  .bubble.user .msg { background: var(--white); }
+  .bubble .msg p + p { margin-top: 8px; }
+  .bubble .msg .reason { color: var(--slate-mid); font-size: 16px; }
+  .bubble img { max-width: 200px; border: 1px solid var(--stroke); border-radius: 4px; display: block; margin-top: 8px; }
+
+  #suggest { padding: 0 24px 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    border: 1px solid var(--stroke); border-radius: 4px; background: var(--white);
+    font-size: 16px; font-family: inherit; color: var(--slate-dark);
+    padding: 4px 16px; cursor: pointer;
+  }
+  .pill:hover { border-color: var(--purple); color: var(--purple); }
+  .pill.selected { border-color: var(--purple); color: var(--purple); font-weight: 600; }
+
+  #composer { border-top: 1px solid var(--stroke); padding: 16px 24px; display: flex; gap: 8px; align-items: flex-end; }
+  #composer textarea {
+    flex: 1; font-family: inherit; font-size: 18px; line-height: 1.6;
+    border: 1px solid var(--stroke); border-radius: 4px; padding: 8px;
+    resize: vertical; min-height: 44px; max-height: 200px;
+  }
+  #composer button, .btn {
+    font-family: inherit; font-size: 16px; font-weight: 600;
+    background: var(--slate-dark); color: var(--white);
+    border: none; border-radius: 4px; padding: 8px 24px; cursor: pointer;
+  }
+  #composer button:disabled { background: var(--stroke); cursor: default; }
+  #attachBtn { background: var(--white); color: var(--slate-mid); border: 1px solid var(--stroke); font-weight: 400; padding: 8px; }
+
+  /* ---------- brief pane ---------- */
+  #briefPane {
+    border-left: 1px solid var(--stroke); background: var(--white);
+    overflow-y: auto; padding: 24px;
+  }
+  #briefPane h2 { font-size: 20px; font-weight: 600; color: var(--purple); line-height: 1.3; margin-bottom: 16px; }
+  .slot { margin-bottom: 16px; }
+  .slot .s-label { font-size: 16px; font-weight: 600; }
+  .slot .s-value { font-size: 16px; color: var(--slate-mid); white-space: pre-wrap; }
+  .slot .s-value.empty { color: var(--diagram); }
+  .slot .s-edit {
+    font-size: 16px; background: none; border: none; color: var(--purple);
+    cursor: pointer; padding: 0; font-family: inherit;
+  }
+  .msg-row { border: 1px solid var(--stroke); border-radius: 4px; padding: 8px; margin-bottom: 8px; }
+  .msg-row .m-text { font-size: 16px; }
+  .msg-row .chips { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+  .chip {
+    font-size: 13px; border: 1px solid var(--stroke); border-radius: 4px;
+    background: var(--white); padding: 0 8px; cursor: pointer; font-family: inherit; color: var(--slate-mid);
+  }
+  .chip.on { border-color: var(--purple); color: var(--purple); font-weight: 600; }
+  .msg-row input[type="text"] {
+    width: 100%; font-family: inherit; font-size: 14px; color: var(--slate-mid);
+    border: none; border-bottom: 1px solid var(--stroke); margin-top: 4px; padding: 2px 0;
+  }
+  .risk { color: var(--purple); font-size: 16px; }
+  #genBtn { width: 100%; margin-top: 8px; }
+
+  /* ---------- strategy overlay ---------- */
+  #strategyView {
+    position: fixed; inset: 0; background: var(--white);
+    overflow-y: auto; padding: 32px 24px; z-index: 10;
+  }
+  #strategyView[hidden] { display: none; }
+  .strategy-inner { max-width: 75ch; margin: 0 auto; }
+  .strategy-inner h2 { font-size: 32px; font-weight: 700; line-height: 1.3; margin-bottom: 24px; }
+  .strategy-inner h3 { font-size: 20px; font-weight: 600; color: var(--purple); line-height: 1.3; margin: 32px 0 8px; }
+  .strategy-inner table { border-collapse: collapse; width: 100%; font-size: 16px; }
+  .strategy-inner td, .strategy-inner th { text-align: left; padding: 4px 24px 4px 0; vertical-align: top; border-bottom: 1px solid var(--stroke); }
+  .strategy-inner .note { font-size: 16px; color: var(--slate-mid); }
+  .close-x { float: right; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Alpha</h1>
+  <span class="tag">v2 · chat</span>
+  <span style="font-size:16px;color:var(--slate-mid);">the brief fills itself as we talk</span>
+  <a href="communication-coach.html">v1 (form) →</a>
+</header>
+
+<div class="layout">
+  <section id="chatPane" aria-label="Conversation">
+    <div id="log" role="log" aria-live="polite"></div>
+    <div id="suggest"></div>
+    <div id="composer">
+      <button id="attachBtn" type="button" aria-label="Attach a screenshot">📎</button>
+      <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      <textarea id="input" rows="1" aria-label="Your reply" placeholder="Type here…"></textarea>
+      <button id="sendBtn" type="button">Send</button>
+    </div>
+  </section>
+
+  <aside id="briefPane" aria-label="The brief">
+    <h2>The brief</h2>
+    <div id="briefBody"></div>
+  </aside>
+</div>
+
+<div id="strategyView" hidden>
+  <div class="strategy-inner">
+    <button class="btn close-x" id="closeStrategy" type="button">Back to the chat</button>
+    <div id="strategyBody"></div>
+  </div>
+</div>
+
+<script src="ai-communication-coach/rules.js"></script>
+<script>
+const {
+  UX_ROLES, PRODUCTS, PROJECT_TYPES, MVP_PROJECT_TYPES, AUDIENCE_TAGS,
+  INFERENCE, VERDICT_LEVELS, VERDICT_FLAGS, HEURISTICS_LIBRARY, KPI_INDICATORS, TRIGGERS
+} = COACH_RULES;
+
+const KEY = 'alpha-chat-v2';
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const blank = () => ({
+  turns: [],            // [{who:'coach'|'user', html}]
+  asked: {},            // stepId -> true once its bubble was shown
+  slots: {
+    role: '', working: '', userNeed: '', bizProblem: '', audienceTags: '', audience: '',
+    product: '', projectType: '', todaySteps: '', futureSteps: '', clientsImpacted: '',
+    stuckPoints: '', screens: [], screensSkipped: false, goalType: '', goal: '',
+    comms: '', badReqs: '', defectHeuristics: '', kpis: ''
+  },
+  messages: [],         // [{text, level, flags:[], placement}]
+  redo: ''              // step id being re-asked via Change
+});
+let S = blank();
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+const isUx = () => UX_ROLES.includes(S.slots.role);
+const filled = v => (v || '').trim() !== '';
+
+/* ---------- inference: read free text, fill slots, return reasons ---------- */
+function infer(text) {
+  const t = text || '';
+  const reasons = [];
+  const sl = S.slots;
+  if (!filled(sl.product)) {
+    for (const [p, re] of Object.entries(INFERENCE.products)) {
+      const m = re.exec(t);
+      if (m) { sl.product = p; reasons.push(`My guess is <strong>${esc(p)}</strong> — “${esc(m[0].trim())}” sounds like ${esc(p)}.`); break; }
+    }
+  }
+  const tags = sl.audienceTags ? sl.audienceTags.split(',').map(x => x.trim()) : [];
+  for (const [tag, re] of Object.entries(INFERENCE.audiences)) {
+    const m = re.exec(t);
+    if (m && !tags.includes(tag)) { tags.push(tag); reasons.push(`Audience: <strong>${esc(tag)}</strong> — you said “${esc(m[0].trim())}”.`); }
+  }
+  if (tags.length) sl.audienceTags = tags.join(', ');
+  if (!filled(sl.projectType)) {
+    for (const [p, re] of Object.entries(INFERENCE.projectTypes)) {
+      const m = re.exec(t);
+      if (m) { sl.projectType = p; reasons.push(`Project reads as <strong>${esc(p)}</strong> — from “${esc(m[0].trim())}”.`); break; }
+    }
+  }
+  const comms = sl.comms ? sl.comms.split(',').map(x => x.trim()) : [];
+  for (const [c, re] of Object.entries(INFERENCE.comms)) {
+    const m = re.exec(t);
+    if (m && !comms.includes(c) && !/^nothing/i.test(c)) { comms.push(c); reasons.push(`Other channel: <strong>${esc(c)}</strong> — “${esc(m[0].trim())}”.`); }
+  }
+  if (comms.length) sl.comms = comms.join(', ');
+  return reasons;
+}
+
+/* ---------- the script: each step = one coach turn ---------- */
+/* need() true → step wants an answer. ask() returns the coach turn. apply(reply) stores it. */
+const SCRIPT = [
+  {
+    id: 'role',
+    need: () => !filled(S.slots.role),
+    ask: () => ({ text: 'What’s your role?', pills: [...UX_ROLES, 'Marketing', 'Product', 'Sales or service'], input: 'none' }),
+    apply: v => { S.slots.role = v; }
+  },
+  {
+    id: 'working',
+    need: () => isUx() && !filled(S.slots.working),
+    ask: () => ({ text: 'What are you working on?', input: 'textarea' }),
+    apply: v => {
+      S.slots.working = v;
+      sayReasons(infer(v));
+    }
+  },
+  {
+    id: 'userNeed',
+    need: () => isUx() && !filled(S.slots.userNeed),
+    ask: () => ({ text: 'What problem are you trying to solve? The user’s problem, in their words if you can.', input: 'textarea' }),
+    apply: v => { S.slots.userNeed = v; sayReasons(infer(v)); }
+  },
+  {
+    id: 'bizProblem',
+    need: () => isUx() && !filled(S.slots.bizProblem),
+    ask: () => ({ text: 'And the business problem?', pills: ['Too many support calls', 'Low adoption', 'Costly errors', 'Churn risk'], input: 'text' }),
+    apply: v => { S.slots.bizProblem = v; }
+  },
+  {
+    id: 'audienceTags',
+    need: () => isUx() && !filled(S.slots.audienceTags),
+    ask: () => ({ text: 'Who’s the audience? Pick all that apply.', pills: [...AUDIENCE_TAGS, 'None of the above'], multi: true, input: 'none' }),
+    apply: v => { S.slots.audienceTags = v; }
+  },
+  {
+    id: 'audience',
+    need: () => isUx() && !filled(S.slots.audience),
+    ask: () => ({ text: 'Audience specifics — who exactly, and who’s excluded?', input: 'text' }),
+    apply: v => { S.slots.audience = v; sayReasons(infer(v)); }
+  },
+  {
+    id: 'product',
+    need: () => isUx() && !filled(S.slots.product),
+    ask: () => ({ text: 'Which product?', pills: PRODUCTS, input: 'none' }),
+    apply: v => { S.slots.product = v; }
+  },
+  {
+    id: 'projectType',
+    need: () => isUx() && !filled(S.slots.projectType),
+    ask: () => ({ text: 'What does the project involve?', pills: PROJECT_TYPES, input: 'none' }),
+    apply: v => {
+      if (!MVP_PROJECT_TYPES.includes(v)) {
+        coachSay('<p>New UI is beyond this prototype on purpose — the MVP covers one-time messages and updates to existing UI. Pick the closest in-scope option.</p>');
+        return false;
+      }
+      S.slots.projectType = v;
+    }
+  },
+  {
+    id: 'todaySteps',
+    need: () => isUx() && !filled(S.slots.todaySteps),
+    ask: () => ({
+      text: 'Step out the user’s experience today, one step per line. I’ll start:',
+      prefill: 'User signs in\nUser goes to ' + (S.slots.product || 'the product') + '\n',
+      input: 'textarea'
+    }),
+    apply: v => { S.slots.todaySteps = v; }
+  },
+  {
+    id: 'futureSteps',
+    need: () => isUx() && !filled(S.slots.futureSteps),
+    ask: () => ({
+      text: 'After this ships, what changes? Edit the steps that differ — or tell me nothing changes.',
+      pills: ['Nothing changes — message only'],
+      prefill: S.slots.todaySteps,
+      input: 'textarea'
+    }),
+    apply: v => { S.slots.futureSteps = v === 'Nothing changes — message only' ? 'same' : v; }
+  },
+  {
+    id: 'clientsImpacted',
+    need: () => isUx() && (S.slots.projectType === 'One-time message' || (S.slots.futureSteps && S.slots.futureSteps !== 'same' && S.slots.futureSteps !== S.slots.todaySteps)) && !filled(S.slots.clientsImpacted),
+    ask: () => ({ text: 'How many clients do we know for sure are impacted?', pills: ['All of them', 'A known list', 'We don’t know yet'], input: 'text' }),
+    apply: v => { S.slots.clientsImpacted = v; }
+  },
+  {
+    id: 'screens',
+    need: () => isUx() && S.slots.screens.length === 0 && !S.slots.screensSkipped,
+    ask: () => ({
+      text: 'Show me the screens — paste or attach them with 📎, from the first screen to the last. Getting these is part of the job; anything I don’t see goes in the strategy as a risk.',
+      pills: ['I’ve attached them all', 'I can’t get some — log the risk'],
+      input: 'none'
+    }),
+    apply: v => {
+      if (/can’t|can't/i.test(v)) {
+        S.slots.screensSkipped = true;
+        coachSay('<p>Noted — and logged. The strategy will name every screen we haven’t seen as a risk.</p>');
+      } else if (S.slots.screens.length === 0) {
+        coachSay('<p>I don’t see any attachments yet — use 📎, then tell me when they’re in.</p>');
+        return false;
+      }
+    }
+  },
+  {
+    id: 'stuck',
+    need: () => isUx() && !filled(S.slots.stuckPoints),
+    ask: () => ({
+      text: 'You’ve shown me what they see. Where are they getting stuck?',
+      pills: ['A confusing choice', 'Math they can’t follow', 'They can’t find it', 'We don’t know yet'],
+      multi: true, input: 'text'
+    }),
+    apply: v => {
+      S.slots.stuckPoints = v;
+      if (/don’t know|don't know/i.test(v)) {
+        coachSay('<p>If we don’t know where they’re stuck, that’s the first job. Ask the PO and the service folks for pain points. Then, with your researcher: past usability tests, session replays, survey comments — or add this to an upcoming test.</p>');
+      }
+    }
+  },
+  {
+    id: 'goalType',
+    need: () => isUx() && !filled(S.slots.goalType),
+    ask: () => ({ text: 'Is there a specific action you want the user to take — or something you want them to know?', pills: ['Do something', 'Know something', 'Both', 'Stop doing something'], input: 'none' }),
+    apply: v => { S.slots.goalType = v; }
+  },
+  {
+    id: 'goal',
+    need: () => isUx() && !filled(S.slots.goal),
+    ask: () => ({
+      text: S.slots.goalType === 'Do something' ? 'What should they do?'
+        : S.slots.goalType === 'Know something' ? 'What should they know — and why?'
+        : S.slots.goalType === 'Stop doing something' ? 'What should they stop doing — and what replaces it?'
+        : 'What should they do, and what must they know?',
+      input: 'text'
+    }),
+    apply: v => { S.slots.goal = v; }
+  },
+  {
+    id: 'comms',
+    need: () => isUx() && !filled(S.slots.comms),
+    ask: () => ({ text: 'How else are we communicating this?', pills: ['Email', 'Rep or advisor outreach', 'Help Center', 'Marketing site', 'Nothing else'], multi: true, input: 'text' }),
+    apply: v => { S.slots.comms = v; }
+  },
+  {
+    id: 'messages',
+    need: () => isUx() && S.messages.length === 0,
+    ask: () => {
+      const drafts = [];
+      (S.slots.stuckPoints || '').split(',').map(x => x.trim()).filter(x => x && !/don't know|don’t know/i.test(x)).forEach(p => {
+        drafts.push('What “' + p.toLowerCase() + '” means for their work, in plain words');
+      });
+      if (filled(S.slots.goal)) drafts.push(S.slots.goal);
+      return {
+        text: 'Now the message list — every fact that must land, including content that already exists. This is a content audit plus the content need: existing content that should go gets listed too, so the cut is on the record. One per line; I’ve drafted starters from what you told me.',
+        prefill: drafts.join('\n'),
+        input: 'textarea'
+      };
+    },
+    apply: v => {
+      S.messages = v.split('\n').map(x => x.trim()).filter(Boolean).map(text => ({ text, level: 'Helpful', flags: [], placement: '' }));
+      coachSay('<p>They’re in the brief. Each one has a level — <strong>Critical, Very helpful, Helpful, Not helpful</strong> — and flags for when the answer isn’t words: <em>non-verbal cue, solve through design, interaction design change, conditional</em>. Click to set them; add a placement where you know it.</p>');
+    }
+  },
+  {
+    id: 'badReqs',
+    need: () => isUx() && !filled(S.slots.badReqs),
+    ask: () => ({
+      text: 'Any requirements you were handed that fight the real fix? Naming them isn’t defiance — the strategy will show a plan that honors them and a plan that doesn’t, and let the work make the argument.',
+      pills: ['Content changes only', 'No workflow changes', 'Keep the existing screens', 'None — requirements are sound'],
+      multi: true, input: 'text'
+    }),
+    apply: v => { S.slots.badReqs = v; }
+  },
+  {
+    id: 'defects',
+    need: () => isUx() && filled(S.slots.badReqs) && !/^none\b/i.test(S.slots.badReqs) && !filled(S.slots.defectHeuristics),
+    ask: () => ({
+      text: 'If those constraints hold, Plan B logs what they break — by name, as user impact. Which apply?',
+      pills: Object.values(HEURISTICS_LIBRARY).map(h => h.name),
+      multi: true, input: 'none'
+    }),
+    apply: v => { S.slots.defectHeuristics = v; }
+  },
+  {
+    id: 'kpis',
+    need: () => isUx() && !filled(S.slots.kpis),
+    ask: () => ({
+      text: 'Last: how will we know it worked? Pick 1 to 4 — at least some in-product. (A real coach would ask for usage data here to set severity and effort; collecting it is out of scope for this prototype, so we pick indicators instead.)',
+      pills: [...KPI_INDICATORS.inProduct.slice(0, 5), ...KPI_INDICATORS.outside],
+      multi: true, input: 'none'
+    }),
+    apply: v => {
+      const picked = v.split(',').map(x => x.trim()).filter(Boolean);
+      if (picked.length > 4) { coachSay('<p>That’s ' + picked.length + ' — pick 4 at most, or nothing moves the needle.</p>'); return false; }
+      if (!picked.some(p => KPI_INDICATORS.inProduct.includes(p))) { coachSay('<p>At least one should be in-product — calls and chats tell us about the callers, not the users who quietly struggle.</p>'); return false; }
+      S.slots.kpis = v;
+    }
+  },
+  {
+    id: 'wrap',
+    need: () => isUx() && !S.asked.wrapDone,
+    ask: () => ({
+      text: 'That’s the brief — check it on the right, change anything, then generate the strategy. It ships with its open questions attached: going through Alpha is a process, not an approval.',
+      pills: ['Generate the strategy'],
+      input: 'none'
+    }),
+    apply: v => { S.asked.wrapDone = true; renderStrategy(); }
+  },
+  {
+    id: 'outside',
+    need: () => filled(S.slots.role) && !isUx() && !S.asked.outsideDone,
+    ask: () => ({
+      text: 'The outside-UX conversation isn’t built in v2 yet — v1 has the full path, stated KPI assumptions and all.',
+      pills: ['Open v1'],
+      input: 'none'
+    }),
+    apply: v => { S.asked.outsideDone = true; window.location.href = 'communication-coach.html'; }
+  }
+];
+
+/* ---------- engine ---------- */
+let pending = null;   // the step currently awaiting a reply
+
+function coachSay(html) {
+  S.turns.push({ who: 'coach', html });
+}
+function sayReasons(reasons) {
+  if (reasons.length) coachSay('<p>Here’s what I filled in — correct anything in the brief.</p>' + reasons.map(r => `<p class="reason">${r}</p>`).join(''));
+}
+function userSay(html) {
+  S.turns.push({ who: 'user', html });
+}
+
+function nextStep() {
+  if (S.redo) {
+    const st = SCRIPT.find(x => x.id === S.redo);
+    if (st) return st;
+  }
+  return SCRIPT.find(st => { try { return st.need(); } catch (e) { return false; } });
+}
+
+function advance() {
+  const st = nextStep();
+  pending = st || null;
+  if (st && !S.asked[st.id + ':' + (S.redo || '')]) {
+    const turn = st.ask();
+    coachSay('<p>' + turn.text + '</p>');
+    S.asked[st.id + ':' + (S.redo || '')] = true;
+  }
+  render();
+  save();
+}
+
+function submitReply(value) {
+  if (!pending || !filled(value)) return;
+  const st = pending;
+  userSay('<p>' + esc(value) + '</p>');
+  $('#input').value = '';
+  const ok = st.apply(value.trim());
+  if (ok !== false) {
+    if (S.redo === st.id) S.redo = '';
+    delete S.asked[st.id + ':' + st.id];   // allow re-ask after future Change
+  }
+  advance();
+}
+
+/* ---------- render: chat ---------- */
+let multiSel = [];
+function render() {
+  const log = $('#log');
+  log.innerHTML = S.turns.map(t => `
+    <div class="bubble ${t.who}">
+      <div class="who">${t.who === 'coach' ? 'Alpha' : 'You'}</div>
+      <div class="msg">${t.html}</div>
+    </div>`).join('');
+  log.scrollTop = log.scrollHeight;
+
+  const sug = $('#suggest');
+  const turn = pending ? pending.ask() : null;
+  if (turn && turn.pills) {
+    sug.innerHTML = turn.pills.map(p =>
+      `<button type="button" class="pill ${multiSel.includes(p) ? 'selected' : ''}" data-p="${esc(p)}">${esc(p)}</button>`
+    ).join('') + (turn.multi ? `<button type="button" class="btn" id="multiGo" style="font-size:14px;padding:4px 16px;">That’s all</button>` : '');
+    sug.querySelectorAll('[data-p]').forEach(b => b.addEventListener('click', () => {
+      const p = b.dataset.p;
+      if (turn.multi) {
+        if (multiSel.includes(p)) multiSel = multiSel.filter(x => x !== p);
+        else multiSel.push(p);
+        render();
+      } else {
+        multiSel = [];
+        submitReply(p);
+      }
+    }));
+    const mg = sug.querySelector('#multiGo');
+    if (mg) mg.addEventListener('click', () => {
+      const typed = $('#input').value.trim();
+      const all = [...multiSel, ...(typed ? [typed] : [])].join(', ');
+      multiSel = [];
+      $('#input').value = '';
+      submitReply(all);
+    });
+  } else {
+    sug.innerHTML = '';
+  }
+
+  const input = $('#input');
+  if (turn && turn.prefill !== undefined && input.value === '') input.value = turn.prefill;
+  input.rows = turn && turn.input === 'textarea' ? 4 : 1;
+
+  renderBrief();
+}
+
+/* ---------- render: brief ---------- */
+function slotRow(label, value, redoId) {
+  return `<div class="slot">
+    <span class="s-label">${esc(label)}</span>
+    ${redoId && filled(value) ? `<button type="button" class="s-edit" data-redo="${redoId}">Change</button>` : ''}
+    <div class="s-value ${filled(value) ? '' : 'empty'}">${filled(value) ? esc(value) : '—'}</div>
+  </div>`;
+}
+
+function renderBrief() {
+  const sl = S.slots;
+  const el = $('#briefBody');
+  const screens = sl.screens.length ? sl.screens.map(s => s.name).join(', ') : (sl.screensSkipped ? 'not provided — logged as risk' : '');
+  el.innerHTML = `
+    ${slotRow('Role', sl.role, 'role')}
+    ${slotRow('Working on', sl.working, 'working')}
+    ${slotRow('User problem', sl.userNeed, 'userNeed')}
+    ${slotRow('Business problem', sl.bizProblem, 'bizProblem')}
+    ${slotRow('Audience', sl.audienceTags && sl.audience ? sl.audienceTags + ' — ' + sl.audience : sl.audienceTags || sl.audience, 'audience')}
+    ${slotRow('Product · project', [sl.product, sl.projectType].filter(Boolean).join(' · '), 'projectType')}
+    ${slotRow('Steps today', sl.todaySteps, 'todaySteps')}
+    ${slotRow('After it ships', sl.futureSteps === 'same' ? 'Nothing changes — message only' : sl.futureSteps, 'futureSteps')}
+    ${sl.clientsImpacted ? slotRow('Clients impacted', sl.clientsImpacted, 'clientsImpacted') : ''}
+    ${slotRow('Screens', screens, 'screens')}
+    ${slotRow('Stuck points', sl.stuckPoints, 'stuck')}
+    ${slotRow('Goal', sl.goalType && sl.goal ? sl.goalType + ': ' + sl.goal : sl.goal, 'goal')}
+    ${slotRow('Other channels', sl.comms, 'comms')}
+    ${slotRow('Constraints under protest', sl.badReqs, 'badReqs')}
+    ${slotRow('KPIs', sl.kpis, 'kpis')}
+    ${S.messages.length ? `<div class="slot"><span class="s-label">Messages</span>
+      ${S.messages.map((m, i) => `
+        <div class="msg-row" data-i="${i}">
+          <div class="m-text">${esc(m.text)}</div>
+          <div class="chips">
+            ${VERDICT_LEVELS.map(l => `<button type="button" class="chip ${m.level === l ? 'on' : ''}" data-level="${esc(l)}">${esc(l)}</button>`).join('')}
+          </div>
+          <div class="chips">
+            ${VERDICT_FLAGS.map(f => `<button type="button" class="chip ${m.flags.includes(f) ? 'on' : ''}" data-flag="${esc(f)}">${esc(f)}</button>`).join('')}
+          </div>
+          <input type="text" placeholder="placement…" value="${esc(m.placement)}" data-place>
+        </div>`).join('')}
+    </div>` : ''}
+    ${sl.screensSkipped ? `<p class="risk">Risk: screens not seen.</p>` : ''}
+    ${S.asked.wrapDone ? `<button type="button" class="btn" id="genBtn">View the strategy</button>` : ''}
+  `;
+
+  el.querySelectorAll('[data-redo]').forEach(b => b.addEventListener('click', () => {
+    const id = b.dataset.redo;
+    const st = SCRIPT.find(x => x.id === id);
+    if (!st) return;
+    // clear the slot(s) this step owns so need() fires again
+    const clear = {
+      role: ['role'], working: ['working'], userNeed: ['userNeed'], bizProblem: ['bizProblem'],
+      audience: ['audience', 'audienceTags'], projectType: ['projectType', 'product'],
+      todaySteps: ['todaySteps'], futureSteps: ['futureSteps'], clientsImpacted: ['clientsImpacted'],
+      stuck: ['stuckPoints'], goal: ['goal', 'goalType'], comms: ['comms'],
+      badReqs: ['badReqs', 'defectHeuristics'], kpis: ['kpis'], screens: []
+    }[id] || [];
+    clear.forEach(k => { S.slots[k] = ''; });
+    if (id === 'screens') { S.slots.screens = []; S.slots.screensSkipped = false; }
+    Object.keys(S.asked).forEach(k => { if (k.startsWith(id + ':')) delete S.asked[k]; });
+    coachSay('<p>Let’s fix that.</p>');
+    advance();
+  }));
+
+  el.querySelectorAll('.msg-row').forEach(row => {
+    const i = +row.dataset.i;
+    row.querySelectorAll('[data-level]').forEach(c => c.addEventListener('click', () => {
+      S.messages[i].level = c.dataset.level; save(); renderBrief();
+    }));
+    row.querySelectorAll('[data-flag]').forEach(c => c.addEventListener('click', () => {
+      const f = c.dataset.flag;
+      const fl = S.messages[i].flags;
+      fl.includes(f) ? fl.splice(fl.indexOf(f), 1) : fl.push(f);
+      save(); renderBrief();
+    }));
+    row.querySelector('[data-place]').addEventListener('input', e => {
+      S.messages[i].placement = e.target.value; save();
+    });
+  });
+
+  const gen = el.querySelector('#genBtn');
+  if (gen) gen.addEventListener('click', renderStrategy);
+}
+
+/* ---------- strategy deliverable ---------- */
+function renderStrategy() {
+  const sl = S.slots;
+  const constraints = (sl.badReqs || '').trim();
+  const constrained = constraints && !/^none\b/i.test(constraints);
+  const defects = (sl.defectHeuristics || '').split(',').map(x => x.trim()).filter(Boolean);
+  const heurByName = Object.values(HEURISTICS_LIBRARY);
+  const kept = S.messages.filter(m => m.level !== 'Not helpful');
+  const cut = S.messages.filter(m => m.level === 'Not helpful');
+  const designMoves = S.messages.filter(m => m.flags.some(f => /design/.test(f)));
+
+  const row = m => `<tr><td>${esc(m.text)}</td><td>${esc(m.level)}${m.flags.length ? ' — ' + esc(m.flags.join(', ')) : ''}</td><td>${esc(m.placement || '—')}</td></tr>`;
+
+  $('#strategyBody').innerHTML = `
+    <h2>Content strategy for ${esc(sl.working ? sl.working.split(/[.\n]/)[0].toLowerCase().replace(/^(i am|i'm|i’m|we are|we're|we’re)\s+(fixing|working on|updating|building|redesigning)\s+(the\s+)?/i, '') : 'this work')}</h2>
+
+    <h3>Problem we're fixing</h3>
+    <p>User problem: “${esc(sl.userNeed)}”<br>Business problem: ${esc(sl.bizProblem)}.</p>
+
+    <h3>Goals</h3>
+    <p>User: ${esc(sl.goalType ? sl.goalType.toLowerCase() + ' — ' : '')}${esc(sl.goal)}.<br>Business: solve “${esc(sl.bizProblem.toLowerCase())}.”</p>
+
+    <h3>Indicators and recommended KPIs</h3>
+    <p>${esc(sl.kpis)}</p>
+    <p class="note">A live coach would ask for usage data here — it sets defect severity and fix effort. Out of scope for this prototype.</p>
+
+    <h3>Message plan — content audit + content need</h3>
+    <div style="overflow-x:auto;"><table>
+      <tr><th>Message</th><th>Verdict</th><th>Placement</th></tr>
+      ${kept.map(row).join('')}
+      ${cut.map(m => `<tr><td style="text-decoration:line-through;color:var(--slate-mid);">${esc(m.text)}</td><td>Cut</td><td>—</td></tr>`).join('')}
+    </table></div>
+
+    ${constrained ? `
+    <h3>Plan A — fix the workflow</h3>
+    <p>The constraint${constraints.includes(',') ? 's' : ''} “${esc(constraints)}” ${constraints.includes(',') ? 'fight' : 'fights'} where the problems live. Plan A overrides ${constraints.includes(',') ? 'them' : 'it'}:</p>
+    <p>${designMoves.length ? designMoves.map(m => esc(m.text) + (m.placement ? ' — ' + esc(m.placement) : '')).join('.<br>') + '.' : 'Group related decisions together; prevent errors at the point of choice, not at save.'}</p>
+
+    <h3>Plan B — if the constraint holds</h3>
+    <p>Every message above still lands, placed within the existing flow. And the honored constraint gets logged — that's the UXer's job, not a courtesy:</p>
+    ${defects.length ? defects.map(name => {
+      const h = heurByName.find(x => x.name === name);
+      return `<p><strong>${esc(name)}</strong> — ${esc(h ? h.impact : '')} Log as a major UX defect.</p>`;
+    }).join('') : '<p class="note">No heuristics selected yet — pick them in the conversation.</p>'}
+    ` : `
+    <h3>Plan</h3>
+    <p>No contested constraints — one plan. Messages above, placed as marked.</p>
+    `}
+
+    <h3>Risks — screens not seen</h3>
+    <p>${sl.screensSkipped ? 'Screens were not provided. Every recommendation about unseen screens is a guess wearing a recommendation.' : (sl.screens.length ? 'Screens reviewed: ' + esc(sl.screens.map(s => s.name).join(', ')) + '.' : 'No screens attached.')}</p>
+
+    <h3>Open questions</h3>
+    <p class="note">This strategy went through Alpha — a process, not an approval. It ships with its open questions:
+    ${sl.stuckPoints && /don’t know|don't know/i.test(sl.stuckPoints) ? 'Where users actually get stuck is unverified. ' : ''}
+    ${sl.clientsImpacted === 'We don’t know yet' ? 'Impacted client count unknown. ' : ''}
+    Verify placements against the real screens before writing final copy.</p>
+  `;
+  $('#strategyView').hidden = false;
+  save();
+}
+
+/* ---------- wiring ---------- */
+$('#sendBtn').addEventListener('click', () => {
+  const v = $('#input').value;
+  if (pending && pending.ask().multi && multiSel.length) {
+    const all = [...multiSel, ...(v.trim() ? [v.trim()] : [])].join(', ');
+    multiSel = [];
+    $('#input').value = '';
+    submitReply(all);
+  } else {
+    $('#input').value = '';
+    submitReply(v);
+  }
+});
+$('#input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey && $('#input').rows === 1) {
+    e.preventDefault();
+    $('#sendBtn').click();
+  }
+});
+$('#attachBtn').addEventListener('click', () => $('#fileInput').click());
+$('#fileInput').addEventListener('change', () => {
+  const files = [...$('#fileInput').files];
+  files.forEach(f => {
+    S.slots.screens.push({ name: f.name });
+    const reader = new FileReader();
+    reader.onload = () => {
+      userSay('<p>' + esc(f.name) + '</p><img src="' + reader.result + '" alt="Attached screen: ' + esc(f.name) + '">');
+      render(); save();
+    };
+    reader.readAsDataURL(f);
+  });
+  $('#fileInput').value = '';
+});
+$('#closeStrategy').addEventListener('click', () => { $('#strategyView').hidden = true; });
+
+/* ---------- start ---------- */
+if (S.turns.length === 0) {
+  coachSay('<p>Hi — I’m Alpha. Before any copy gets written, we figure out what actually needs to be said, to whom, and where. The brief on the right fills in as we talk. Correct me any time — challenge the assumption, not the response.</p>');
+}
+advance();
+</script>
+</body>
+</html>
