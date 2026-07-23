@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design artifacts — tax registration</title>
+<style>
+  :root {
+    --white: #ffffff;
+    --slate-bg: #f8f9fa;
+    --slate-mid: #475569;
+    --slate-dark: #1e293b;
+    --stroke: #e2e8f0;
+    --diagram: #64748b;
+    --purple: #6B4C9A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Inter, 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 18px; line-height: 1.6; color: var(--slate-dark); background: var(--white);
+    padding: 32px 24px;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 48px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  h2 { font-size: 32px; font-weight: 700; line-height: 1.3; margin: 32px 0 8px; }
+  h3 { font-size: 24px; font-weight: 600; line-height: 1.3; margin: 32px 0 8px; }
+  .subhead { font-size: 20px; font-weight: 600; color: var(--purple); line-height: 1.3; margin: 32px 0 8px; }
+  p { max-width: 75ch; margin-bottom: 16px; }
+  .lede { color: var(--slate-mid); }
+  .small { font-size: 16px; line-height: 1.5; color: var(--slate-mid); }
+  .tag {
+    display: inline-block; font-size: 16px; color: var(--purple);
+    border: 1px solid var(--purple); border-radius: 4px; padding: 0 8px; margin-bottom: 16px;
+  }
+
+  /* mock chrome */
+  .mock { border: 1px solid var(--stroke); border-radius: 4px; margin-bottom: 16px; }
+  .mock-label {
+    font-size: 16px; font-weight: 600; padding: 8px 16px;
+    border-bottom: 1px solid var(--stroke); background: var(--slate-bg);
+  }
+  .mock-body { padding: 24px; }
+  .mock-title { font-size: 24px; font-weight: 600; line-height: 1.3; }
+  .mock-sub { font-size: 16px; color: var(--slate-mid); margin-bottom: 24px; }
+
+  .radio-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 16px; }
+  .radio-dot {
+    width: 16px; height: 16px; border: 1px solid var(--diagram); border-radius: 50%;
+    flex: none; margin-top: 4px;
+  }
+  .radio-dot.on { border: 5px solid var(--slate-dark); }
+  .radio-label { font-size: 18px; }
+  .radio-desc { font-size: 16px; color: var(--slate-mid); }
+
+  .q { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+
+  /* comparison */
+  .compare { display: grid; grid-template-columns: 120px 1fr 1fr; border-top: 1px solid var(--stroke); }
+  .compare > div { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--stroke); font-size: 16px; }
+  .compare .rowlabel { color: var(--slate-mid); }
+  .compare .head { font-size: 18px; font-weight: 600; padding-top: 24px; }
+  .compare .price { font-size: 24px; font-weight: 700; }
+  .badge {
+    display: inline-block; font-size: 13px; color: var(--purple);
+    border: 1px solid var(--purple); border-radius: 4px; padding: 0 8px; margin-top: 4px;
+  }
+  .choose { padding-top: 16px; }
+
+  .callout {
+    border-left: 3px solid var(--purple); padding: 0 0 0 20px; margin: 32px 0;
+  }
+  .callout .lbl { font-size: 16px; font-weight: 600; color: var(--purple); }
+  .callout .txt { font-size: 20px; font-weight: 600; }
+
+  .note-bar {
+    background: var(--slate-bg); border: 1px solid var(--stroke);
+    padding: 16px; font-size: 16px; margin-bottom: 24px;
+  }
+  .note-bar strong { display: block; }
+
+  .steps { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 16px; margin-bottom: 24px; color: var(--slate-mid); }
+  .steps .now { color: var(--slate-dark); font-weight: 600; }
+
+  table.map { border-collapse: collapse; width: 100%; font-size: 16px; }
+  table.map th, table.map td { text-align: left; padding: 8px 24px 8px 0; border-bottom: 1px solid var(--stroke); vertical-align: top; }
+  table.map th { font-weight: 600; }
+
+  svg { max-width: 100%; height: auto; display: block; background: var(--slate-bg); border: 1px solid var(--stroke); }
+  figcaption { font-size: 16px; color: var(--slate-mid); margin-top: 8px; }
+  figure { margin: 0 0 32px; }
+
+  .two { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  .mock.narrow { max-width: 480px; }
+  @media (max-width: 760px) {
+    .compare { grid-template-columns: 1fr; }
+    .compare .rowlabel { padding-bottom: 0; border-bottom: none; font-weight: 600; }
+    .compare > div { padding-right: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="tag">Alpha · design artifacts</span>
+<h1>Tax registration</h1>
+<p class="lede">What the coach produces alongside the strategy document: the recommended screen, the message-state model, and a placement map. Product and partner names are generic here — swap them for internal use.</p>
+
+<h2>Artifact 1 — the choice screen</h2>
+<p>The current screen asks the user to choose between two options while hiding what each one costs and involves. Both facts sit one screen deeper, behind the choice itself.</p>
+
+<div class="two">
+  <div class="mock narrow">
+    <div class="mock-label">Today</div>
+    <div class="mock-body">
+      <div class="mock-title">Registration guide</div>
+      <div class="mock-sub">State revenue department</div>
+      <div class="q">How do you want to apply?</div>
+      <div class="radio-row">
+        <span class="radio-dot"></span>
+        <span>
+          <span class="radio-label">With a partner service</span><br>
+          <span class="radio-desc">Prevent mistakes and pay a fee to have our partner service apply for you.</span>
+        </span>
+      </div>
+      <div class="radio-row">
+        <span class="radio-dot"></span>
+        <span>
+          <span class="radio-label">With instructions</span><br>
+          <span class="radio-desc">Use one of our guides to apply on your own.</span>
+        </span>
+      </div>
+      <p class="small" style="margin-top:24px;">Next: Instructions</p>
+    </div>
+  </div>
+
+  <div class="mock">
+    <div class="mock-label">Recommended</div>
+    <div class="mock-body">
+      <div class="mock-title">Registration guide</div>
+      <div class="mock-sub">State revenue department</div>
+
+      <div class="note-bar">
+        <strong>Tax agencies require the employer to register.</strong>
+        We're not permitted to do this one for you. Until it's done, we can't file or pay this agency.
+      </div>
+
+      <div class="steps">
+        <span class="now">1. Register</span> →
+        <span>2. Turn on auto-file</span> →
+        <span>3. Assign us as your agent</span>
+      </div>
+
+      <div class="q">How do you want to apply?</div>
+      <div class="compare">
+        <div class="rowlabel"></div>
+        <div class="head">With a partner service <span class="badge">most companies choose this</span></div>
+        <div class="head">On your own</div>
+
+        <div class="rowlabel">Cost</div>
+        <div><span class="price">$150</span><br><span class="small">per registration · this agency needs 1</span></div>
+        <div><span class="price">Free</span></div>
+
+        <div class="rowlabel">You do</div>
+        <div>Answer their questions in plain English.</div>
+        <div>Gather your EIN, entity type, owner's SSN, bank details, and more — then apply on the agency's site.</div>
+
+        <div class="rowlabel">Time</div>
+        <div>About a day to get your ID back.</div>
+        <div>About 75 minutes, usually across several sessions while you wait on the agency.</div>
+
+        <div class="rowlabel">Also</div>
+        <div>Sets your Workers' Comp rate correctly.</div>
+        <div>—</div>
+
+        <div class="rowlabel"></div>
+        <div class="choose"><span class="radio-row"><span class="radio-dot"></span><span class="radio-label">Choose this</span></span></div>
+        <div class="choose"><span class="radio-row"><span class="radio-dot"></span><span class="radio-label">Choose this</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="lbl">Key insight</div>
+  <div class="txt">Nothing here persuades. The comparison was always the argument — it was just hidden behind the choice it was supposed to inform.</div>
+</div>
+
+<p class="small">Reuses the two-column comparison already built for the auto-file accept/decline screen. Neither option is pre-selected: the paid option benefits the business, so pre-choosing it is a deceptive pattern. The popularity badge is only usable while it stays true, with an owner and a review date.</p>
+
+<h2>Artifact 2 — message states</h2>
+<p>The dashboard alert is the loudest cue in the product, and today it clears when the ID is added — while the user is still two steps from being able to have taxes filed. The fix isn't to make it persistent. It's to make it accurate.</p>
+
+<figure>
+<svg viewBox="0 0 920 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four message states: action needed, quiet while the partner works, action needed again, and done.">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <g font-family="Inter, sans-serif" font-size="14" fill="#1e293b">
+
+    <rect x="16" y="40" width="190" height="96" fill="#ffffff" stroke="#64748b"/>
+    <text x="32" y="68" font-size="15" font-weight="600">1 · Not registered</text>
+    <text x="32" y="92" fill="#475569">Dashboard shows:</text>
+    <text x="32" y="112" font-weight="600">Register with this agency</text>
+
+    <line x1="206" y1="88" x2="242" y2="88" stroke="#64748b" marker-end="url(#ar)"/>
+
+    <rect x="244" y="40" width="190" height="96" fill="#f8f9fa" stroke="#64748b" stroke-dasharray="4 3"/>
+    <text x="260" y="68" font-size="15" font-weight="600">2 · Partner working</text>
+    <text x="260" y="92" fill="#475569">No action possible.</text>
+    <text x="260" y="112" font-weight="600">Quiet — about a day</text>
+
+    <line x1="434" y1="88" x2="470" y2="88" stroke="#64748b" marker-end="url(#ar)"/>
+
+    <rect x="472" y="40" width="200" height="96" fill="#ffffff" stroke="#64748b"/>
+    <text x="488" y="68" font-size="15" font-weight="600">3 · ID received</text>
+    <text x="488" y="92" fill="#475569">Alert returns, worded</text>
+    <text x="488" y="112" font-weight="600">for what this agency needs</text>
+
+    <line x1="672" y1="88" x2="708" y2="88" stroke="#64748b" marker-end="url(#ar)"/>
+
+    <rect x="710" y="40" width="190" height="96" fill="#ffffff" stroke="#64748b"/>
+    <text x="726" y="68" font-size="15" font-weight="600">4 · Agent assigned</text>
+    <text x="726" y="92" fill="#475569">Nothing owed.</text>
+    <text x="726" y="112" font-weight="600">Alert clears for real</text>
+
+    <line x1="472" y1="150" x2="472" y2="176" stroke="#64748b"/>
+    <line x1="672" y1="150" x2="672" y2="176" stroke="#64748b"/>
+    <line x1="472" y1="176" x2="672" y2="176" stroke="#64748b"/>
+    <text x="488" y="204" fill="#475569">Two variants only:</text>
+    <text x="488" y="226" font-weight="600">"Submit a signed form"</text>
+    <text x="488" y="248" font-weight="600">"Assign us at the agency site"</text>
+
+    <text x="16" y="204" fill="#475569">Today the alert clears here —</text>
+    <text x="16" y="226" fill="#6B4C9A" font-weight="600">at the exact moment users</text>
+    <text x="16" y="248" fill="#6B4C9A" font-weight="600">feel finished and aren't.</text>
+    <line x1="244" y1="196" x2="330" y2="150" stroke="#6B4C9A" marker-end="url(#ar)"/>
+  </g>
+</svg>
+<figcaption>State 2 is why "keep the alert up until everything's done" is the wrong fix — it would nag for something the user cannot do. Reuses the four-step tracker already built for auto-file setup.</figcaption>
+</figure>
+
+<h2>Artifact 3 — placement map</h2>
+<table class="map">
+  <tr><th>Message</th><th>Verdict</th><th>Where it goes</th></tr>
+  <tr><td>Agencies require the employer to register — we're not permitted to</td><td>Critical</td><td>Above the choice</td></tr>
+  <tr><td>We can't file or pay this agency until setup is done</td><td>Critical</td><td>Above the choice</td></tr>
+  <tr><td>Step 1 of 3</td><td>Critical — non-verbal cue</td><td>Progress indicator</td></tr>
+  <tr><td>$150 per registration, count for this agency</td><td>Critical</td><td>Comparison, cost row</td></tr>
+  <tr><td>What you'd gather yourself</td><td>Critical</td><td>Comparison, "you do" row</td></tr>
+  <tr><td>Timing on both paths</td><td>Very helpful</td><td>Comparison, time row</td></tr>
+  <tr><td>Sets your Workers' Comp correctly</td><td>Very helpful</td><td>Comparison, "also" row</td></tr>
+  <tr><td>Next step after the ID arrives</td><td>Critical — conditional</td><td>Dashboard, state 3</td></tr>
+  <tr><td style="text-decoration:line-through;color:var(--slate-mid);">Prevent mistakes and pay a fee</td><td>Cut</td><td>Vague claim, hidden cost</td></tr>
+  <tr><td style="text-decoration:line-through;color:var(--slate-mid);">"Next: Instructions" before a choice</td><td>Cut</td><td>Presumes an unpicked path</td></tr>
+</table>
+
+<p class="small" style="margin-top:32px;">Went through Alpha — a process, not an approval. Open questions travel with it: whether the unregistered-agency count decrements, and how the authorization mechanism varies past the two known variants.</p>
+
+</div>
+</body>
+</html>

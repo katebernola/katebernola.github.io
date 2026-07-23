@@ -64,9 +64,14 @@ Not linked / not pushed:
 - **Icons are placeholders** (person, chat bubbles, bot). Kate likes them and may supply real ones.
 - Open: whether the iteration property (re-enter at any step) reads well as a sentence under the diagram, or needs a visual device.
 
+**Second case walked end to end (2026-07-22) — tax registration / partner upsell**
+- Produced the strategy doc in-chat plus **`tax-registration-artifacts.html`**: recommended choice screen (before/after), message-state diagram, placement map. This is the "content design → UI plan" leg of `agent-flow.svg` made concrete — first time the tool has produced design artifacts rather than prose.
+- **New rules encoded:** preselection taxonomy (defensible-defaults v3 — *preselection is only a problem when it's part of a deceptive pattern that benefits the business rather than the user*) · `DECEPTIVE_PATTERNS` named library in rules.js · `heuristics/propagate-existing-patterns.md` · `heuristics/state-aware-messaging.md` · "can't judge a fork without seeing both branches" (book 04) · stay-apolitical (book 14).
+- **Still to write: `patterns/tax-registration.md`** — the flagship case file. Richer than the mid-period case for showing judgment (regulatory constraint, hidden per-registration pricing, comparison prevention, a legal ruling mid-review).
+
 **Blocked on Kate**
 - **Screenshot files** for the mid-period case study — the images pasted in chat need saving as files, then redacting (crop client headers, blur product name) before they can ship.
-- **The real brief schema** — the flow shows overview/objective/persona/workflow/usage data; confirm that's right rather than invented.
+- **Redaction rule, standing:** never publish product screenshots unredacted. Tax-case sources are in `Desktop/Kate working file/Middesk/` — outside the repo, keep it that way.
 - **Display the Browser pane** — screenshot verification has been impossible all session ("the Browser pane is not displayed, so the page is not compositing frames"). Everything is verified geometrically but unseen.
 
 **Story framing (agreed)** — three beats: 1. everything was a mess (the scattered-piles visual already in `index.html`) → 2. we organized the knowledge and built a reasoning machine (`agent-ia-map.svg` + `agent-flow.svg`) → 3. everyone used it (adoption artifact not built).

@@ -99,6 +99,7 @@ The steps, in order:
 
 - If you need three communication goals, you have two messages pretending to be one.
 - If everything gets cut at step 8, the honest answer may be that this moment needs no copy.
+- **You can't judge a fork without seeing both branches.** If a screen offers a choice, the workflow isn't captured until every path is captured through to its end state. Reasoning about a two-option screen from that screen alone produced two wrong conclusions in the tax registration review: the option labels implied "we do it" vs. "you do it" when both led to instructions, and the strongest argument for the paid path turned out to be sitting on the page you only reach by declining it. Ask for the whole workflow, both branches, every time.
 
 ## Common mistakes
 

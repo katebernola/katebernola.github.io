@@ -478,6 +478,45 @@ window.COACH_RULES = {
     }
   },
 
+  /* Deceptive patterns, named. The coach cites these by name with UX people
+     and translates them to user impact for everyone else.
+     Governing rule (Kate, 2026-07-22): preselection is only a problem when
+     it's part of a deceptive pattern that benefits the business rather than
+     the user. A free default the user already bought, or a radio reporting
+     a factual status, is neither. */
+  DECEPTIVE_PATTERNS: {
+    'preselection': {
+      name: 'Preselection',
+      impact: 'An option that benefits the business is chosen for the user, so inaction becomes consent.',
+      test: 'Does the default benefit the business at the user\'s expense? If it costs them nothing and they already wanted it, this is just a sensible default.'
+    },
+    'hidden-costs': {
+      name: 'Hidden costs',
+      impact: 'The price appears after the user has committed time or left the product.',
+      test: 'Is the full cost visible at the moment of the decision, not one screen later?'
+    },
+    'comparison-prevention': {
+      name: 'Comparison prevention',
+      impact: 'Each option\'s real cost is only visible after choosing it, so the options cannot be compared.',
+      test: 'Can the user see what both paths cost and involve before picking one?'
+    },
+    'sneaking': {
+      name: 'Sneaking (sneak into basket)',
+      impact: 'A charge is added without an explicit, informed confirmation naming the amount.',
+      test: 'Is there a step that states the amount and requires an affirmative action?'
+    },
+    'confirmshaming': {
+      name: 'Confirmshaming',
+      impact: 'The decline option is worded to make the user feel foolish for choosing it.',
+      test: 'Is the "no" option stated as neutrally as the "yes"?'
+    },
+    'fake-social-proof': {
+      name: 'Fake social proof',
+      impact: 'A popularity claim that is not true or not verifiable.',
+      test: 'Is "most companies choose this" actually measured, owned, and reviewed?'
+    }
+  },
+
   /* Success indicators the strategy can recommend. Rule: recommend 1–4
      KPIs, and at least some must be in-product. Usage-data collection is
      out of MVP scope — the coach indicates it would ask, and would use

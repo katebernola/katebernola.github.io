@@ -21,6 +21,7 @@ How the product sounds. Borrowed from public best-in-class systems until interna
 - At most one exclamation mark per page, for genuinely exciting content. *(source: Polaris grammar)*
 - Prefer "your" over "my" in UI labels. *(source: Intuit word list)*
 - Avoid "easy," "simple," "just," "only," "quick" in instructions — they discourage anyone who's struggling, and ease is subjective. *(sources: Polaris inclusive language; Intuit word list)*
+- **Stay apolitical.** Watch for anything carrying political charge — contested holiday names, place names, loaded terminology — and take the neutral framing. Name a thing by the part the user needs: a payroll calendar's job is "banks are closed," not settling whose holiday it is. Picking either side of a contested name upsets half the audience and helps no one finish their task.
 
 ## Decision heuristics
 
@@ -35,6 +36,7 @@ How the product sounds. Borrowed from public best-in-class systems until interna
 ## Examples
 
 - "Your other files are safe" — fact-based reassurance in the user's terms. See `../examples/before-after/upload-error.md`.
+- A tax calendar listed "Indigenous Peoples' Day (Columbus Day)." Both names are contested, and neither is what the reader needs. "Bank holiday" is the fact the payroll user came for.
 
 ## Counterexamples
 

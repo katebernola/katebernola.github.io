@@ -77,6 +77,17 @@ Reason: an unexplained default is a sale wearing a suggestion's clothes. Verifia
 Strengthened: "show the real charge" is not enough. The real charge must be the **most prominent number in the visual hierarchy** — a per-period teaser price never outranks it in size, weight, or position.
 Reason: a real charge that's technically present but visually outshouted still deceives. Hierarchy is part of the claim.
 
+**v3 — 2026-07-22**
+Preselection sorted into three things that were wearing one name. The governing rule, in Kate's words: **preselection is only a problem when it's part of a deceptive pattern that benefits the business rather than the user.**
+
+| What it is | Example | Verdict |
+|---|---|---|
+| A paid option pre-chosen for the user | A paid registration partner, $150 per registration, pre-selected | Deceptive pattern. Prohibited — legal confirmed |
+| A free option the user already bought and wants | "Yes, accept service" on an auto-file service already included in their subscription | Not a preselection in the meaningful sense. No disclosure owed |
+| A radio reporting a factual status | "No, not yet" on *Have you finished the authorization steps?* | Not a default at all — a status field wearing a radio button |
+
+Reason: an earlier draft of this review flagged "inconsistent preselection" across these three and proposed a blanket consistency rule. That was wrong — it flattened a prohibited pattern, a sensible default, and a status report into one category. The test is who benefits, not whether the dot is filled in. Named patterns: `rules.js → DECEPTIVE_PATTERNS`.
+
 ### Decision: title + button tell one story
 
 **v1 — 2026-07-18**
