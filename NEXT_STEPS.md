@@ -44,12 +44,15 @@ Not linked / not pushed:
 0b. **Quote campaign.** Kate asks colleagues for attributed quotes (with permission to link LinkedIn profiles). One specific moment per person, not adjectives. Role → theme map: content designer (teaching content design), direct report (manager), IC (mentor), product partner (partnership), multimedia designer (craft + unblocking), peer (collaboration), **product design lead (design judgment in critique — highest-value quote, get first)**, former designer (unblocking, change management, leveling up). Claude to draft the ask-message template on request.
 0c. **"Why you should hire Kate" fun page.** Deliberate gameshow/casino pastiche: random quote/stat/fact machine + personality + live proof of AI-assisted building. Guardrails agreed: side-door link from Me with self-aware label; one on-page framing line ("built with AI in an afternoon; yes, it's supposed to look like this"); randomizer backed by a scannable full list; strongest quotes ALSO woven into My team. Full-commitment execution (marquee typography, real slot interaction) — no halfway cheese.
 
-1. **Design systems: creation (step 3) + adoption (step 4).** Kate can speak to this directly. Weave the creation story into step 3 and the adoption story (advised across 90 designs / 100+ teams) into step 4. **Top of the list.**
-2. **"How I hire and grow" — the practice-build case study.** Kate's favorite; fills the people-building gap the retirement study leaves. Source: the "How I Did It" doc + the interview-question set handed off this session. Needs a non–Great-Resignation framing for why the team collapsed to one person before it can open.
-3. **Flex Assistant content governance (70% → 90% accuracy).** Kate happy to add. "Content design is the input to AI accuracy" — timely. Needs: what was measured, by whom, and what content change moved the number.
-4. ~~Step 2 visual~~ — done; the retirement cross-sell case study (with the redrawn left-nav wireframe) now lives inline in Step 2.
-5. **Step 4 principle line** — still missing; breaks the four-step template. Needs one line in Kate's voice.
-6. **Fill step 3 placeholder visuals** — operating model, knowledge architecture, annotated AI conversation, notification architecture.
+**Portfolio is now four-step playbook plus case studies.** Steps 1-3 live with inline case studies (Help Center, retirement cross-sell, AI content design coach). Step 4 complete with principle line.
+
+1. **Design systems: weave creation (step 3) + adoption (step 4) narratives.** Kate owns scoping and copy. The portfolio has the framework; she can speak to this directly. "Advised across 90 designs / 100+ teams" is the adoption story; the creation story is hers to tell.
+
+2. **Flex Assistant content governance (70% → 90% accuracy).** Kate happy to add. "Content design is the input to AI accuracy" frames it. Needs: what was measured, by whom, and what content change moved the number.
+
+3. ~~**Mid-period rate change. Second flagship case pattern.**~~ Done (2026-07-22). Screenshots in `Kate working file / mid-period rate change/`. Pattern file at `ai-communication-coach/patterns/mid-period-rate-change.md`. The case is already in decisions/books/09-decision-library.md (v1: bad requirements get an alternate plan).
+
+4. **Stories bank (deep dives index).** Flex Assistant, PPP calculator, in-app governance. Shorter pieces that don't fit the four-step playbook; need a linked index on the homepage. Low priority.
 
 ## AI communication coach (Alpha)
 
