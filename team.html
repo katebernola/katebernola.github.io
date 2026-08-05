@@ -216,6 +216,31 @@
     color: #475569;
   }
 
+  .more-quotes > summary {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .more-quotes > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .more-quotes > summary:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  .more-quotes[open] > summary {
+    margin-bottom: 64px;
+  }
+
   a:focus-visible,
   summary:focus-visible {
     outline: 2px solid #1e293b;
@@ -330,13 +355,36 @@
     </blockquote>
 
     <blockquote>
-      <p>"Kate is a fantastic leader who not only truly cares about the quality of deliverables, but also the people behind the deliverables. From crucial conversations to content strategy, Kate was an incredible boss and mentor."</p>
-      <footer>&mdash; <a href="https://www.linkedin.com/in/bekka-burton/">Bekka</a>, senior content designer</footer>
+      <p>"Kate is one of the strongest advocates for user-centered design I've ever met. She revamped our change management approach and redefined how we tackle in-app communication. Her greatest skill is bringing the right people together: she makes sure UX has a voice in important decisions, and challenges us to define outcomes. She's curious, and she's a creative problem solver."</p>
+      <footer>&mdash; <a href="https://www.linkedin.com/in/danielpascalewd/">Daniel</a>, UX designer</footer>
+    </blockquote>
+
+    <details class="more-quotes">
+      <summary>See more quotes</summary>
+
+      <blockquote>
+        <p>"Kate is a fantastic leader who not only truly cares about the quality of deliverables, but also the people behind the deliverables. From crucial conversations to content strategy, Kate was an incredible boss and mentor."</p>
+        <footer>&mdash; <a href="https://www.linkedin.com/in/bekka-burton/">Bekka</a>, senior content designer</footer>
+      </blockquote>
+
+      <blockquote>
+        <p>"She constantly encouraged me to take on new challenges and advocated for my professional growth... Kate fostered a supportive and open environment where ideas mattered more than hierarchy. Her mentorship will have a lasting impact on my career."</p>
+        <footer>&mdash; <a href="https://www.linkedin.com/in/gina-iannitelli/">Gina</a>, content designer II</footer>
+      </blockquote>
+    </details>
+  </section>
+
+  <section>
+    <h2>What my partners say</h2>
+
+    <blockquote>
+      <p>"In the five years I partnered with Kate, she provided more than just content. Her focus was on making the product better in any way she could: advocating for better user experiences, leading the charge to deprecate redundant workflows, and being a sounding board and trusted partner for the new features I delivered. I could always count on her insights and opinions to help drive the product forward."</p>
+      <footer>&mdash; <a href="https://www.linkedin.com/in/brandon-wright-ba966b144">Brandon</a>, senior product owner</footer>
     </blockquote>
 
     <blockquote>
-      <p>"She constantly encouraged me to take on new challenges and advocated for my professional growth... Kate fostered a supportive and open environment where ideas mattered more than hierarchy. Her mentorship will have a lasting impact on my career."</p>
-      <footer>&mdash; <a href="https://www.linkedin.com/in/gina-iannitelli/">Gina</a>, content designer II</footer>
+      <p>"Kate is a fantastic design partner!... [She] helped us build exceptional solutions that had high adoption rates with our users."</p>
+      <footer>&mdash; <a href="https://www.linkedin.com/in/adrian-chavez-3416666">Adrian</a>, senior product owner</footer>
     </blockquote>
   </section>
 
