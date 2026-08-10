@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate Bernola resume, comprehensive</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #1B3A5C;
+    --accent:    #2A6496;
+    --sidebar:   #EEF4F9;
+    --text:      #1A1A1A;
+    --muted:     #5A6474;
+    --light:     #F7FAFD;
+    --page-w:    8.5in;
+    --margin:    0.5in;
+    --sidebar-w: 2.3in;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: var(--text);
+    background: #c8c8c8;
+  }
+
+  .page {
+    width: var(--page-w);
+    height: 11in;
+    background: white;
+    margin: 0.5in auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+
+  /* ── Name bar ── */
+  .name-bar {
+    background: var(--navy);
+    padding: 0.38in var(--margin) 0.24in;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2in;
+    flex-shrink: 0;
+  }
+  .name-bar h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24pt;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .name-bar .tagline {
+    font-size: 13pt;
+    font-weight: 300;
+    color: #C8DCF0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Contact strip ── */
+  .contact-strip {
+    background: var(--accent);
+    padding: 0.06in var(--margin);
+    display: flex;
+    gap: 0.14in;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .contact-strip span, .contact-strip a {
+    color: #fff;
+    font-size: 9.5pt;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .contact-strip a:hover { text-decoration: underline; }
+  .contact-strip .sep { color: rgba(255,255,255,0.4); }
+
+  /* ── Page 2 running header ── */
+  .page2-head {
+    background: var(--navy);
+    padding: 0.38in var(--margin) 0.24in;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .page2-head .p2-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24pt;
+    font-weight: 400;
+    line-height: 1;
+    color: #fff;
+  }
+  .page2-head .p2-contact {
+    font-size: 9.5pt;
+    color: #fff;
+  }
+  .page2-head .p2-contact a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .page2-head .p2-contact .sep { color: rgba(255,255,255,0.45); padding: 0 0.05in; }
+  .page2-head a:hover { text-decoration: underline; }
+
+  /* Icons sit optically on the text baseline */
+  .contact-strip svg, .page2-head svg {
+    position: relative;
+    top: 3px;
+  }
+
+  /* Heading tags carry semantics only; all sizing stays with the classes */
+  h1, h2, h3, h4, h5 { font-size: inherit; font-weight: inherit; margin: 0; }
+
+  /* ── Summary bar ── */
+  .summary-bar {
+    background: var(--light);
+    border-bottom: 1.5px solid #C8DCF0;
+    padding: 0.09in var(--margin);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    flex-shrink: 0;
+  }
+  .summary-bar p {
+    font-size: 11pt;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Body layout ── */
+  .body { display: flex; flex: 1; min-height: 0; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--sidebar);
+    padding: 0.2in 0.2in 0.2in 0.5in;
+    border-right: 1.5px solid #C8DCF0;
+  }
+  .side-section { margin-bottom: 0.2in; }
+  .side-heading {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--accent);
+    padding-bottom: 3px;
+    margin-bottom: 0.1in;
+  }
+  .skill-item {
+    font-size: 9.5pt;
+    color: var(--text);
+    margin-top: 8px;
+    line-height: 1.25;
+  }
+  .edu-school {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 4px;
+    line-height: 1.25;
+  }
+  .edu-detail {
+    font-size: 9pt;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.25;
+  }
+
+  /* ── Main column ── */
+  .main {
+    flex: 1;
+    padding: 0.2in var(--margin) 0.2in 0.35in;
+    overflow: hidden;
+  }
+
+  .section-heading {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--accent);
+    padding-bottom: 3px;
+    margin-bottom: 0.12in;
+    margin-top: 0.14in;
+  }
+  .section-heading:first-child { margin-top: 0; }
+
+  .company-block { margin-bottom: 0.14in; }
+  .company-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.04in;
+  }
+  .company-name {
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .company-meta {
+    font-size: 9.5pt;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+
+  .role-block { margin-bottom: 0.1in; }
+  .role-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 0.09in;
+    margin-bottom: 0.03in;
+  }
+  .role-title {
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .role-subtitle {
+    font-size: 9.5pt;
+    color: var(--text);
+    margin-bottom: 0.15in;
+    line-height: 1.25;
+  }
+  .role-dates {
+    font-size: 9pt;
+    white-space: nowrap;
+    margin-left: 0.1in;
+  }
+
+  .role-category {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin: 0.11in 0 0.0in;
+  }
+  .role-block .role-category:first-of-type { margin-top: 0.06in; }
+
+  /* Standard bullets */
+  ul { list-style: none; margin: 0; padding: 0; }
+  ul li {
+    font-size: 9.5pt;
+    color: var(--text);
+    line-height: 1.45;
+    padding: 2px .2in 2px 0.14in;
+    position: relative;
+  }
+  ul li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+    @page { size: letter; margin: 0; }
+    .page { page-break-after: always; }
+  }
+
+
+  /* ── Spotlight ── */
+  .spotlight {
+    background: none;
+    border-left: 1px solid #C8DCF0;
+    padding: 0.06in 0 0.04in 0.13in;
+    margin: 0.11in 0 0.04in;
+  }
+  .spotlight-header {
+    font-size: 9pt;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  .spotlight-subhead {
+    font-size: 10pt;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.0in;
+  }
+  .spotlight p {
+    font-size: 9.5pt;
+    line-height: 1.4;
+    color: var(--text);
+    margin-top: 0.04in;
+  }
+  .spotlight ul.sub { margin: 0.05in 0 0.03in; }
+  .spotlight ul.sub li {
+    font-size: 9.5pt;
+    line-height: 1.4;
+    padding: 1.5px 0 1.5px 0.14in;
+  }
+  .spotlight ul.sub li::before {
+    content: "\2022";
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* ── Awards ── */
+  .award { margin-top: 0.09in; }
+  .award-name {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+  .award-desc {
+    font-size: 9pt;
+    color: var(--muted);
+    line-height: 1.35;
+    font-weight: 300;
+    margin-top: 0.025in;
+    margin-bottom: 0.1in;
+
+  }
+  .award-year {
+    font-size: 9pt;
+    color: var(--navy);
+    line-height: 1.35;
+    margin-top: 0.03in;
+    font-weight: 400;
+  }
+  .award-note {
+    font-size: 9pt;
+    line-height: 1.35;
+    margin-top: 0.16in;
+    color: var(--text);
+  }
+
+  .skill-group { font-size: 8.5pt; font-weight: 700; color: var(--navy); margin-top: 0.13in; margin-bottom: 1px; letter-spacing: 0.02em; }
+  .scope-line { font-size: 9.5pt; color: var(--text); margin: 0.05in 0 0.02in; line-height: 1.35; }
+  .section-heading .cont { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 9pt; color: var(--muted); padding-left: 0.08in; }
+  .earlier-roles { font-size: 9.5pt; color: var(--text); line-height: 1.45; margin-top: 0.14in; padding-top: 0.09in; border-top: 1px solid #E4EDF5; }
+  .earlier-roles a { color: var(--navy); text-decoration: none; }
+  .main { display: flex; flex-direction: column; }
+  .page-footer { text-align: right; font-size: 8.5pt; color: var(--muted); margin-top: auto; padding-top: 0.1in; }
+  .section-heading { color: var(--navy); border-bottom-color: var(--navy); }
+
+  .bank .skill-group { font-size: 8.5pt; font-weight: 700; color: var(--navy); margin-top: 0.11in; margin-bottom: 2px; letter-spacing: 0.02em; text-transform: uppercase; }
+  .bank .skill-item { font-size: 9pt; margin-top: 2px; line-height: 1.2; }
+  .side-note { font-size: 8.5pt; color: var(--muted); line-height: 1.3; margin-top: 0.16in; padding-top: 0.09in; border-top: 1px solid #C8DCF0; }
+
+  ul li a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  ul li a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="name-bar">
+    <h1>Kate Bernola</h1>
+    <span class="tagline">Design leader</span>
+  </div>
+  <div class="contact-strip">
+    <a href="https://katebernola.github.io" target="_blank"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 2h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8c0-1.11.89-2 2-2h4V4c0-1.11.89-2 2-2m4 4V4h-4v2z"/></svg> katebernola.github.io</a><span class="sep">|</span>
+    <span>Rochester, NY or remote</span><span class="sep">|</span>
+    <a href="https://linkedin.com/in/kdbernola" target="_blank">LinkedIn</a><span class="sep">|</span>
+    <a href="mailto:kate.d.bernola@gmail.com">kate.d.bernola@gmail.com</a><span class="sep">|</span>
+    <span>585.469.2324</span>
+  </div>
+  <div class="summary-bar">
+    <p>I build design disciplines where they didn't exist, get them adopted across the organization, and leave teams permanently more capable than I found them.</p>
+  </div>
+  <div class="body">
+    <aside class="sidebar">
+      <div class="side-section">
+        <h2 class="side-heading">Skills</h2>
+        <div class="skill-item">Design leadership</div>
+        <div class="skill-item">People management</div>
+        <div class="skill-item">UX strategy</div>
+        <div class="skill-item">Design system management</div>
+        <div class="skill-item">DesignOps</div>
+        <div class="skill-item">Product design</div>
+        <div class="skill-item">Roadmap planning</div>
+        <div class="skill-item">Change management</div>
+        <div class="skill-item">Governance</div>
+        <div class="skill-item">UX research</div>
+      </div>
+      <div class="side-section">
+        <h2 class="side-heading">Tools</h2>
+        <div class="skill-item">Heap (web analytics)</div><div class="skill-item">Pendo</div>
+        <div class="skill-item">UMUX surveys</div><div class="skill-item">Figma</div>
+        <div class="skill-item">Microsoft Copilot</div><div class="skill-item">Claude</div>
+        <div class="skill-item">LibreChat</div>
+      </div>
+    </aside>
+    <div class="main">
+      <h2 class="section-heading">Experience</h2>
+      <div class="company-block">
+        <div class="company-header"><h3 class="company-name">Paychex</h3><span class="company-meta">2019 &ndash; 2026</span></div>
+        <p class="role-subtitle">I lead through others. These results represent the teams, systems, and culture I built, and what they achieved.</p>
+        <div class="role-block">
+          <div class="role-header"><h4 class="role-title">UX Design Manager, Product Design and Head of Multimedia</h4><span class="role-dates">2024 &ndash; 2026</span></div>
+          <h5 class="role-category">Leadership</h5>
+          <ul>
+            <li>Led 13 designers and 2 researchers across four areas: Tax, Payments, a new accountant platform and its design system, and the multimedia practice. Also wrote strategy and enforced governance across 100+ dev teams.</li>
+             <li>Revised the content design support model to add in Paycor, a newly acquired HCM platform, without adding headcount.</li>
+            <li>Inherited a multimedia team spending half its time on videos that mirrored Help Center articles. Found 95% of those videos would never justify the cost, and stopped the work. Freed $150K a year across the company. <a href="https://katebernola.github.io/index.html#step-1">Details</a></li> 
+           <li>Drove design system adoption across 90 designers, moving the culture from letter of the law to meaning of the law. Owned the design system for the accounting platform, shifting from custom to platform-agnostic. </li>
+          <h5 class="role-category">Platform influence</h5>
+            <li>Rearchitected the illustration system into a new componentized library with a fresh visual style. Our CPO lauded it as a simple shift that modernized the system.</li>
+<li>Moved in-app marketing from prohibited to permitted. Founded a governance board to ensure service, marketing, and Product oversight. Set guardrails. Proposed alternatives for asks that put client relationships at risk.</li>
+<li>The business hid that our app promoted paid benefits to employees, fearing admins would opt out. Piloted disclosure, framing benefits as employer-offered. Under 2% opted out, use was 6.8x vs. the control. Disclosure became standard.
+</li>
+
+     <li>Increased chatbot accuracy from 70% to 90% on key topics. Established ownership, governance, and human-in-the-loop review for AI-authored content.</li>
+          <h5 class="role-category">Results</h5>
+
+<li>Led an in-app marketing campaign for a partner offering that generated $7M in revenue. Achieved 1.9x growth year-over-year. Exceeded revenue goal by 22%.
+</li>                
+<li>Closed a 15-point satisfaction gap on a new AI dashboard. Saw past "you didn't warn me!" complaints to the root cause: a new panel pushed familiar UI below the fold. Shortened the panel, eliminating the complaint.</li>                
+<li>
+
+Merged 4 reporting systems into 1 library, removing the need to search each separately. Developed new interaction patterns for multi-company reports.</li>                
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="page2-head">
+    <span class="p2-name">Kate Bernola</span>
+    <span class="p2-contact"><a href="https://katebernola.github.io" target="_blank"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 2h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8c0-1.11.89-2 2-2h4V4c0-1.11.89-2 2-2m4 4V4h-4v2z"/></svg> katebernola.github.io</a></span>
+  </div>
+  <div class="body">
+    <aside class="sidebar">
+      <div class="side-section">
+        <h2 class="side-heading">Education</h2>
+        <h3 class="edu-school">University of Notre Dame</h3>
+        <div class="edu-detail">BBA, Marketing &amp; Psychology</div>
+        <div class="edu-detail">Magna cum laude, 3.7 GPA</div>
+        <div class="edu-detail">Varsity letters, football &amp; rowing</div>
+      </div>
+      <div class="side-section">
+        <h2 class="side-heading">Awards</h2>
+        <div class="award"><div class="award-name">Brandon Hall gold</div><div class="award-year">2022, Paychex Voice Assist</div><div class="award-desc">Best advance in AI for business impact</div></div>
+        <div class="award"><div class="award-name">Brandon Hall bronze</div><div class="award-year">2022, Retention Insights</div><div class="award-desc">Best advance in HR predictive analytics technology</div></div>
+        <div class="award"><div class="award-name">Silver Stevie</div><div class="award-year">2021, PPP Loan Forgiveness Estimator</div></div>
+        <p class="award-note">My work contributed to these industry awards, plus 26 others.</p>
+      </div>
+    </aside>
+    <div class="main">
+      <h2 class="section-heading">Experience <span class="cont">continued</span></h2>
+
+        <div class="role-block">
+          <div class="role-header"><h4 class="role-title">UX Design Manager, Head of Content Design</h4><span class="role-dates">2021 &ndash; 2024</span></div>
+          <h5 class="role-category">Practice</h5>
+          <ul>
+            <li>Built a content design practice from scratch, growing from 1 employee to 12. Together they supported 40+ product designers across 100+ dev teams.</li>
+            <li>Hired 11 people and personally trained 9 with no prior content design experience, including 2 internal hires. Achieved 75% promotion rate and 92% retention. <a href="https://katebernola.github.io/team.html">Details</a></li>
+            <li>Established and elevated craft through weekly design critiques, 1:1 coaching, mentor pairings, and triannual reviews based on peer feedback.</li>
+            <li>Taught WCAG rules and design for users with reading disorders, low literacy, and neurodivergence, providing evidence-based justification for plain language.</li>
+            <li>After 2.5 years, decentralized the content design team from a shared service to designers embedded in their products. Positioned a senior content designer to lead the community of practice.</li>
+          </ul>
+          <h5 class="role-category">Scale</h5>
+          <ul>
+            <li>Redirected a request for a promotional placement seen by only 8% of users into a persistent navigation solution. Built the prototype without engineering, increasing My Perks visits 3.4× and leading to permanent implementation.</li>
+            <li>Built a new client training platform from the ground up in 3 days. Defined the IA, designed integration points in the existing app, and wrote all site content.</li>
+            <li>Scaled five high-volume content projects while preserving content designer capacity for strategic initiatives. Secured contract resourcing and designed a Product-led review process.</li>
+            <li>Built app-wide UMUX surveys to gather data for product scorecards. Advised researchers on how to choose workflows and triggers.</li>
+          </ul>
+        </div>
+
+
+        <div class="role-block">
+          <div class="role-header"><h4 class="role-title">UX Design Operations Specialist</h4><span class="role-dates">2020 &ndash; 2021</span></div>
+          <ul>
+            <li>Overhauled the content intake process, adding templates and structure. Improved consistency and reduced rework. Managed delivery across 25+ products.</li>
+            <li>Burned down a 6-month content backlog in 2 months by reorganizing the work and cutting low-value requests.</li>
+          </ul>
+        </div>
+        <div class="role-block">
+          <div class="role-header"><h4 class="role-title">UX Content Designer</h4><span class="role-dates">2019 &ndash; 2020</span></div>
+          <ul>
+            <li>Owned all user interface content and supporting documentation for the PPP Loan Forgiveness Estimator. Enabled 500,000 small businesses to secure $65B in funding. The product earned a Silver Stevie.</li>
+            <li>Within 45 days of hire, volunteered to drive the team's Help Center deployment, organizing the work, defining the process, and monitoring completion.</li>
+          </ul>
+        </div>
+      <div class="company-block">
+        <p class="earlier-roles"><span style="color: #666;"><strong>Earlier roles.</strong> From 2008 to 2018, I worked at Xerox. I designed the IA and UX for two Fortune 500 intranets, and drove software adoption across the global workforce.</span></p>
+      </div>
+    </div>
+  </div>
+</div>
