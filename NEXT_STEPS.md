@@ -88,6 +88,7 @@ A small linked index of shorter pieces, so strong-but-off-framework stories have
 - **UI Writing Assistant measurement** — the 100+ hours/week figure needs a method before it's publishable.
 - **Xerox/Conduent separation** — 140K employees, 180 countries; use only if targeting change-management roles.
 - **Retiring the accountant home page** — clean change-management story; needs the treatments + service-call measurement.
+- **Partner Pro change management** — create case study.
 - **Mid-period rate change story** — cut in the redesign; fits step 2 or stands alone.
 
 ## Tooling to weave in (portfolio + resume)
