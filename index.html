@@ -169,14 +169,27 @@
   }
 
   /* Spans the card grid so it reads as a constant across all four phases,
-     not a fifth item in the sequence. */
+     not a fifth item in the sequence. Jumps to the section at the end. */
   .playbook-note {
+    display: block;
     max-width: 600px;
-    margin: 16px 0 32px;
+    margin: 16px 0 0;
     padding-top: 16px;
     border-top: 1px solid #e2e8f0;
     font-size: 16px;
     color: #475569;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .playbook-note:hover {
+    color: #1e293b;
+  }
+
+  /* Same separator as a phase, deliberately without the ghost number. */
+  .craft {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 40px;
   }
 
   .step-card {
@@ -605,15 +618,7 @@
       </a>
     </div>
 
-    <p class="playbook-note">Throughout all four phases: raising craft.</p>
-
-    <h3>Raising craft</h3>
-
-    <p>The framework made room for great work. It didn't teach anyone how to do it.</p>
-
-    <p>My product and multimedia designers arrived with training and experience. My job was to push: identify heuristic gaps in their work, point them to methodologies the problem was asking for, show them how to gather product analytics. It was their job to solve the problem.</p>
-
-    <p>The content designers were different. Nine of the twelve had never done the job before. I hired for aptitude and attitude, then taught them the craft. It wasn't long before their skills surpassed my own.</p>
+    <a class="playbook-note" href="#craft">Throughout all four phases: raising craft <span aria-hidden="true">&rarr;</span></a>
   </section>
 
 <section id="step-1" class="step">
@@ -1355,6 +1360,16 @@
       <p class="ki-label">Key insight</p>
       <p class="ki-text">Leaders can create the conditions for change, but the team has to own it.</p>
     </div>
+  </section>
+
+  <section id="craft" class="craft">
+    <h2>Raising craft</h2>
+
+    <p>The framework made room for great work. It didn't teach anyone how to do it.</p>
+
+    <p>My product and multimedia designers arrived with training and experience. My job was to push: identify heuristic gaps in their work, point them to methodologies the problem was asking for, show them how to gather product analytics. It was their job to solve the problem.</p>
+
+    <p>The content designers were different. Nine of the twelve had never done the job before. I hired for aptitude and attitude, then taught them the craft. It wasn't long before their skills surpassed my own.</p>
   </section>
 
  
