@@ -174,15 +174,22 @@
     display: block;
     max-width: 600px;
     margin: 16px 0 0;
-    padding-top: 16px;
-    border-top: 1px solid #e2e8f0;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 16px;
     font-size: 16px;
     color: #475569;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: border-color 0.2s;
   }
 
   .playbook-note:hover {
+    border-color: #1e293b;
+  }
+
+  /* Mirrors the .step-title / .step-line split inside a card. */
+  .pn-strong {
+    font-weight: 600;
     color: #1e293b;
   }
 
@@ -551,6 +558,9 @@
     .eq-row { grid-template-columns: 1fr; gap: 4px; }
     .eq-result { white-space: normal; }
     .eq-group { grid-template-columns: 1fr; }
+    /* Once stacked, match the standalone .equation cap instead of filling
+       the container. */
+    .eq-group .equation { max-width: 360px; }
     .two-col-list { column-count: 1; }
   }
 
@@ -618,7 +628,7 @@
       </a>
     </div>
 
-    <a class="playbook-note" href="#craft">Throughout all four phases: raising craft <span aria-hidden="true">&rarr;</span></a>
+    <a class="playbook-note" href="#craft">Throughout all four phases: <span class="pn-strong">raising craft</span> <span aria-hidden="true">&rarr;</span></a>
   </section>
 
 <section id="step-1" class="step">
