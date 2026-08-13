@@ -368,6 +368,60 @@
     padding: 2px 32px 2px 0;
   }
 
+  /* Channel map — a wide reference grid that reflows to cards on mobile.
+     Distinct from .roi-table, which is a small borderless comparison. */
+  .channel-map {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 16px 0 0;
+  }
+
+  .channel-map th,
+  .channel-map td {
+    text-align: left;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .channel-map thead th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #64748b;
+    padding-bottom: 8px;
+  }
+
+  .channel-map tbody th {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    width: 19%;
+  }
+
+  .channel-map td { color: #475569; }
+
+  .channel-map .cm-prom { width: 11%; }
+  .channel-map .cm-goal { width: 25%; }
+  .channel-map .cm-use  { width: 22%; }
+  .channel-map .cm-stat { width: 23%; }
+
+  /* four-segment prominence meter; the accessible name lives on the wrapper */
+  .meter { display: flex; gap: 2px; }
+
+  .meter i {
+    display: block;
+    width: 9px;
+    height: 14px;
+    background: #e2e8f0;
+  }
+
+  .meter i.on { background: #1e293b; }
+
+  .meter-label { font-size: 13px; color: #475569; }
+
   .cs-tag {
     display: inline-block;
     font-size: 14px;
@@ -562,6 +616,59 @@
        the container. */
     .eq-group .equation { max-width: 360px; }
     .two-col-list { column-count: 1; }
+
+    /* Channel map reflows from a grid to one card per row. Column headers are
+       hidden from view but kept for screen readers; each cell carries its own
+       label via data-label. */
+    .channel-map,
+    .channel-map tbody,
+    .channel-map th,
+    .channel-map td,
+    .channel-map tr { display: block; }
+
+    .channel-map { width: 100%; max-width: 100%; }
+
+    .channel-map thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .channel-map tbody tr {
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .channel-map tbody th {
+      width: auto;
+      font-size: 17px;
+      padding: 0 0 8px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .channel-map td {
+      border-bottom: none;
+      padding: 6px 0;
+      width: auto;
+    }
+
+    .channel-map td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 2px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -752,6 +859,79 @@
       <p class="cs-label">Defining the channels</p>
 
       <p>Once we could see the patterns, I defined a purpose for each channel. I already owned our communications governance, so that part was quick.</p>
+
+      <div class="visual-figure">
+        <h4>Map for tax communications</h4>
+        <table class="channel-map">
+          <thead>
+            <tr>
+              <th scope="col">Where it shows up</th>
+              <th scope="col" class="cm-prom">Prominence</th>
+              <th scope="col" class="cm-goal">Goal</th>
+              <th scope="col" class="cm-use">Use for</th>
+              <th scope="col" class="cm-stat">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Pop-up after payroll runs</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: very high"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td>
+              <td data-label="Goal">Warn them where they can't miss it</td>
+              <td data-label="Use for">Service-blocking issues that start before their next login</td>
+              <td data-label="Status">Build it</td>
+            </tr>
+            <tr>
+              <th scope="row">Top actions on admin dashboard</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: high"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
+              <td data-label="Goal">Put their most important task first, with the next few beside it</td>
+              <td data-label="Use for">Actions needed to prevent an error or blocked service</td>
+              <td data-label="Status">Expand to all use cases</td>
+            </tr>
+            <tr>
+              <th scope="row">System notifications</th>
+              <td data-label="Prominence"><span class="meter-label">Varies</span></td>
+              <td data-label="Goal">Tell them a system event happened, in the channel they choose: email, push, text, or in-app</td>
+              <td data-label="Use for">System events that require communication</td>
+              <td data-label="Status">No change</td>
+            </tr>
+            <tr>
+              <th scope="row">Weekly summary</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: high"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
+              <td data-label="Goal">Remind them regularly, outside our system</td>
+              <td data-label="Use for">Any open tax task</td>
+              <td data-label="Status">Send as email only, not a system notification</td>
+            </tr>
+            <tr>
+              <th scope="row">Pre-payroll checklist</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: medium"><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+              <td data-label="Goal">Flag big warnings and errors before they submit payroll</td>
+              <td data-label="Use for">Actions needed to keep this payroll accurate</td>
+              <td data-label="Status">Add tax items</td>
+            </tr>
+            <tr>
+              <th scope="row">Tasks list on Tax hub</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: low"><i class="on"></i><i></i><i></i><i></i></span></td>
+              <td data-label="Goal">List each open tax task in full detail</td>
+              <td data-label="Use for">Any open tax task</td>
+              <td data-label="Status">No change</td>
+            </tr>
+            <tr>
+              <th scope="row">Tasks tile on admin dashboard</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: low"><i class="on"></i><i></i><i></i><i></i></span></td>
+              <td data-label="Goal">Show a count of open tasks in one place</td>
+              <td data-label="Use for">Any open tax task</td>
+              <td data-label="Status">Add tax items</td>
+            </tr>
+            <tr>
+              <th scope="row">Other dashboard tiles</th>
+              <td data-label="Prominence"><span class="meter" role="img" aria-label="Prominence: low"><i class="on"></i><i></i><i></i><i></i></span></td>
+              <td data-label="Goal">Show a minor message to someone already using that tile</td>
+              <td data-label="Use for">Nothing in tax today</td>
+              <td data-label="Status">&mdash;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Consistent communication became a main project deliverable. That closed gaps we'd found along the way. Even better, the channel definitions are now being built into a platform-level schema.</p>
 
