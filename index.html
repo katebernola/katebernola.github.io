@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -368,7 +368,7 @@
     padding: 2px 32px 2px 0;
   }
 
-  /* Channel map — a wide reference grid that reflows to cards on mobile.
+  /* Channel map â€” a wide reference grid that reflows to cards on mobile.
      Distinct from .roi-table, which is a small borderless comparison. */
   .channel-map {
     width: 100%;
@@ -777,6 +777,38 @@
     margin-right: 4px;
   }
 
+  /* Appears once the last case study is in view; hidden from tab order until
+     then, since visibility:hidden also removes it from the focus order. */
+  .to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: #f8f9fa;
+    color: #475569;
+    font-size: 14px;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .to-top.shown {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .to-top:hover {
+    border-color: #1e293b;
+    color: #1e293b;
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;
@@ -820,6 +852,7 @@
     /* Paired screens stack too; side by side they'd be too small to read. */
     .nk-visual-group { grid-template-columns: 1fr; gap: 16px; }
     .nk-ticket { padding-left: 16px; }
+    .to-top { right: 16px; bottom: 16px; }
     .nk-stat-figure { font-size: 30px; }
 
     /* Channel map reflows from a grid to one card per row. Column headers are
@@ -889,7 +922,7 @@
 
 <main>
 
-  <header class="masthead">
+  <header class="masthead" id="top">
     <h1>Kate <span class="h1-last">Bernola</span></h1>
     <p class="masthead-role">Product design leader</p>
   </header>
@@ -965,17 +998,17 @@
     <div class="eq-group">
       <div class="equation">
         <p class="eq-line">16 hours to create</p>
-        <p class="eq-line"><span class="eq-op">×</span>$120 per resource-hour</p>
+        <p class="eq-line"><span class="eq-op">Ã—</span>$120 per resource-hour</p>
         <p class="eq-answer">$1920 per video</p>
       </div>
       <div class="equation">
         <p class="eq-line">$12 savings per contact avoided</p>
-        <p class="eq-line"><span class="eq-op">×</span>10% chance one view prevents a contact</p>
+        <p class="eq-line"><span class="eq-op">Ã—</span>10% chance one view prevents a contact</p>
         <p class="eq-answer">$1.20 max value per view</p>
       </div>
       <div class="equation">
         <p class="eq-line">$1920 per video</p>
-        <p class="eq-line"><span class="eq-op">÷</span>$1.20 max value per view</p>
+        <p class="eq-line"><span class="eq-op">Ã·</span>$1.20 max value per view</p>
         <p class="eq-answer">1600 views to break even</p>
       </div>
       </div>
@@ -1254,7 +1287,7 @@
         <rect x="592" y="168" width="72" height="4" fill="#e2e8f0"/>
         <rect x="592" y="180" width="58" height="4" fill="#e2e8f0"/>
         <rect x="592" y="192" width="68" height="4" fill="#e2e8f0"/>
-        <text x="580" y="272" font-size="10.5" fill="#475569">Side by side — unrelated</text>
+        <text x="580" y="272" font-size="10.5" fill="#475569">Side by side â€” unrelated</text>
 
         <!-- UX research -->
         <text x="765" y="58" font-size="14" font-weight="700" fill="#1e293b">UX research</text>
@@ -1337,7 +1370,7 @@
 
         <!-- Tribal knowledge -->
         <text x="25" y="655" font-size="16" font-weight="700" fill="#1e293b">Tribal knowledge</text>
-        <text x="25" y="673" font-size="11" fill="#475569">Never documented — lived only in specific people's heads</text>
+        <text x="25" y="673" font-size="11" fill="#475569">Never documented â€” lived only in specific people's heads</text>
         <g stroke="#64748b" stroke-width="1" fill="#ffffff">
           <circle cx="90" cy="700" r="10"/>
           <path d="M77,711 L73,738 L107,738 L103,711 Z"/>
@@ -1460,7 +1493,7 @@
         <line x1="228" y1="554" x2="236" y2="554" stroke="#64748b" stroke-width="1"/>
         <text x="242" y="558" font-size="11" fill="#475569">Hero</text>
         <line x1="228" y1="574" x2="236" y2="574" stroke="#64748b" stroke-width="1"/>
-        <text x="242" y="578" font-size="11" fill="#475569">100×100</text>
+        <text x="242" y="578" font-size="11" fill="#475569">100Ã—100</text>
 
         <line x1="196" y1="594" x2="204" y2="594" stroke="#64748b" stroke-width="1"/>
         <text x="210" y="598" font-size="11.5" font-weight="600" fill="#1e293b">Video</text>
@@ -1507,7 +1540,7 @@
         </g>
         <g font-size="11.5" fill="#475569">
           <text x="650" y="166">Purpose</text>
-          <text x="650" y="186">When to use — and what to use instead</text>
+          <text x="650" y="186">When to use â€” and what to use instead</text>
           <text x="650" y="206">Usage guidance</text>
           <text x="650" y="226">Content standards</text>
           <text x="650" y="246">Reusable content</text>
@@ -1607,11 +1640,11 @@
         <path d="M265,190 H363 L375,202 V333 H265 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
         <path d="M363,190 V202 H375" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="320" y="212" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Brief</text>
-        <text x="277" y="236" font-size="9.5" fill="#475569">· Overview</text>
-        <text x="277" y="251" font-size="9.5" fill="#475569">· Objective</text>
-        <text x="277" y="266" font-size="9.5" fill="#475569">· Persona</text>
-        <text x="277" y="281" font-size="9.5" fill="#475569">· Workflow</text>
-        <text x="277" y="296" font-size="9.5" fill="#475569">· Usage data</text>
+        <text x="277" y="236" font-size="9.5" fill="#475569">Â· Overview</text>
+        <text x="277" y="251" font-size="9.5" fill="#475569">Â· Objective</text>
+        <text x="277" y="266" font-size="9.5" fill="#475569">Â· Persona</text>
+        <text x="277" y="281" font-size="9.5" fill="#475569">Â· Workflow</text>
+        <text x="277" y="296" font-size="9.5" fill="#475569">Â· Usage data</text>
 
         <!-- ===== Strategy (collaborative) ===== -->
         <rect x="445" y="195" width="150" height="76" rx="10" fill="#ffffff" stroke="#6B4C9A" stroke-width="1.5"/>
@@ -1643,14 +1676,14 @@
         <path d="M470,410 H568 L580,422 V553 H470 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
         <path d="M568,410 V422 H580" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="525" y="432" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Plan B</text>
-        <text x="482" y="456" font-size="9.5" fill="#475569">· Holds scope</text>
-        <text x="482" y="471" font-size="9.5" fill="#475569">· Carries UX risk</text>
+        <text x="482" y="456" font-size="9.5" fill="#475569">Â· Holds scope</text>
+        <text x="482" y="471" font-size="9.5" fill="#475569">Â· Carries UX risk</text>
 
         <path d="M365,430 H463 L475,442 V573 H365 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
         <path d="M463,430 V442 H475" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="420" y="452" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Plan A</text>
-        <text x="377" y="476" font-size="9.5" fill="#475569">· Mitigates UX risks</text>
-        <text x="377" y="491" font-size="9.5" fill="#475569">· May add scope</text>
+        <text x="377" y="476" font-size="9.5" fill="#475569">Â· Mitigates UX risks</text>
+        <text x="377" y="491" font-size="9.5" fill="#475569">Â· May add scope</text>
 
         <!-- ===== Decision: P.O. picks a plan ===== -->
         <path d="M170,457 L228,490 L170,523 L112,490 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
@@ -1669,10 +1702,10 @@
         <path d="M310,620 H408 L420,632 V763 H310 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
         <path d="M408,620 V632 H420" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="365" y="642" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">UI plan</text>
-        <text x="322" y="666" font-size="9.5" fill="#475569">· Component</text>
-        <text x="322" y="681" font-size="9.5" fill="#475569">· Copy</text>
-        <text x="322" y="696" font-size="9.5" fill="#475569">· Confidence</text>
-        <text x="322" y="711" font-size="9.5" fill="#475569">· Risks</text>
+        <text x="322" y="666" font-size="9.5" fill="#475569">Â· Component</text>
+        <text x="322" y="681" font-size="9.5" fill="#475569">Â· Copy</text>
+        <text x="322" y="696" font-size="9.5" fill="#475569">Â· Confidence</text>
+        <text x="322" y="711" font-size="9.5" fill="#475569">Â· Risks</text>
 
         <!-- ===== Design execution ===== -->
         <rect x="480" y="652" width="120" height="72" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
@@ -1696,7 +1729,7 @@
         <path d="M665,830 H763 L775,842 V973 H665 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
         <path d="M763,830 V842 H775" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="720" y="852" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Design file</text>
-        <text x="677" y="876" font-size="9.5" fill="#475569">· Submitted for review</text>
+        <text x="677" y="876" font-size="9.5" fill="#475569">Â· Submitted for review</text>
 
         <!-- ===== Monitored post-launch ===== -->
         <rect x="650" y="995" width="140" height="42" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
@@ -1716,14 +1749,14 @@
         <path d="M398,830 V842 H410" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="355" y="850" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Knowledge base</text>
         <text x="355" y="864" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">updates</text>
-        <text x="312" y="888" font-size="9.5" fill="#475569">· To content design</text>
-        <text x="312" y="903" font-size="9.5" fill="#475569">· They approve</text>
+        <text x="312" y="888" font-size="9.5" fill="#475569">Â· To content design</text>
+        <text x="312" y="903" font-size="9.5" fill="#475569">Â· They approve</text>
 
         <path d="M195,850 H293 L305,862 V993 H195 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
         <path d="M293,850 V862 H305" fill="none" stroke="#64748b" stroke-width="1.5"/>
         <text x="250" y="872" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Risks</text>
-        <text x="207" y="896" font-size="9.5" fill="#475569">· To the designer</text>
-        <text x="207" y="911" font-size="9.5" fill="#475569">· Logged in Jira</text>
+        <text x="207" y="896" font-size="9.5" fill="#475569">Â· To the designer</text>
+        <text x="207" y="911" font-size="9.5" fill="#475569">Â· Logged in Jira</text>
 
         <!-- ===== footnotes ===== -->
         <rect x="55" y="1080" width="470" height="124" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
@@ -1819,18 +1852,18 @@
       <p>Here's what they were asking for.</p>
 
       <div class="nk-screen-row">
-        <img src="images/nook/walkthrough-1.png"
+        <img src="images/nook/walkthrough-1.png" width="390" height="808" loading="lazy" decoding="async"
              alt="The walkthrough offer over the Dashboard, headed &quot;Welcome to Nook!&quot;, with Get started and No thanks.">
-        <img src="images/nook/walkthrough-2.png"
+        <img src="images/nook/walkthrough-2.png" width="390" height="808" loading="lazy" decoding="async"
              alt="Step 2 of 6, pointing at the Lease tile on the Dashboard, with a Next button.">
-        <img src="images/nook/walkthrough-3.png"
+        <img src="images/nook/walkthrough-3.png" width="390" height="808" loading="lazy" decoding="async"
              alt="Step 6 of 6, the final step, pointing at Perks in the open menu with an Explore Perks button.">
       </div>
 
       <p>Here's the thing ... we'd had a walkthrough before, so we knew exactly how this would go. About two-thirds of users decided "not for me" and never started. Of those who started, about two-thirds dropped off after the first step. Only 8% saw the final step.</p>
 
       <div class="visual-figure nk-chart">
-        <img src="images/nook/walkthrough-reach.png"
+        <img src="images/nook/walkthrough-reach.jpg" width="1536" height="1024" loading="lazy" decoding="async"
              alt="Walkthrough reach, falling sharply across six steps: 100% saw the walkthrough offer, two-thirds opted out, 35% saw step 1, two-thirds of those dropped off, and 8% saw the last step.">
       </div>
 
@@ -1842,7 +1875,7 @@
 
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-task.png"
+          <img src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
                alt="The Dashboard Tasks tile showing only a count of open tasks, and the task list where Perks appears as one item among several.">
         </div>
         <div class="nk-treatment-body">
@@ -1865,7 +1898,7 @@
 
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-banner.png"
+          <img src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
                alt="A purple promotional banner reading &quot;Check out Perks for exclusive deals&quot; inside the Tasks tile, directly beneath the tile title and above the count of 7 tasks.">
         </div>
         <div class="nk-treatment-body">
@@ -1887,7 +1920,7 @@
 
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-new-open.png"
+          <img src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
                alt="The open menu showing a teal New badge beside Perks.">
         </div>
         <div class="nk-treatment-body">
@@ -1912,7 +1945,7 @@
 
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-popup.png"
+          <img src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
                alt="A pop-up covering the Dashboard at login, headed &quot;Don't miss out!&quot;, promoting limited-time access to Perks with buttons to explore Perks now, be reminded later, or decline.">
         </div>
         <div class="nk-treatment-body">
@@ -1955,7 +1988,7 @@
       <h4 class="cs-label">What if Perks had a permanent place in the app's navigation?</h4>
 
       <div class="visual-figure">
-        <img src="images/nook/bottom-nav-dashboard.png"
+        <img src="images/nook/bottom-nav-dashboard.png" width="390" height="808" loading="lazy" decoding="async"
              alt="The Dashboard with four placeholder links, labelled Link 1 through Link 4, sitting in a rudimentary bottom navigation bar fixed across the foot of the screen.">
       </div>
 
@@ -1987,9 +2020,9 @@
       </ul>
 
       <div class="visual-figure nk-visual-group">
-        <img src="images/nook/experiment-dashboard-nav.png"
+        <img src="images/nook/experiment-dashboard-nav.png" width="390" height="808" loading="lazy" decoding="async"
              alt="The Dashboard with the finished faux bottom navigation showing Dash, Rent, Perks, and Help, with Dash as the active item.">
-        <img src="images/nook/experiment-perks-nav.png"
+        <img src="images/nook/experiment-perks-nav.png" width="390" height="808" loading="lazy" decoding="async"
              alt="The Perks destination showing the same bottom navigation still in place, now with Perks as the active item.">
       </div>
 
@@ -2022,6 +2055,10 @@
  
 </main>
 
+<a class="to-top" href="#top">
+  <span aria-hidden="true">&uarr;</span>Back to top
+</a>
+
 <script>
   (function () {
     var masthead = document.querySelector('.masthead');
@@ -2030,6 +2067,17 @@
       new IntersectionObserver(function (entries) {
         nav.classList.toggle('stuck', !entries[0].isIntersecting);
       }, { threshold: 0 }).observe(masthead);
+    }
+
+    // Reveal "back to top" once the last case study starts, and keep it up
+    // through the end of the page.
+    var toTop = document.querySelector('.to-top');
+    var last = document.querySelector('#craft .case-study');
+    if (toTop && last && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        var e = entries[0];
+        toTop.classList.toggle('shown', e.isIntersecting || e.boundingClientRect.top < 0);
+      }, { threshold: 0 }).observe(last);
     }
   })();
 </script>
