@@ -712,6 +712,95 @@
     margin-bottom: 4px;
   }
 
+  /* Treatment comparison. Reflows to one card per treatment on small screens,
+     the same pattern the channel map uses. */
+  .nk-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin: 24px 0 8px;
+  }
+
+  .nk-matrix th,
+  .nk-matrix td {
+    text-align: left;
+    padding: 14px 12px 14px 0;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .nk-matrix thead th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #64748b;
+    padding-bottom: 8px;
+    vertical-align: bottom;
+  }
+
+  .nk-matrix tbody th {
+    width: 30%;
+    font-weight: 400;
+  }
+
+  .nk-matrix-thumb {
+    display: block;
+    width: 110px;
+    height: auto;
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+    margin-bottom: 8px;
+  }
+
+  .nk-matrix-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 2px;
+  }
+
+  .nk-matrix-status {
+    font-size: 13px;
+    color: #475569;
+    margin: 0;
+  }
+
+  /* Shape and text carry the verdict; colour is only reinforcement. */
+  .nk-yes,
+  .nk-no {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .nk-yes { color: #15803D; }
+  .nk-no  { color: #B91C1C; }
+
+  .nk-detail {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .nk-detail summary {
+    cursor: pointer;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #6B4C9A;
+  }
+
+  .nk-detail summary:focus-visible {
+    outline: 2px solid #1e293b;
+    outline-offset: 4px;
+  }
+
+  .nk-detail .nk-treatment {
+    padding-top: 8px;
+  }
+
+  .nk-detail + .nk-detail .nk-treatment,
+  .nk-detail .nk-treatment {
+    border-top: 0;
+  }
+
   /* Requirements read as a distilled brief. */
   .nk-reqs {
     list-style: none;
@@ -853,6 +942,55 @@
     .nk-visual-group { grid-template-columns: 1fr; gap: 16px; }
     .nk-ticket { padding-left: 16px; }
     .to-top { right: 16px; bottom: 16px; }
+
+    /* Comparison table becomes one card per treatment. Column headers are
+       hidden from view but kept for screen readers; each cell labels itself. */
+    .nk-matrix,
+    .nk-matrix tbody,
+    .nk-matrix th,
+    .nk-matrix td,
+    .nk-matrix tr { display: block; }
+
+    .nk-matrix thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .nk-matrix tbody tr {
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .nk-matrix tbody th {
+      width: auto;
+      padding: 0 0 12px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .nk-matrix td {
+      border-bottom: none;
+      padding: 6px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .nk-matrix td::before {
+      content: attr(data-label);
+      font-size: 14px;
+      color: #475569;
+    }
     .nk-stat-figure { font-size: 30px; }
 
     /* Channel map reflows from a grid to one card per row. Column headers are
@@ -998,17 +1136,17 @@
     <div class="eq-group">
       <div class="equation">
         <p class="eq-line">16 hours to create</p>
-        <p class="eq-line"><span class="eq-op">Ã—</span>$120 per resource-hour</p>
+        <p class="eq-line"><span class="eq-op">×</span>$120 per resource-hour</p>
         <p class="eq-answer">$1920 per video</p>
       </div>
       <div class="equation">
         <p class="eq-line">$12 savings per contact avoided</p>
-        <p class="eq-line"><span class="eq-op">Ã—</span>10% chance one view prevents a contact</p>
+        <p class="eq-line"><span class="eq-op">×</span>10% chance one view prevents a contact</p>
         <p class="eq-answer">$1.20 max value per view</p>
       </div>
       <div class="equation">
         <p class="eq-line">$1920 per video</p>
-        <p class="eq-line"><span class="eq-op">Ã·</span>$1.20 max value per view</p>
+        <p class="eq-line"><span class="eq-op">÷</span>$1.20 max value per view</p>
         <p class="eq-answer">1600 views to break even</p>
       </div>
       </div>
@@ -1493,7 +1631,7 @@
         <line x1="228" y1="554" x2="236" y2="554" stroke="#64748b" stroke-width="1"/>
         <text x="242" y="558" font-size="11" fill="#475569">Hero</text>
         <line x1="228" y1="574" x2="236" y2="574" stroke="#64748b" stroke-width="1"/>
-        <text x="242" y="578" font-size="11" fill="#475569">100Ã—100</text>
+        <text x="242" y="578" font-size="11" fill="#475569">100×100</text>
 
         <line x1="196" y1="594" x2="204" y2="594" stroke="#64748b" stroke-width="1"/>
         <text x="210" y="598" font-size="11.5" font-weight="600" fill="#1e293b">Video</text>
@@ -1873,6 +2011,71 @@
 
       <p>Perks had been a business priority since it launched. But there was no target for what "enough" adoption looked like. Any lift was worth keeping, and the business wanted more.</p>
 
+      <table class="nk-matrix">
+        <caption class="sr-only">The four promotional treatments we tried, measured against what a real solution needed to do.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Treatment</th>
+            <th scope="col">Visible</th>
+            <th scope="col">Persistent</th>
+            <th scope="col">Non-blocking</th>
+            <th scope="col">Matches expectations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <img class="nk-matrix-thumb" src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
+                   alt="The Dashboard Tasks tile showing only a count of open tasks.">
+              <span class="nk-matrix-name">Make it a Task</span>
+              <span class="nk-matrix-status">In production</span>
+            </th>
+            <td data-label="Visible"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td data-label="Persistent"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Non-blocking"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Matches expectations"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <img class="nk-matrix-thumb" src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
+                   alt="A purple promotional banner inside the Tasks tile.">
+              <span class="nk-matrix-name">Add a banner to Tasks</span>
+              <span class="nk-matrix-status">In production &middot; later discontinued</span>
+            </th>
+            <td data-label="Visible"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td data-label="Persistent"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Non-blocking"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Matches expectations"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <img class="nk-matrix-thumb" src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
+                   alt="The open menu showing a teal New badge beside Perks.">
+              <span class="nk-matrix-name">Add a "New" badge</span>
+              <span class="nk-matrix-status">Used at Perks launch</span>
+            </th>
+            <td data-label="Visible"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Persistent"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Non-blocking"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Matches expectations"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <img class="nk-matrix-thumb" src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
+                   alt="A promotional pop-up covering the Dashboard at login.">
+              <span class="nk-matrix-name">Show a pop-up at login</span>
+              <span class="nk-matrix-status">Previously used</span>
+            </th>
+            <td data-label="Visible"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td data-label="Persistent"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td data-label="Non-blocking"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td data-label="Matches expectations"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <details class="nk-detail">
+        <summary>Make it a Task</summary>
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
           <img src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
@@ -1895,7 +2098,10 @@
           </ul>
         </div>
       </div>
+      </details>
 
+      <details class="nk-detail">
+        <summary>Add a banner to Tasks</summary>
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
           <img src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
@@ -1917,7 +2123,10 @@
           </ul>
         </div>
       </div>
+      </details>
 
+      <details class="nk-detail">
+        <summary>Add a "New" badge</summary>
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
           <img src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
@@ -1942,7 +2151,10 @@
           </ul>
         </div>
       </div>
+      </details>
 
+      <details class="nk-detail">
+        <summary>Show a pop-up at login</summary>
       <div class="nk-treatment">
         <div class="nk-treatment-visual">
           <img src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
@@ -1965,6 +2177,7 @@
           </ul>
         </div>
       </div>
+      </details>
 
       <h4 class="cs-label">We don't need to hijack a pattern to get attention</h4>
 
