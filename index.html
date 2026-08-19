@@ -579,6 +579,204 @@
     margin: 0;
   }
 
+  /* Raster screens behave like the existing SVG figures. */
+  .visual-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Every Nook screen is 390px wide. Cap at native size so none upscales,
+     which keeps them all the same width wherever they appear. */
+  #craft .visual-figure img,
+  #craft .nk-treatment-visual img {
+    max-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* A row of screens shown together, sized like every other screen. */
+  .nk-screen-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  /* Grouped screens sit a size down from single screens. */
+  .nk-screen-row img,
+  #craft .nk-screen-row img {
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Intake artifact: a quoted request, marked by a rule rather than a box. */
+  .nk-ticket {
+    border-left: 1px solid #e2e8f0;
+    padding-left: 24px;
+    margin: 24px 0 0;
+    max-width: 75ch;
+  }
+
+  .nk-ticket dt {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px;
+  }
+
+  .nk-ticket dd {
+    font-size: 16px;
+    color: #475569;
+    margin: 0 0 24px;
+  }
+
+  .nk-ticket dd:last-of-type { margin-bottom: 0; }
+
+  /* Treatment row: visual left, evaluation right, never alternating. */
+  .nk-treatment {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    margin: 0;
+    padding: 40px 0;
+  }
+
+  /* A rule between rows so one row's cons don't run into the next screenshot. */
+  .nk-treatment + .nk-treatment {
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .nk-treatment-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Two screens that belong to one treatment stay together. */
+  .nk-visual-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+  }
+
+  .nk-visual-group img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  .nk-treatment-h {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.3;
+    margin: 0 0 4px;
+  }
+
+  .nk-status {
+    font-size: 14px;
+    color: #475569;
+    margin: 0 0 16px;
+    max-width: 75ch;
+  }
+
+  .nk-pc-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 16px 0 4px;
+  }
+
+  .nk-treatment-body ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .nk-treatment-body li {
+    font-size: 16px;
+    color: #475569;
+    margin-bottom: 4px;
+  }
+
+  /* Requirements read as a distilled brief. */
+  .nk-reqs {
+    list-style: none;
+    margin: 24px 0 32px;
+    padding: 0;
+  }
+
+  .nk-reqs li {
+    position: relative;
+    padding-left: 28px;
+    font-size: 18px;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+
+  .nk-reqs li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.35em;
+    width: 12px;
+    height: 6px;
+    border-left: 2px solid #6B4C9A;
+    border-bottom: 2px solid #6B4C9A;
+    transform: rotate(-45deg);
+  }
+
+  /* The reach chart is landscape, so it gets the full content column. */
+  #craft .nk-chart img {
+    max-width: 100%;
+  }
+
+  /* Conversational aside, deliberately light. */
+  .nk-quote {
+    border-left: 1px solid #e2e8f0;
+    margin: 24px 0 32px;
+    padding-left: 24px;
+    max-width: 75ch;
+  }
+
+  .nk-quote p {
+    margin: 0 0 12px;
+  }
+
+  .nk-quote p:last-child { margin-bottom: 0; }
+
+  .nk-quote-emoji {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  /* The two result lines carry the numbers; the figure itself does the work. */
+  .nk-stat {
+    line-height: 1.5;
+    margin: 0 0 16px;
+  }
+
+  .nk-stat-figure {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.01em;
+    margin-right: 4px;
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;
@@ -616,6 +814,13 @@
        the container. */
     .eq-group .equation { max-width: 360px; }
     .two-col-list { column-count: 1; }
+
+    /* Treatment rows stack: visual first, its own analysis directly under it. */
+    .nk-treatment { grid-template-columns: 1fr; gap: 20px; }
+    /* Paired screens stack too; side by side they'd be too small to read. */
+    .nk-visual-group { grid-template-columns: 1fr; gap: 16px; }
+    .nk-ticket { padding-left: 16px; }
+    .nk-stat-figure { font-size: 30px; }
 
     /* Channel map reflows from a grid to one card per row. Column headers are
        hidden from view but kept for screen readers; each cell carries its own
@@ -736,7 +941,8 @@
       </a>
     </div>
 
-    <a class="playbook-note" href="#craft">Throughout all four phases: <span class="pn-strong">raising craft</span> <span aria-hidden="true">&rarr;</span></a>
+    <a class="playbook-note" href="#craft">Throughout all four phases: <span class="pn-strong">raising craft</span> <span aria-hidden="true">&rarr;</span>
+      <p class="cs-badge">Case study</p></a>
   </section>
 
 <section id="step-1" class="step">
@@ -1589,9 +1795,228 @@
 
     <p>The framework made room for great work. It didn't teach anyone how to do it.</p>
 
-    <p>My product and multimedia designers arrived with training and experience. My job was to push: identify heuristic gaps in their work, point them to methodologies the problem was asking for, show them how to gather product analytics. It was their job to solve the problem.</p>
+    <p>With experienced designers, my job was to raise the bar: spot gaps in the work, introduce the right methods, ask the questions we were missing, and use evidence to challenge the obvious solution. Sometimes I coached from the sidelines. Sometimes I got directly involved.</p>
 
-    <p>The content designers were different. Nine of the twelve had never done the job before. I hired for aptitude and attitude, then taught them the craft. It wasn't long before their skills surpassed my own.</p>
+    <p>Nine of my twelve content designers were new to the discipline, so they needed something different. I hired for aptitude and attitude, then taught them the craft. It wasn't long before their skills surpassed my own.</p>
+
+    <div class="case-study">
+      <p class="cs-tag">Case study</p>
+      <h3>Replacing loud promotion with quiet visibility</h3>
+
+      <p>Our app's biggest navigational update in years started with a content request for an in-app promotion.</p>
+
+      <p>The request came in with minimal information.</p>
+
+      <dl class="nk-ticket">
+        <dt>Overview</dt>
+        <dd>Add a walkthrough for new users. As the last step, point them to Perks.</dd>
+        <dt>Business goal</dt>
+        <dd>Increase new user awareness of Perks</dd>
+        <dt>What is the value to the company, in dollars?</dt>
+        <dd>We make $20 off of every user who visits Perks. But many users don't know it exists, especially new users. We need to make sure that every new user is aware of Perks.</dd>
+      </dl>
+
+      <p>Here's what they were asking for.</p>
+
+      <div class="nk-screen-row">
+        <img src="images/nook/walkthrough-1.png"
+             alt="The walkthrough offer over the Dashboard, headed &quot;Welcome to Nook!&quot;, with Get started and No thanks.">
+        <img src="images/nook/walkthrough-2.png"
+             alt="Step 2 of 6, pointing at the Lease tile on the Dashboard, with a Next button.">
+        <img src="images/nook/walkthrough-3.png"
+             alt="Step 6 of 6, the final step, pointing at Perks in the open menu with an Explore Perks button.">
+      </div>
+
+      <p>Here's the thing ... we'd had a walkthrough before, so we knew exactly how this would go. About two-thirds of users decided "not for me" and never started. Of those who started, about two-thirds dropped off after the first step. Only 8% saw the final step.</p>
+
+      <div class="visual-figure nk-chart">
+        <img src="images/nook/walkthrough-reach.png"
+             alt="Walkthrough reach, falling sharply across six steps: 100% saw the walkthrough offer, two-thirds opted out, 35% saw step 1, two-thirds of those dropped off, and 8% saw the last step.">
+      </div>
+
+      <p>8% is promotional reach, not engagement. We didn't know how many of that 8% would click a Perks promotion.</p>
+
+      <h4 class="cs-label">We'd tried plenty of ways to promote Perks</h4>
+
+      <p>Perks had been a business priority since it launched. But there was no target for what "enough" adoption looked like. Any lift was worth keeping, and the business wanted more.</p>
+
+      <div class="nk-treatment">
+        <div class="nk-treatment-visual">
+          <img src="images/nook/treatment-task.png"
+               alt="The Dashboard Tasks tile showing only a count of open tasks, and the task list where Perks appears as one item among several.">
+        </div>
+        <div class="nk-treatment-body">
+          <h5 class="nk-treatment-h">Make it a Task</h5>
+          <p class="nk-status">In production</p>
+          <p class="nk-pc-label">Pros</p>
+          <ul>
+            <li>Persistent until users visited Perks</li>
+            <li>Non-blocking</li>
+          </ul>
+          <p class="nk-pc-label">Cons</p>
+          <ul>
+            <li>Poor visibility. Tasks was below the fold, and the Dashboard showed only the number of open tasks.</li>
+            <li>Unknown impact. The Task and menu item had always been live; together, the existing experience produced an 18% first-month visit rate.</li>
+            <li>Devalued the pattern. Tasks were intended for things users actually needed to do.</li>
+            <li>Risked trust. Users complained about being tricked into opening an ad disguised as a Task.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nk-treatment">
+        <div class="nk-treatment-visual">
+          <img src="images/nook/treatment-banner.png"
+               alt="A purple promotional banner reading &quot;Check out Perks for exclusive deals&quot; inside the Tasks tile, directly beneath the tile title and above the count of 7 tasks.">
+        </div>
+        <div class="nk-treatment-body">
+          <h5 class="nk-treatment-h">Add a banner to Tasks</h5>
+          <p class="nk-status">In production &middot; later discontinued</p>
+          <p class="nk-pc-label">Pros</p>
+          <ul>
+            <li>Persistent</li>
+            <li>Non-blocking</li>
+            <li>Moderate impact. New-user visits increased from 18% to 23%.</li>
+          </ul>
+          <p class="nk-pc-label">Cons</p>
+          <ul>
+            <li>Poor visibility. It still lived behind a below-the-fold Tasks tile.</li>
+            <li>Added noise to the Dashboard.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nk-treatment">
+        <div class="nk-treatment-visual">
+          <img src="images/nook/treatment-new-open.png"
+               alt="The open menu showing a teal New badge beside Perks.">
+        </div>
+        <div class="nk-treatment-body">
+          <h5 class="nk-treatment-h">Add a "New" badge</h5>
+          <p class="nk-status">Used at Perks launch</p>
+          <p class="nk-pc-label">Pros</p>
+          <ul>
+            <li>High impact. Users who saw the treatment were 35% more likely to visit than the control.</li>
+            <li>Persistent until action</li>
+            <li>Non-blocking</li>
+            <li>Prompted action by creating a strong drive to clear the notification indicator.</li>
+          </ul>
+          <p class="nk-pc-label">Cons</p>
+          <ul>
+            <li>Different audience. The result came from an existing-user launch; we didn't know whether it would work the same way when the entire product was new.</li>
+            <li>Perks wasn't new anymore.</li>
+            <li>Devalued the pattern. Promotional use weakened the meaning of "New" when we actually needed to communicate new functionality.</li>
+            <li>Risked trust. A false "New" signal teaches users that product cues may really be ads.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nk-treatment">
+        <div class="nk-treatment-visual">
+          <img src="images/nook/treatment-popup.png"
+               alt="A pop-up covering the Dashboard at login, headed &quot;Don't miss out!&quot;, promoting limited-time access to Perks with buttons to explore Perks now, be reminded later, or decline.">
+        </div>
+        <div class="nk-treatment-body">
+          <h5 class="nk-treatment-h">Show a pop-up at login</h5>
+          <p class="nk-status">Previously used</p>
+          <p class="nk-pc-label">Pros</p>
+          <ul>
+            <li>Maximum visibility</li>
+            <li>High immediate impact. 24% of users who saw it visited Perks.</li>
+          </ul>
+          <p class="nk-pc-label">Cons</p>
+          <ul>
+            <li>Blocking. It interrupted users before they could do what they'd logged in to do.</li>
+            <li>One-time. It produced an immediate bump, not sustained visibility.</li>
+            <li>Lower-quality traffic. Visits increased, but interaction with Perks decreased.</li>
+            <li>Risked trust. Promotional interruptions made it harder to know when an interruption was actually important.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4 class="cs-label">We don't need to hijack a pattern to get attention</h4>
+
+      <p>A Task should still mean something users need to do. "New" should still mean new. An interruption should still signal something worth interrupting them for.</p>
+
+      <p>We could make Perks more prominent without asking another pattern to mean something it didn't.</p>
+
+      <h4 class="cs-label">We needed a different approach</h4>
+
+      <p>I looked back at the promotions we'd run, and defined requirements for a real solution.</p>
+
+      <ul class="nk-reqs">
+        <li>Visible</li>
+        <li>Persistent</li>
+        <li>Non-blocking</li>
+        <li>Aligned to user expectations</li>
+      </ul>
+
+      <p>The prior promotions either demanded attention or waited for users to stumble across them. I wanted Perks to have a consistent, persistently visible place in the app's navigation, without interrupting what users came to do.</p>
+
+      <h4 class="cs-label">What if Perks had a permanent place in the app's navigation?</h4>
+
+      <div class="visual-figure">
+        <img src="images/nook/bottom-nav-dashboard.png"
+             alt="The Dashboard with four placeholder links, labelled Link 1 through Link 4, sitting in a rudimentary bottom navigation bar fixed across the foot of the screen.">
+      </div>
+
+      <h4 class="cs-label">The experiment</h4>
+
+      <p>Changing mobile navigation is no small feat. We're talking standing up a new initiative; getting funding and roadmap priority; assigning a PO, dev team, and other resources; then starting pre-SDLC.</p>
+
+      <p>The business certainly didn't have that kind of patience to pursue an idea proposed by UX. But I had an even better idea about how we could test this for free.</p>
+
+      <p>Pendo was already layered over the product, so I asked our Pendo builder a slightly weird question: could we put four linked images across the bottom of every screen and make them look and behave like a rudimentary bottom nav?</p>
+
+      <p>His response:</p>
+
+      <blockquote class="nk-quote">
+        <p>"Uhhh, maybe??"</p>
+        <p class="nk-quote-emoji"><span role="img" aria-label="Thinking face">&#129300;</span></p>
+        <p>"Theoretically, yes. Let me see if I can build it."</p>
+      </blockquote>
+
+      <p>He could.</p>
+
+      <p>So I pulled in just enough expertise to make it a responsible experiment:</p>
+
+      <ul>
+        <li>Pressure-tested the idea with our senior product strategist. We made sure this wasn't a clever idea we'd all come to regret, then chose the four destinations together. About 20 minutes.</li>
+        <li>Brought in our principal visual designer. He made the faux navigation look native to the product. Less than a day.</li>
+        <li>Defined the audience and success metrics. I validated both with a UX researcher and systems data analyst over chat.</li>
+        <li>Crossed the Ts, dotted the Is, and pushed it live.</li>
+      </ul>
+
+      <div class="visual-figure nk-visual-group">
+        <img src="images/nook/experiment-dashboard-nav.png"
+             alt="The Dashboard with the finished faux bottom navigation showing Dash, Rent, Perks, and Help, with Dash as the active item.">
+        <img src="images/nook/experiment-perks-nav.png"
+             alt="The Perks destination showing the same bottom navigation still in place, now with Perks as the active item.">
+      </div>
+
+      <h4 class="cs-label">We tested it live</h4>
+
+      <p>Pendo randomly split eligible new users 50/50 between a control group and a test group. We measured activity on both groups simultaneously, for 30 days after first login.</p>
+
+      <p>The control group had the existing experience: Perks was available through the menu and as a Task. The test group got that, plus the faux bottom nav on every screen.</p>
+
+      <p>Our primary KPI was whether users visited Perks.</p>
+
+      <h4 class="cs-label">Persistent visibility drove a 3.4&times; lift</h4>
+
+      <p>The results were compelling.</p>
+
+      <p class="nk-stat"><span class="nk-stat-figure">18%</span> of users visited Perks when they saw the normal experience.</p>
+
+      <p class="nk-stat"><span class="nk-stat-figure">61%</span> visited when we added the bottom nav.</p>
+
+      <p>Our simple A/B test showed that we didn't need interruptions, badges, and promotional UI to drive attention. By making Perks persistently visible in a place that made sense in the app's IA, we could get a much larger lift.</p>
+
+      <h4 class="cs-label">The band-aid requests stopped</h4>
+
+      <p>The test changed the conversation. Instead of finding another way to promote Perks, we could solve the underlying problem with persistent mobile navigation.</p>
+
+      <p>The business turned their attention to making that a reality, and stopped asking for one-off promotional treatments. And they succeeded. An initiative to create a mobile bottom nav was approved for the roadmap, and is on its way to development.</p>
+    </div>
   </section>
 
  
