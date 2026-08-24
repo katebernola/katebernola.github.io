@@ -292,6 +292,21 @@
     border: 1px solid #e2e8f0;
   }
 
+  /* Four separate images (not one raster comic) so panels can reflow
+     independently. 2x2 grid, matching the .eq-group pattern. */
+  .comic-panels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0 32px;
+  }
+
+  .comic-panels img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   /* Tall, portrait-oriented diagrams (viewBox height > width) would otherwise
      stretch to full container width and run well past the viewport. Cap the
      visible height and let it scroll, so the diagram stays at full resolution
@@ -948,6 +963,7 @@
     /* Once stacked, match the standalone .equation cap instead of filling
        the container. */
     .eq-group .equation { max-width: 360px; }
+    .comic-panels { grid-template-columns: 1fr; }
     .two-col-list { column-count: 1; }
 
     /* Treatment rows stack: visual first, its own analysis directly under it. */
@@ -1361,20 +1377,32 @@
 
     <div class="case-study">
     <p class="cs-tag">Case study</p>
-    <h3>Scaling expertise with AI</h3>
-    <p>Our company acquired a new platform that nearly doubled our product footprint. At about the same time, content designers began moving into new UX leadership roles, so the team was shrinking.</p>
-    <p>We couldn't hire more designers, so we decided to make their expertise available to everyone.</p>
+    <h3>Turning an AI agent into a design coach</h3>
 
-        <p class="cs-label">The first agent: UI Writing Assistant</p>
-    <p>Like everyone else, our first instinct was to try AI. We pasted our standards into an AI writing agent and hoped it would coach people through writing better UI copy.</p>
-    <p>The results were disappointing.</p>
-    <p>When you provided a rough draft, the AI spat out text that was "translated" into our product voice. But that ignored the real problems: placement, componentry, and the propensity to jam multiple messages together. Plus, the agent couldn't explain <em>why</em> a change was important, so its output was sometimes ignored.</p>
+    <p class="cs-label">Content designers could no longer support every project</p>
+    <p>The roadmap was expanding while content design headcount was shrinking.</p>
+    <p>We needed to help product designers make better content and design decisions without putting a content designer on every project.</p>
 
-        <p class="cs-label">Building the system</p>
-    <p>Years of guidance existed across wiki pages, design system documentation, and tribal knowledge.</p>
+    <p class="cs-label">Our first AI writing tool fell flat</p>
+    <p>To help people write UI content, we built an agent in LibreChat. But there was no way to import extensive documentation; the agent had only two short instruction fields. Even our word list was too long. We spent our limited characters on broad guidance: friendly, simple, clear.</p>
+    <p>The results were "meh." The agent could rewrite copy, but not particularly well. It missed subjective concepts like tone. Even straightforward criteria like capitalization were unreliable because it treated too many words as proper nouns.</p>
+    <p>The tool could produce text. It couldn't scale content design expertise.</p>
 
+    <p class="cs-label">Meanwhile, we turned scattered guidance into a system</p>
+    <p>In parallel, we were making our content knowledge easier to use. An audit revealed just how unruly our documentation had become. It worked, sort of, for an extremely tight-knit team of 10, but there was no way to expand that system to 60+ product designers.</p>
+    <p>We rebuilt the standards where designers would use them: directly in the design system documentation.</p>
+    <p>Here's what we did.</p>
+    <ul>
+      <li>Gave content guidance a clear home.</li>
+      <li>Replaced scattered lists of options with clearer rules.</li>
+      <li>Clarified what each component was for and when to use it.</li>
+      <li>Added content standards alongside component guidance.</li>
+    </ul>
+
+    <p class="eq-title">Where our guidance lived</p>
     <div class="visual-figure">
       <svg viewBox="0 0 950 785" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nine messy piles of paper, each in a different tool. ZeroHeight holds component pages and usage guidelines with no rationale and varied quality. Confluence holds five separate spaces: UX content design with three dozen sub-pages, UX design, UX operations with component guidance and Help Center standards side by side though unrelated, UX research, and five personal spaces, one per person. Miro holds the notification decision tree. Figma holds temporary components, but their usage docs lived on the UX ops wiki. A UX SharePoint site holds more unlabeled pages. Below the piles, six people represent tribal knowledge that was never documented: component selection, date and time decisions, product terminology, change management, notification expertise, and product-specific language." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+        <title>Where our guidance lived</title>
 
         <!-- ZeroHeight -->
         <text x="25" y="58" font-size="14" font-weight="700" fill="#1e293b">ZeroHeight</text>
@@ -1552,27 +1580,9 @@
           <text x="790" y="766">language</text>
         </g>
       </svg>
-      <p class="visual-caption">Where guidance lived before: nine different places, plus people's heads.</p>
+      <p class="visual-caption">Nine different places, plus people's heads.</p>
     </div>
 
-    <p>So we stopped improving the AI, and started improving the knowledge architecture.</p>
-    <ul class="two-col-list">
-      <li>Audited existing knowledge</li>
-      <li>Consolidated duplicate guidance</li>
-      <li>Added missing guidance</li>
-      <li>Standardized page structure</li>
-      <li>Documented why for everything</li>
-      <li>Assigned ownership</li>
-      <li>Connected related concepts</li>
-      <li>Filled knowledge gaps</li>
-    </ul>
-    <p>The content designers no longer reported to me. Each was embedded with a different product team, and everyone already had a full-time job. Even so, the practice still operated as one team.</p>
-    <p>I organized the work, divided ownership, and established a shared structure. The team drove the work. They reviewed each other's standards, worked through problems, and held everyone accountable to the timeline.</p>
-    <p>Over three months, we transformed hundreds of scattered guidelines into one coherent knowledge system.</p>
-  
-      <p class="cs-label">Growing the system</p>
-    <p>Once the structure existed, adding knowledge became straightforward.</p>
-    <p>Instead of documenting rules, we documented decisions.</p>
 
     <div class="visual-figure">
       <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A page tree titled: one ZeroHeight space. The root, knowledge architecture, splits into five sections. Strategy and foundations holds communication strategy, voice and tone, and decision frameworks. Content standards holds the word list, product terminology, pages on talking about people, our clients, and our company, date and time formats, and visuals, which covers visual hierarchy, graphs and charts, illustrations, video, and microanimation. Components holds one page per component with a standard structure: purpose, when to use and what to use instead, usage guidance, content standards, reusable content, content templates, visual standards, technical standards, multimedia standards, and related patterns. Communications holds system comms, expanded to show the standard page structure of overview, guidelines, template, and examples; change management and notifications follow the same structure. Platform standards holds reusable patterns and dashboard rules." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
@@ -1747,12 +1757,16 @@
       </svg>
          </div>
 
-      <p class="cs-label">The second agent: content design coach</p>
-  <p>By the time we'd completed documentation, we had access to more advanced AI tooling. But this time, we taught it our strategy. We also told it to push back, suggest alternate approaches, and call out risks. The new agent wasn't a UI writer. It was a content designer.</p>
+      <p>The result was much clearer guidance: not just what to do, but what decisions it was helping designers make and why.</p>
+
+      <p class="cs-label">We mistook clear rules for an automatable process</p>
+      <p>Leadership was pushing hard to scale more work through AI. I saw an opportunity: could an agent enforce the decisions we constantly had to coach people through?</p>
+      <p>We defined a basic content design workflow around common requests. Then I loaded it into Copilot and taught the agent to challenge questionable communication decisions before giving people the content they asked for.</p>
+      <p>The goal was ambitious: automate the content design process itself.</p>
 
     <div class="visual-figure visual-figure--scroll">
-      <svg viewBox="0 0 885 1280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The coach workflow, running as a snake down the page. Kickoff sits at the top. A collaborative discovery process leads to the Brief document, listing overview, objective, persona, workflow and usage data. A collaborative strategy process leads to a group of three stacked documents: content inventory, content audit and gap analysis. Those produce one Content needs document, which produces a pair of side-by-side documents: Plan A, which mitigates UX risks but may add scope, and Plan B, which holds scope but carries UX risk. Both go to a decision where the product owner picks a plan. A collaborative content design process produces the UI plan document, listing component, copy, confidence and risks. A designer-only design execution process follows, with usability testing alongside, before the decision where the product owner decides what ships. The designer then submits the Design file, which a bot-only Review process reviews. Review sends two documents: Risks, to the designer, who logs them in Jira; and Knowledge base updates, to the content design team, who review and approve. The work is monitored post-launch. Collaborative steps, where the bot and a person work together, are outlined in purple and carry a conversation icon. Footnotes: the bot references the knowledge base at every step, the process is iterative throughout, the requester can return to any stage, and the bot applies changes to all artifacts." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
-        <title>How the AI content design coach works, end to end</title>
+      <svg viewBox="0 0 885 1280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The agent workflow, running as a snake down the page. Kickoff sits at the top. A collaborative discovery process leads to the Brief document, listing overview, objective, persona, workflow and usage data. A collaborative strategy process leads to a group of three stacked documents: content inventory, content audit and gap analysis. Those produce one Content needs document, which produces a pair of side-by-side documents: Plan A, which mitigates UX risks but may add scope, and Plan B, which holds scope but carries UX risk. Both go to a decision where the product owner picks a plan. A collaborative content design process produces the UI plan document, listing component, copy, confidence and risks. A designer-only design execution process follows, with usability testing alongside, before the decision where the product owner decides what ships. The designer then submits the Design file, which a bot-only Review process reviews. Review sends two documents: Risks, to the designer, who logs them in Jira; and Knowledge base updates, to the content design team, who review and approve. The work is monitored post-launch. Collaborative steps, where the bot and a person work together, are outlined in purple and carry a conversation icon. Footnotes: the bot references the knowledge base at every step, the process is iterative throughout, the requester can return to any stage, and the bot applies changes to all artifacts." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+        <title>The process we set out to automate</title>
         <defs>
           <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto" markerUnits="userSpaceOnUse">
             <path d="M0,0 L6.5,3.2 L0,6.4" fill="none" stroke="#64748b" stroke-width="1.5"/>
@@ -1930,23 +1944,33 @@
         <path d="M77,1187 L80,1178 L88,1170 L91,1173 L83,1181 Z" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
         <text x="110" y="1184" font-size="11" fill="#1e293b">The bot applies changes to all artifacts</text>
       </svg>
-      <p class="visual-caption">How the AI content design coach works, end to end.</p>
+      <p class="visual-caption">The process we set out to automate.</p>
     </div>
 
-        <p class="cs-label">Results</p>
-    <p>More than 100 people across UX and partner organizations adopted the AI coach.</p>
-    <p>Content designers could invest expertise where it mattered. They built new strategy, improved information architecture, and shaped the integration of LLMs into our products. </p>
-    </div> 
+      <p class="cs-label">It failed immediately in testing</p>
+      <p>Feedback from inside and outside UX was damning: "It took too long" and "it wouldn't give me what I needed."</p>
+      <p>Most projects were already in execution. It was too late to send designers back through the full content design process. Partners outside UX had a different problem: they didn't need a police officer. They needed someone who could help them find a better way to meet their goal.</p>
+      <p>I had taught the agent what to push back on. I hadn't taught it how to find the workable alternative. That required judgment, creativity, and negotiation.</p>
+      <p>People came in asking for content. The agent didn't give it to them; it made them earn it.</p>
 
-    <h3>Other ways it played out</h3>
-    <ul>
-      <li><strong>Product design</strong>: Before creating a new solution, we began with a simple plan with elements that already existed. As we upgraded pieces, we always had something ready-to-ship. This enabled us to pivot on a dime, while also leaving dev with something to code.</li>
-    <li><strong>Multimedia design</strong>: A reusable illustration library let designers assemble graphics from standardized pieces instead of creating every illustration from scratch.</li>
-</ul>
-   
-    <div class="key-insight">
-      <p class="ki-label">Key insight</p>
-      <p class="ki-text">Don't scale people; scale expertise.</p>
+      <p class="cs-label">We changed the agent from cop to coach</p>
+      <p>The original agent applied every standard as a hard rule. It caught every infraction, and wouldn't move forward until each was fixed.</p>
+      <p>Now, the agent coached users through the challenges they were up against. It gave them the content they came for, surfaced the most relevant risks or standards alongside it, and let them decide what to do next.</p>
+
+      <p class="eq-title">UX Designer in Toggle Trouble</p>
+      <div class="comic-panels">
+        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-1.png" alt="A designer asks the bot to help write copy for a toggle: 'Send refund by direct deposit. Otherwise, you'll get a paper check in the mail.'">
+        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-2.png" alt="The bot asks a clarifying question: is the user choosing between two ways to get their refund? The designer confirms yes.">
+        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-3.png" alt="The bot explains the rule: a toggle means on or off, but this is an either/or choice, so it needs radio buttons instead.">
+        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-4.png" alt="The bot's recommendation swaps the toggle for radio buttons asking how the user wants their refund: direct deposit or a mailed check. It offers to draft the toggle version too if it's required, and to flag the risk.">
+      </div>
+
+      <p>Product designers starting a new project could still ask it to walk them through the simplified content design process we had outlined. We kept that original workflow in place, just toned down the pushback.</p>
+
+      <p class="cs-label">When users got what they came for, we did, too</p>
+      <p>The new approach worked. 122 people across UX and partner teams adopted the coach.</p>
+      <p>Their content got better. Partner requests and design flows were better aligned to strategy. Straightforward standards like word choice, character limits, partner names, and date formats were routinely incorporated. The coach also brought less familiar guidance into the work, from communication strategy to reading level and contextual placement.</p>
+      <p>A few months later, one of my team's design reviews made me especially happy. Four designers who were native Spanish speakers agreed that, if they had to choose, they'd take the coach's design guidance over its writing help.</p>
     </div>
   </section>
 
