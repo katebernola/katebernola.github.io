@@ -417,6 +417,17 @@
     height: auto;
   }
 
+  /* Phone screenshots are 390px wide natively; don't upscale them. */
+  .lightbox-inner--screen {
+    max-width: 392px;
+  }
+
+  .lightbox-inner img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   /* Tall, portrait-oriented diagrams (viewBox height > width) would otherwise
      stretch to full container width and run well past the viewport. Cap the
      visible height and let it scroll, so the diagram stays at full resolution
@@ -853,52 +864,107 @@
 
   /* Treatment comparison. Reflows to one card per treatment on small screens,
      the same pattern the channel map uses. */
+  /* Treatments run across as columns; the criteria they're judged against
+     run down as rows. Scrolls sideways rather than collapsing, because each
+     column is one treatment being compared against the others. */
+  .nk-matrix-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    margin: 24px 0 8px;
+  }
+
   .nk-matrix {
     width: 100%;
+    min-width: 620px;
     border-collapse: collapse;
     font-size: 15px;
-    margin: 24px 0 8px;
+    table-layout: fixed;
   }
 
   .nk-matrix th,
   .nk-matrix td {
     text-align: left;
-    padding: 14px 12px 14px 0;
+    padding: 12px 8px;
     border-bottom: 1px solid #e2e8f0;
     vertical-align: top;
   }
 
+  /* Each treatment column heads with its screenshot, name, then status. */
   .nk-matrix thead th {
-    font-size: 13px;
-    font-weight: 600;
-    color: #475569;
+    width: 19.5%;
+    font-weight: 400;
     border-bottom: 1px solid #64748b;
-    padding-bottom: 8px;
-    vertical-align: bottom;
   }
 
+  .nk-matrix-corner {
+    width: 22%;
+    border-bottom: 1px solid #64748b;
+  }
+
+  /* Criterion labels down the left. */
   .nk-matrix tbody th {
-    width: 30%;
-    font-weight: 400;
+    font-weight: 600;
+    color: #1e293b;
+    vertical-align: middle;
+  }
+
+  .nk-matrix tbody td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .nk-thumb-link {
+    position: relative;
+    display: block;
+    margin-bottom: 8px;
+    text-decoration: none;
   }
 
   .nk-matrix-thumb {
     display: block;
-    width: 110px;
+    width: 100%;
     height: auto;
     border: 1px solid #e2e8f0;
     background: #f8f9fa;
-    margin-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .nk-thumb-link:hover .nk-matrix-thumb,
+  .nk-thumb-link:focus-visible .nk-matrix-thumb {
+    border-color: #1e293b;
+  }
+
+  .nk-thumb-expand {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    color: #1e293b;
+    transition: border-color 0.2s;
+  }
+
+  .nk-thumb-link:hover .nk-thumb-expand,
+  .nk-thumb-link:focus-visible .nk-thumb-expand {
+    border-color: #1e293b;
   }
 
   .nk-matrix-name {
-    font-size: 16px;
+    display: block;
+    font-size: 15px;
     font-weight: 600;
     color: #1e293b;
     margin: 0 0 2px;
   }
 
   .nk-matrix-status {
+    display: block;
     font-size: 13px;
     color: #475569;
     margin: 0;
@@ -1083,54 +1149,13 @@
     .nk-ticket { padding-left: 16px; }
     .to-top { right: 16px; bottom: 16px; }
 
-    /* Comparison table becomes one card per treatment. Column headers are
-       hidden from view but kept for screen readers; each cell labels itself. */
-    .nk-matrix,
-    .nk-matrix tbody,
+    /* The matrix keeps its shape and scrolls sideways. Collapsing it to cards
+       would break the side-by-side comparison that is the whole point. */
+    .nk-matrix { min-width: 560px; }
+
     .nk-matrix th,
-    .nk-matrix td,
-    .nk-matrix tr { display: block; }
+    .nk-matrix td { padding: 10px 6px; }
 
-    .nk-matrix thead {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .nk-matrix tbody tr {
-      border: 1px solid #e2e8f0;
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .nk-matrix tbody th {
-      width: auto;
-      padding: 0 0 12px;
-      border-bottom: 1px solid #e2e8f0;
-      margin-bottom: 8px;
-    }
-
-    .nk-matrix td {
-      border-bottom: none;
-      padding: 6px 0;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: baseline;
-      gap: 12px;
-    }
-
-    .nk-matrix td::before {
-      content: attr(data-label);
-      font-size: 14px;
-      color: #475569;
-    }
     .nk-stat-figure { font-size: 30px; }
 
     /* Channel map reflows from a grid to one card per row. Column headers are
@@ -2535,68 +2560,123 @@
 
       <p>Perks had been a business priority since it launched. But there was no target for what "enough" adoption looked like. Any lift was worth keeping, and the business wanted more.</p>
 
+      <span id="nook-matrix-anchor"></span>
+      <div class="nk-matrix-scroll">
       <table class="nk-matrix">
         <caption class="sr-only">The four promotional treatments we tried, measured against what a real solution needed to do.</caption>
         <thead>
           <tr>
-            <th scope="col">Treatment</th>
-            <th scope="col">Visible</th>
-            <th scope="col">Persistent</th>
-            <th scope="col">Non-blocking</th>
-            <th scope="col">Matches expectations</th>
+            <td class="nk-matrix-corner"></td>
+            <th scope="col">
+              <a class="nk-thumb-link" href="#lb-nook-task">
+                <img class="nk-matrix-thumb" src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
+                     alt="The Dashboard Tasks tile showing only a count of open tasks.">
+                <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+                <span class="sr-only">Expand image</span>
+              </a>
+              <span class="nk-matrix-name">Make it a Task</span>
+              <span class="nk-matrix-status">In production</span>
+            </th>
+            <th scope="col">
+              <a class="nk-thumb-link" href="#lb-nook-banner">
+                <img class="nk-matrix-thumb" src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
+                     alt="A purple promotional banner inside the Tasks tile.">
+                <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+                <span class="sr-only">Expand image</span>
+              </a>
+              <span class="nk-matrix-name">Add a banner to Tasks</span>
+              <span class="nk-matrix-status">In production &middot; later discontinued</span>
+            </th>
+            <th scope="col">
+              <a class="nk-thumb-link" href="#lb-nook-badge">
+                <img class="nk-matrix-thumb" src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
+                     alt="The open menu showing a teal New badge beside Perks.">
+                <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+                <span class="sr-only">Expand image</span>
+              </a>
+              <span class="nk-matrix-name">Add a "New" badge</span>
+              <span class="nk-matrix-status">Used at Perks launch</span>
+            </th>
+            <th scope="col">
+              <a class="nk-thumb-link" href="#lb-nook-popup">
+                <img class="nk-matrix-thumb" src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
+                     alt="A promotional pop-up covering the Dashboard at login.">
+                <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+                <span class="sr-only">Expand image</span>
+              </a>
+              <span class="nk-matrix-name">Show a pop-up at login</span>
+              <span class="nk-matrix-status">Previously used</span>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">
-              <img class="nk-matrix-thumb" src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
-                   alt="The Dashboard Tasks tile showing only a count of open tasks.">
-              <span class="nk-matrix-name">Make it a Task</span>
-              <span class="nk-matrix-status">In production</span>
-            </th>
-            <td data-label="Visible"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
-            <td data-label="Persistent"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Non-blocking"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Matches expectations"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <th scope="row">Visible</th>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
           </tr>
           <tr>
-            <th scope="row">
-              <img class="nk-matrix-thumb" src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
-                   alt="A purple promotional banner inside the Tasks tile.">
-              <span class="nk-matrix-name">Add a banner to Tasks</span>
-              <span class="nk-matrix-status">In production &middot; later discontinued</span>
-            </th>
-            <td data-label="Visible"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
-            <td data-label="Persistent"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Non-blocking"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Matches expectations"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <th scope="row">Persistent</th>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
           </tr>
           <tr>
-            <th scope="row">
-              <img class="nk-matrix-thumb" src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
-                   alt="The open menu showing a teal New badge beside Perks.">
-              <span class="nk-matrix-name">Add a "New" badge</span>
-              <span class="nk-matrix-status">Used at Perks launch</span>
-            </th>
-            <td data-label="Visible"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Persistent"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Non-blocking"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Matches expectations"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <th scope="row">Non-blocking</th>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
           </tr>
           <tr>
-            <th scope="row">
-              <img class="nk-matrix-thumb" src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
-                   alt="A promotional pop-up covering the Dashboard at login.">
-              <span class="nk-matrix-name">Show a pop-up at login</span>
-              <span class="nk-matrix-status">Previously used</span>
-            </th>
-            <td data-label="Visible"><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
-            <td data-label="Persistent"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
-            <td data-label="Non-blocking"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
-            <td data-label="Matches expectations"><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <th scope="row">Matches expectations</th>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td><span class="nk-yes">&check;</span><span class="sr-only">Yes</span></td>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
+            <td><span class="nk-no">&times;</span><span class="sr-only">No</span></td>
           </tr>
         </tbody>
       </table>
+      </div>
+
+      <div class="lightbox" id="lb-nook-task">
+        <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
+        <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
+        <div class="lightbox-inner lightbox-inner--screen">
+          <img src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
+               alt="The Dashboard Tasks tile showing only a count of open tasks.">
+        </div>
+      </div>
+
+      <div class="lightbox" id="lb-nook-banner">
+        <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
+        <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
+        <div class="lightbox-inner lightbox-inner--screen">
+          <img src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
+               alt="A purple promotional banner inside the Tasks tile.">
+        </div>
+      </div>
+
+      <div class="lightbox" id="lb-nook-badge">
+        <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
+        <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
+        <div class="lightbox-inner lightbox-inner--screen">
+          <img src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
+               alt="The open menu showing a teal New badge beside Perks.">
+        </div>
+      </div>
+
+      <div class="lightbox" id="lb-nook-popup">
+        <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
+        <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
+        <div class="lightbox-inner lightbox-inner--screen">
+          <img src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
+               alt="A promotional pop-up covering the Dashboard at login.">
+        </div>
+      </div>
 
       <details class="nk-detail">
         <summary>Make it a Task</summary>
