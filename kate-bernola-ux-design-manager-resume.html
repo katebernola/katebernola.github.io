@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate Bernola – UX design manager</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #1B3A5C;
+    --accent:    #2A6496;
+    --sidebar:   #EEF4F9;
+    --text:      #1A1A1A;
+    --muted:     #5A6474;
+    --light:     #F7FAFD;
+    --page-w:    8.5in;
+    --margin:    0.35in;
+    --sidebar-w: 2.2in;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: var(--text);
+    background: #c8c8c8;
+  }
+
+  .page {
+    width: var(--page-w);
+    height: 11in;
+    background: white;
+    margin: 0.35in auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+
+  /* ── Name bar ── */
+  .name-bar {
+    background: var(--navy);
+    padding: 0.24in var(--margin) 0.2in;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2in;
+    flex-shrink: 0;
+  }
+  .name-bar h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24pt;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .name-bar .tagline {
+    font-size: 13pt;
+    font-weight: 300;
+    color: #C8DCF0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Contact strip ── */
+  .contact-strip {
+    background: var(--accent);
+    padding: 0.06in var(--margin);
+    display: flex;
+    gap: 0.14in;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .contact-strip span, .contact-strip a {
+    color: #fff;
+    font-size: 9.5pt;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .contact-strip a { text-decoration: underline; text-underline-offset: 2px; }
+  .contact-strip .sep { color: rgba(255,255,255,0.4); }
+
+  /* ── Summary bar ── */
+  .summary-bar {
+    background: var(--light);
+    border-bottom: 1.5px solid #C8DCF0;
+    padding: 0.09in var(--margin);
+    flex-shrink: 0;
+  }
+  .summary-bar p {
+    font-size: 10pt;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Body layout ── */
+  .body { display: flex; flex: 1; min-height: 0; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--sidebar);
+    padding: 0.2in 0.2in 0.2in 0.35in;
+    border-right: 1.5px solid #C8DCF0;
+  }
+  .side-section { margin-bottom: 0.2in; }
+  .side-heading {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--accent);
+    padding-bottom: 3px;
+    margin-bottom: 0.1in;
+  }
+  .skill-item {
+    font-size: 9.5pt;
+    color: var(--text);
+    margin-top: 7px;
+    line-height: 1.25;
+  }
+  .edu-school {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 4px;
+    line-height: 1.25;
+  }
+  .edu-detail {
+    font-size: 9pt;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.25;
+  }
+
+  /* ── Main column ── */
+  .main {
+    flex: 1;
+    padding: 0.2in var(--margin) 0.2in 0.35in;
+    overflow: hidden;
+  }
+
+  .section-heading {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--accent);
+    padding-bottom: 3px;
+    margin-bottom: 0.12in;
+    margin-top: 0.14in;
+  }
+  .section-heading:first-child { margin-top: 0; }
+
+  .company-block { margin-bottom: 0.14in; }
+  .company-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.04in;
+  }
+  .company-name {
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .company-meta {
+    font-size: 9.5pt;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .role-block { margin-bottom: 0.1in; }
+  .role-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.03in;
+  }
+  .role-title {
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .role-dates {
+    font-size: 9pt;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: 0.1in;
+  }
+  .awards-line {
+    font-size: 9.5pt;
+    color: var(--text);
+    margin: 0.02in 0 0.08in;
+    line-height: 1.42;
+  }
+
+  ul { list-style: none; margin: 0; padding: 0; }
+  ul li {
+    font-size: 9.5pt;
+    color: var(--text);
+    line-height: 1.42;
+    padding: 2px 0 2px 0.14in;
+    position: relative;
+  }
+  ul li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+    @page { size: letter; margin: 0; }
+    .page { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ PAGE 1 ════════════════════════ -->
+<div class="page">
+
+  <div class="name-bar">
+    <h1>Kate Bernola</h1>
+    <span class="tagline">UX design manager</span>
+  </div>
+
+  <div class="contact-strip">
+    <span>585.469.2324</span>
+    <span class="sep">|</span>
+    <a href="https://katebernola.github.io">Portfolio</a>
+    <span class="sep">|</span>
+    <span>Rochester, NY or remote</span>
+    <span class="sep">|</span>
+    <a href="https://linkedin.com/in/kdbernola">LinkedIn</a>
+    <span class="sep">|</span>
+    <span>kate.d.bernola@gmail.com</span>
+  </div>
+
+  <div class="summary-bar">
+    <p>UX design manager with core strengths in DesignOps, practice building, platform strategy around communications, and change management. Over 18 months I moved from content designer to DesignOps to manager, then rebuilt the content design team from 1 to 12 and turned ticket-taking writers into design partners. Now I lead 12 designers across two products, one platform, and the multimedia practice.</p>
+  </div>
+
+  <div class="body">
+    <aside class="sidebar">
+
+      <div class="side-section">
+        <div class="side-heading">Core skills</div>
+        <div class="skill-item">UX strategy and roadmaps</div>
+        <div class="skill-item">People management and coaching</div>
+        <div class="skill-item">Content design</div>
+        <div class="skill-item">Content strategy</div>
+        <div class="skill-item">DesignOps</div>
+        <div class="skill-item">AI feature design and governance</div>
+        <div class="skill-item">Design systems adoption</div>
+        <div class="skill-item">Product analytics</div>
+        <div class="skill-item">Stakeholder influence</div>
+        <div class="skill-item">Cross-functional leadership</div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-heading">Tools</div>
+        <div class="skill-item">Heap</div>
+        <div class="skill-item">Pendo</div>
+        <div class="skill-item">UMUX surveys</div>
+        <div class="skill-item">Figma (review, feedback, editing)</div>
+        <div class="skill-item">Copilot</div>
+        <div class="skill-item">Claude</div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-heading">Education</div>
+        <div class="edu-school">University of Notre Dame</div>
+        <div class="edu-detail">BBA, Marketing &amp; Psychology</div>
+        <div class="edu-detail">Magna cum laude, 3.7 GPA</div>
+        <div class="edu-detail">Varsity letters, football &amp; rowing</div>
+      </div>
+
+    </aside>
+
+    <main class="main">
+      <div class="section-heading">Experience</div>
+
+      <div class="company-block">
+        <div class="company-header">
+          <span class="company-name">Paychex</span>
+          <span class="company-meta">2019 – 2026</span>
+        </div>
+        <div class="awards-line">From 2020 to 2026, I've led UX on products that have earned 8 industry awards. Most notably, Paychex Voice Assist won Brandon Hall Gold in "AI for business impact."</div>
+
+        <div class="role-block">
+          <div class="role-header">
+            <span class="role-title">UX design manager, product design</span>
+            <span class="role-dates">Mar 2024 – Jun 2026</span>
+          </div>
+          <ul>
+            <li>Led 12 designers across three product platforms and the multimedia practice. Managed both the work and the people delivering it.</li>
+            <li>Owned four portfolios at once: Taxes and Payments (each spanning two customer platforms), the accountant platform and its design system, and the multimedia team supporting 25+ products across all three platforms.</li>
+            <li>Secured earlier UX involvement in roadmap planning. Guided the team in building a Claude-based AI agent that compressed 6 weeks of discovery across two separate projects into 3 days.</li>
+            <li>Facilitated content ownership standards, messaging guidelines, and governance for LLM-based AI features across dozens of products. Increased Paychex Flex Assistant accuracy on key topics from 70% to 90%.</li>
+            <li>Built UI Writing Assistant, a Microsoft Copilot agent. This enabled product designers and partners to draft their own high-quality application messaging, freeing up over 100 hours of content design resourcing each week.</li>
+            <li>Led UX on a range of AI-feature initiatives, including Paychex Assistant (chatbot), SundaySky (video), and Payroll Voice Assist (voice). Guided creation of a human-in-the-loop process for AI-authored Help articles.</li>
+            <li>Used Heap, Pendo, and UMUX data to evaluate post-launch performance, identify friction points, and recommend roadmap adjustments.</li>
+            <li>Brought the multimedia team through a four-phase transformation: eliminated low-value work, surfaced the team's strategic value, scaled it, and shifted the culture.</li>
+            <li>Advised design system leadership on adoption strategy across 90 designs and 100+ product teams.</li>
+          </ul>
+        </div>
+
+        <div class="role-block">
+          <div class="role-header">
+            <span class="role-title">UX design manager, content design practice</span>
+            <span class="role-dates">Jun 2021 – Mar 2024</span>
+          </div>
+          <ul>
+            <li>Built a content design practice from scratch, growing from 1 team member to 12 employees plus a full-time contractor, supporting 40 to 50 product designers across 100+ dev teams.</li>
+            <li>Hired 11 people and personally trained 9 with no prior content design experience.</li>
+            <li>Team outcomes: 75% promotion rate, 92% retention (average tenure 3 years), and 100% of direct reports proactively offered recommendations when I left.</li>
+          </ul>
+        </div>
+
+      </div><!-- /paychex -->
+    </main>
+  </div>
+</div><!-- /page 1 -->
+
+
+<!-- ════════════════════════ PAGE 2 ════════════════════════ -->
+<div class="page">
+  <div class="body" style="flex:1;">
+    <aside class="sidebar" style="background: var(--sidebar); border-right: 1.5px solid #C8DCF0;"></aside>
+
+    <main class="main" style="padding-top: .45in;">
+      <div class="section-heading" style="margin-top: 0;">Experience <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:8.5pt; color:var(--muted); padding-left:0.08in;">continued</span></div>
+
+      <div class="company-block">
+        <div class="company-header">
+          <span class="company-name">Paychex</span>
+          <span class="company-meta">2019 – 2026</span>
+        </div>
+
+        <div class="role-block">
+          <div class="role-header">
+            <span class="role-title">UX design manager, content design practice (continued)</span>
+            <span class="role-dates">continued</span>
+          </div>
+          <ul>
+            <li>Managed all in-app messaging requests from across the business, including notifications, pop-ups, banners, and other UI text. Evaluated each against CX standards, prioritized by impact, and oversaw execution.</li>
+            <li>Redirected disruptive partner requests toward contextually embedded alternatives. When piloted, those solutions lifted KPIs by 2.5x against baseline.</li>
+            <li>Pioneered the test-and-learn process at Paychex, driving user and business value through regular experiments and A/B tests to improve workflows and generate revenue.</li>
+            <li>Established the scale, alignment, and leadership for the team to graduate to a federated reporting structure and operate as a community of practice. Positioned a design-lead-level senior content designer to lead it.</li>
+          </ul>
+        </div>
+
+        <div class="role-block">
+          <div class="role-header">
+            <span class="role-title">UX design operations specialist</span>
+            <span class="role-dates">Aug 2020 – May 2021</span>
+          </div>
+          <ul>
+            <li>Defined requirements for technical enhancements, overhauled the intake process, and managed delivery across dozens of products.</li>
+            <li>Led content work triage and prioritization across all product teams, balancing the needs of dozens of stakeholders with the user experience impacts of over-messaging.</li>
+            <li>Burned down a 6-month content backlog in 2 months by reorganizing the work and cutting low-value requests.</li>
+          </ul>
+        </div>
+
+        <div class="role-block">
+          <div class="role-header">
+            <span class="role-title">UX content designer</span>
+            <span class="role-dates">Sep 2019 – Jul 2020</span>
+          </div>
+          <ul>
+            <li>Within 45 days of hire, volunteered to drive the team's Help Center deployment, organizing the work, defining the process, and monitoring completion.</li>
+            <li>Owned all UI content and documentation for the PPP loan calculator, helping 500,000 small businesses secure $65B in funding and earning a Silver Stevie Award.</li>
+          </ul>
+        </div>
+
+      </div><!-- /paychex continued -->
+
+      <div class="company-block">
+        <div class="company-header">
+          <span class="company-name">Xerox Corporation</span>
+          <span class="company-meta">2007 – 2018</span>
+        </div>
+
+        <div class="role-block">
+          <div class="role-header">
+            <span class="role-title">Select accomplishments demonstrating scope of responsibility</span>
+          </div>
+          <ul>
+            <li>During the 2016 separation of Xerox ($10.8B) and Conduent ($6.7B), led change management for 140,000 employees across 180 countries.</li>
+            <li>Product-managed intranet UX for two Fortune 500 companies. Overhauled IA, content governance, and structure, eliminating $125K in recurring annual overhead.</li>
+            <li>Authored global corporate narrative and strategy deck for Direction 2016 with direct CEO input. Supported executive and shareholder communications.</li>
+          </ul>
+        </div>
+
+        <p style="font-size: 9pt; font-style: italic; color: var(--muted); margin-top: 0.06in;">Previously held roles in social marketing, program management, and operations at Xerox (2007 – 2014).</p>
+
+      </div><!-- /xerox -->
+    </main>
+  </div>
+</div><!-- /page 2 -->
+
+</body>
+</html>
