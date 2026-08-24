@@ -296,14 +296,16 @@
      independently. 2x2 grid, matching the .eq-group pattern. */
   .comic-panels {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    gap: 12px;
     margin: 16px 0 32px;
   }
 
   .comic-panels img {
     display: block;
     width: 100%;
+    max-width: 360px;
+    max-height: 365px;
     height: auto;
   }
 
