@@ -319,7 +319,8 @@
   }
 
   .diagram-thumb {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 360px;
     max-width: 100%;
     border: 1px solid #e2e8f0;
@@ -333,10 +334,13 @@
     border-color: #1e293b;
   }
 
+  /* Both previews share one box ratio so the two cards line up. The shorter
+     diagram letterboxes at the bottom rather than stretching. */
   .diagram-thumb svg {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 950 / 835;
   }
 
   .diagram-thumb-label {
@@ -344,6 +348,7 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 8px;
+    margin-top: auto;
     padding: 12px 16px;
     border-top: 1px solid #e2e8f0;
   }
@@ -417,9 +422,9 @@
     height: auto;
   }
 
-  /* Phone screenshots are 390px wide natively; don't upscale them. */
-  .lightbox-inner--screen {
-    max-width: 392px;
+  /* Treatment panel: screenshot beside its pros and cons. */
+  .lightbox-inner--detail {
+    padding: 0 32px;
   }
 
   .lightbox-inner img {
@@ -970,6 +975,24 @@
     margin: 0;
   }
 
+  /* Second, explicit way into the same panel, so the expand affordance is
+     not carried by the image overlay alone. */
+  .nk-matrix-more {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6B4C9A;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+
+  .nk-matrix-more:hover {
+    border-bottom-color: #6B4C9A;
+  }
+
   /* Shape and text carry the verdict; colour is only reinforcement. */
   .nk-yes,
   .nk-no {
@@ -980,31 +1003,6 @@
   .nk-yes { color: #15803D; }
   .nk-no  { color: #B91C1C; }
 
-  .nk-detail {
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .nk-detail summary {
-    cursor: pointer;
-    padding: 14px 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #6B4C9A;
-  }
-
-  .nk-detail summary:focus-visible {
-    outline: 2px solid #1e293b;
-    outline-offset: 4px;
-  }
-
-  .nk-detail .nk-treatment {
-    padding-top: 8px;
-  }
-
-  .nk-detail + .nk-detail .nk-treatment,
-  .nk-detail .nk-treatment {
-    border-top: 0;
-  }
 
   /* Requirements read as a distilled brief. */
   .nk-reqs {
@@ -1537,7 +1535,7 @@
     <span id="guidance-compare-anchor"></span>
     <div class="guidance-compare">
       <a href="#lightbox-guidance-before" class="diagram-thumb" aria-label="Open full-size: before, where our guidance lived">
-      <svg viewBox="0 0 950 835" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: Before: Where our guidance lived. Nine messy piles of paper, each in a different tool. ZeroHeight holds component pages and usage guidelines with no rationale and varied quality. Confluence holds five separate spaces: UX content design with three dozen sub-pages, UX design, UX operations with component guidance and Help Center standards side by side though unrelated, UX research, and five personal spaces, one per person. Miro holds the notification decision tree. Figma holds temporary components, but their usage docs lived on the UX ops wiki. A UX SharePoint site holds more unlabeled pages. Below the piles, six people represent tribal knowledge that was never documented: component selection, date and time decisions, product terminology, change management, notification expertise, and product-specific language." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+      <svg viewBox="0 0 950 835" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: Before: Where our guidance lived. Nine messy piles of paper, each in a different tool. ZeroHeight holds component pages and usage guidelines with no rationale and varied quality. Confluence holds five separate spaces: UX content design with three dozen sub-pages, UX design, UX operations with component guidance and Help Center standards side by side though unrelated, UX research, and five personal spaces, one per person. Miro holds the notification decision tree. Figma holds temporary components, but their usage docs lived on the UX ops wiki. A UX SharePoint site holds more unlabeled pages. Below the piles, six people represent tribal knowledge that was never documented: component selection, date and time decisions, product terminology, change management, notification expertise, and product-specific language." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
         <title>Before: Where our guidance lived</title>
 
         <text x="475" y="32" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Before: Where our guidance lived</text>
@@ -1726,7 +1724,7 @@
         </span>
       </a>
       <a href="#lightbox-guidance-after" class="diagram-thumb" aria-label="Open full-size: after, knowledge architecture">
-      <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: After: knowledge architecture. A page tree with root ZeroHeight, splitting into five sections. Strategy and foundations holds communication strategy, voice and tone, and decision frameworks. Content standards holds the word list, product terminology, pages on talking about people, our clients, and our company, date and time formats, and visuals, which covers visual hierarchy, graphs and charts, illustrations, video, and microanimation. Components holds one page per component with a standard structure: purpose, when to use and what to use instead, usage guidance, content standards, reusable content, content templates, visual standards, technical standards, multimedia standards, and related patterns. Communications holds system comms, expanded to show the standard page structure of overview, guidelines, template, and examples; change management and notifications follow the same structure. Platform standards holds reusable patterns and dashboard rules." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: After: knowledge architecture. A page tree with root ZeroHeight, splitting into five sections. Strategy and foundations holds communication strategy, voice and tone, and decision frameworks. Content standards holds the word list, product terminology, pages on talking about people, our clients, and our company, date and time formats, and visuals, which covers visual hierarchy, graphs and charts, illustrations, video, and microanimation. Components holds one page per component with a standard structure: purpose, when to use and what to use instead, usage guidance, content standards, reusable content, content templates, visual standards, technical standards, multimedia standards, and related patterns. Communications holds system comms, expanded to show the standard page structure of overview, guidelines, template, and examples; change management and notifications follow the same structure. Platform standards holds reusable patterns and dashboard rules." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
 
         <text x="500" y="40" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">After: knowledge architecture</text>
 
@@ -1906,7 +1904,7 @@
       <a href="#guidance-compare-anchor" class="lightbox-backdrop" tabindex="-1"></a>
       <a href="#guidance-compare-anchor" class="lightbox-close" aria-label="Close">&times;</a>
       <div class="lightbox-inner">
-      <svg viewBox="0 0 950 835" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: Before: Where our guidance lived. Nine messy piles of paper, each in a different tool. ZeroHeight holds component pages and usage guidelines with no rationale and varied quality. Confluence holds five separate spaces: UX content design with three dozen sub-pages, UX design, UX operations with component guidance and Help Center standards side by side though unrelated, UX research, and five personal spaces, one per person. Miro holds the notification decision tree. Figma holds temporary components, but their usage docs lived on the UX ops wiki. A UX SharePoint site holds more unlabeled pages. Below the piles, six people represent tribal knowledge that was never documented: component selection, date and time decisions, product terminology, change management, notification expertise, and product-specific language." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+      <svg viewBox="0 0 950 835" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: Before: Where our guidance lived. Nine messy piles of paper, each in a different tool. ZeroHeight holds component pages and usage guidelines with no rationale and varied quality. Confluence holds five separate spaces: UX content design with three dozen sub-pages, UX design, UX operations with component guidance and Help Center standards side by side though unrelated, UX research, and five personal spaces, one per person. Miro holds the notification decision tree. Figma holds temporary components, but their usage docs lived on the UX ops wiki. A UX SharePoint site holds more unlabeled pages. Below the piles, six people represent tribal knowledge that was never documented: component selection, date and time decisions, product terminology, change management, notification expertise, and product-specific language." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
         <title>Before: Where our guidance lived</title>
 
         <text x="475" y="32" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Before: Where our guidance lived</text>
@@ -2096,7 +2094,7 @@
       <a href="#guidance-compare-anchor" class="lightbox-backdrop" tabindex="-1"></a>
       <a href="#guidance-compare-anchor" class="lightbox-close" aria-label="Close">&times;</a>
       <div class="lightbox-inner">
-      <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: After: knowledge architecture. A page tree with root ZeroHeight, splitting into five sections. Strategy and foundations holds communication strategy, voice and tone, and decision frameworks. Content standards holds the word list, product terminology, pages on talking about people, our clients, and our company, date and time formats, and visuals, which covers visual hierarchy, graphs and charts, illustrations, video, and microanimation. Components holds one page per component with a standard structure: purpose, when to use and what to use instead, usage guidance, content standards, reusable content, content templates, visual standards, technical standards, multimedia standards, and related patterns. Communications holds system comms, expanded to show the standard page structure of overview, guidelines, template, and examples; change management and notifications follow the same structure. Platform standards holds reusable patterns and dashboard rules." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Titled: After: knowledge architecture. A page tree with root ZeroHeight, splitting into five sections. Strategy and foundations holds communication strategy, voice and tone, and decision frameworks. Content standards holds the word list, product terminology, pages on talking about people, our clients, and our company, date and time formats, and visuals, which covers visual hierarchy, graphs and charts, illustrations, video, and microanimation. Components holds one page per component with a standard structure: purpose, when to use and what to use instead, usage guidance, content standards, reusable content, content templates, visual standards, technical standards, multimedia standards, and related patterns. Communications holds system comms, expanded to show the standard page structure of overview, guidelines, template, and examples; change management and notifications follow the same structure. Platform standards holds reusable patterns and dashboard rules." font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
 
         <text x="500" y="40" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">After: knowledge architecture</text>
 
@@ -2572,40 +2570,44 @@
                 <img class="nk-matrix-thumb" src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
                      alt="The Dashboard Tasks tile showing only a count of open tasks.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
-                <span class="sr-only">Expand image</span>
+                <span class="sr-only">See full details</span>
               </a>
               <span class="nk-matrix-name">Make it a Task</span>
               <span class="nk-matrix-status">In production</span>
+              <a class="nk-matrix-more" href="#lb-nook-task">See details</a>
             </th>
             <th scope="col">
               <a class="nk-thumb-link" href="#lb-nook-banner">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
                      alt="A purple promotional banner inside the Tasks tile.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
-                <span class="sr-only">Expand image</span>
+                <span class="sr-only">See full details</span>
               </a>
               <span class="nk-matrix-name">Add a banner to Tasks</span>
               <span class="nk-matrix-status">In production &middot; later discontinued</span>
+              <a class="nk-matrix-more" href="#lb-nook-banner">See details</a>
             </th>
             <th scope="col">
               <a class="nk-thumb-link" href="#lb-nook-badge">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
                      alt="The open menu showing a teal New badge beside Perks.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
-                <span class="sr-only">Expand image</span>
+                <span class="sr-only">See full details</span>
               </a>
               <span class="nk-matrix-name">Add a "New" badge</span>
               <span class="nk-matrix-status">Used at Perks launch</span>
+              <a class="nk-matrix-more" href="#lb-nook-badge">See details</a>
             </th>
             <th scope="col">
               <a class="nk-thumb-link" href="#lb-nook-popup">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
                      alt="A promotional pop-up covering the Dashboard at login.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
-                <span class="sr-only">Expand image</span>
+                <span class="sr-only">See full details</span>
               </a>
               <span class="nk-matrix-name">Show a pop-up at login</span>
               <span class="nk-matrix-status">Previously used</span>
+              <a class="nk-matrix-more" href="#lb-nook-popup">See details</a>
             </th>
           </tr>
         </thead>
@@ -2645,143 +2647,119 @@
       <div class="lightbox" id="lb-nook-task">
         <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
         <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
-        <div class="lightbox-inner lightbox-inner--screen">
-          <img src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
-               alt="The Dashboard Tasks tile showing only a count of open tasks.">
+        <div class="lightbox-inner lightbox-inner--detail">
+          <div class="nk-treatment">
+            <div class="nk-treatment-visual">
+              <img src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
+                   alt="The Dashboard Tasks tile showing only a count of open tasks, and the task list where Perks appears as one item among several.">
+            </div>
+            <div class="nk-treatment-body">
+              <h5 class="nk-treatment-h">Make it a Task</h5>
+              <p class="nk-status">In production</p>
+              <p class="nk-pc-label">Pros</p>
+              <ul>
+                <li>Persistent until users visited Perks</li>
+                <li>Non-blocking</li>
+              </ul>
+              <p class="nk-pc-label">Cons</p>
+              <ul>
+                <li>Poor visibility. Tasks was below the fold, and the Dashboard showed only the number of open tasks.</li>
+                <li>Unknown impact. The Task and menu item had always been live; together, the existing experience produced an 18% first-month visit rate.</li>
+                <li>Devalued the pattern. Tasks were intended for things users actually needed to do.</li>
+                <li>Risked trust. Users complained about being tricked into opening an ad disguised as a Task.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="lightbox" id="lb-nook-banner">
         <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
         <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
-        <div class="lightbox-inner lightbox-inner--screen">
-          <img src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
-               alt="A purple promotional banner inside the Tasks tile.">
+        <div class="lightbox-inner lightbox-inner--detail">
+          <div class="nk-treatment">
+            <div class="nk-treatment-visual">
+              <img src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
+                   alt="A purple promotional banner reading &quot;Check out Perks for exclusive deals&quot; inside the Tasks tile, directly beneath the tile title and above the count of 7 tasks.">
+            </div>
+            <div class="nk-treatment-body">
+              <h5 class="nk-treatment-h">Add a banner to Tasks</h5>
+              <p class="nk-status">In production &middot; later discontinued</p>
+              <p class="nk-pc-label">Pros</p>
+              <ul>
+                <li>Persistent</li>
+                <li>Non-blocking</li>
+                <li>Moderate impact. New-user visits increased from 18% to 23%.</li>
+              </ul>
+              <p class="nk-pc-label">Cons</p>
+              <ul>
+                <li>Poor visibility. It still lived behind a below-the-fold Tasks tile.</li>
+                <li>Added noise to the Dashboard.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="lightbox" id="lb-nook-badge">
         <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
         <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
-        <div class="lightbox-inner lightbox-inner--screen">
-          <img src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
-               alt="The open menu showing a teal New badge beside Perks.">
+        <div class="lightbox-inner lightbox-inner--detail">
+          <div class="nk-treatment">
+            <div class="nk-treatment-visual">
+              <img src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
+                   alt="The open menu showing a teal New badge beside Perks.">
+            </div>
+            <div class="nk-treatment-body">
+              <h5 class="nk-treatment-h">Add a "New" badge</h5>
+              <p class="nk-status">Used at Perks launch</p>
+              <p class="nk-pc-label">Pros</p>
+              <ul>
+                <li>High impact. Users who saw the treatment were 35% more likely to visit than the control.</li>
+                <li>Persistent until action</li>
+                <li>Non-blocking</li>
+                <li>Prompted action by creating a strong drive to clear the notification indicator.</li>
+              </ul>
+              <p class="nk-pc-label">Cons</p>
+              <ul>
+                <li>Different audience. The result came from an existing-user launch; we didn't know whether it would work the same way when the entire product was new.</li>
+                <li>Perks wasn't new anymore.</li>
+                <li>Devalued the pattern. Promotional use weakened the meaning of "New" when we actually needed to communicate new functionality.</li>
+                <li>Risked trust. A false "New" signal teaches users that product cues may really be ads.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="lightbox" id="lb-nook-popup">
         <a href="#nook-matrix-anchor" class="lightbox-backdrop" tabindex="-1"></a>
         <a href="#nook-matrix-anchor" class="lightbox-close" aria-label="Close">&times;</a>
-        <div class="lightbox-inner lightbox-inner--screen">
-          <img src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
-               alt="A promotional pop-up covering the Dashboard at login.">
+        <div class="lightbox-inner lightbox-inner--detail">
+          <div class="nk-treatment">
+            <div class="nk-treatment-visual">
+              <img src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
+                   alt="A pop-up covering the Dashboard at login, headed &quot;Don't miss out!&quot;, promoting limited-time access to Perks with buttons to explore Perks now, be reminded later, or decline.">
+            </div>
+            <div class="nk-treatment-body">
+              <h5 class="nk-treatment-h">Show a pop-up at login</h5>
+              <p class="nk-status">Previously used</p>
+              <p class="nk-pc-label">Pros</p>
+              <ul>
+                <li>Maximum visibility</li>
+                <li>High immediate impact. 24% of users who saw it visited Perks.</li>
+              </ul>
+              <p class="nk-pc-label">Cons</p>
+              <ul>
+                <li>Blocking. It interrupted users before they could do what they'd logged in to do.</li>
+                <li>One-time. It produced an immediate bump, not sustained visibility.</li>
+                <li>Lower-quality traffic. Visits increased, but interaction with Perks decreased.</li>
+                <li>Risked trust. Promotional interruptions made it harder to know when an interruption was actually important.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-
-      <details class="nk-detail">
-        <summary>Make it a Task</summary>
-      <div class="nk-treatment">
-        <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
-               alt="The Dashboard Tasks tile showing only a count of open tasks, and the task list where Perks appears as one item among several.">
-        </div>
-        <div class="nk-treatment-body">
-          <h5 class="nk-treatment-h">Make it a Task</h5>
-          <p class="nk-status">In production</p>
-          <p class="nk-pc-label">Pros</p>
-          <ul>
-            <li>Persistent until users visited Perks</li>
-            <li>Non-blocking</li>
-          </ul>
-          <p class="nk-pc-label">Cons</p>
-          <ul>
-            <li>Poor visibility. Tasks was below the fold, and the Dashboard showed only the number of open tasks.</li>
-            <li>Unknown impact. The Task and menu item had always been live; together, the existing experience produced an 18% first-month visit rate.</li>
-            <li>Devalued the pattern. Tasks were intended for things users actually needed to do.</li>
-            <li>Risked trust. Users complained about being tricked into opening an ad disguised as a Task.</li>
-          </ul>
-        </div>
-      </div>
-      </details>
-
-      <details class="nk-detail">
-        <summary>Add a banner to Tasks</summary>
-      <div class="nk-treatment">
-        <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
-               alt="A purple promotional banner reading &quot;Check out Perks for exclusive deals&quot; inside the Tasks tile, directly beneath the tile title and above the count of 7 tasks.">
-        </div>
-        <div class="nk-treatment-body">
-          <h5 class="nk-treatment-h">Add a banner to Tasks</h5>
-          <p class="nk-status">In production &middot; later discontinued</p>
-          <p class="nk-pc-label">Pros</p>
-          <ul>
-            <li>Persistent</li>
-            <li>Non-blocking</li>
-            <li>Moderate impact. New-user visits increased from 18% to 23%.</li>
-          </ul>
-          <p class="nk-pc-label">Cons</p>
-          <ul>
-            <li>Poor visibility. It still lived behind a below-the-fold Tasks tile.</li>
-            <li>Added noise to the Dashboard.</li>
-          </ul>
-        </div>
-      </div>
-      </details>
-
-      <details class="nk-detail">
-        <summary>Add a "New" badge</summary>
-      <div class="nk-treatment">
-        <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
-               alt="The open menu showing a teal New badge beside Perks.">
-        </div>
-        <div class="nk-treatment-body">
-          <h5 class="nk-treatment-h">Add a "New" badge</h5>
-          <p class="nk-status">Used at Perks launch</p>
-          <p class="nk-pc-label">Pros</p>
-          <ul>
-            <li>High impact. Users who saw the treatment were 35% more likely to visit than the control.</li>
-            <li>Persistent until action</li>
-            <li>Non-blocking</li>
-            <li>Prompted action by creating a strong drive to clear the notification indicator.</li>
-          </ul>
-          <p class="nk-pc-label">Cons</p>
-          <ul>
-            <li>Different audience. The result came from an existing-user launch; we didn't know whether it would work the same way when the entire product was new.</li>
-            <li>Perks wasn't new anymore.</li>
-            <li>Devalued the pattern. Promotional use weakened the meaning of "New" when we actually needed to communicate new functionality.</li>
-            <li>Risked trust. A false "New" signal teaches users that product cues may really be ads.</li>
-          </ul>
-        </div>
-      </div>
-      </details>
-
-      <details class="nk-detail">
-        <summary>Show a pop-up at login</summary>
-      <div class="nk-treatment">
-        <div class="nk-treatment-visual">
-          <img src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
-               alt="A pop-up covering the Dashboard at login, headed &quot;Don't miss out!&quot;, promoting limited-time access to Perks with buttons to explore Perks now, be reminded later, or decline.">
-        </div>
-        <div class="nk-treatment-body">
-          <h5 class="nk-treatment-h">Show a pop-up at login</h5>
-          <p class="nk-status">Previously used</p>
-          <p class="nk-pc-label">Pros</p>
-          <ul>
-            <li>Maximum visibility</li>
-            <li>High immediate impact. 24% of users who saw it visited Perks.</li>
-          </ul>
-          <p class="nk-pc-label">Cons</p>
-          <ul>
-            <li>Blocking. It interrupted users before they could do what they'd logged in to do.</li>
-            <li>One-time. It produced an immediate bump, not sustained visibility.</li>
-            <li>Lower-quality traffic. Visits increased, but interaction with Perks decreased.</li>
-            <li>Risked trust. Promotional interruptions made it harder to know when an interruption was actually important.</li>
-          </ul>
-        </div>
-      </div>
-      </details>
 
       <h4 class="cs-label">We don't need to hijack a pattern to get attention</h4>
 
