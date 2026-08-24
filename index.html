@@ -473,12 +473,20 @@
     padding: 16px 20px;
   }
 
+  /* line-height governs spacing within a wrapped line; the + selector adds
+     extra space between separate operand lines, so a hard return reads as
+     more of a break than a wrap. */
   .eq-line {
     position: relative;
     padding-left: 22px;
     font-size: 16px;
+    line-height: 1.3;
     color: #475569;
     margin: 0;
+  }
+
+  .eq-line + .eq-line {
+    margin-top: 6px;
   }
 
   .eq-op {
