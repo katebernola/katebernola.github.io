@@ -965,6 +965,14 @@
     border-color: #1e293b;
   }
 
+  /* Reserves space for the longest title+status pairing across the four
+     columns, so every image starts at the same vertical position instead
+     of drifting with how much each one wraps. */
+  .nk-matrix-head-text {
+    min-height: 94px;
+    margin-bottom: 8px;
+  }
+
   .nk-matrix-name {
     display: block;
     font-size: 15px;
@@ -2771,47 +2779,55 @@
           <tr>
             <td class="nk-matrix-corner"></td>
             <th scope="col">
+              <div class="nk-matrix-head-text">
+                <span class="nk-matrix-name">Make it a Task</span>
+                <span class="nk-matrix-status">In production</span>
+              </div>
               <a class="nk-thumb-link" href="#lb-nook-task">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-task.png" width="390" height="808" loading="lazy" decoding="async"
                      alt="The Dashboard Tasks tile showing only a count of open tasks.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
                 <span class="sr-only">See full details</span>
               </a>
-              <span class="nk-matrix-name">Make it a Task</span>
-              <span class="nk-matrix-status">In production</span>
               <a class="nk-matrix-more" href="#lb-nook-task">See details</a>
             </th>
             <th scope="col">
+              <div class="nk-matrix-head-text">
+                <span class="nk-matrix-name">Add a banner to Tasks</span>
+                <span class="nk-matrix-status">In production &middot; later discontinued</span>
+              </div>
               <a class="nk-thumb-link" href="#lb-nook-banner">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-banner.png" width="390" height="808" loading="lazy" decoding="async"
                      alt="A purple promotional banner inside the Tasks tile.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
                 <span class="sr-only">See full details</span>
               </a>
-              <span class="nk-matrix-name">Add a banner to Tasks</span>
-              <span class="nk-matrix-status">In production &middot; later discontinued</span>
               <a class="nk-matrix-more" href="#lb-nook-banner">See details</a>
             </th>
             <th scope="col">
+              <div class="nk-matrix-head-text">
+                <span class="nk-matrix-name">Add a "New" badge</span>
+                <span class="nk-matrix-status">Used at Perks launch</span>
+              </div>
               <a class="nk-thumb-link" href="#lb-nook-badge">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-new-open.png" width="390" height="803" loading="lazy" decoding="async"
                      alt="The open menu showing a teal New badge beside Perks.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
                 <span class="sr-only">See full details</span>
               </a>
-              <span class="nk-matrix-name">Add a "New" badge</span>
-              <span class="nk-matrix-status">Used at Perks launch</span>
               <a class="nk-matrix-more" href="#lb-nook-badge">See details</a>
             </th>
             <th scope="col">
+              <div class="nk-matrix-head-text">
+                <span class="nk-matrix-name">Show a pop-up at login</span>
+                <span class="nk-matrix-status">Previously used</span>
+              </div>
               <a class="nk-thumb-link" href="#lb-nook-popup">
                 <img class="nk-matrix-thumb" src="images/nook/treatment-popup.png" width="390" height="808" loading="lazy" decoding="async"
                      alt="A promotional pop-up covering the Dashboard at login.">
                 <span class="nk-thumb-expand" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
                 <span class="sr-only">See full details</span>
               </a>
-              <span class="nk-matrix-name">Show a pop-up at login</span>
-              <span class="nk-matrix-status">Previously used</span>
               <a class="nk-matrix-more" href="#lb-nook-popup">See details</a>
             </th>
           </tr>
