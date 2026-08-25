@@ -301,12 +301,18 @@
     margin: 16px 0 32px;
   }
 
+  /* Panel files are natively 492x557; aspect-ratio keeps that proportion
+     exact instead of fighting a fixed max-height meant for the old files. */
   .comic-panels img {
     display: block;
     width: 100%;
     max-width: 288px;
-    max-height: 292px;
     height: auto;
+    aspect-ratio: 492 / 557;
+  }
+
+  .comic-figure {
+    margin: 0;
   }
 
   /* Small side-by-side previews of the two guidance diagrams. Each links
@@ -2680,12 +2686,21 @@
       <p>Now, the agent coached users through the challenges they were up against. It gave them the content they came for, surfaced the most relevant risks or standards alongside it, and let them decide what to do next.</p>
 
       <p class="eq-title">UX Designer in Toggle Trouble</p>
-      <div class="comic-panels">
-        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-1.png" alt="A designer asks the bot to help write copy for a toggle: 'Send refund by direct deposit. Otherwise, you'll get a paper check in the mail.'">
-        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-2.png" alt="The bot asks a clarifying question: is the user choosing between two ways to get their refund? The designer confirms yes.">
-        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-3.png" alt="The bot explains the rule: a toggle means on or off, but this is an either/or choice, so it needs radio buttons instead.">
-        <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-4.png" alt="The bot's recommendation swaps the toggle for radio buttons asking how the user wants their refund: direct deposit or a mailed check. It offers to draft the toggle version too if it's required, and to flag the risk.">
-      </div>
+      <figure class="comic-figure" aria-labelledby="comic-toggle-trouble-title">
+        <h2 id="comic-toggle-trouble-title" class="sr-only">UX Designer in Toggle Trouble</h2>
+        <div class="comic-panels">
+          <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-1.png" alt="">
+          <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-2.png" alt="">
+          <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-3.png" alt="">
+          <img src="images/comic-toggle-trouble/ux-designer-in-toggle-trouble-panel-4.png" alt="">
+        </div>
+        <figcaption class="sr-only">
+          <p>Panel 1. A UX designer says, "Hi coach! Help me write this." The request uses an on toggle and says, "Send refund by direct deposit. Otherwise, you'll get a paper check in the mail."</p>
+          <p>Panel 2. The Coach asks, "Quick question. Are they choosing between two ways to get their refund?" The designer replies, "Yep."</p>
+          <p>Panel 3. The Coach says, "Use radio buttons for a choice." A toggle is labeled "on / off" and marked with a red X. Two stacked radio buttons are labeled "either / or" and marked with a green check.</p>
+          <p>Panel 4. Recommendation: "How would you like to receive your refund?" "Direct deposit" is selected. "Paper check in the mail" is unselected. The Coach adds, "Tell me if this must be a toggle. I'll give you a draft, and help you flag the risk."</p>
+        </figcaption>
+      </figure>
 
       <p>Product designers starting a new project could still ask it to walk them through the simplified content design process we had outlined. We kept that original workflow in place, just toned down the pushback.</p>
 
