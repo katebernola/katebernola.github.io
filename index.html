@@ -671,6 +671,41 @@
     font-weight: 700;
   }
 
+  /* Collapsed by default wherever a phase has a case study above it, so the
+     one full story leads and these stay a secondary, optional read. Reuses
+     the .stat accordion's rotating-plus affordance from team.html. */
+  .more-ways > summary {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #1e293b;
+    margin: 0 0 16px;
+  }
+
+  .more-ways > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .more-ways-icon {
+    font-size: 20px;
+    color: #475569;
+    transition: transform 0.2s;
+  }
+
+  .more-ways[open] .more-ways-icon {
+    transform: rotate(45deg);
+  }
+
+  .more-ways summary:focus-visible {
+    outline: 2px solid #1e293b;
+    outline-offset: 4px;
+  }
+
   .key-insight {
     border-left: 3px solid #6B4C9A;
     padding-left: 20px;
@@ -1374,12 +1409,14 @@
     <p>Before, the team created 3 videos per sprint. After, they produced 4 videos over the next few years. One was a C-suite ask, but the other three had data to support them.</p>
     </div>
 
-    <h3>Other ways it played out</h3>
-    <ul>
-      <li><strong>Product design:</strong> We stopped designing for rare error cases. The PO shipped a generic message first and only invested more if the data showed it was needed.</li>
-      <li><strong>Content design:</strong> Help Center articles made up the bulk of the Content Design team's work. I applied the same break-even math we used for Help Center videos. We cut production and upkeep by 90%.</li>
-      <li><strong>Multimedia design:</strong> One 30-minute conversation paved the way to return demo videos to the original producers. All we had to do was create a reusable template. </li>
-    </ul>
+    <details class="more-ways">
+      <summary>Other ways it played out <span class="more-ways-icon" aria-hidden="true">+</span></summary>
+      <ul>
+        <li><strong>Product design:</strong> We stopped designing for rare error cases. The PO shipped a generic message first and only invested more if the data showed it was needed.</li>
+        <li><strong>Content design:</strong> Help Center articles made up the bulk of the Content Design team's work. I applied the same break-even math we used for Help Center videos. We cut production and upkeep by 90%.</li>
+        <li><strong>Multimedia design:</strong> One 30-minute conversation paved the way to return demo videos to the original producers. All we had to do was create a reusable template. </li>
+      </ul>
+    </details>
 
     <div class="key-insight">
       <p class="ki-label">Key insight</p>
@@ -1505,12 +1542,14 @@
     <p>Seek out projects where the need is so obvious, sending in an expert feels like cheating.</p>
 
 
-    <h3>Other ways it played out</h3>
-    <ul>
-      <li><strong>Multimedia design</strong>: When we completely overhauled our accountant portal, the content designer requested a few images. I embedded a multimedia designer on the project, enabling him to define visual hierarchy for the new portal. He also suggested micro-animations that enhanced usability.</li>
-      <li><strong>Content design</strong>: A 401(k) rebalancing flow had failed three rounds of usability testing. Before I committed a resource, I made a bargain: yes, we could do this, but I also wanted early engagement on an upcoming project. The designer completed both with flying colors, and the retirement team made him their full-time content designer.</li>
-      <li><strong>Content design</strong>: A payroll team asked for "content support" on a workflow nobody could explain. I proved the real issue was system design. Instead of implementing a band-aid, we focused our time on other projects where we could make an impact.</li>
-    </ul>
+    <details class="more-ways">
+      <summary>Other ways it played out <span class="more-ways-icon" aria-hidden="true">+</span></summary>
+      <ul>
+        <li><strong>Multimedia design</strong>: When we completely overhauled our accountant portal, the content designer requested a few images. I embedded a multimedia designer on the project, enabling him to define visual hierarchy for the new portal. He also suggested micro-animations that enhanced usability.</li>
+        <li><strong>Content design</strong>: A 401(k) rebalancing flow had failed three rounds of usability testing. Before I committed a resource, I made a bargain: yes, we could do this, but I also wanted early engagement on an upcoming project. The designer completed both with flying colors, and the retirement team made him their full-time content designer.</li>
+        <li><strong>Content design</strong>: A payroll team asked for "content support" on a workflow nobody could explain. I proved the real issue was system design. Instead of implementing a band-aid, we focused our time on other projects where we could make an impact.</li>
+      </ul>
+    </details>
 
     <div class="key-insight">
       <p class="ki-label">Key insight</p>
@@ -1531,25 +1570,17 @@
     <p class="cs-tag">Case study</p>
     <h3>Turning an AI agent into a design coach</h3>
 
-    <p class="cs-label">Content designers could no longer support every project</p>
-    <p>The roadmap was expanding while content design headcount was shrinking.</p>
-    <p>We needed to help product designers make better content and design decisions without putting a content designer on every project.</p>
+    <p class="cs-label">We needed to scale design expertise</p>
+    <p>The roadmap was expanding while content design headcount was shrinking, just as demand for in-app messaging was growing across UX and the business.</p>
+    <p>We needed more people to make strong decisions about content, placement, and messaging strategy without relying on a content designer for every project.</p>
 
     <p class="cs-label">Our first AI writing tool fell flat</p>
     <p>To help people write UI content, we built an agent in LibreChat. But there was no way to import extensive documentation; the agent had only two short instruction fields. Even our word list was too long. We spent our limited characters on broad guidance: friendly, simple, clear.</p>
-    <p>The results were "meh." The agent could rewrite copy, but not particularly well. It missed subjective concepts like tone. Even straightforward criteria like capitalization were unreliable because it treated too many words as proper nouns.</p>
-    <p>The tool could produce text. It couldn't scale content design expertise.</p>
+    <p>The results were "meh." The agent could rewrite copy, but not particularly well. It missed subjective concepts like tone, and sometimes even straightforward criteria like capitalization.</p>
 
     <p class="cs-label">Meanwhile, we turned scattered guidance into a system</p>
-    <p>In parallel, we were making our content knowledge easier to use. An audit revealed just how unruly our documentation had become. It worked, sort of, for an extremely tight-knit team of 10, but there was no way to expand that system to 60+ product designers.</p>
-    <p>We rebuilt the standards where designers would use them: directly in the design system documentation.</p>
-    <p>Here's what we did.</p>
-    <ul>
-      <li>Gave content guidance a clear home.</li>
-      <li>Replaced scattered lists of options with clearer rules.</li>
-      <li>Clarified what each component was for and when to use it.</li>
-      <li>Added content standards alongside component guidance.</li>
-    </ul>
+    <p>In parallel, we were consolidating an enormous array of documentation, to make it more accessible and searchable for others.</p>
+    <p>This structure gave strategy, standards, and guidance one clear home: our design system.</p>
 
     <span id="guidance-compare-anchor"></span>
     <div class="guidance-compare">
@@ -2285,12 +2316,19 @@
       </div>
     </div>
 
-      <p>The result was much clearer guidance: not just what to do, but what decisions it was helping designers make and why.</p>
+    <p>We added a lot of information to the design system, and made it significantly easier to use.</p>
+    <p>Here's what we did.</p>
+    <ul>
+      <li>Gave content guidance a clear home.</li>
+      <li>Replaced scattered lists of options with clearer rules.</li>
+      <li>Clarified what each component was for and when to use it.</li>
+      <li>Added content standards alongside component guidance.</li>
+    </ul>
+    <p>The audience for this work was people, not AI.</p>
 
-      <p class="cs-label">We mistook clear rules for an automatable process</p>
-      <p>Leadership was pushing hard to scale more work through AI. I saw an opportunity: could an agent enforce the decisions we constantly had to coach people through?</p>
-      <p>We defined a basic content design workflow around common requests. Then I loaded it into Copilot and taught the agent to challenge questionable communication decisions before giving people the content they asked for.</p>
-      <p>The goal was ambitious: automate the content design process itself.</p>
+    <p class="cs-label">We mistook clear rules for an automatable process</p>
+    <p>Leadership was pushing hard to scale more work through AI. I saw an opportunity: could an agent go beyond advising and actually enforce the decisions we constantly had to coach people through?</p>
+    <p>We defined a basic content design workflow around common requests, then loaded it into Copilot. I taught the agent to complete a thorough intake assessment, and to challenge questionable communication decisions before giving people the content they asked for. It would only provide content after everything else had been resolved.</p>
 
     <span id="workflow-anchor"></span>
     <a href="#lightbox-workflow" class="diagram-thumb diagram-thumb--tall" aria-label="Open full-size: the workflow we set out to automate">
@@ -2675,15 +2713,14 @@
       </div>
     </div>
 
-      <p class="cs-label">It failed immediately in testing</p>
-      <p>Feedback from inside and outside UX was damning: "It took too long" and "it wouldn't give me what I needed."</p>
-      <p>Most projects were already in execution. It was too late to send designers back through the full content design process. Partners outside UX had a different problem: they didn't need a police officer. They needed someone who could help them find a better way to meet their goal.</p>
-      <p>I had taught the agent what to push back on. I hadn't taught it how to find the workable alternative. That required judgment, creativity, and negotiation.</p>
-      <p>People came in asking for content. The agent didn't give it to them; it made them earn it.</p>
+    <p class="cs-label">It failed immediately in testing</p>
+    <p>Feedback from inside and outside UX was damning: "It took too long" and "it wouldn't give me what I needed."</p>
+    <p>Within UX, it was generally too late to send designers back through the full content design process.</p>
+    <p>Outside UX, partners didn't need a police officer. They needed someone who could help them find a better way to meet their goal. That required judgment, creativity, and negotiation.</p>
 
-      <p class="cs-label">We changed the agent from cop to coach</p>
-      <p>The original agent applied every standard as a hard rule. It caught every infraction, and wouldn't move forward until each was fixed.</p>
-      <p>Now, the agent coached users through the challenges they were up against. It gave them the content they came for, surfaced the most relevant risks or standards alongside it, and let them decide what to do next.</p>
+    <p class="cs-label">We changed the agent from cop to coach</p>
+    <p>The original agent caught every infraction, and tried to force a fix.</p>
+    <p>Now, the agent coached users through the challenges they were up against. It gave them the content they came for, surfaced the most relevant risks or standards alongside it, and let them decide what to do next.</p>
 
       <p class="eq-title">UX Designer in Toggle Trouble</p>
       <figure class="comic-figure" aria-labelledby="comic-toggle-trouble-title">
@@ -2702,12 +2739,25 @@
         </figcaption>
       </figure>
 
-      <p>Product designers starting a new project could still ask it to walk them through the simplified content design process we had outlined. We kept that original workflow in place, just toned down the pushback.</p>
+    <p>Product designers starting a new project could still ask it to walk them through the simplified content design process we had outlined. We kept that original workflow in place, just toned down the pushback.</p>
 
-      <p class="cs-label">When users got what they came for, we did, too</p>
-      <p>The new approach worked. 122 people across UX and partner teams adopted the coach.</p>
-      <p>Their content got better. Partner requests and design flows were better aligned to strategy. Straightforward standards like word choice, character limits, partner names, and date formats were routinely incorporated. The coach also brought less familiar guidance into the work, from communication strategy to reading level and contextual placement.</p>
-      <p>A few months later, one of my team's design reviews made me especially happy. Four designers who were native Spanish speakers agreed that, if they had to choose, they'd take the coach's design guidance over its writing help.</p>
+    <p class="cs-label">When users got what they came for, we did, too</p>
+    <p>The new approach worked. 122 people across UX and partner teams adopted the coach.</p>
+    <p>Content improved, and requests and design flows became better aligned to strategy. Straightforward standards like word choice, character limits, and date formats were routinely incorporated. The coach also surfaced less familiar guidance, from communication strategy to reading level and contextual placement.</p>
+    <p>The original workflow had its place, too. A few months later, four designers on my team who were native Spanish speakers agreed that, if they had to choose, they'd take the coach's design guidance over its writing help.</p>
+    </div>
+
+    <details class="more-ways">
+      <summary>Other ways it played out <span class="more-ways-icon" aria-hidden="true">+</span></summary>
+      <ul>
+        <li><strong>Product design</strong>: Before creating a new solution, we began with a simple plan with elements that already existed. As we upgraded pieces, we always had something ready-to-ship. This enabled us to pivot on a dime, while also leaving dev with something to code.</li>
+        <li><strong>Multimedia design</strong>: A reusable illustration library let designers assemble graphics from standardized pieces instead of creating every illustration from scratch.</li>
+      </ul>
+    </details>
+
+    <div class="key-insight">
+      <p class="ki-label">Key insight</p>
+      <p class="ki-text">Don't scale people; scale expertise.</p>
     </div>
   </section>
 
