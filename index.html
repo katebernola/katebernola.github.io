@@ -293,20 +293,20 @@
   }
 
   /* Four separate images (not one raster comic) so panels can reflow
-     independently. 2x2 grid, matching the .eq-group pattern. */
+     independently. Fills the full content width as 4 equal columns, so all
+     four sit side by side rather than capping at a fixed per-panel size. */
   .comic-panels {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 288px));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
     margin: 16px 0 32px;
   }
 
-  /* Panel files are natively 492x557; aspect-ratio keeps that proportion
-     exact instead of fighting a fixed max-height meant for the old files. */
+  /* Panel files are natively 500x560; aspect-ratio keeps that proportion
+     exact regardless of the column width the grid gives each one. */
   .comic-panels img {
     display: block;
     width: 100%;
-    max-width: 288px;
     height: auto;
     aspect-ratio: 500 / 560;
   }
@@ -798,11 +798,19 @@
     border: 1px solid #e2e8f0;
   }
 
-  /* Every Nook screen is 390px wide. Cap at native size so none upscales,
-     which keeps them all the same width wherever they appear. */
-  #craft .visual-figure img,
+  /* Lightbox detail screens are the zoomed-in view (like the matrix's own
+     lightboxes), so they stay at native size regardless of the inline sizes
+     below. */
   #craft .nk-treatment-visual img {
     max-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Inline single and paired screens: sized to match what 3-across used to
+     be, per Kate -- one size down from native, one size up from 4-across. */
+  #craft .visual-figure img {
+    max-width: 260px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -816,12 +824,12 @@
     margin: 32px 0;
   }
 
-  /* Grouped screens sit a size down from single screens. */
+  /* 3-across matches the 4-across matrix-thumbnail size, per Kate. */
   .nk-screen-row img,
   #craft .nk-screen-row img {
     display: block;
     width: 100%;
-    max-width: 260px;
+    max-width: 149px;
     height: auto;
     background: #f8f9fa;
     border: 1px solid #e2e8f0;
@@ -860,8 +868,17 @@
     padding: 24px 32px;
   }
 
-  .nk-ticket--card dt {
+  .nk-ticket--card dt,
+  .nk-ticket--card dd {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  .nk-ticket--card dd {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .nk-ticket--card dt {
     font-size: 14px;
     font-weight: 600;
     color: #475569;
