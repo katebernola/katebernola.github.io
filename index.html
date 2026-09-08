@@ -293,11 +293,11 @@
   }
 
   /* Four separate images (not one raster comic) so panels can reflow
-     independently. Fills the full content width as 4 equal columns, so all
-     four sit side by side rather than capping at a fixed per-panel size. */
+     independently. Panels stay a fixed size; only the column count changes
+     by breakpoint (4 / 2 / 1), so they never stretch or shrink themselves. */
   .comic-panels {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 200px);
     gap: 12px;
     margin: 16px 0 32px;
   }
@@ -471,6 +471,10 @@
     max-width: 75ch;
     margin: 24px 0 32px;
     align-items: start;
+  }
+
+  .eq-group--2 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .eq-group .equation {
@@ -1215,6 +1219,12 @@
     outline-offset: 4px;
   }
 
+  /* Comic panels are a fixed 200px; only the column count drops as space
+     runs out (4 above ~872px, 2 here, 1 under 640px). */
+  @media (max-width: 899px) {
+    .comic-panels { grid-template-columns: repeat(2, 200px); }
+  }
+
   @media (max-width: 640px) {
     main { padding: 48px 20px; }
     section { margin-bottom: 64px; }
@@ -1234,7 +1244,7 @@
     /* Once stacked, match the standalone .equation cap instead of filling
        the container. */
     .eq-group .equation { max-width: 360px; }
-    .comic-panels { grid-template-columns: 1fr; }
+    .comic-panels { grid-template-columns: 200px; justify-content: center; }
     .two-col-list { column-count: 1; }
 
     /* Treatment rows stack: visual first, its own analysis directly under it. */
@@ -1412,33 +1422,35 @@
       </div>
       </div>
     <p class="cs-label">Current state</p>
-    <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">Help Center videos</span>
-        <span class="eq-result">237</span>
-      </div>
-      <div class="eq-row">
-        <span class="eq-expr">Videos with 1600+ annual views</span>
-        <span class="eq-result">12</span>
-      </div>
-      <div class="eq-row eq-total">
-        <span class="eq-expr">Videos below ROI threshold</span>
-        <span class="eq-result">95%</span>
-      </div>
-    </div>
     <p>At the old pace of 3 videos a sprint, the cost added up fast.</p>
-    <div class="equation">
-      <div class="eq-row">
-        <span class="eq-expr">Cost per video</span>
-        <span class="eq-result">$1920</span>
+    <div class="eq-group eq-group--2">
+      <div class="equation">
+        <div class="eq-row">
+          <span class="eq-expr">Help Center videos</span>
+          <span class="eq-result">237</span>
+        </div>
+        <div class="eq-row">
+          <span class="eq-expr">Videos with 1600+ annual views</span>
+          <span class="eq-result">12</span>
+        </div>
+        <div class="eq-row eq-total">
+          <span class="eq-expr">Videos below ROI threshold</span>
+          <span class="eq-result">95%</span>
+        </div>
       </div>
-      <div class="eq-row">
-        <span class="eq-expr">Videos per year</span>
-        <span class="eq-result">78</span>
-      </div>
-      <div class="eq-row eq-total">
-        <span class="eq-expr">Annual savings</span>
-        <span class="eq-result">$150k</span>
+      <div class="equation">
+        <div class="eq-row">
+          <span class="eq-expr">Cost per video</span>
+          <span class="eq-result">$1920</span>
+        </div>
+        <div class="eq-row">
+          <span class="eq-expr">Videos per year</span>
+          <span class="eq-result">78</span>
+        </div>
+        <div class="eq-row eq-total">
+          <span class="eq-expr">Annual savings</span>
+          <span class="eq-result">$150k</span>
+        </div>
       </div>
     </div>
 
@@ -2561,7 +2573,6 @@
         </g>
       </svg>
       <span class="diagram-thumb-label">
-        <span class="diagram-thumb-title">The workflow we set out to automate</span>
         <span class="diagram-thumb-cta">View full size</span>
       </span>
     </a>
