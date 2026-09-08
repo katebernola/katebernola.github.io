@@ -1132,9 +1132,89 @@
     transform: rotate(-45deg);
   }
 
-  /* The reach chart is landscape, so it gets the full content column. */
-  #craft .nk-chart img {
-    max-width: 100%;
+  /* Walkthrough reach, drawn as a spine of dots with proportional bars. Built
+     from real elements rather than one SVG so the type stays at its native size
+     on a phone instead of scaling down with the artwork. */
+  .nk-funnel {
+    position: relative;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  /* The spine. Every row and note draws its own segment rather than one line
+     inset from the ends, so it still meets the dots when a label wraps and the
+     rows grow taller. */
+  .nk-funnel-row::after,
+  .nk-funnel-note::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #64748b;
+  }
+
+  /* Start and stop on a dot instead of overshooting it. */
+  .nk-funnel-row:first-child::after { top: 50%; }
+  .nk-funnel-row:last-child::after { bottom: 50%; }
+
+  .nk-funnel-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0 8px 28px;
+  }
+
+  .nk-funnel-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #1e293b;
+  }
+
+  .nk-funnel-label {
+    flex: 0 0 150px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .nk-funnel-track {
+    flex: 1 1 auto;
+    height: 12px;
+    background: #e2e8f0;
+  }
+
+  .nk-funnel-fill {
+    display: block;
+    height: 100%;
+    background: #1e293b;
+  }
+
+  .nk-funnel-pct {
+    flex: 0 0 48px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  /* Sits in the gap between two dots. Margin is zeroed because the paragraph
+     carries a segment of the spine, and a margin would break the line. */
+  .nk-funnel-note {
+    position: relative;
+    margin: 0;
+    padding: 8px 0 8px 28px;
+    font-size: 14px;
+    color: #475569;
   }
 
   /* Conversational aside, deliberately light. */
@@ -1254,6 +1334,10 @@
     .nk-ticket { padding-left: 16px; }
     .nk-ticket--card { padding: 16px 20px; }
     .to-top { right: 16px; bottom: 16px; }
+
+    /* The label moves above its bar so the bar keeps enough width to compare. */
+    .nk-funnel-row { flex-wrap: wrap; gap: 4px 12px; }
+    .nk-funnel-label { flex: 1 1 100%; }
 
     /* The matrix keeps its shape and scrolls sideways. Collapsing it to cards
        would break the side-by-side comparison that is the whole point. */
@@ -1593,10 +1677,6 @@
 
       <p>The best part? We didn't have to wait for the next planning cycle to see results. Hours after we shared the work, the POs' manager pushed both kickoffs to give us time to work together.</p>
     </div>
-
-    <h3>What I do</h3>
-    <p>Seek out projects where the need is so obvious, sending in an expert feels like cheating.</p>
-
 
     <details class="more-ways">
       <summary>Other ways it played out <span class="more-ways-icon" aria-hidden="true">+</span></summary>
@@ -2883,8 +2963,50 @@
       <p>Here's the thing ... we'd had a walkthrough before, so we knew exactly how this would go. About two-thirds of users decided "not for me" and never started. Of those who started, about two-thirds dropped off after the first step. Only 8% saw the final step.</p>
 
       <div class="visual-figure nk-chart">
-        <img src="images/nook/walkthrough-reach.jpg" width="1536" height="1024" loading="lazy" decoding="async"
-             alt="Walkthrough reach, falling sharply across six steps: 100% saw the walkthrough offer, two-thirds opted out, 35% saw step 1, two-thirds of those dropped off, and 8% saw the last step.">
+        <div class="nk-funnel">
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Walkthrough offered</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:100%"></span></span>
+            <span class="nk-funnel-pct">100%</span>
+          </div>
+
+          <p class="nk-funnel-note">2 out of every 3 people opted out</p>
+
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Step 1</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:35%"></span></span>
+            <span class="nk-funnel-pct">35%</span>
+          </div>
+
+          <p class="nk-funnel-note">2 out of every 3 people dropped off</p>
+
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Step 2</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:17%"></span></span>
+            <span class="nk-funnel-pct">17%</span>
+          </div>
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Step 3</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:12%"></span></span>
+            <span class="nk-funnel-pct">12%</span>
+          </div>
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Step 4</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:10%"></span></span>
+            <span class="nk-funnel-pct">10%</span>
+          </div>
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Step 5</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:9%"></span></span>
+            <span class="nk-funnel-pct">9%</span>
+          </div>
+          <div class="nk-funnel-row">
+            <span class="nk-funnel-label">Step 6</span>
+            <span class="nk-funnel-track"><span class="nk-funnel-fill" style="width:8%"></span></span>
+            <span class="nk-funnel-pct">8%</span>
+          </div>
+        </div>
+        <p class="visual-caption">Two drop-offs did the damage: opting out, then leaving after step 1.</p>
       </div>
 
       <p>8% is promotional reach, not engagement. We didn't know how many of that 8% would click a Perks promotion.</p>
@@ -3148,14 +3270,17 @@
 
       <p>He could.</p>
 
-      <p>So I pulled in just enough expertise to make it a responsible experiment:</p>
+      <p>So I pulled in just enough expertise to make it a responsible experiment.</p>
 
-      <ul>
-        <li>Pressure-tested the idea with our senior product strategist. We made sure this wasn't a clever idea we'd all come to regret, then chose the four destinations together. About 20 minutes.</li>
-        <li>Brought in our principal visual designer. He made the faux navigation look native to the product. Less than a day.</li>
-        <li>Defined the audience and success metrics. I validated both with a UX researcher and systems data analyst over chat.</li>
-        <li>Crossed the Ts, dotted the Is, and pushed it live.</li>
-      </ul>
+      <p>Our senior product strategist talked through the idea, to make sure it wasn't something we'd all come to regret testing. Together, we chose four screens that the nav bar would link to.</p>
+
+      <p>Our principal visual designer styled the faux nav bar, to make it look native to the product.</p>
+
+      <p>A UX researcher and systems data analyst refined the audience and success metrics.</p>
+
+      <p>A Pendo builder made the whole thing work.</p>
+
+      <p>After I started the conversation, the team ran with it.</p>
 
       <div class="visual-figure nk-visual-group">
         <img src="images/nook/experiment-dashboard-nav.png" width="390" height="808" loading="lazy" decoding="async"
