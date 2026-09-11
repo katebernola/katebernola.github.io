@@ -42,10 +42,19 @@
     line-height: 1.6;
   }
 
+  /* The masthead and nav sit outside <main> (so the skip link can jump past
+     them), which means they have to recreate main's column themselves. The top
+     padding lives on the masthead now, not on main. */
   main {
     max-width: 960px;
     margin: 0 auto;
-    padding: 80px 32px;
+    padding: 0 32px 80px;
+  }
+
+  .masthead {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 32px 0;
   }
 
   h1 {
@@ -128,9 +137,10 @@
     align-items: baseline;
     gap: 32px;
     background: #ffffff;
-    width: 100vw;
-    padding: 16px calc(50vw - 50%);
-    margin: 0 calc(50% - 50vw) 64px;
+    /* Full width already, as a child of <body>. The side padding lines the
+       links up with main's text: half the leftover space, plus main's 32px. */
+    padding: 16px max(32px, calc((100% - 960px) / 2 + 32px));
+    margin: 0 0 64px;
     border-bottom: 1px solid transparent;
     transition: border-color 0.2s;
   }
@@ -655,8 +665,10 @@
     max-width: var(--measure);
   }
 
+  /* The stroke lives on the <details>, not the <summary>, so the collapsed
+     cards need :has() to pick up the same hover as the link cards. */
   .cs-preview:hover,
-  .case-study > summary:hover {
+  .case-study:has(> summary:hover) {
     border-color: #1e293b;
   }
 
@@ -714,7 +726,7 @@
   .more-ways h3,
   .craft > h3,
   .step > h3 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   /* Same card as the collapsed ones, but it navigates instead of expanding.
@@ -824,7 +836,7 @@
   .more-ways h3,
   .step > h3,
   .craft > h3 {
-    margin: 0 0 20px;
+    margin: 0 0 32px;
     max-width: var(--measure);
   }
 
@@ -915,7 +927,7 @@
   .key-insight {
     border-left: 3px solid #6B4C9A;
     padding-left: 20px;
-    margin: 40px 0 0;
+    margin: 64px 0 0;
     max-width: var(--measure);
   }
 
@@ -1478,7 +1490,8 @@
   }
 
   @media (max-width: 640px) {
-    main { padding: 48px 20px; }
+    main { padding: 0 20px 48px; }
+    .masthead { padding: 48px 20px 0; }
     section { margin-bottom: 64px; }
     h1 { font-size: 32px; }
     h2 { font-size: 24px; }
@@ -1486,6 +1499,10 @@
     /* h2 drops to 24 here, so the case study title has to drop too or the two
        top levels collide on a phone. */
     .case-study > summary h3 { font-size: 20px; }
+    /* And the label above it has to stay a step below that title. */
+    .more-ways h3,
+    .craft > h3,
+    .step > h3 { font-size: 18px; }
     .masthead-role { font-size: 18px; }
     .intro p { font-size: 18px; }
     .cs-body { grid-template-columns: 1fr; gap: 0; }
@@ -1493,7 +1510,7 @@
     .proof-grid,
     .proof-grid--2,
     .more-ways ul { grid-template-columns: 1fr; }
-    .tab-nav { gap: 16px; margin-bottom: 48px; }
+    .tab-nav { gap: 16px; margin-bottom: 48px; padding-left: 20px; padding-right: 20px; }
     .tab-nav a { font-size: 16px; }
     .step-head { padding-top: 24px; padding-bottom: 24px; }
     .step-ghost { font-size: 56px; }
