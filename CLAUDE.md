@@ -2,6 +2,25 @@
 
 Portfolio site for Kate Bernola (Dobbertin), content designer. Single static HTML pages, no build step.
 
+## Site structure
+
+Six pages. Nav order and labels: My playbook, Case studies, Leadership, Me.
+
+| File | Nav label | Holds |
+|---|---|---|
+| `index.html` | My playbook | The 4-phase framework, plus Raise craft as a throughline |
+| `case-studies.html` | Case studies | Index only: two preview frames, nothing else |
+| `agent-coach.html` | (via index) | Full AI design coach case study |
+| `perks.html` | (via index) | Full Perks navigation case study |
+| `team.html` | Leadership | How I coach, then retention/promotion evidence and quotes |
+| `me.html` | Me | Contact and what I'm looking for |
+
+`index.html`, `case-studies.html`, `agent-coach.html` and `perks.html` share **`styles.css`**. Edit that file, not a `<style>` block. `team.html` and `me.html` still carry their own inline styles and have not been merged in.
+
+**Anchor ids are load-bearing.** Résumés already in circulation link to `index.html#step-1`. Never rename `#step-1` through `#step-4`, `#craft`, `#craft-case`, or `#work`, even if the headings above them change.
+
+**Never scope CSS to a section id** (e.g. `#craft .visual-figure img`). Content moves between pages, and id-scoped rules fail silently when it does. This has already broken image sizing and the old back-to-top button once each.
+
 ## Voice and reading level
 
 - Sentence case everywhere. Never title case, never all caps.
