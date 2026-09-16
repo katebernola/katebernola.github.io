@@ -1006,6 +1006,25 @@
     margin: 0;
   }
 
+  /* First thing under a case study's title band. White with a border, so it
+     doesn't blend into the gray band above it or read as one of the gray
+     request cards further down. */
+  .cs-disclaimer {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1e293b;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 16px 24px;
+    margin: 0 0 32px;
+    max-width: var(--measure);
+  }
+
+  .cs-disclaimer strong {
+    font-weight: 600;
+  }
+
   /* Raster screens behave like the existing SVG figures. */
   .visual-figure img {
     display: block;
@@ -1530,6 +1549,7 @@
     .nk-visual-group { grid-template-columns: 1fr; gap: 16px; }
     .nk-ticket { padding-left: 16px; }
     .nk-ticket--card { padding: 16px 20px; }
+    .cs-disclaimer { padding: 16px 20px; }
 
     /* The label moves above its bar so the bar keeps enough width to compare. */
     .nk-funnel-row { flex-wrap: wrap; gap: 4px 12px; }
