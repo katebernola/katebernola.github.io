@@ -739,25 +739,84 @@
     text-decoration: none;
   }
 
-  /* Two actions in one card. The card can't be a single link any more, because a
-     link can't contain another one, so the first link stretches to cover the
-     card and the second sits above it. Whole card still clickable, two tab
-     stops, valid markup. */
-  .cs-actions {
-    display: flex;
-    align-items: center;
+  /* Case study index: two across, so a locked card and an open one are visible
+     at the same time and the difference explains itself. */
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
-    flex-wrap: wrap;
+    max-width: var(--measure);
     margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .cs-open--cover::after {
+  .cs-card {
+    position: relative;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    max-width: none;
+  }
+
+  .cs-card:hover,
+  .cs-card:focus-within { border-color: #1e293b; }
+
+  /* The flag, if the card needs one. No flag is the signal for the open ones. */
+  .cs-flag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .cs-flag svg { width: 16px; height: 16px; flex: none; }
+
+  .cs-card h3 {
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 0 0 16px;
+  }
+
+  /* The title is the link, and it stretches over its own card, so the whole
+     card is clickable without nesting links inside a link. */
+  .cs-card-link {
+    color: #1e293b;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .cs-card-link::after {
     content: "";
     position: absolute;
     inset: 0;
   }
 
-  .cs-preview:focus-within { border-color: #1e293b; }
+  .cs-card:hover .cs-card-link { color: #000000; }
+
+  /* One height for every card image, whatever shape the source is. */
+  .cs-card-img {
+    display: block;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    object-position: top;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    margin: 0 0 16px;
+  }
+
+  .cs-card .cs-teaser {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cs-card-links { margin: 16px 0 0; }
 
   .cs-locked {
     position: relative;
@@ -1594,6 +1653,8 @@
     .intro p { font-size: 18px; }
     .cs-body { grid-template-columns: 1fr; gap: 0; }
     .cs-shot { display: none; }
+    .cs-grid { grid-template-columns: minmax(0, 1fr); }
+    .cs-card-img { height: 180px; }
     .proof-grid,
     .proof-grid--2,
     .more-ways ul { grid-template-columns: 1fr; }
