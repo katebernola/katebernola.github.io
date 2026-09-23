@@ -731,7 +731,9 @@
 
   /* Same card as the collapsed ones, but it navigates instead of expanding.
      The CTA wording is what tells you which. */
+  /* Positioned, so the stretched link inside covers this card and not the page. */
   .cs-preview {
+    position: relative;
     display: block;
     color: #1e293b;
     text-decoration: none;
