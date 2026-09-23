@@ -737,6 +737,33 @@
     text-decoration: none;
   }
 
+  /* Sits under its card: the card carries 40px below it, so the note pulls back
+     up into that space and keeps the 40px before the next card. */
+  .cs-locked {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: var(--measure);
+    margin: -24px 0 40px;
+    font-size: 16px;
+    color: #475569;
+  }
+
+  .cs-locked svg { width: 18px; height: 18px; flex: none; }
+
+  .cs-locked a {
+    color: #1e293b;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .cs-locked a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
   .cs-preview:hover .cs-open {
     border-bottom-color: #6B4C9A;
   }
