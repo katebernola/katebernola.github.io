@@ -737,29 +737,43 @@
     text-decoration: none;
   }
 
-  /* Sits under its card: the card carries 40px below it, so the note pulls back
-     up into that space and keeps the 40px before the next card. */
-  .cs-locked {
+  /* Two actions in one card. The card can't be a single link any more, because a
+     link can't contain another one, so the first link stretches to cover the
+     card and the second sits above it. Whole card still clickable, two tab
+     stops, valid markup. */
+  .cs-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
-    max-width: var(--measure);
-    margin: -24px 0 40px;
-    font-size: 16px;
-    color: #475569;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 0;
   }
 
-  .cs-locked svg { width: 18px; height: 18px; flex: none; }
+  .cs-open--cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
 
-  .cs-locked a {
-    color: #1e293b;
+  .cs-preview:focus-within { border-color: #1e293b; }
+
+  .cs-locked {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    color: #475569;
     text-decoration: none;
     border-bottom: 1px solid #e2e8f0;
     padding-bottom: 2px;
     transition: color 0.2s, border-color 0.2s;
   }
 
-  .cs-locked a:hover {
+  .cs-locked svg { width: 18px; height: 18px; flex: none; }
+
+  .cs-locked:hover {
     color: #000000;
     border-bottom-color: #1e293b;
   }
