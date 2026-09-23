@@ -751,10 +751,12 @@
     list-style: none;
   }
 
+  /* Every card reserves the same space for the flag, whether it has one or not,
+     so the titles start on the same line across the row. */
   .cs-card {
     position: relative;
     margin: 0;
-    padding: 24px;
+    padding: 56px 24px 24px;
     border: 1px solid #e2e8f0;
     border-radius: 4px;
     max-width: none;
@@ -765,10 +767,13 @@
 
   /* The flag, if the card needs one. No flag is the signal for the open ones. */
   .cs-flag {
+    position: absolute;
+    top: 24px;
+    left: 24px;
     display: flex;
     align-items: center;
     gap: 6px;
-    margin: 0 0 8px;
+    margin: 0;
     font-size: 14px;
     font-weight: 600;
     color: #475569;
