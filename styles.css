@@ -1045,6 +1045,44 @@
     margin: 0;
   }
 
+  /* The outcome goes behind a toggle so the three lines that carry the argument
+     scan on their own. The payoff, the reframed ask, stays visible. */
+  .proof-more {
+    margin: 16px 0 0;
+  }
+
+  .proof-more > summary {
+    display: inline-block;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .proof-more > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .proof-more > summary:focus-visible {
+    outline: 2px solid #1e293b;
+    outline-offset: 4px;
+  }
+
+  .proof-more > summary:hover .cs-open,
+  .proof-more > summary:hover .cs-close {
+    border-bottom-color: #6B4C9A;
+  }
+
+  .proof-more:not([open]) .cs-close,
+  .proof-more[open] .cs-open {
+    display: none;
+  }
+
+  .proof-more p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #475569;
+    margin: 12px 0 0;
+  }
+
   .proof-item .nk-ticket {
     border-left: none;
     padding-left: 0;
