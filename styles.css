@@ -657,6 +657,7 @@
      is what makes it read as a larger version rather than a different
      component, which is what the purple box got wrong. */
   .case-study {
+    position: relative;
     display: block;
     border: 1px solid #e2e8f0;
     border-radius: 4px;
@@ -873,12 +874,17 @@
     border-bottom-color: #6B4C9A;
   }
 
+  /* A deck, not a paragraph. It belongs to the title above it, so it sits
+     tight under it, runs a step larger than body copy, and keeps a looser
+     line. At body size it read as the first paragraph of the case study,
+     which made the real opening line look like the second one. */
   .cs-teaser {
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
     color: #475569;
-    max-width: var(--measure);
-    margin: 0 0 16px;
+    max-width: 58ch;
+    margin: -4px 0 16px;
   }
 
   .cs-open,
@@ -894,6 +900,38 @@
   .case-study > summary:hover .cs-open,
   .case-study > summary:hover .cs-close {
     border-bottom-color: #6B4C9A;
+  }
+
+  /* Open, the control has nothing left to advertise, so it stops being a line
+     of text in the column, where it read as a stray paragraph between the deck
+     and the case study, and becomes a close mark in the card's corner. */
+  .case-study[open] .cs-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    color: #475569;
+    background: #ffffff;
+  }
+
+  .case-study[open] > summary:hover .cs-close {
+    border-color: #6B4C9A;
+    color: #6B4C9A;
+  }
+
+  /* Keeps a long title off the close mark. */
+  .case-study[open] > summary h3 {
+    padding-right: 40px;
   }
 
   /* The teaser and number are the collapsed card's job. Once it's open the
