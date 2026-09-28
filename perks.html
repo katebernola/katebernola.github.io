@@ -435,6 +435,10 @@
       var el = document.getElementById(id);
       if (!el) return;
       var panel = el.closest('details');
+      // Some phases keep the case study in a card below the heading rather than
+      // around it. A marked section opens its own card too, so a link from a
+      // resume lands on the thing it promised instead of a closed summary.
+      if (!panel && el.hasAttribute('data-reveal')) panel = el.querySelector('details');
       if (!panel) return;
       panel.open = true;
       el.scrollIntoView();
