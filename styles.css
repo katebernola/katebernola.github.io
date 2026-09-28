@@ -915,17 +915,15 @@
     width: 32px;
     height: 32px;
     padding: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
+    border: 0;
     font-size: 24px;
     font-weight: 400;
     line-height: 1;
     color: #475569;
-    background: #ffffff;
+    background: none;
   }
 
   .case-study[open] > summary:hover .cs-close {
-    border-color: #6B4C9A;
     color: #6B4C9A;
   }
 
