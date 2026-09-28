@@ -118,3 +118,47 @@ A small linked index of shorter pieces, so strong-but-off-framework stories have
 
 - **Local notes files** (How I Did It, resume drafts, job-search CSV) — gitignored but still in the repo folder; consider moving them elsewhere.
 - **Re-sync next-steps-tracker.html** (gitignored) — it's several sessions behind this file now (predates the retirement case study, the game show page, and the lowercase pass).
+
+## Outside feedback on the portfolio, received 2026-09-28
+
+Logged verbatim in substance, not yet prioritized or acted on. From a design
+leader who reviewed the live site.
+
+Bugs and mechanics
+- JS syntax error in the dev console, so some JavaScript is probably failing.
+- Help Center videos: clicking the "1" card jumps to the anchor but does not
+  expand the details. Two clicks to get there. Consider expanding on first click.
+- Do not use mailto as the primary contact mechanism. It does not always open
+  the preferred mail program and leaves people on a blank page. A small embedded
+  form that sends mail worked better for him.
+
+Findability
+- Add contact information on every page, maybe in the footer.
+- The resume is buried. Give it more prominence, or embed a version. On his own
+  site it was the third most visited page.
+- Playbook and Case studies are very long with nothing at the bottom to help
+  someone who gets there: no back to top, no next case study.
+- The Jeopardy game is buried, so the fun and personal traits rarely surface.
+
+Structure of the case studies
+- Put results at the top. Recruiters often do not reach the bottom. Consider
+  what someone with 30 seconds sees, and pull results up, or into the preview
+  cards on the case studies page.
+- The step images in the Pay case study are nice at first but get hard to parse
+  by the end.
+
+Voice and content
+- Watch for Paychex jargon: "Pre-SDLC", "POs".
+- In the Help Center example, people will wonder where "10% chance one view
+  prevents a contact" came from.
+- Leadership page: he would put the quotes above the statistics.
+- Overall the content is good: focused, punchy, emphasizes ROI.
+
+Positioning
+- Consider a photo on the home page. He resisted for years, then added one
+  during his last search and saw more recruiter contacts.
+- Consider a short personal career story, maybe on the Me page.
+- In this market, vibes matter. The pitch reads strong to a manager, but it
+  needs something memorable to stand out from other managers pitching ROI and
+  team leadership. He joined his technology background to UX leadership to do
+  that.
