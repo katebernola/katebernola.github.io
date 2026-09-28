@@ -904,7 +904,9 @@
 
   /* Open, the control has nothing left to advertise, so it stops being a line
      of text in the column, where it read as a stray paragraph between the deck
-     and the case study, and becomes a close mark in the card's corner. */
+     and the case study, and moves to the card's corner. A chevron, not a cross:
+     a cross promises the card goes away, and this one collapses back to its
+     preview. */
   .case-study[open] .cs-close {
     position: absolute;
     top: 16px;
