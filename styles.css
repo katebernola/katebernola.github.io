@@ -1693,6 +1693,67 @@
 
   /* Appears once the last case study is in view; hidden from tab order until
      then, since visibility:hidden also removes it from the focus order. */
+  /* Every page ends the same way: how to reach her, and a way back up. It
+     repeats what the Me page says, on purpose: plenty of readers arrive
+     mid-site from a link and never see that page. Padding matches the nav's,
+     so the footer sits in the same column as everything above it. */
+  .site-footer {
+    border-top: 1px solid #e2e8f0;
+    margin: 64px 0 0;
+    padding: 24px max(32px, calc((100% - 960px) / 2 + 32px)) 48px;
+  }
+
+  .site-footer-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px;
+  }
+
+  .site-footer-links {
+    font-size: 16px;
+    color: #475569;
+    margin: 0;
+  }
+
+  .site-footer-links span {
+    margin: 0 8px;
+    color: #64748b;
+  }
+
+  .site-footer a {
+    color: #475569;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .site-footer a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  /* A long page shouldn't dead-end. */
+  .next-case {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 64px 0 0;
+    max-width: var(--measure);
+  }
+
+  .next-case a {
+    color: #6B4C9A;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .next-case a:hover {
+    border-bottom-color: #6B4C9A;
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;
