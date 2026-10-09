@@ -59,8 +59,8 @@ Purposes condensed from the Polaris icon library metadata (© Shopify, [polaris-
 | Camera | Represent a camera. |
 | Caret down | Represent there is dropdown content |
 | Caret up | >- |
-| Cart abandoned filled | Represent a prospective purchase that a buyer didnâ€™t complete. |
-| Cart abandoned | Represent a prospective purchase that a buyer didnâ€™t complete. |
+| Cart abandoned filled | Represent a prospective purchase that a buyer didn’t complete. |
+| Cart abandoned | Represent a prospective purchase that a buyer didn’t complete. |
 | Cart down filled | Represent saving the contents of a shopping cart. |
 | Cart down | Represent saving the contents of a shopping cart. |
 | Cart filled | Represent a shopping cart. |
@@ -270,8 +270,8 @@ Purposes condensed from the Polaris icon library metadata (© Shopify, [polaris-
 | Logo youtube | Represent Youtube. |
 | Magic | Concept     | Used to represent AI-assisted features. |
 | Make payment | Denote making a payment |
-| Markets filled | Represent Markets, Shopifyâ€™s international commerce product. |
-| Markets | Represent Markets, Shopifyâ€™s international commerce product. |
+| Markets filled | Represent Markets, Shopify’s international commerce product. |
+| Markets | Represent Markets, Shopify’s international commerce product. |
 | Maximize | Represent an action to make an item, resource or view larger. |
 | Measurement size | Represent measurement including dimension, volume, and weight. |
 | Measurement volume | Represent volume measurement |
@@ -376,7 +376,7 @@ Purposes condensed from the Polaris icon library metadata (© Shopify, [polaris-
 | Question circle | Give merchants help or support for a feature. |
 | Receipt | Represent a sales receipt or invoice. |
 | Redo | Indicate redoing an action after undoing it. |
-| Referral code | Represent a referral codeâ€™s usage status. |
+| Referral code | Represent a referral code’s usage status. |
 | Refresh | >- |
 | Remove background | Signify the background removal feature in Magic media editing. |
 | Replace | Represent an action to replace an item or resource with another. |
