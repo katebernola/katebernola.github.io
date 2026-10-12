@@ -42,19 +42,94 @@
     line-height: 1.6;
   }
 
-  /* The masthead and nav sit outside <main> (so the skip link can jump past
-     them), which means they have to recreate main's column themselves. The top
-     padding lives on the masthead now, not on main. */
+  /* The bar sits outside <main> (so the skip link can jump past it), which
+     means it has to recreate main's column itself. Its own bottom margin
+     stands in for main's top padding. */
   main {
     max-width: 960px;
     margin: 0 auto;
     padding: 0 32px 80px;
   }
 
-  .masthead {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 80px 32px 0;
+  /* One bar, not two. A 48px name and a role line repeated above the nav on
+     every page cost about 150px of chrome before any content, and because the
+     block above it varied, the nav landed at a different height from page to
+     page and appeared to jump.
+
+     Every property the bar depends on is declared here rather than inherited,
+     including the font and box-sizing, so the identical block can be dropped
+     into the game show's own stylesheet and land on the same pixels. Only the
+     colours differ there. */
+  .site-bar {
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 32px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px max(32px, calc((100% - 960px) / 2 + 32px));
+    margin: 0 0 48px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: normal;
+  }
+
+  .site-brand {
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: normal;
+    color: #1e293b;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .site-role {
+    font-weight: 400;
+    color: #475569;
+    margin-left: 8px;
+  }
+
+  .site-nav {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 24px;
+  }
+
+  .site-nav a {
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: normal;
+    color: #475569;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .site-nav a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  /* Colour and the missing underline mark the current page. Deliberately not
+     bold: the nav is right-aligned, so a heavier word on one page would change
+     the group's width and shift every link a few pixels when you change page. */
+  .site-nav a[aria-current="page"] {
+    color: #1e293b;
+    border-bottom-color: transparent;
   }
 
   h1 {
@@ -118,65 +193,7 @@
     max-width: 600px;
   }
 
-  .masthead h1 {
-    margin: 0 0 4px;
-  }
 
-  .masthead-role {
-    font-size: 20px;
-    font-weight: 300;
-    color: #475569;
-    margin: 0 0 16px;
-  }
-
-  .tab-nav {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    align-items: baseline;
-    gap: 32px;
-    background: #ffffff;
-    /* Full width already, as a child of <body>. The side padding lines the
-       links up with main's text: half the leftover space, plus main's 32px. */
-    padding: 16px max(32px, calc((100% - 960px) / 2 + 32px));
-    margin: 0 0 64px;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-  }
-
-  .tab-nav.stuck {
-    border-bottom-color: #e2e8f0;
-  }
-
-  .tab-nav a {
-    font-size: 18px;
-    color: #475569;
-    text-decoration: none;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .tab-nav a:hover {
-    color: #000000;
-    border-bottom-color: #1e293b;
-  }
-
-  .tab-nav a[aria-current="page"] {
-    color: #1e293b;
-    font-weight: 600;
-    border-bottom-color: transparent;
-  }
-
-  .h1-last {
-    font-weight: 300;
-    color: #475569;
-  }
-
-  /* Sits first, as the wordmark, rather than orphaned on the right. It still
-     fades in only once the masthead scrolls away, so it never competes with
-     the h1, and the space stays reserved so the links don't shift. */
   section {
     scroll-margin-top: 80px;
   }
@@ -1782,7 +1799,9 @@
 
   @media (max-width: 640px) {
     main { padding: 0 20px 48px; }
-    .masthead { padding: 48px 20px 0; }
+    .site-bar { padding-left: 20px; padding-right: 20px; margin-bottom: 32px; }
+    .site-brand, .site-nav a { font-size: 16px; }
+    .site-nav { gap: 8px 16px; }
     section { margin-bottom: 64px; }
     h1 { font-size: 32px; }
     h2 { font-size: 24px; }
@@ -1794,7 +1813,6 @@
     .more-ways h3,
     .craft > h3,
     .step > h3 { font-size: 18px; }
-    .masthead-role { font-size: 18px; }
     .intro p { font-size: 18px; }
     .cs-body { grid-template-columns: 1fr; gap: 0; }
     .cs-shot { display: none; }
@@ -1803,8 +1821,6 @@
     .proof-grid,
     .proof-grid--2,
     .more-ways ul { grid-template-columns: 1fr; }
-    .tab-nav { gap: 16px; margin-bottom: 48px; padding-left: 20px; padding-right: 20px; }
-    .tab-nav a { font-size: 16px; }
     .step-head { padding-top: 24px; padding-bottom: 24px; }
     .step-ghost { font-size: 56px; }
     .equation { padding: 16px 20px; }
