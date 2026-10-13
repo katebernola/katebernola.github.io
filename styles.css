@@ -1,4 +1,4 @@
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
   /* One measure for every right edge on the page: body copy, the framed
      stories, the grid of small ones, and the section headers above them.
@@ -42,94 +42,85 @@
     line-height: 1.6;
   }
 
-  /* The bar sits outside <main> (so the skip link can jump past it), which
-     means it has to recreate main's column itself. Its own bottom margin
-     stands in for main's top padding. */
   main {
     max-width: 960px;
     margin: 0 auto;
     padding: 0 32px 80px;
   }
 
-  /* One bar, not two. A 48px name and a role line repeated above the nav on
-     every page cost about 150px of chrome before any content, and because the
-     block above it varied, the nav landed at a different height from page to
-     page and appeared to jump.
-
-     Every property the bar depends on is declared here rather than inherited,
-     including the font and box-sizing, so the identical block can be dropped
-     into the game show's own stylesheet and land on the same pixels. Only the
-     colours differ there. */
-  .site-bar {
+  /* --- NEW GLOBAL HEADER --- */
+  .global-header {
     box-sizing: border-box;
-    position: sticky;
-    top: 0;
-    z-index: 10;
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    gap: 8px 32px;
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    gap: 16px 32px;
     padding: 16px max(32px, calc((100% - 960px) / 2 + 32px));
     margin: 0 0 48px;
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    border-bottom: 1px solid #e2e8f0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: normal;
   }
 
-  .site-brand {
+  .global-header .logo {
     box-sizing: border-box;
     font-size: 18px;
     font-weight: 600;
     line-height: 1.4;
-    letter-spacing: normal;
     color: #1e293b;
     text-decoration: none;
     white-space: nowrap;
   }
 
-  .site-role {
+  .global-header .logo span {
     font-weight: 400;
     color: #475569;
     margin-left: 8px;
   }
 
-  .site-nav {
+  .global-header nav {
     box-sizing: border-box;
     display: flex;
-    flex-wrap: wrap;
+    gap: 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: 2px;
     align-items: baseline;
-    gap: 8px 24px;
   }
 
-  .site-nav a {
+  .global-header nav::-webkit-scrollbar { 
+    display: none; 
+  }
+
+  .global-header nav a {
     box-sizing: border-box;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.4;
-    letter-spacing: normal;
     color: #475569;
     text-decoration: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 2px solid transparent;
     padding-bottom: 2px;
     transition: color 0.2s, border-color 0.2s;
   }
 
-  .site-nav a:hover {
+  .global-header nav a:hover {
     color: #000000;
-    border-bottom-color: #1e293b;
   }
 
-  /* Colour and the missing underline mark the current page. Deliberately not
-     bold: the nav is right-aligned, so a heavier word on one page would change
-     the group's width and shift every link a few pixels when you change page. */
-  .site-nav a[aria-current="page"] {
+  .global-header nav a[aria-current="page"] {
     color: #1e293b;
-    border-bottom-color: transparent;
+    font-weight: 600;
+    border-bottom-color: #1e293b;
   }
 
   h1 {
@@ -193,21 +184,16 @@
     max-width: 600px;
   }
 
-
   section {
     scroll-margin-top: 80px;
   }
 
-  /* Fixed column width, not fractions: the cards keep their size and drop to
-     the next row rather than being squeezed. */
   .playbook {
     display: grid;
     grid-template-columns: repeat(auto-fit, 292px);
     gap: 16px;
   }
 
-  /* Spans the card grid so it reads as a constant across all four phases,
-     not a fifth item in the sequence. */
   .playbook-note {
     display: block;
     max-width: 600px;
@@ -225,15 +211,11 @@
     border-color: #1e293b;
   }
 
-  /* Mirrors the .step-title / .step-line split inside a card. */
   .pn-strong {
     font-weight: 600;
     color: #1e293b;
   }
 
-  /* Gets the same band as a phase so it reads as a peer section, but carries
-     no number. The missing number is the distinction: four numbered phases,
-     one unnumbered constant running under them. */
   .craft {
     padding-top: 40px;
   }
@@ -250,9 +232,6 @@
     margin: 0 0 16px;
   }
 
-  /* Same colour as the sentence it opens, differing by weight alone. In dark
-     bold it both clashed with the grey body and outranked the h3 above it,
-     which is the only thing in this block that should lead. */
   .principles strong {
     font-weight: 600;
     color: #475569;
@@ -352,9 +331,6 @@
     border: 1px solid #e2e8f0;
   }
 
-  /* Four separate images (not one raster comic) so panels can reflow
-     independently. Panels stay a fixed size; only the column count changes
-     by breakpoint (4 / 2 / 1), so they never stretch or shrink themselves. */
   .comic-panels {
     display: grid;
     grid-template-columns: repeat(4, 200px);
@@ -362,8 +338,6 @@
     margin: 16px 0 32px;
   }
 
-  /* Panel files are natively 500x560; aspect-ratio keeps that proportion
-     exact regardless of the column width the grid gives each one. */
   .comic-panels img {
     display: block;
     width: 100%;
@@ -375,8 +349,6 @@
     margin: 0;
   }
 
-  /* Small side-by-side previews of the two guidance diagrams. Each links
-     to a full-size CSS-only lightbox (:target) -- no JavaScript. */
   .guidance-compare {
     display: flex;
     flex-wrap: wrap;
@@ -400,8 +372,6 @@
     border-color: #1e293b;
   }
 
-  /* Both previews share one box ratio so the two cards line up. The shorter
-     diagram letterboxes at the bottom rather than stretching. */
   .diagram-thumb svg {
     display: block;
     width: 100%;
@@ -409,9 +379,6 @@
     aspect-ratio: 950 / 835;
   }
 
-  /* The workflow diagram is a single tall portrait card, not part of a
-     side-by-side pair -- caps at a browsable preview height instead of
-     matching the guidance-diagram ratio. */
   .diagram-thumb--tall {
     width: 280px;
   }
@@ -499,7 +466,6 @@
     height: auto;
   }
 
-  /* Treatment panel: screenshot beside its pros and cons. */
   .lightbox-inner--detail {
     padding: 0 32px;
   }
@@ -543,9 +509,6 @@
     padding: 16px 20px;
   }
 
-  /* line-height governs spacing within a wrapped line; the + selector adds
-     extra space between separate operand lines, so a hard return reads as
-     more of a break than a wrap. */
   .eq-line {
     position: relative;
     padding-left: 22px;
@@ -593,13 +556,10 @@
     padding: 0 32px 4px 0;
   }
 
-
   .roi-table td {
     padding: 2px 32px 2px 0;
   }
 
-  /* Channel map: a wide reference grid that reflows to cards on mobile.
-     Distinct from .roi-table, which is a small borderless comparison. */
   .channel-map {
     width: 100%;
     border-collapse: collapse;
@@ -638,7 +598,6 @@
   .channel-map .cm-use  { width: 22%; }
   .channel-map .cm-stat { width: 23%; }
 
-  /* four-segment prominence meter; the accessible name lives on the wrapper */
   .meter { display: flex; gap: 2px; }
 
   .meter i {
@@ -652,10 +611,6 @@
 
   .meter-label { font-size: 13px; color: #475569; }
 
-  /* No box. The card already carries a purple border, so the tag doesn't need
-     to repeat it, and a bordered pill on a card that is itself clickable reads
-     as a button you're meant to press. Size, weight and colour do the work:
-     purple for a full case study, slate for the shorter pieces. */
   .cs-tag {
     display: inline-block;
     font-size: 14px;
@@ -669,10 +624,6 @@
     color: #475569;
   }
 
-  /* Same frame as the small examples below it, just bigger: more padding, a
-     24px title, full width instead of a column. Identical stroke on both tiers
-     is what makes it read as a larger version rather than a different
-     component, which is what the purple box got wrong. */
   .case-study {
     position: relative;
     display: block;
@@ -683,8 +634,6 @@
     max-width: var(--measure);
   }
 
-  /* The stroke lives on the <details>, not the <summary>, so the collapsed
-     cards need :has() to pick up the same hover as the link cards. */
   .cs-preview:hover,
   .case-study:has(> summary:hover) {
     border-color: #1e293b;
@@ -696,9 +645,6 @@
     margin-top: 0;
   }
 
-  /* The screenshots are phone screens, so a portrait shot sits beside the
-     intro text without stretching the card. It's a preview, so it goes once
-     the full case study (with its own visuals) is open. */
   .cs-body {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -706,8 +652,6 @@
     align-items: start;
   }
 
-  /* Stays put when the card opens. Hiding it re-flowed the text column wider,
-     which slid the toggle sideways out from under the cursor that clicked it. */
   .cs-shot {
     display: block;
     width: 120px;
@@ -715,9 +659,6 @@
     border: 1px solid #e2e8f0;
   }
 
-  /* Collapsed by default so the four read as a set of four things rather than
-     one continuous page. The summary has to stand on its own, because plenty
-     of readers will never open it: title, the problem in a line, the number. */
   .case-study > summary {
     display: block;
     cursor: pointer;
@@ -733,10 +674,6 @@
     outline-offset: 4px;
   }
 
-  /* Four levels, and only one item per phase at each: the phase band (32px),
-     the case study title (24px), signposts and the key insight (18px), then
-     everything inside them (16px). The metric used to be 24/700, which made
-     the number outrank every heading on the page. */
   .case-study > summary h3 {
     font-size: 24px;
   }
@@ -747,9 +684,6 @@
     font-size: 20px;
   }
 
-  /* Same card as the collapsed ones, but it navigates instead of expanding.
-     The CTA wording is what tells you which. */
-  /* Positioned, so the stretched link inside covers this card and not the page. */
   .cs-preview {
     position: relative;
     display: block;
@@ -757,8 +691,6 @@
     text-decoration: none;
   }
 
-  /* Case study index: two across, so a locked card and an open one are visible
-     at the same time and the difference explains itself. */
   .cs-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -769,8 +701,6 @@
     list-style: none;
   }
 
-  /* Every card reserves the same space for the flag, whether it has one or not,
-     so the titles start on the same line across the row. */
   .cs-card {
     position: relative;
     margin: 0;
@@ -783,7 +713,6 @@
   .cs-card:hover,
   .cs-card:focus-within { border-color: #1e293b; }
 
-  /* The flag, if the card needs one. No flag is the signal for the open ones. */
   .cs-flag {
     position: absolute;
     top: 24px;
@@ -805,8 +734,6 @@
     margin: 0 0 16px;
   }
 
-  /* The title is the link, and it stretches over its own card, so the whole
-     card is clickable without nesting links inside a link. */
   .cs-card-link {
     color: #1e293b;
     text-decoration: none;
@@ -821,7 +748,6 @@
 
   .cs-card:hover .cs-card-link { color: #000000; }
 
-  /* One height for every card image, whatever shape the source is. */
   .cs-card-img {
     display: block;
     width: 100%;
@@ -857,7 +783,6 @@
 
   .cs-locked svg { width: 18px; height: 18px; flex: none; }
 
-  /* Proof it shipped. Above the card's cover link, like the password link. */
   .cs-stores {
     position: relative;
     z-index: 1;
@@ -891,10 +816,6 @@
     border-bottom-color: #6B4C9A;
   }
 
-  /* A deck, not a paragraph. It belongs to the title above it, so it sits
-     tight under it, runs a step larger than body copy, and keeps a looser
-     line. At body size it read as the first paragraph of the case study,
-     which made the real opening line look like the second one. */
   .cs-teaser {
     font-size: 20px;
     font-weight: 400;
@@ -919,11 +840,6 @@
     border-bottom-color: #6B4C9A;
   }
 
-  /* Open, the control has nothing left to advertise, so it stops being a line
-     of text in the column, where it read as a stray paragraph between the deck
-     and the case study, and moves to the card's corner. A chevron, not a cross:
-     a cross promises the card goes away, and this one collapses back to its
-     preview. */
   .case-study[open] .cs-close {
     position: absolute;
     top: 16px;
@@ -946,15 +862,10 @@
     color: #6B4C9A;
   }
 
-  /* Keeps a long title off the close mark. */
   .case-study[open] > summary h3 {
     padding-right: 40px;
   }
 
-  /* The teaser and number are the collapsed card's job. Once it's open the
-     full copy says all of it better, so they'd only be repetition. */
-  /* Only the label swaps when the card opens. The teaser and number stay, so
-     nothing below the CTA reflows and the control never moves. */
   .case-study:not([open]) .cs-close,
   .case-study[open] .cs-open {
     display: none;
@@ -1010,16 +921,10 @@
     font-weight: 700;
   }
 
-  /* Open, not collapsed. These were hidden back when the full case study sat
-     expanded above them and led the section. With the case study collapsed to
-     a card, nothing leads, so this list is what gives a phase visible weight.
-     Matches the always-open list phase 4 already uses. */
   .more-ways {
     margin: 32px 0 0;
   }
 
-  /* No rule under it. The framed cards below now do the separating, so the
-     header only needs space. */
   .more-ways h3,
   .step > h3,
   .craft > h3 {
@@ -1027,10 +932,6 @@
     max-width: var(--measure);
   }
 
-  /* Two columns, not three. These items are now three short paragraphs each,
-     and a third column would drop the measure to about 30 characters, which is
-     too narrow to read once there's no tint marking the block. auto-fit so they
-     collapse to one column rather than squeezing at an arbitrary breakpoint. */
   .proof-grid,
   .more-ways ul {
     display: grid;
@@ -1046,14 +947,7 @@
     gap: 32px;
   }
 
-  /* The same hairline frame as the featured example, at a smaller scale. No
-     fill on either: a tint becomes the loudest thing in the section and turns
-     the whole run into one texture. */
   .proof-item,
-  /* No box. A stroked box on white means the thing opens, and these don't:
-     wearing the same costume as the case study above them promised a click
-     that was never there. A rule across the top groups them instead, and
-     whitespace does the rest. */
   .more-ways li {
     border-top: 1px solid #e2e8f0;
     padding: 16px 0 0;
@@ -1062,8 +956,6 @@
     color: #475569;
   }
 
-  /* Without this the paragraph picks up the global 18px and ends up larger
-     than the 16px heading above it. */
   .more-ways li p,
   .proof-item p {
     font-size: 16px;
@@ -1071,9 +963,6 @@
     margin: 0 0 12px;
   }
 
-  /* Dark, because the field labels inside the coaching examples are 600 too.
-     Left inheriting slate, the item title was lighter than the "The ask" label
-     underneath it, so the subhead outranked the head. */
   .proof-item h4,
   .more-ways li h4 {
     font-size: 16px;
@@ -1086,8 +975,6 @@
     color: #475569;
   }
 
-  /* The question is the move, so it gets to be the loudest thing in the block
-     rather than a line of body copy like everything around it. */
   .nk-ticket dd.nk-said {
     font-size: 20px;
     line-height: 1.4;
@@ -1103,8 +990,6 @@
     margin: 0;
   }
 
-  /* The outcome goes behind a toggle so the three lines that carry the argument
-     scan on their own. The payoff, the reframed ask, stays visible. */
   .proof-more {
     margin: 16px 0 0;
   }
@@ -1148,10 +1033,6 @@
     max-width: none;
   }
 
-  /* Off the purple deliberately. Purple is what identifies a case study now,
-     and a phase was spending it four times over (card border, tag, link, and
-     this) before you'd read anything. The insight closes the phase, not the
-     case study, so it takes the neutral dark instead. */
   .key-insight {
     border-left: 3px solid #6B4C9A;
     padding-left: 20px;
@@ -1186,11 +1067,6 @@
     padding-top: 40px;
   }
 
-  /* The phase opener is the seam between case studies, and those run 2,700 to
-     11,000px each. A 1px rule can't be felt across that distance, so the opener
-     becomes a band you pass through instead. Negative margins are bounded to
-     main's padding rather than using 100vw, which counts the scrollbar on
-     Windows; the usual overflow-x fix for that would break the sticky nav. */
   .step-head {
     display: flex;
     gap: 20px;
@@ -1234,9 +1110,6 @@
     margin: 0;
   }
 
-  /* First thing under a case study's title band. White with a border, so it
-     doesn't blend into the gray band above it or read as one of the gray
-     request cards further down. */
   .cs-disclaimer {
     font-size: 16px;
     line-height: 1.5;
@@ -1253,7 +1126,6 @@
     font-weight: 600;
   }
 
-  /* Raster screens behave like the existing SVG figures. */
   .visual-figure img {
     display: block;
     width: 100%;
@@ -1262,24 +1134,18 @@
     border: 1px solid #e2e8f0;
   }
 
-  /* Lightbox detail screens are the zoomed-in view (like the matrix's own
-     lightboxes), so they stay at native size regardless of the inline sizes
-     below. */
   #perks-nav .nk-treatment-visual img {
     max-width: 390px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* Inline single and paired screens: sized to match what 3-across used to
-     be, per Kate -- one size down from native, one size up from 4-across. */
   #perks-nav .visual-figure img {
     max-width: 260px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* A row of screens shown together, sized like every other screen. */
   .nk-screen-row {
     display: flex;
     flex-wrap: wrap;
@@ -1288,7 +1154,6 @@
     margin: 32px 0;
   }
 
-  /* 3-across matches the 4-across matrix-thumbnail size, per Kate. */
   .nk-screen-row img,
   #perks-nav .nk-screen-row img {
     display: block;
@@ -1299,7 +1164,6 @@
     border: 1px solid #e2e8f0;
   }
 
-  /* Intake artifact: a quoted request, marked by a rule rather than a box. */
   .nk-ticket {
     border-left: 1px solid #e2e8f0;
     padding-left: 24px;
@@ -1322,10 +1186,6 @@
 
   .nk-ticket dd:last-of-type { margin-bottom: 0; }
 
-  /* The one block that's an actual incoming request, not a worked example --
-     a bordered, filled card with monospace field labels, so it reads as a
-     distinct artifact rather than the same list treatment as the newer
-     coaching examples further down. */
   .nk-ticket--card {
     border: 1px solid #e2e8f0;
     background: #f8f9fa;
@@ -1348,7 +1208,6 @@
     color: #475569;
   }
 
-  /* Treatment row: visual left, evaluation right, never alternating. */
   .nk-treatment {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1358,7 +1217,6 @@
     padding: 40px 0;
   }
 
-  /* A rule between rows so one row's cons don't run into the next screenshot. */
   .nk-treatment + .nk-treatment {
     border-top: 1px solid #e2e8f0;
   }
@@ -1371,7 +1229,6 @@
     border: 1px solid #e2e8f0;
   }
 
-  /* Two screens that belong to one treatment stay together. */
   .nk-visual-group {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1420,11 +1277,6 @@
     margin-bottom: 4px;
   }
 
-  /* Treatment comparison. Reflows to one card per treatment on small screens,
-     the same pattern the channel map uses. */
-  /* Treatments run across as columns; the criteria they're judged against
-     run down as rows. Scrolls sideways rather than collapsing, because each
-     column is one treatment being compared against the others. */
   .nk-matrix-scroll {
     position: relative;
     overflow-x: auto;
@@ -1448,7 +1300,6 @@
     vertical-align: top;
   }
 
-  /* Each treatment column heads with its screenshot, name, then status. */
   .nk-matrix thead th {
     width: 19.5%;
     font-weight: 400;
@@ -1460,7 +1311,6 @@
     border-bottom: 1px solid #64748b;
   }
 
-  /* Criterion labels down the left. */
   .nk-matrix tbody th {
     font-weight: 600;
     color: #1e293b;
@@ -1514,9 +1364,6 @@
     border-color: #1e293b;
   }
 
-  /* Reserves space for the longest title+status pairing across the four
-     columns, so every image starts at the same vertical position instead
-     of drifting with how much each one wraps. */
   .nk-matrix-head-text {
     min-height: 94px;
     margin-bottom: 8px;
@@ -1537,8 +1384,6 @@
     margin: 0;
   }
 
-  /* Second, explicit way into the same panel, so the expand affordance is
-     not carried by the image overlay alone. */
   .nk-matrix-more {
     display: inline-block;
     margin-top: 8px;
@@ -1555,7 +1400,6 @@
     border-bottom-color: #6B4C9A;
   }
 
-  /* Shape and text carry the verdict; colour is only reinforcement. */
   .nk-yes,
   .nk-no {
     font-size: 18px;
@@ -1565,8 +1409,6 @@
   .nk-yes { color: #15803D; }
   .nk-no  { color: #B91C1C; }
 
-
-  /* Requirements read as a distilled brief. */
   .nk-reqs {
     list-style: none;
     margin: 24px 0 32px;
@@ -1593,18 +1435,12 @@
     transform: rotate(-45deg);
   }
 
-  /* Walkthrough reach, drawn as a spine of dots with proportional bars. Built
-     from real elements rather than one SVG so the type stays at its native size
-     on a phone instead of scaling down with the artwork. */
   .nk-funnel {
     position: relative;
     max-width: 640px;
     margin: 0;
   }
 
-  /* The spine. Every row and note draws its own segment rather than one line
-     inset from the ends, so it still meets the dots when a label wraps and the
-     rows grow taller. */
   .nk-funnel-row::after,
   .nk-funnel-note::after {
     content: "";
@@ -1616,7 +1452,6 @@
     background: #64748b;
   }
 
-  /* Start and stop on a dot instead of overshooting it. */
   .nk-funnel-row:first-child::after { top: 50%; }
   .nk-funnel-row:last-child::after { bottom: 50%; }
 
@@ -1668,8 +1503,6 @@
     color: #1e293b;
   }
 
-  /* Sits in the gap between two dots. Margin is zeroed because the paragraph
-     carries a segment of the spine, and a margin would break the line. */
   .nk-funnel-note {
     position: relative;
     margin: 0;
@@ -1678,7 +1511,6 @@
     color: #475569;
   }
 
-  /* Conversational aside, deliberately light. */
   .nk-quote {
     border-left: 1px solid #e2e8f0;
     margin: 24px 0 32px;
@@ -1697,7 +1529,6 @@
     line-height: 1;
   }
 
-  /* The two result lines carry the numbers; the figure itself does the work. */
   .nk-stat {
     line-height: 1.5;
     margin: 0 0 16px;
@@ -1711,12 +1542,6 @@
     margin-right: 4px;
   }
 
-  /* Appears once the last case study is in view; hidden from tab order until
-     then, since visibility:hidden also removes it from the focus order. */
-  /* Every page ends the same way: how to reach her, and a way back up. It
-     repeats what the Me page says, on purpose: plenty of readers arrive
-     mid-site from a link and never see that page. Padding matches the nav's,
-     so the footer sits in the same column as everything above it. */
   .site-footer {
     border-top: 1px solid #e2e8f0;
     margin: 64px 0 0;
@@ -1754,7 +1579,6 @@
     border-bottom-color: #1e293b;
   }
 
-  /* A long page shouldn't dead-end. */
   .next-case {
     font-size: 18px;
     font-weight: 600;
@@ -1791,25 +1615,23 @@
     outline-offset: 4px;
   }
 
-  /* Comic panels are a fixed 200px; only the column count drops as space
-     runs out (4 above ~872px, 2 here, 1 under 640px). */
   @media (max-width: 899px) {
     .comic-panels { grid-template-columns: repeat(2, 200px); }
   }
 
   @media (max-width: 640px) {
     main { padding: 0 20px 48px; }
-    .site-bar { padding-left: 20px; padding-right: 20px; margin-bottom: 32px; }
-    .site-brand, .site-nav a { font-size: 16px; }
-    .site-nav { gap: 8px 16px; }
+    
+    /* Updated Mobile Header Rules */
+    .global-header { padding-left: 20px; padding-right: 20px; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+    .global-header .logo, .global-header nav a { font-size: 16px; }
+    .global-header nav { gap: 16px; width: 100%; }
+
     section { margin-bottom: 64px; }
     h1 { font-size: 32px; }
     h2 { font-size: 24px; }
     h3 { font-size: 20px; }
-    /* h2 drops to 24 here, so the case study title has to drop too or the two
-       top levels collide on a phone. */
     .case-study > summary h3 { font-size: 20px; }
-    /* And the label above it has to stay a step below that title. */
     .more-ways h3,
     .craft > h3,
     .step > h3 { font-size: 18px; }
@@ -1827,44 +1649,26 @@
     .eq-row { grid-template-columns: 1fr; gap: 4px; }
     .eq-result { white-space: normal; }
     .eq-group { grid-template-columns: 1fr; }
-    /* Once stacked, match the standalone .equation cap instead of filling
-       the container. */
     .eq-group .equation { max-width: 360px; }
     .comic-panels { grid-template-columns: 200px; justify-content: center; }
     .two-col-list { column-count: 1; }
-
-    /* Treatment rows stack: visual first, its own analysis directly under it. */
     .nk-treatment { grid-template-columns: 1fr; gap: 20px; }
-    /* Paired screens stack too; side by side they'd be too small to read. */
     .nk-visual-group { grid-template-columns: 1fr; gap: 16px; }
     .nk-ticket { padding-left: 16px; }
     .nk-ticket--card { padding: 16px 20px; }
     .cs-disclaimer { padding: 16px 20px; }
-
-    /* The label moves above its bar so the bar keeps enough width to compare. */
     .nk-funnel-row { flex-wrap: wrap; gap: 4px 12px; }
     .nk-funnel-label { flex: 1 1 100%; }
-
-    /* The matrix keeps its shape and scrolls sideways. Collapsing it to cards
-       would break the side-by-side comparison that is the whole point. */
     .nk-matrix { min-width: 560px; }
-
     .nk-matrix th,
     .nk-matrix td { padding: 10px 6px; }
-
     .nk-stat-figure { font-size: 30px; }
-
-    /* Channel map reflows from a grid to one card per row. Column headers are
-       hidden from view but kept for screen readers; each cell carries its own
-       label via data-label. */
     .channel-map,
     .channel-map tbody,
     .channel-map th,
     .channel-map td,
     .channel-map tr { display: block; }
-
     .channel-map { width: 100%; max-width: 100%; }
-
     .channel-map thead {
       position: absolute;
       width: 1px;
@@ -1876,14 +1680,12 @@
       white-space: nowrap;
       border: 0;
     }
-
     .channel-map tbody tr {
       border: 1px solid #e2e8f0;
       border-radius: 4px;
       padding: 14px 16px;
       margin-bottom: 12px;
     }
-
     .channel-map tbody th {
       width: auto;
       font-size: 17px;
@@ -1891,13 +1693,11 @@
       border-bottom: 1px solid #e2e8f0;
       margin-bottom: 8px;
     }
-
     .channel-map td {
       border-bottom: none;
       padding: 6px 0;
       width: auto;
     }
-
     .channel-map td::before {
       content: attr(data-label);
       display: block;
