@@ -101,26 +101,27 @@
     display: none; 
   }
 
-  .global-header nav a {
+.global-header nav a {
     box-sizing: border-box;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.4;
     color: #475569;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
   }
 
-  .global-header nav a:hover {
+.global-header nav a:hover {
     color: #000000;
+    background: #f8f9fa; /* Very subtle hover state */
   }
 
-  .global-header nav a[aria-current="page"] {
+.global-header nav a[aria-current="page"] {
     color: #1e293b;
-    font-weight: 600;
-    border-bottom-color: #1e293b;
+    background: #e2e8f0; /* Darker depressed state */
+    cursor: default;
   }
 
   h1 {
