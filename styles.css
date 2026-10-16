@@ -103,27 +103,27 @@
 
 .global-header nav a {
     box-sizing: border-box;
-    font-size: 18px;
+    font-size: 16px; /* Scaled down slightly from 18px for that tighter Apple aesthetic */
     font-weight: 400;
-    line-height: 1.4;
-    color: #475569;
+    letter-spacing: -0.01em;
+    color: rgba(0, 0, 0, 0.8);
     text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
+    transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
-.global-header nav a:hover {
+  .global-header nav a:hover {
+    opacity: 0.65; /* The classic Apple fade */
+  }
+
+  .global-header nav a[aria-current="page"] {
     color: #000000;
-    background: #f8f9fa; /* Very subtle hover state */
-  }
-
-.global-header nav a[aria-current="page"] {
-    color: #1e293b;
-    background: #e2e8f0; /* Darker depressed state */
+    opacity: 1;
     cursor: default;
   }
 
+  .global-header nav a[aria-current="page"]:hover {
+    opacity: 1; /* Prevents the active page from fading if accidentally hovered */
+  }
   h1 {
     font-size: 48px;
     font-weight: 700;
@@ -989,6 +989,27 @@
 
   .more-ways li p:last-child {
     margin: 0;
+  }
+
+  /* The ladder on the "Start with MVP, then upgrade" card: the four things the
+     team could have shipped, smallest first. It sits under the title and above
+     the prose so the shape of the idea lands before the story does. */
+  /* Scoped through `.more-ways li` to outrank that block's own `p` rule. */
+  .more-ways li p.ladder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 6px;
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1e293b;
+  }
+
+  .ladder .ladder-step {
+    font-weight: 400;
+    color: #94a3b8;
   }
 
   .proof-more {
