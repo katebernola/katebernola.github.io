@@ -3,6 +3,27 @@
 One running list, prioritized by impact. Update in place rather than starting new lists elsewhere.
 **Global rule: anything unfinished or still in doubt goes here.**
 
+## Queued 2026-10-16 — perks.html funnel
+
+Kate's list, not yet built.
+
+1. **Cut** the sentence "About two-thirds of users decided 'not for me' and never
+   started. Of those who started, about two-thirds dropped off after the first
+   step. Only 8% saw the final step." (perks.html, around line 63)
+2. **Surface the two drop-off figures visually** instead, so they are not buried
+   in prose: "2 out of every 3 people opted out" and "2 out of every 3 people
+   dropped off." Kate's instinct is purple; she is open to another treatment.
+   Note the palette rule: purple is reserved for case-study tags, badges,
+   subheads and outline boxes, so using it for a statistic either extends that
+   rule deliberately or picks a different device (size and weight, a rule, the
+   funnel chart itself).
+3. **Caption** on the funnel image becomes "Only 8% saw the final screen."
+
+## Also queued
+
+- **Remaining four playbook cards** still have declarative titles while the other
+  four are now imperative. Convert or revert; do not leave it split.
+
 ## Current state (updated 2026-07-11)
 
 Live and pushed: **index.html** (masthead + four-step playbook; steps 1, 2, and 3 now all have inline case studies — Help Center, retirement cross-sell test, AI content design coach) · **team.html** (leadership stats + quotes) · **me.html** (contact + what I'm looking for). Eggplant (#6B4C9A) accent marks case studies. "Content design/designers" lowercased site-wide.
@@ -162,3 +183,57 @@ Positioning
   needs something memorable to stand out from other managers pitching ROI and
   team leadership. He joined his technology background to UX leadership to do
   that.
+
+## Held, 2026-10-09
+
+Decided but not built. Kate said hold.
+
+### Shorter playbook cards
+
+Four rewrites, imperative titles, bodies trimmed.
+
+1. **Start with MVP, then upgrade.** Promo video on a tight deadline. The ladder
+   "Screenshot, styled image, GIF, video" becomes the card's visual: directly
+   under the title, above the prose, labels in dark text with light gray arrows.
+2. **Done everywhere beats done perfectly.** Illustration library. The body needs
+   a clause saying the compromise out loud: one replacement per topic group
+   rather than a bespoke swap per image, less precise and the only version that
+   was ever going to ship.
+3. **Superhero moments are leverage.** The 401(k) rescue traded for early
+   engagement. "Leverage" as a verb was the problem; as a noun it is fine.
+4. **Say no to no-win scenarios.** The payroll workflow. Edit "we couldn't do
+   much to help," which concedes more than it should. Closer to: the real
+   problem was the architecture, which no content fix could reach.
+
+### Key insights
+
+Kate plans to cut them to shorten the page. Consistent, once the card titles
+carry the plays. Before deleting, check each phase still has a point of view
+without its insight, and fold the best lines into the phase opening rather than
+losing them. "If a conversation doesn't solve it, show the math" is the best
+writing on the page.
+
+### Case study, not yet reachable
+
+The protected case study is live at /roadmap-seat/ but nothing links to it. Two
+edits finish it:
+
+- Phase 2 card on index.html replacing "We shifted UX involvement left"
+  (confirmed for deletion), carrying the title, the long teaser, a locked flag
+  and the get-the-password mailto
+- A fourth card on case-studies.html, same pattern as the Paychex Pay card
+
+### The prototype
+
+Another session built a self-hosted version of the messaging placement
+prototype as static files. It beats the current Figma embed: it can sit behind
+the password, it drops the frame-src exception added to the Worker policy, and
+it has a phone fallback. Open: switch or keep, where the files live, who makes
+the phone screenshot, and the caption copy.
+
+### Copy on the case study page that is Claude's, not Kate's
+
+Replace or cut: "What landed on the roadmap" and its sentence, "How the work
+ran", "A new card every time the work changed hands", "The same epic,
+rewritten", the "- Product" attribution under the quote, and the key insight
+"You don't get invited into planning. You show up with the work."
