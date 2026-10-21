@@ -1463,8 +1463,17 @@
     margin: 0;
   }
 
-  .nk-funnel-row::after,
   .nk-funnel-note::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #6B4C9A;
+  }
+
+  .nk-funnel-row::after {
     content: "";
     position: absolute;
     left: 4px;
@@ -1525,12 +1534,17 @@
     color: #1e293b;
   }
 
+  /* These two lines are the finding, not a note about it. The paragraph above
+     the chart used to repeat them and the caption summarised them a third
+     time; now they are stated once, here, loudly enough not to be skipped. */
   .nk-funnel-note {
     position: relative;
     margin: 0;
-    padding: 8px 0 8px 28px;
-    font-size: 14px;
-    color: #475569;
+    padding: 12px 0 12px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #6B4C9A;
   }
 
   .nk-quote {

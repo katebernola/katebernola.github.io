@@ -188,22 +188,16 @@ Positioning
 
 Decided but not built. Kate said hold.
 
-### Shorter playbook cards
+### Shorter playbook cards — DONE 2026-10-16, and a lesson
 
-Four rewrites, imperative titles, bodies trimmed.
+Kate wrote these four cards herself on 2026-10-08 ("thoughts on these shorter
+cards for the main page of my portfolio?"). The spec that used to sit here was
+my reading of them, and building from it shipped wording she never wrote,
+including a closing line I had drafted and a cut to "we couldn't do much to
+help" that was never mine to make. Reverted to her text and pushed.
 
-1. **Start with MVP, then upgrade.** Promo video on a tight deadline. The ladder
-   "Screenshot, styled image, GIF, video" becomes the card's visual: directly
-   under the title, above the prose, labels in dark text with light gray arrows.
-2. **Done everywhere beats done perfectly.** Illustration library. The body needs
-   a clause saying the compromise out loud: one replacement per topic group
-   rather than a bespoke swap per image, less precise and the only version that
-   was ever going to ship.
-3. **Superhero moments are leverage.** The 401(k) rescue traded for early
-   engagement. "Leverage" as a verb was the problem; as a noun it is fine.
-4. **Say no to no-win scenarios.** The payroll workflow. Edit "we couldn't do
-   much to help," which concedes more than it should. Closer to: the real
-   problem was the architecture, which no content fix could reach.
+**Rule:** when Kate sends copy, build from her message, not from a note about
+her message.
 
 ### Key insights
 
