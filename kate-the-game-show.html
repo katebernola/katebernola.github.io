@@ -37,88 +37,10 @@
     line-height: 1.6;
   }
 
-  /* The same bar as the rest of the portfolio, in this page's colours. Every
-     property is restated rather than inherited, and the values match
-     styles.css exactly, so nothing moves when you arrive here from another
-     page. Only the colours differ. */
-  .site-bar {
-    box-sizing: border-box;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px 32px;
-    background: var(--stage-deep);
-    border-bottom: 1px solid var(--curtain);
-    padding: 16px max(32px, calc((100% - 960px) / 2 + 32px));
-    margin: 0 0 48px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: normal;
-    text-transform: none;
-  }
-
-  .site-brand {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: normal;
-    text-transform: none;
-    color: var(--cream);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .site-role {
-    font-weight: 400;
-    color: rgba(255, 246, 227, 0.65);
-    margin-left: 8px;
-  }
-
-  .site-nav {
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 8px 24px;
-  }
-
-  .site-nav a {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: normal;
-    text-transform: none;
-    color: rgba(255, 246, 227, 0.75);
-    text-decoration: none;
-    border-bottom: 1px solid var(--curtain);
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .site-nav a:hover {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
-  }
-
-  .site-nav a[aria-current="page"] {
-    color: var(--cream);
-    border-bottom-color: transparent;
-  }
-
   main {
     max-width: 880px;
     margin: 0 auto;
-    padding: 0 20px 80px;
+    padding: 48px 20px 80px;
   }
 
   .display {
@@ -903,18 +825,6 @@
 </style>
 </head>
 <body>
-
-  <header class="site-bar" id="top">
-    <a class="site-brand" href="index.html">Kate Bernola<span class="site-role">Design leader</span></a>
-    <nav class="site-nav" aria-label="Site">
-      <a href="index.html">My playbook</a>
-      <a href="case-studies.html">Case studies</a>
-      <a href="team.html">Leadership</a>
-      <a href="me.html">Me</a>
-      <a href="kate-the-game-show.html" aria-current="page">Game show</a>
-    </nav>
-  </header>
-
 <main>
 
   <header class="marquee" id="marquee">
