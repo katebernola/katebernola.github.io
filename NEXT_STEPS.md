@@ -3,6 +3,34 @@
 One running list, prioritized by impact. Update in place rather than starting new lists elsewhere.
 **Global rule: anything unfinished or still in doubt goes here.**
 
+## After the dashboard case study ships
+
+### Is the engineering proof adequate?
+
+Kate needs a "works closely with engineering" proof point for design manager
+roles. The dashboard case study currently has two: refereeing the data science
+vs engineering dispute over login time against first activity, and engineering
+building the includes and excludes for the multi-ID rollout. Both are real but
+both are brief, and both read as her adjudicating rather than collaborating.
+
+Her own framing, worth taking seriously: this may not be the right case study
+to carry that proof. The dashboard story is about governing a model and
+recovering from a bad launch. A piece where she and engineering built something
+together would carry it better. Assess whether to deepen it here or find it
+elsewhere before adding more.
+
+### Also parked
+
+- Visual hierarchy between the heading levels and body text on the dashboard
+  case study. Kate flagged it as unresolved, explicitly not an MVP blocker.
+- Numbers for "Avert downstream crises" on the dashboard case study. It
+  definitely worked; the figures are not in hand yet.
+- The grey band behind "I build design practices...", or moving that line to
+  the playbook page. Kate believes she asked before; it is not built.
+- Accessibility pass on the rewritten dashboard case study (the rail, the two
+  disclosures, the ranked list are all new).
+- 26 unused CSS classes left in the dashboard stylesheet by the rewrite.
+
 ## Queued 2026-10-16 — perks.html funnel
 
 Kate's list, not yet built.
