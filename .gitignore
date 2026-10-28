@@ -1,0 +1,52 @@
+# Personal / working files that should never go to the public repo
+*.txt
+*.csv
+next-steps-printable.html
+next-steps-tracker.html
+
+# Prototype build tooling
+node_modules/
+
+# Planning notes. Kept local: this repo is public and GitHub Pages serves it.
+NEXT_STEPS.md
+
+# Work in progress. Local only until it is ready to be seen.
+ai-communication-coach/
+diagrams/
+
+# Planning, drafts and source material. This repo is public and GitHub Pages
+# serves every tracked file, so anything not meant for strangers lives here.
+AGENTS.md
+BACKLOG.md
+PORTFOLIO_PRIORITIES.md
+HANDOFF-intellidash.md
+INTELLIGENT-DASHBOARD-CURRENT-DRAFT.md
+INTELLIGENT-DASHBOARD-SOURCE-OF-RECORD.md
+INTERVIEW_NOTES.md
+roadmap-planning/
+prototypes/
+tmp/
+Icons/
+
+# Resumes tailored to one employer. Only the two general ones ship.
+*_Fedex.pdf
+*_resume_*.pdf
+
+# Unused source images and working crops
+images/tax/
+images/messaging-placement/
+images/nook/Dot.png
+images/nook/New-pill.png
+images/nook/Tasks-1.png
+images/nook/Tasks-3.png
+images/nook/treatment-new-closed.png
+
+# Local machine noise
+.claude/settings.local.json
+desktop.ini
+images/nook/walkthrough-reach.jpg
+
+# How Claude works on this project, and local dev server config. Useful to
+# Claude Code on this machine, not to anyone reading the site.
+CLAUDE.md
+.claude/

@@ -1,0 +1,2179 @@
+* { box-sizing: border-box; }
+
+  /* One measure for every right edge on the page: body copy, the framed
+     stories, the grid of small ones, and the section headers above them.
+     75ch at the 18px body size, fixed in px so it does not drift with the
+     font-size of whatever element it is applied to. */
+  :root { --measure: 728px; }
+
+  /* Visible only on keyboard focus. Without it every page makes a keyboard
+     user tab the whole nav before reaching content (WCAG 2.4.1). */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 16px;
+    border: 1px solid #1e293b;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    left: 16px;
+    top: 16px;
+  }
+
+  /* Lets the phase bands run 100vw past main's max-width. Must be clip, not
+     hidden: hidden would make this a scroll container and kill the sticky nav,
+     while clip leaves overflow-y visible. */
+  html, body { overflow-x: clip; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: #1e293b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* --- NEW GLOBAL HEADER --- */
+  .global-header {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+    padding: 16px max(32px, calc((100% - 960px) / 2 + 32px));
+    margin: 0 0 48px;
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    border-bottom: 1px solid #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  .global-header .logo {
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1e293b;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .global-header .logo span {
+    font-weight: 400;
+    color: #475569;
+    margin-left: 8px;
+  }
+
+  .global-header nav {
+    box-sizing: border-box;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    align-items: baseline;
+  }
+
+  .global-header nav::-webkit-scrollbar { 
+    display: none; 
+  }
+
+.global-header nav a {
+    box-sizing: border-box;
+    font-size: 16px; /* Scaled down slightly from 18px for that tighter Apple aesthetic */
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: rgba(0, 0, 0, 0.8);
+    text-decoration: none;
+    transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .global-header nav a:hover {
+    opacity: 0.65; /* The classic Apple fade */
+  }
+
+  .global-header nav a[aria-current="page"] {
+    color: #000000;
+    opacity: 1;
+    cursor: default;
+  }
+
+  .global-header nav a[aria-current="page"]:hover {
+    opacity: 1; /* Prevents the active page from fading if accidentally hovered */
+  }
+  h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 32px;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 32px;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 16px;
+  }
+
+  h4 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 24px 0 16px;
+    color: #1e293b;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 0 24px;
+    color: #475569;
+    max-width: var(--measure);
+  }
+
+  li {
+    max-width: var(--measure);
+  }
+
+  h1, h2, h3 {
+    max-width: var(--measure);
+  }
+
+  section {
+    margin: 0 0 80px;
+  }
+
+  section:last-child {
+    margin-bottom: 0;
+  }
+
+  /* A slate band, the same device .step-head uses on every case study page.
+     Set flush against the cards it sits above, the positioning line read as a
+     fourth card with no picture. The band says it is the page talking. */
+  .intro {
+    background: #f8f9fa;
+    width: 100vw;
+    margin: 0 calc(50% - 50vw) 48px;
+    padding: 40px calc(50vw - 50%);
+  }
+
+  .intro p {
+    font-size: 20px;
+    color: #1e293b;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  section {
+    scroll-margin-top: 80px;
+  }
+
+  .playbook {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 292px);
+    gap: 16px;
+  }
+
+  .playbook-note {
+    display: block;
+    max-width: 600px;
+    margin: 16px 0 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 16px;
+    font-size: 16px;
+    color: #475569;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .playbook-note:hover {
+    border-color: #1e293b;
+  }
+
+  .pn-strong {
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .craft {
+    padding-top: 40px;
+  }
+
+  .principles {
+    max-width: var(--measure);
+    margin: 0 0 32px;
+  }
+
+  .principles p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0 0 16px;
+  }
+
+  .principles strong {
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .step-card {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 16px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .step-card:hover {
+    border-color: #1e293b;
+  }
+
+  .step-num {
+    position: absolute;
+    bottom: -12px;
+    right: 8px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 104px;
+    font-weight: 700;
+    line-height: 1;
+    color: #e2e8f0;
+    margin: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .step-title,
+  .step-line {
+    position: relative;
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 2px;
+  }
+
+  .step-line {
+    font-size: 16px;
+    color: #475569;
+    margin: 0;
+  }
+
+  .context {
+    font-size: 18px;
+    color: #475569;
+    margin: 0 0 32px;
+  }
+
+  ul, ol {
+    margin: 0 0 24px;
+    padding-left: 24px;
+  }
+
+  li {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    color: #475569;
+    max-width: var(--measure);
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  .two-col-list {
+    column-count: 2;
+    column-gap: 32px;
+  }
+
+  .two-col-list li {
+    margin-bottom: 4px;
+    break-inside: avoid;
+  }
+
+  .visual-figure {
+    margin: 32px 0;
+  }
+
+  .visual-figure svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  .comic-panels {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    gap: 12px;
+    margin: 16px 0 32px;
+  }
+
+  .comic-panels img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 500 / 560;
+  }
+
+  .comic-figure {
+    margin: 0;
+  }
+
+  .guidance-compare {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 24px 0 32px;
+  }
+
+  .diagram-thumb {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    max-width: 100%;
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .diagram-thumb:hover,
+  .diagram-thumb:focus-visible {
+    border-color: #1e293b;
+  }
+
+  .diagram-thumb svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 950 / 835;
+  }
+
+  .diagram-thumb--tall {
+    width: 280px;
+  }
+
+  .diagram-thumb--tall svg {
+    aspect-ratio: 885 / 1340;
+  }
+
+  .diagram-thumb-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding: 12px 16px;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .diagram-thumb-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .diagram-thumb-cta {
+    font-size: 13px;
+    color: #475569;
+    white-space: nowrap;
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    padding: 32px 16px;
+    overflow-y: auto;
+  }
+
+  .lightbox:target {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(30, 41, 59, 0.92);
+  }
+
+  /* Sticky inside the lightbox's own scroller, not fixed to the viewport.
+     Fixed descendants get clipped by the overflow: clip on html in some
+     browsers, which left the close button off the top of the screen with no
+     way back out of a full-screen image. */
+  .lightbox-close {
+    position: sticky;
+    top: 0;
+    align-self: flex-end;
+    flex: none;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+    font-size: 22px;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .lightbox-close:hover {
+    border-color: #1e293b;
+  }
+
+  .lightbox-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  .lightbox-inner svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .lightbox-inner--detail {
+    padding: 0 32px;
+  }
+
+  .lightbox-inner img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    font-size: 16px;
+    color: #475569;
+    margin-top: 16px;
+  }
+
+  .equation {
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+    padding: 24px 32px;
+    margin: 24px 0 32px;
+    max-width: 360px;
+  }
+
+  .eq-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: var(--measure);
+    margin: 24px 0 32px;
+    align-items: start;
+  }
+
+  .eq-group--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .eq-group .equation {
+    margin: 0;
+    max-width: none;
+    padding: 16px 20px;
+  }
+
+  .eq-line {
+    position: relative;
+    padding-left: 22px;
+    font-size: 16px;
+    line-height: 1.3;
+    color: #475569;
+    margin: 0;
+  }
+
+  .eq-line + .eq-line {
+    margin-top: 6px;
+  }
+
+  .eq-op {
+    position: absolute;
+    left: 0;
+  }
+
+  .eq-answer {
+    margin: 6px 0 0 22px;
+    padding-top: 6px;
+    border-top: 1px solid #64748b;
+    font-size: 16px;
+    font-weight: 400;
+    color: #475569;
+  }
+
+  .eq-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+  }
+
+  .roi-table {
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #475569;
+  }
+
+  .roi-table th {
+    text-align: left;
+    font-weight: 600;
+    color: #1e293b;
+    padding: 0 32px 4px 0;
+  }
+
+  .roi-table td {
+    padding: 2px 32px 2px 0;
+  }
+
+  .channel-map {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 16px 0 0;
+  }
+
+  .channel-map th,
+  .channel-map td {
+    text-align: left;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .channel-map thead th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #64748b;
+    padding-bottom: 8px;
+  }
+
+  .channel-map tbody th {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    width: 19%;
+  }
+
+  .channel-map td { color: #475569; }
+
+  .channel-map .cm-prom { width: 11%; }
+  .channel-map .cm-goal { width: 25%; }
+  .channel-map .cm-use  { width: 22%; }
+  .channel-map .cm-stat { width: 23%; }
+
+  .meter { display: flex; gap: 2px; }
+
+  .meter i {
+    display: block;
+    width: 9px;
+    height: 14px;
+    background: #e2e8f0;
+  }
+
+  .meter i.on { background: #1e293b; }
+
+  .meter-label { font-size: 13px; color: #475569; }
+
+  .cs-tag {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #6B4C9A;
+    margin: 0 0 8px;
+  }
+
+  .cs-tag--light {
+    color: #475569;
+  }
+
+  .case-study {
+    position: relative;
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 32px;
+    margin: 0 0 40px;
+    max-width: var(--measure);
+  }
+
+  .cs-preview:hover,
+  .case-study:has(> summary:hover) {
+    border-color: #1e293b;
+  }
+
+  .case-study > h3,
+  .case-study > summary > h3,
+  .cs-body h3 {
+    margin-top: 0;
+  }
+
+  .cs-body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .cs-shot {
+    display: block;
+    width: 120px;
+    height: auto;
+    border: 1px solid #e2e8f0;
+  }
+
+  .case-study > summary {
+    display: block;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .case-study > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .case-study > summary:focus-visible {
+    outline: 2px solid #1e293b;
+    outline-offset: 4px;
+  }
+
+  .case-study > summary h3 {
+    font-size: 24px;
+  }
+
+  .more-ways h3,
+  .craft > h3,
+  .step > h3 {
+    font-size: 20px;
+  }
+
+  .cs-preview {
+    position: relative;
+    display: block;
+    color: #1e293b;
+    text-decoration: none;
+  }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: var(--measure);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cs-card {
+    position: relative;
+    margin: 0;
+    padding: 56px 24px 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    max-width: none;
+  }
+
+  .cs-card:hover,
+  .cs-card:focus-within { border-color: #1e293b; }
+
+  .cs-flag {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .cs-flag svg { width: 16px; height: 16px; flex: none; }
+
+  .cs-card h3 {
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 0 0 16px;
+  }
+
+  .cs-card-link {
+    color: #1e293b;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .cs-card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .cs-card:hover .cs-card-link { color: #000000; }
+
+  .cs-card-img {
+    display: block;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    object-position: top;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    margin: 0 0 16px;
+  }
+
+  .cs-card .cs-teaser {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cs-card-links { margin: 16px 0 0; }
+
+  .cs-locked {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    color: #475569;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .cs-locked svg { width: 18px; height: 18px; flex: none; }
+
+  .cs-stores {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0 0;
+    font-size: 15px;
+    color: #475569;
+  }
+
+  .cs-stores a {
+    color: #475569;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .cs-stores a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  .cs-locked:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  .cs-preview:hover .cs-open {
+    border-bottom-color: #6B4C9A;
+  }
+
+  .cs-teaser {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #475569;
+    max-width: 58ch;
+    margin: -4px 0 16px;
+  }
+
+  .cs-open,
+  .cs-close {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6B4C9A;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .case-study > summary:hover .cs-open,
+  .case-study > summary:hover .cs-close {
+    border-bottom-color: #6B4C9A;
+  }
+
+  .case-study[open] .cs-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    color: #475569;
+    background: none;
+  }
+
+  .case-study[open] > summary:hover .cs-close {
+    color: #6B4C9A;
+  }
+
+  .case-study[open] > summary h3 {
+    padding-right: 40px;
+  }
+
+  .case-study:not([open]) .cs-close,
+  .case-study[open] .cs-open {
+    display: none;
+  }
+
+  .cs-label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #6B4C9A;
+    margin: 24px 0 8px;
+    line-height: 1.3;
+  }
+
+  .case-study .eq-group,
+  .case-study .equation {
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+
+  .eq-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  .eq-expr {
+    font-size: 18px;
+    color: #475569;
+  }
+
+  .eq-result {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    white-space: nowrap;
+  }
+
+  .eq-total {
+    border-top: 1px solid #e2e8f0;
+    margin-top: 8px;
+    padding-top: 16px;
+  }
+
+  .eq-total .eq-expr {
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  .eq-total .eq-result {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .more-ways {
+    margin: 32px 0 0;
+  }
+
+  .more-ways h3,
+  .step > h3,
+  .craft > h3 {
+    margin: 0 0 32px;
+    max-width: var(--measure);
+  }
+
+  .proof-grid,
+  .more-ways ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    max-width: var(--measure);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .proof-grid--2 {
+    gap: 32px;
+  }
+
+  .proof-item,
+  .more-ways li {
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 0 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #475569;
+  }
+
+  .more-ways li p,
+  .proof-item p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+
+  .proof-item h4,
+  .more-ways li h4 {
+    font-size: 16px;
+    line-height: 1.3;
+    color: #1e293b;
+    margin: 0 0 8px;
+  }
+
+  .proof-item .nk-ticket dt {
+    color: #475569;
+  }
+
+  .nk-ticket dd.nk-said {
+    font-size: 20px;
+    line-height: 1.4;
+    color: #1e293b;
+    margin-bottom: 24px;
+  }
+
+  .proof-item h4 {
+    margin-bottom: 16px;
+  }
+
+  .more-ways li p:last-child {
+    margin: 0;
+  }
+
+  /* The ladder on the "Start with MVP, then upgrade" card: the four things the
+     team could have shipped, smallest first. It sits under the title and above
+     the prose so the shape of the idea lands before the story does. */
+  /* Scoped through `.more-ways li` to outrank that block's own `p` rule. */
+  .more-ways li p.ladder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 6px;
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1e293b;
+  }
+
+  .ladder .ladder-step {
+    font-weight: 400;
+    color: #94a3b8;
+  }
+
+  .proof-more {
+    margin: 16px 0 0;
+  }
+
+  .proof-more > summary {
+    display: inline-block;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .proof-more > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .proof-more > summary:focus-visible {
+    outline: 2px solid #1e293b;
+    outline-offset: 4px;
+  }
+
+  .proof-more > summary:hover .cs-open,
+  .proof-more > summary:hover .cs-close {
+    border-bottom-color: #6B4C9A;
+  }
+
+  .proof-more:not([open]) .cs-close,
+  .proof-more[open] .cs-open {
+    display: none;
+  }
+
+  .proof-more p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #475569;
+    margin: 12px 0 0;
+  }
+
+  .proof-item .nk-ticket {
+    border-left: none;
+    padding-left: 0;
+    margin: 0;
+    max-width: none;
+  }
+
+  .key-insight {
+    border-left: 3px solid #6B4C9A;
+    padding-left: 20px;
+    margin: 64px 0 0;
+    max-width: var(--measure);
+  }
+
+  .key-insight .ki-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6B4C9A;
+    margin: 0 0 4px;
+  }
+
+  .key-insight .ki-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .impact-list {
+    margin: 32px 0 0;
+  }
+
+  .impact-list ul {
+    margin-bottom: 0;
+  }
+
+  .step {
+    padding-top: 40px;
+  }
+
+  .step-head {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: #f8f9fa;
+    width: 100vw;
+    margin: 0 calc(50% - 50vw) 32px;
+    padding: 32px calc(50vw - 50%);
+  }
+
+  .step-ghost {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 0.85;
+    color: #475569;
+    margin: 0;
+    user-select: none;
+  }
+
+  .step-head h2 {
+    margin: 0 0 4px;
+  }
+
+  .step li a {
+    color: #1e293b;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .step li a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  .step-hook {
+    font-size: 16px;
+    color: #475569;
+    margin: 0;
+  }
+
+  /* Standfirst under a case study headline. The headline is the short label
+     the card used, so this line is where the story actually starts. Body size
+     in slate: it is not a section label, so it stays under the 20px purple
+     ones that structure the page below it. */
+  .cs-dek {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #475569;
+    max-width: var(--measure);
+    margin: 8px 0 0;
+  }
+
+  .cs-disclaimer {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1e293b;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 16px 24px;
+    margin: 0 0 32px;
+    max-width: var(--measure);
+  }
+
+  .cs-disclaimer strong {
+    font-weight: 600;
+  }
+
+  .visual-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  #perks-nav .nk-treatment-visual img {
+    max-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #perks-nav .visual-figure img {
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nk-screen-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  .nk-screen-row img,
+  #perks-nav .nk-screen-row img {
+    display: block;
+    width: 100%;
+    max-width: 149px;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  .nk-ticket {
+    border-left: 1px solid #e2e8f0;
+    padding-left: 24px;
+    margin: 24px 0 32px;
+    max-width: var(--measure);
+  }
+
+  .nk-ticket dt {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px;
+  }
+
+  .nk-ticket dd {
+    font-size: 16px;
+    color: #475569;
+    margin: 0 0 24px;
+  }
+
+  .nk-ticket dd:last-of-type { margin-bottom: 0; }
+
+  .nk-ticket--card {
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+    padding: 24px 32px;
+  }
+
+  .nk-ticket--card dt,
+  .nk-ticket--card dd {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  .nk-ticket--card dd {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .nk-ticket--card dt {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .nk-treatment {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    margin: 0;
+    padding: 40px 0;
+  }
+
+  .nk-treatment + .nk-treatment {
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .nk-treatment-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  .nk-visual-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+  }
+
+  .nk-visual-group img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+  }
+
+  .nk-treatment-h {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.3;
+    margin: 0 0 4px;
+  }
+
+  .nk-status {
+    font-size: 14px;
+    color: #475569;
+    margin: 0 0 16px;
+    max-width: var(--measure);
+  }
+
+  .nk-pc-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 16px 0 4px;
+  }
+
+  .nk-treatment-body ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .nk-treatment-body li {
+    font-size: 16px;
+    color: #475569;
+    margin-bottom: 4px;
+  }
+
+  .nk-matrix-scroll {
+    position: relative;
+    overflow-x: auto;
+    max-width: 100%;
+    margin: 24px 0 8px;
+  }
+
+  .nk-matrix {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    font-size: 15px;
+    table-layout: fixed;
+  }
+
+  .nk-matrix th,
+  .nk-matrix td {
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .nk-matrix thead th {
+    width: 19.5%;
+    font-weight: 400;
+    border-bottom: 1px solid #64748b;
+  }
+
+  .nk-matrix-corner {
+    width: 22%;
+    border-bottom: 1px solid #64748b;
+  }
+
+  .nk-matrix tbody th {
+    font-weight: 600;
+    color: #1e293b;
+    vertical-align: middle;
+  }
+
+  .nk-matrix tbody td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .nk-thumb-link {
+    position: relative;
+    display: block;
+    margin-bottom: 8px;
+    text-decoration: none;
+  }
+
+  .nk-matrix-thumb {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+    transition: border-color 0.2s;
+  }
+
+  .nk-thumb-link:hover .nk-matrix-thumb,
+  .nk-thumb-link:focus-visible .nk-matrix-thumb {
+    border-color: #1e293b;
+  }
+
+  .nk-thumb-expand {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    color: #1e293b;
+    transition: border-color 0.2s;
+  }
+
+  .nk-thumb-link:hover .nk-thumb-expand,
+  .nk-thumb-link:focus-visible .nk-thumb-expand {
+    border-color: #1e293b;
+  }
+
+  .nk-matrix-head-text {
+    min-height: 94px;
+    margin-bottom: 8px;
+  }
+
+  .nk-matrix-name {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 2px;
+  }
+
+  .nk-matrix-status {
+    display: block;
+    font-size: 13px;
+    color: #475569;
+    margin: 0;
+  }
+
+  .nk-matrix-more {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6B4C9A;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+
+  .nk-matrix-more:hover {
+    border-bottom-color: #6B4C9A;
+  }
+
+  .nk-yes,
+  .nk-no {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .nk-yes { color: #15803D; }
+  .nk-no  { color: #B91C1C; }
+
+  .nk-reqs {
+    list-style: none;
+    margin: 24px 0 32px;
+    padding: 0;
+  }
+
+  .nk-reqs li {
+    position: relative;
+    padding-left: 28px;
+    font-size: 18px;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+
+  .nk-reqs li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.35em;
+    width: 12px;
+    height: 6px;
+    border-left: 2px solid #6B4C9A;
+    border-bottom: 2px solid #6B4C9A;
+    transform: rotate(-45deg);
+  }
+
+  .nk-funnel {
+    position: relative;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .nk-funnel-note::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #6B4C9A;
+  }
+
+  .nk-funnel-row::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #64748b;
+  }
+
+  .nk-funnel-row:first-child::after { top: 50%; }
+  .nk-funnel-row:last-child::after { bottom: 50%; }
+
+  .nk-funnel-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0 8px 28px;
+  }
+
+  .nk-funnel-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #1e293b;
+  }
+
+  .nk-funnel-label {
+    flex: 0 0 150px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .nk-funnel-track {
+    flex: 1 1 auto;
+    height: 12px;
+    background: #e2e8f0;
+  }
+
+  .nk-funnel-fill {
+    display: block;
+    height: 100%;
+    background: #1e293b;
+  }
+
+  .nk-funnel-pct {
+    flex: 0 0 48px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  /* These two lines are the finding, not a note about it. The paragraph above
+     the chart used to repeat them and the caption summarised them a third
+     time; now they are stated once, here, loudly enough not to be skipped. */
+  .nk-funnel-note {
+    position: relative;
+    margin: 0;
+    padding: 12px 0 12px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #6B4C9A;
+  }
+
+  .nk-quote {
+    border-left: 1px solid #e2e8f0;
+    margin: 24px 0 32px;
+    padding-left: 24px;
+    max-width: var(--measure);
+  }
+
+  .nk-quote p {
+    margin: 0 0 12px;
+  }
+
+  .nk-quote p:last-child { margin-bottom: 0; }
+
+  .nk-quote-emoji {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .nk-stat {
+    line-height: 1.5;
+    margin: 0 0 16px;
+  }
+
+  .nk-stat-figure {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.01em;
+    margin-right: 4px;
+  }
+
+  .site-footer {
+    border-top: 1px solid #e2e8f0;
+    margin: 64px 0 0;
+    padding: 24px max(32px, calc((100% - 960px) / 2 + 32px)) 48px;
+  }
+
+  .site-footer-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px;
+  }
+
+  .site-footer-links {
+    font-size: 16px;
+    color: #475569;
+    margin: 0;
+  }
+
+  .site-footer-links span {
+    margin: 0 8px;
+    color: #64748b;
+  }
+
+  .site-footer a {
+    color: #475569;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .site-footer a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+
+  .next-case {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 64px 0 0;
+    max-width: var(--measure);
+  }
+
+  .next-case a {
+    color: #6B4C9A;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .next-case a:hover {
+    border-bottom-color: #6B4C9A;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  a:focus-visible {
+    outline: 2px solid #1e293b;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 899px) {
+    .comic-panels { grid-template-columns: repeat(2, 200px); }
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 0 20px 48px; }
+    
+    /* Updated Mobile Header Rules */
+    .global-header { padding-left: 20px; padding-right: 20px; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+    .global-header .logo, .global-header nav a { font-size: 16px; }
+    .global-header nav { gap: 16px; width: 100%; }
+
+    section { margin-bottom: 64px; }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    .case-study > summary h3 { font-size: 20px; }
+    .more-ways h3,
+    .craft > h3,
+    .step > h3 { font-size: 18px; }
+    .intro { padding-top: 28px; padding-bottom: 28px; margin-bottom: 32px; }
+    .intro p { font-size: 18px; }
+    .cs-body { grid-template-columns: 1fr; gap: 0; }
+    .cs-shot { display: none; }
+    .cs-grid { grid-template-columns: minmax(0, 1fr); }
+    /* Card art is drawn 2:1. A fixed height at phone widths cropped the
+       sides off the Perks nav, so let the ratio set the height instead. */
+    .cs-card-img { height: auto; aspect-ratio: 2 / 1; }
+    .proof-grid,
+    .proof-grid--2,
+    .more-ways ul { grid-template-columns: 1fr; }
+    .step-head { padding-top: 24px; padding-bottom: 24px; }
+    .step-ghost { font-size: 56px; }
+    .equation { padding: 16px 20px; }
+    .eq-row { grid-template-columns: 1fr; gap: 4px; }
+    .eq-result { white-space: normal; }
+    .eq-group { grid-template-columns: 1fr; }
+    .eq-group .equation { max-width: 360px; }
+    .comic-panels { grid-template-columns: 200px; justify-content: center; }
+    .two-col-list { column-count: 1; }
+    .nk-treatment { grid-template-columns: 1fr; gap: 20px; }
+    .nk-visual-group { grid-template-columns: 1fr; gap: 16px; }
+    .nk-ticket { padding-left: 16px; }
+    .nk-ticket--card { padding: 16px 20px; }
+    .cs-disclaimer { padding: 16px 20px; }
+    .nk-funnel-row { flex-wrap: wrap; gap: 4px 12px; }
+    .nk-funnel-label { flex: 1 1 100%; }
+    .nk-matrix { min-width: 560px; }
+    .nk-matrix th,
+    .nk-matrix td { padding: 10px 6px; }
+    .nk-stat-figure { font-size: 30px; }
+    .channel-map,
+    .channel-map tbody,
+    .channel-map th,
+    .channel-map td,
+    .channel-map tr { display: block; }
+    .channel-map { width: 100%; max-width: 100%; }
+    .channel-map thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .channel-map tbody tr {
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .channel-map tbody th {
+      width: auto;
+      font-size: 17px;
+      padding: 0 0 8px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 8px;
+    }
+    .channel-map td {
+      border-bottom: none;
+      padding: 6px 0;
+      width: auto;
+    }
+    .channel-map td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ---- Leadership page ---- */
+
+  .stat {
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .stat summary {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .stat summary::-webkit-details-marker {
+    display: none;
+  }
+  .stat summary:hover {
+    background: #f8f9fa;
+  }
+  .stat summary:hover .stat-icon {
+    color: #1e293b;
+  }
+  .stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1e293b;
+    min-width: 140px;
+  }
+  .stat-label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    flex: 1;
+  }
+  .stat-icon {
+    font-size: 24px;
+    color: #475569;
+    transition: transform 0.2s;
+  }
+  .stat[open] .stat-icon {
+    transform: rotate(45deg);
+  }
+  .stat-detail {
+    padding: 0 0 24px;
+    max-width: 600px;
+  }
+  .stat-detail p {
+    color: #475569;
+    font-size: 18px;
+    margin: 0 0 8px;
+  }
+  .stat-detail p:last-child {
+    margin-bottom: 0;
+  }
+  blockquote {
+    margin: 0 0 24px;
+    padding: 0 0 24px 32px;
+    border-left: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  blockquote:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  blockquote p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #1e293b;
+    margin: 0 0 16px;
+  }
+  blockquote footer {
+    font-size: 16px;
+    color: #475569;
+  }
+  .more-quotes > summary {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .more-quotes > summary::-webkit-details-marker {
+    display: none;
+  }
+  .more-quotes > summary:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+  .more-quotes[open] > summary {
+    margin-bottom: 64px;
+  }
+
+  /* ---- Me page ---- */
+
+  .me-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 18px;
+  }
+  .me-links a {
+    align-self: flex-start;
+    color: #1e293b;
+    text-decoration: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .me-links a:hover {
+    color: #000000;
+    border-bottom-color: #1e293b;
+  }
+  .resume-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 8px 24px;
+    border: 1px solid #1e293b;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .resume-link:hover {
+    background: #1e293b;
+    color: #ffffff;
+  }
+  .me-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    column-gap: 64px;
+    row-gap: 80px;
+    align-items: start;
+  }
+  .me-layout section {
+    margin: 0;
+  }
+  .me-contact { grid-column: 1; grid-row: 1; }
+
+  .me-rail { grid-column: 2; grid-row: 1; }
+
+  .me-looking { grid-column: 1 / -1; }
+
+  .marquee-card {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #fff6e3;
+    border: 4px solid #ffd34d;
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .marquee-card:hover {
+    border-color: #ffb300;
+    transform: translateY(-2px);
+  }
+  .mc-bulbs {
+    height: 12px;
+    background-image: radial-gradient(circle at center, #e0a92e 0 3px, rgba(150, 105, 30, 0.35) 3px 4px, transparent 5px);
+    background-size: 24px 12px;
+    background-repeat: space no-repeat;
+    background-position: center;
+  }
+  .mc-title {
+    font-family: Impact, "Arial Black", "Segoe UI Black", sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #1a0f2e;
+    margin: 16px 0 8px;
+  }
+  .mc-sub {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #3a2560;
+    margin: 0 0 12px;
+  }
+  .mc-cta {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a0f2e;
+    margin: 0 0 16px;
+  }
+  @media (max-width: 720px) {
+    .me-layout {
+      grid-template-columns: 1fr;
+      row-gap: 64px;
+    }
+
+    .me-contact,
+    .me-rail,
+    .me-looking {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .stat summary { gap: 16px; }
+    .stat-number { font-size: 28px; min-width: 76px; }
+    .stat-label { font-size: 18px; }
+    blockquote { padding-left: 16px; padding-bottom: 16px; margin-bottom: 16px; }
+  }
+  /* ---------- Floating back to top ---------- */
+
+  /* Long pages only. Every page has a footer link, which is no help eleven
+     screens down. Hidden by default so that with JS off nobody is shown a
+     control that cannot appear. */
+  .to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #475569;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s, border-color 0.2s;
+  }
+
+  .to-top.is-shown {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .to-top:hover { border-color: #1e293b; color: #1e293b; }
+  .to-top:focus-visible { outline: 2px solid #6B4C9A; outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .to-top { transition: opacity 0.2s, visibility 0.2s; transform: none; }
+  }
+
+  @media (max-width: 640px) {
+    .to-top { right: 16px; bottom: 16px; }
+  }
+
+  /* ---------- Case study header block ---------- */
+
+  /* Role, scope and scale, stated plainly at the top of a case study. Without
+     it a reader cannot tell whether Kate led the work or did it, which is the
+     whole question a hiring manager is asking. */
+  .cs-rules {
+    list-style: none;
+    margin: 24px 0 40px;
+    padding: 0;
+    max-width: var(--measure);
+  }
+
+  .cs-rules > li {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 24px;
+    align-items: baseline;
+    padding: 16px 0;
+    margin: 0;
+    border-top: 1px solid #e2e8f0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #1e293b;
+  }
+
+  .cs-rules > li:last-child { border-bottom: 1px solid #e2e8f0; }
+
+  /* Same size and colour as the value it labels, told apart by weight alone.
+     A small grey label against dark text left a two-tone split that only
+     covered the top of the taller rows, which read as a mistake. */
+  .cs-rules > li > b {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  /* The stem and its bullets are extra children of a two-column grid row,
+     so without this they fall into the label column instead of staying with
+     the text they belong to. */
+  .cs-rules > li > p,
+  .cs-rules > li > ul { grid-column: 2; }
+
+  /* The one field that is genuinely a list of actions. */
+  .cs-rules-stem { margin: 12px 0 6px; }
+
+  .cs-rules ul {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+
+  .cs-rules ul li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    line-height: 1.45;
+    color: #1e293b;
+  }
+
+  .cs-rules ul li:last-child { margin-bottom: 0; }
+
+  .cs-rules ul li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #64748b;
+  }
+
+  @media (max-width: 640px) {
+    .cs-rules > li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .cs-rules > li > b { font-size: 13px; }
+  }
+
+  /* Two groups side by side, so the split between UX and the partner orgs is
+     visible at a glance instead of buried in a sentence. */
+  .cs-rules > li > div { grid-column: 2; }
+
+  .cs-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 32px;
+    margin: 12px 0 0;
+    max-width: 440px;
+  }
+
+  /* The global p rule sets a lighter slate, which wins over inheritance here.
+     One ink across the whole block. */
+  .cs-rules p,
+  .cs-groups p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    color: #1e293b;
+  }
+
+  .cs-group-head {
+    font-weight: 600;
+    margin-bottom: 4px !important;
+  }
+
+  @media (max-width: 640px) {
+    .cs-groups { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  }
+
+  /* Two words and two arrows, in place of a sentence that said the same thing.
+     The whole problem is one line going up while another goes down, and that
+     is a shape, not a clause. */
+  .cs-tension {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 48px;
+    margin: 16px 0 32px;
+  }
+
+  .cs-tension .t-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #1e293b;
+  }
+
+  .cs-tension .t-arrow {
+    font-size: 32px;
+    line-height: 1;
+  }

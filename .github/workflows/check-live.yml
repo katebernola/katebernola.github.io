@@ -1,0 +1,36 @@
+# Checks the LIVE site, not the repo.
+#
+# A broken header shipped on 2026-10-22 because every check up to that point
+# had been run against a working copy. This runs in GitHub, against the
+# deployed origin, and emails Kate when it fails.
+name: Check live site
+
+on:
+  page_build:          # fires when GitHub Pages finishes deploying
+  schedule:
+    - cron: '0 11 * * *'   # 11:00 UTC = 7am America/New_York
+  workflow_dispatch:   # and a Run workflow button, for whenever
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      # Pages reports the build done a moment before the CDN catches up.
+      - name: Let the CDN settle
+        if: github.event_name == 'page_build'
+        run: sleep 45
+      - name: Check every page, link and image on the live site
+        run: node tools/check-live.mjs https://katebernola.github.io
+      # The protected site is behind a password, so a runner cannot read its
+      # pages. /health is unauthenticated and returns {"ok":true} and nothing
+      # else, which is enough to catch it being down or misconfigured.
+      - name: Check the protected site is serving
+        run: |
+          body=$(curl -fsS --max-time 20 \
+            https://kate-bernola-protected-portfolio.kate-d-bernola.workers.dev/health)
+          echo "health: $body"
+          echo "$body" | grep -q '"ok":true'
